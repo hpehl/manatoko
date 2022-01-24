@@ -26,14 +26,8 @@ import static org.jboss.hal.dmr.ModelDescriptionConstants.VALUE;
 
 public interface SystemPropertyFixtures {
 
-    String CREATE_NAME = Ids.build(SYSTEM_PROPERTY, CrudConstants.CREATE, NAME, Random.name());
-    String CREATE_VALUE = Ids.build(SYSTEM_PROPERTY, CrudConstants.CREATE, VALUE, Random.name());
     String READ_NAME = Ids.build(SYSTEM_PROPERTY, CrudConstants.READ, NAME, Random.name());
     String READ_VALUE = Ids.build(SYSTEM_PROPERTY, CrudConstants.READ, VALUE, Random.name());
-    String UPDATE_NAME = Ids.build(SYSTEM_PROPERTY, CrudConstants.UPDATE, NAME, Random.name());
-    String UPDATE_VALUE = Ids.build(SYSTEM_PROPERTY, CrudConstants.UPDATE, VALUE, Random.name());
-    String DELETE_NAME = Ids.build(SYSTEM_PROPERTY, CrudConstants.DELETE, NAME, Random.name());
-    String DELETE_VALUE = Ids.build(SYSTEM_PROPERTY, CrudConstants.DELETE, VALUE, Random.name());
 
     static Address systemPropertyAddress(String name) {
         return Address.of(SYSTEM_PROPERTY, name);

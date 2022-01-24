@@ -36,13 +36,8 @@ import org.wildfly.extras.creaper.core.online.operations.Values;
 
 import static org.jboss.hal.dmr.ModelDescriptionConstants.VALUE;
 import static org.jboss.hal.manatoko.WildFlyVersion._26;
-import static org.jboss.hal.manatoko.configuration.systemproperty.SystemPropertyFixtures.CREATE_NAME;
-import static org.jboss.hal.manatoko.configuration.systemproperty.SystemPropertyFixtures.DELETE_NAME;
-import static org.jboss.hal.manatoko.configuration.systemproperty.SystemPropertyFixtures.DELETE_VALUE;
 import static org.jboss.hal.manatoko.configuration.systemproperty.SystemPropertyFixtures.READ_NAME;
 import static org.jboss.hal.manatoko.configuration.systemproperty.SystemPropertyFixtures.READ_VALUE;
-import static org.jboss.hal.manatoko.configuration.systemproperty.SystemPropertyFixtures.UPDATE_NAME;
-import static org.jboss.hal.manatoko.configuration.systemproperty.SystemPropertyFixtures.UPDATE_VALUE;
 import static org.jboss.hal.manatoko.configuration.systemproperty.SystemPropertyFixtures.systemPropertyAddress;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.testcontainers.containers.BrowserWebDriverContainer.VncRecordingMode.RECORD_ALL;
@@ -58,7 +53,7 @@ class SystemPropertyTest {
     static WildFlyContainer wildFly = WildFlyContainer.version(_26);
 
     @Container
-    static HalContainer hal = HalContainer.instance();
+    static HalContainer console = HalContainer.instance();
 
     @Container
     static Browser chrome = Browser.chrome()
@@ -66,13 +61,10 @@ class SystemPropertyTest {
 
     @BeforeAll
     public static void beforeAll() throws Exception {
-        hal.connectTo(wildFly);
+        console.connectTo(wildFly);
         OnlineManagementClient client = wildFly.managementClient();
         Operations operations = new Operations(client);
-
         operations.add(systemPropertyAddress(READ_NAME), Values.empty().and(VALUE, READ_VALUE));
-        operations.add(systemPropertyAddress(UPDATE_NAME), Values.empty().and(VALUE, UPDATE_VALUE));
-        operations.add(systemPropertyAddress(DELETE_NAME), Values.empty().and(VALUE, DELETE_VALUE));
     }
 
     @AfterAll
@@ -80,13 +72,10 @@ class SystemPropertyTest {
         OnlineManagementClient client = wildFly.managementClient();
         Operations operations = new Operations(client);
 
-        // does not work with imp sorter maven plugin
+        // try-with-resource does not work with impsort-maven-plugin
         // noinspection TryFinallyCanBeTryWithResources
         try {
-            operations.removeIfExists(systemPropertyAddress(CREATE_NAME));
             operations.removeIfExists(systemPropertyAddress(READ_NAME));
-            operations.removeIfExists(systemPropertyAddress(UPDATE_NAME));
-            operations.removeIfExists(systemPropertyAddress(DELETE_NAME));
         } finally {
             client.close();
         }
@@ -95,7 +84,7 @@ class SystemPropertyTest {
     @Test
     void read() {
         WebDriver driver = chrome.driver();
-        driver.get(hal.url("index.html", "system-properties"));
+        driver.get(console.url("index.html", "system-properties"));
 
         var table = driver.findElement(By.id(Ids.SYSTEM_PROPERTY_TABLE));
         var tds = table.findElements(By.cssSelector("tbody td"))
