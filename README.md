@@ -2,10 +2,10 @@
 
 Manatoko ([Maori](https://maoridictionary.co.nz/search?keywords=manatoko) for verify, test) is a new approach to test the [HAL](https://hal.github.io) management console. 
 
-The goal is that tests should be self-contained. Therefore, tests should be able to
+The goal is that tests should be self-contained. For tests tt should be easy to
 
-- start a fresh WildFly instance based on [quay.io/halconsole/wildfly](https://quay.io/repository/halconsole/wildfly)
-- run HAL as standalone console based on [quay.io/halconsole/hal](https://quay.io/repository/halconsole/hal)
+- start a fresh WildFly instance (based on [quay.io/halconsole/wildfly](https://quay.io/repository/halconsole/wildfly))
+- run HAL as standalone console (based on [quay.io/halconsole/hal](https://quay.io/repository/halconsole/hal))
 - make sure HAL uses the right management endpoint
 - launch a [`WebDriver`](https://www.testcontainers.org/modules/webdriver_containers/) container which supports screen recording
 
