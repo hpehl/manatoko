@@ -19,15 +19,17 @@ Writing tests looks something like this:
 @Testcontainers
 class SystemPropertyTest {
 
+    @TempDir static File recordings;
     @Container static WildFlyContainer wildFly = WildFlyContainer.version(_26);
     @Container static HalContainer console = HalContainer.instance();
-    @Container static Browser chrome = Browser.chrome();
+    @Container static Browser chrome = Browser.chrome()
+            .withRecordingMode(RECORD_FAILING, recordings, MP4);;
 
     @BeforeAll
     public static void beforeAll() {
         console.connectTo(wildFly);
         OnlineManagementClient client = wildFly.managementClient();
-        // use client to set up resources, ... 
+        // use client to set up resources 
     }
 
     @AfterAll
@@ -42,10 +44,9 @@ class SystemPropertyTest {
         WebDriver driver = chrome.driver();
         console.navigate(driver, NameTokens.SYSTEM_PROPERTIES);
         var table = driver.findElement(By.id(Ids.SYSTEM_PROPERTY_TABLE));
-
         // asserts
     }
 }
 ```
 
-Take a look at the test source code for more details. 
+Take a look at the source code for more details. 
