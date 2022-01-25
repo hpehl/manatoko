@@ -1,8 +1,8 @@
 # Manatoko
 
-Manatoko ([Maori](https://maoridictionary.co.nz/search?keywords=manatoko) for verify, test) is a new approach to test the [HAL](https:://hal.github.io) management console. 
+Manatoko ([Maori](https://maoridictionary.co.nz/search?keywords=manatoko) for verify, test) is a new approach to test the [HAL](https://hal.github.io) management console. 
 
-The goal is that each test is self-contained. Therefore, tests will 
+The goal is that tests should be self-contained. Therefore, tests should 
 
 - start a fresh WildFly instance based on [quay.io/halconsole/wildfly](https://quay.io/repository/halconsole/wildfly)
 - run HAL as standalone console based on [quay.io/halconsole/hal](https://quay.io/repository/halconsole/hal)
