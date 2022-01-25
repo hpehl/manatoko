@@ -20,7 +20,6 @@ import java.time.Duration;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.firefox.FirefoxOptions;
-import org.openqa.selenium.remote.RemoteWebDriver;
 import org.testcontainers.containers.BrowserWebDriverContainer;
 import org.testcontainers.containers.wait.strategy.Wait;
 
@@ -38,13 +37,16 @@ public class Browser extends BrowserWebDriverContainer<Browser> {
 
     private Browser() {
         super();
-        this.withNetwork(Network.INSTANCE).waitingFor(Wait.forLogMessage(".*Started Selenium Standalone.*", 1))
+        withNetwork(Network.INSTANCE)
+                .waitingFor(Wait.forLogMessage(".*Started Selenium Standalone.*", 1))
                 .withStartupTimeout(Duration.of(30, SECONDS));
     }
 
-    public WebDriver driver() {
-        RemoteWebDriver driver = getWebDriver();
-        driver.manage().timeouts().pageLoadTimeout(Duration.of(30, SECONDS)).scriptTimeout(Duration.of(20, SECONDS))
+    public WebDriver webDriver() {
+        var driver = getWebDriver();
+        driver.manage().timeouts()
+                .pageLoadTimeout(Duration.of(30, SECONDS))
+                .scriptTimeout(Duration.of(20, SECONDS))
                 .implicitlyWait(Duration.of(10, SECONDS));
         return driver;
     }

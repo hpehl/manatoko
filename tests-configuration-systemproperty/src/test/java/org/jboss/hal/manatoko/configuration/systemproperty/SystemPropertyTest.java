@@ -17,6 +17,7 @@ package org.jboss.hal.manatoko.configuration.systemproperty;
 
 import java.io.File;
 
+import org.jboss.arquillian.junit5.ArquillianExtension;
 import org.jboss.hal.manatoko.Browser;
 import org.jboss.hal.manatoko.HalContainer;
 import org.jboss.hal.manatoko.WildFlyContainer;
@@ -26,6 +27,7 @@ import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.api.io.TempDir;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -46,6 +48,7 @@ import static org.testcontainers.containers.BrowserWebDriverContainer.VncRecordi
 import static org.testcontainers.containers.VncRecordingContainer.VncRecordingFormat.MP4;
 
 @Testcontainers
+@ExtendWith(ArquillianExtension.class)
 class SystemPropertyTest {
 
     @TempDir
@@ -58,7 +61,8 @@ class SystemPropertyTest {
     static HalContainer console = HalContainer.instance();
 
     @Container
-    static Browser chrome = Browser.chrome().withRecordingMode(RECORD_FAILING, recordings, MP4);
+    static Browser chrome = Browser.chrome()
+            .withRecordingMode(RECORD_FAILING, recordings, MP4);
 
     @BeforeAll
     static void beforeAll() throws Exception {
@@ -77,11 +81,12 @@ class SystemPropertyTest {
         }
     }
 
+    // @Drone
     WebDriver driver;
 
     @BeforeEach
     void beforeEach() {
-        driver = chrome.driver();
+        driver = chrome.webDriver();
         console.navigate(driver, NameTokens.SYSTEM_PROPERTIES);
     }
 

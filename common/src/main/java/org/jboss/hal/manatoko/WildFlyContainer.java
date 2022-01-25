@@ -42,8 +42,11 @@ public class WildFlyContainer extends GenericContainer<WildFlyContainer> {
     }
 
     public static WildFlyContainer version(WildFlyVersion version, WildFlyConfiguration configuration) {
-        return new WildFlyContainer(version).withNetwork(Network.INSTANCE).withNetworkAliases(Network.WILDFLY)
-                .withCommand("-c", configuration.configuration()).withExposedPorts(PORT)
+        return new WildFlyContainer(version)
+                .withNetwork(Network.INSTANCE)
+                .withNetworkAliases(Network.WILDFLY)
+                .withCommand("-c", configuration.configuration())
+                .withExposedPorts(PORT)
                 .waitingFor(Wait.forLogMessage(".*WildFly Full.*started in.*", 1))
                 .withStartupTimeout(Duration.of(300, SECONDS));
     }

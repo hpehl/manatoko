@@ -18,7 +18,6 @@ package org.jboss.hal.manatoko;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
-import java.util.Set;
 
 import org.openqa.selenium.WebDriver;
 import org.slf4j.Logger;
@@ -38,7 +37,8 @@ public class HalContainer extends GenericContainer<HalContainer> {
     private static final Logger LOGGER = LoggerFactory.getLogger(HalContainer.class);
 
     public static HalContainer instance() {
-        return new HalContainer().withNetwork(Network.INSTANCE).withNetworkAliases(Network.HAL).withExposedPorts(PORT)
+        return new HalContainer().withNetwork(Network.INSTANCE)
+                .withNetworkAliases(Network.HAL).withExposedPorts(PORT)
                 .waitingFor(Wait.forListeningPort());
     }
 
@@ -86,11 +86,11 @@ public class HalContainer extends GenericContainer<HalContainer> {
 
         @Override
         public String toPlaceToken(PlaceRequest placeRequest) throws TokenFormatException {
-            StringBuilder builder = new StringBuilder();
+            var builder = new StringBuilder();
             builder.append(placeRequest.getNameToken());
-            Set<String> params = placeRequest.getParameterNames();
+            var params = placeRequest.getParameterNames();
             if (params != null) {
-                for (String param : params) {
+                for (var param : params) {
                     builder.append(";").append(param).append("=").append(placeRequest.getParameter(param, null));
                 }
             }

@@ -55,6 +55,8 @@
 
     <properties>
         <!-- Dependency versions -->
+        <version.arquillian>1.7.0.Alpha10</version.arquillian>
+        <version.arquillian.drone>3.0.0-alpha.4</version.arquillian.drone>
         <version.checkstyle.config>1.0.8.Final</version.checkstyle.config>
         <version.creaper>1.6.1</version.creaper>
         <version.commons.lang3>3.12.0</version.commons.lang3>
@@ -91,6 +93,7 @@
     </properties>
 
     <modules>
+        <module>arquillian</module>
         <module>build-resources</module>
         <module>common</module>
         <module>tests-configuration-systemproperty</module>
@@ -99,6 +102,11 @@
     <dependencyManagement>
         <dependencies>
             <!-- Manatoko -->
+            <dependency>
+                <groupId>${project.groupId}</groupId>
+                <artifactId>manatoko-arquillian</artifactId>
+                <version>${project.version}</version>
+            </dependency>
             <dependency>
                 <groupId>${project.groupId}</groupId>
                 <artifactId>manatoko-common</artifactId>
@@ -157,6 +165,22 @@
                 <groupId>org.testcontainers</groupId>
                 <artifactId>selenium</artifactId>
                 <version>${version.testcontainers}</version>
+            </dependency>
+
+            <!-- Arquillian -->
+            <dependency>
+                <groupId>org.jboss.arquillian</groupId>
+                <artifactId>arquillian-bom</artifactId>
+                <version>${version.arquillian}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.jboss.arquillian.extension</groupId>
+                <artifactId>arquillian-drone-bom</artifactId>
+                <version>${version.arquillian.drone}</version>
+                <type>pom</type>
+                <scope>import</scope>
             </dependency>
 
             <!-- Selenium -->
@@ -304,6 +328,7 @@
                                 <excludes>
                                     <exclude>.sdkmanrc</exclude>
                                     <exclude>LICENSE</exclude>
+                                    <exclude>*.fish</exclude>
                                     <exclude>**/*license*.txt</exclude>
                                 </excludes>
                             </configuration>
