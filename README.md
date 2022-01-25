@@ -51,7 +51,7 @@ Take a look at the source code for more details.
 
 ## Testcontainers, Podman & macOS
 
-If you want to run the tests locally and if you're using podman on macOS, run `./tcpm.sh` and make sure to set the folloowing environment variables **before** running the tests.
+If you're using testcontainers with podman on macOS, start `./tcpm.sh` and make sure to set the folloowing environment variables **before** running the tests.
 
 ```sh
 DOCKER_HOST=unix:///tmp/podman.sock
