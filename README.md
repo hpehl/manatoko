@@ -9,6 +9,8 @@ The goal is that tests should be self-contained. Therefore, tests should be able
 - make sure HAL uses the right management endpoint
 - launch a [`WebDriver`](https://www.testcontainers.org/modules/webdriver_containers/) container which supports screen recording
 
+The biggest advantage of this approach is that it is very easy to run the tests on GitHub actions as this repository [does](.github/workflows/ci.yml). 
+
 This repository is a PoC that the above is possible using [testcontainers](https://www.testcontainers.org/). Testcontainers takes care of the container lifecycle and can inject container instances with the help of some simple annotations. Writing tests looks something like this:
 
 ```java
