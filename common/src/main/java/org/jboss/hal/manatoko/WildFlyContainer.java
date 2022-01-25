@@ -42,11 +42,8 @@ public class WildFlyContainer extends GenericContainer<WildFlyContainer> {
     }
 
     public static WildFlyContainer version(WildFlyVersion version, WildFlyConfiguration configuration) {
-        return new WildFlyContainer(version)
-                .withNetwork(Network.INSTANCE)
-                .withNetworkAliases(Network.WILDFLY)
-                .withCommand("-c", configuration.configuration())
-                .withExposedPorts(PORT)
+        return new WildFlyContainer(version).withNetwork(Network.INSTANCE).withNetworkAliases(Network.WILDFLY)
+                .withCommand("-c", configuration.configuration()).withExposedPorts(PORT)
                 .waitingFor(Wait.forLogMessage(".*WildFly Full.*started in.*", 1))
                 .withStartupTimeout(Duration.of(300, SECONDS));
     }
@@ -60,17 +57,14 @@ public class WildFlyContainer extends GenericContainer<WildFlyContainer> {
 
     @Override
     public String toString() {
-        return "WildFlyContainer{" +
-                "version=" + version +
-                '}';
+        return "WildFlyContainer{" + "version=" + version + '}';
     }
 
     public OnlineManagementClient managementClient() {
         // The management client is used in the unit tests on the host machine.
         // That's why we need to use `getHost()` and `getMappedPort()`.
         return ManagementClient
-                .onlineLazy(OnlineOptions.standalone().hostAndPort(getHost(), getMappedPort(PORT))
-                        .build());
+                .onlineLazy(OnlineOptions.standalone().hostAndPort(getHost(), getMappedPort(PORT)).build());
     }
 
     public String managementEndpoint() {

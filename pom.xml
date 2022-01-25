@@ -26,8 +26,9 @@
     </parent>
 
     <groupId>org.jboss.hal</groupId>
-    <artifactId>manatoko</artifactId>
+    <artifactId>manatoko-parent</artifactId>
     <version>0.0.1</version>
+    <packaging>pom</packaging>
     <name>Manatoko</name>
     <description>HAL self-contained test suite</description>
     <inceptionYear>2022</inceptionYear>
@@ -54,7 +55,7 @@
 
     <properties>
         <!-- Dependency versions -->
-        <version.checkstyle-config>1.0.8.Final</version.checkstyle-config>
+        <version.checkstyle.config>1.0.8.Final</version.checkstyle.config>
         <version.creaper>1.6.1</version.creaper>
         <version.commons.lang3>3.12.0</version.commons.lang3>
         <version.commons.text>1.2</version.commons.text>
@@ -89,59 +90,21 @@
         <project.reporting.outputEncoding>${encoding}</project.reporting.outputEncoding>
     </properties>
 
+    <modules>
+        <module>build-resources</module>
+        <module>common</module>
+        <module>tests-configuration-systemproperty</module>
+    </modules>
+
     <dependencyManagement>
         <dependencies>
-            <!-- Junit -->
+            <!-- Manatoko -->
             <dependency>
-                <groupId>org.junit</groupId>
-                <artifactId>junit-bom</artifactId>
-                <version>${version.junit}</version>
-                <type>pom</type>
-                <scope>import</scope>
+                <groupId>${project.groupId}</groupId>
+                <artifactId>manatoko-common</artifactId>
+                <version>${project.version}</version>
             </dependency>
-            <!-- Selenium -->
-            <dependency>
-                <groupId>org.seleniumhq.selenium</groupId>
-                <artifactId>selenium-remote-driver</artifactId>
-                <version>${version.selenium}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.seleniumhq.selenium</groupId>
-                <artifactId>selenium-chrome-driver</artifactId>
-                <version>${version.selenium}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.seleniumhq.selenium</groupId>
-                <artifactId>selenium-firefox-driver</artifactId>
-                <version>${version.selenium}</version>
-            </dependency>
-            <!-- Testcontainers -->
-            <dependency>
-                <groupId>org.testcontainers</groupId>
-                <artifactId>testcontainers</artifactId>
-                <version>${version.testcontainers}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.testcontainers</groupId>
-                <artifactId>junit-jupiter</artifactId>
-                <version>${version.testcontainers}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.testcontainers</groupId>
-                <artifactId>selenium</artifactId>
-                <version>${version.testcontainers}</version>
-            </dependency>
-            <!-- Logging -->
-            <dependency>
-                <groupId>org.slf4j</groupId>
-                <artifactId>slf4j-api</artifactId>
-                <version>${version.slf4j}</version>
-            </dependency>
-            <dependency>
-                <groupId>ch.qos.logback</groupId>
-                <artifactId>logback-classic</artifactId>
-                <version>${version.logback}</version>
-            </dependency>
+
             <!-- WildFly, JBoss & HAL -->
             <dependency>
                 <groupId>org.wildfly.core</groupId>
@@ -178,6 +141,50 @@
                 <artifactId>gwtp-mvp-shared</artifactId>
                 <version>${version.gwtp}</version>
             </dependency>
+
+            <!-- Testcontainers -->
+            <dependency>
+                <groupId>org.testcontainers</groupId>
+                <artifactId>testcontainers</artifactId>
+                <version>${version.testcontainers}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.testcontainers</groupId>
+                <artifactId>junit-jupiter</artifactId>
+                <version>${version.testcontainers}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.testcontainers</groupId>
+                <artifactId>selenium</artifactId>
+                <version>${version.testcontainers}</version>
+            </dependency>
+
+            <!-- Selenium -->
+            <dependency>
+                <groupId>org.seleniumhq.selenium</groupId>
+                <artifactId>selenium-remote-driver</artifactId>
+                <version>${version.selenium}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.seleniumhq.selenium</groupId>
+                <artifactId>selenium-chrome-driver</artifactId>
+                <version>${version.selenium}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.seleniumhq.selenium</groupId>
+                <artifactId>selenium-firefox-driver</artifactId>
+                <version>${version.selenium}</version>
+            </dependency>
+
+            <!-- Junit -->
+            <dependency>
+                <groupId>org.junit</groupId>
+                <artifactId>junit-bom</artifactId>
+                <version>${version.junit}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+
             <!-- Commons -->
             <dependency>
                 <groupId>org.apache.commons</groupId>
@@ -189,106 +196,20 @@
                 <artifactId>commons-text</artifactId>
                 <version>${version.commons.text}</version>
             </dependency>
+
+            <!-- Logging -->
+            <dependency>
+                <groupId>org.slf4j</groupId>
+                <artifactId>slf4j-api</artifactId>
+                <version>${version.slf4j}</version>
+            </dependency>
+            <dependency>
+                <groupId>ch.qos.logback</groupId>
+                <artifactId>logback-classic</artifactId>
+                <version>${version.logback}</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
-
-    <dependencies>
-        <!-- Junit -->
-        <dependency>
-            <groupId>org.junit.jupiter</groupId>
-            <artifactId>junit-jupiter-api</artifactId>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.junit.jupiter</groupId>
-            <artifactId>junit-jupiter-params</artifactId>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.junit.jupiter</groupId>
-            <artifactId>junit-jupiter-engine</artifactId>
-            <scope>test</scope>
-        </dependency>
-        <!-- Selenium -->
-        <dependency>
-            <groupId>org.seleniumhq.selenium</groupId>
-            <artifactId>selenium-chrome-driver</artifactId>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.seleniumhq.selenium</groupId>
-            <artifactId>selenium-firefox-driver</artifactId>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.seleniumhq.selenium</groupId>
-            <artifactId>selenium-remote-driver</artifactId>
-            <scope>test</scope>
-        </dependency>
-        <!-- Testcontainers -->
-        <dependency>
-            <groupId>org.testcontainers</groupId>
-            <artifactId>testcontainers</artifactId>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.testcontainers</groupId>
-            <artifactId>junit-jupiter</artifactId>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.testcontainers</groupId>
-            <artifactId>selenium</artifactId>
-            <scope>test</scope>
-        </dependency>
-        <!-- Logging -->
-        <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-api</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>ch.qos.logback</groupId>
-            <artifactId>logback-classic</artifactId>
-        </dependency>
-        <!-- WildFly, JBoss & HAL -->
-        <dependency>
-            <groupId>org.wildfly.core</groupId>
-            <artifactId>wildfly-cli</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.wildfly.core</groupId>
-            <artifactId>wildfly-controller-client</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.wildfly.extras.creaper</groupId>
-            <artifactId>creaper-core</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.wildfly.extras.creaper</groupId>
-            <artifactId>creaper-commands</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.jboss</groupId>
-            <artifactId>jboss-dmr</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.jboss.hal</groupId>
-            <artifactId>hal-testsuite-resources</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.gwtplatform</groupId>
-            <artifactId>gwtp-mvp-shared</artifactId>
-        </dependency>
-        <!-- Commons -->
-        <dependency>
-            <groupId>org.apache.commons</groupId>
-            <artifactId>commons-lang3</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.commons</groupId>
-            <artifactId>commons-text</artifactId>
-        </dependency>
-    </dependencies>
 
     <build>
         <pluginManagement>
@@ -299,94 +220,143 @@
                     <version>${version.checkstyle.plugin}</version>
                     <executions>
                         <execution>
-                            <id>check-style</id>
-                            <phase>compile</phase>
+                            <id>manatoko-checkstyle</id>
                             <goals>
                                 <goal>checkstyle</goal>
                             </goals>
+                            <configuration>
+                                <configLocation>wildfly-checkstyle/checkstyle.xml</configLocation>
+                                <consoleOutput>true</consoleOutput>
+                                <failsOnError>true</failsOnError>
+                                <includeTestSourceDirectory>true</includeTestSourceDirectory>
+                                <excludes>**/*$logger.java,**/*$bundle.java</excludes>
+                                <suppressionsLocation>manatoko/checkstyle-suppressions.xml</suppressionsLocation>
+                                <useFile/>
+                            </configuration>
                         </execution>
                     </executions>
                     <dependencies>
                         <dependency>
+                            <groupId>org.jboss.hal</groupId>
+                            <artifactId>manatoko-build-resources</artifactId>
+                            <version>${project.version}</version>
+                        </dependency>
+                        <dependency>
                             <groupId>org.wildfly.checkstyle</groupId>
                             <artifactId>wildfly-checkstyle-config</artifactId>
-                            <version>${version.checkstyle-config}</version>
+                            <version>${version.checkstyle.config}</version>
                         </dependency>
                     </dependencies>
-                    <configuration>
-                        <configLocation>wildfly-checkstyle/checkstyle.xml</configLocation>
-                        <consoleOutput>true</consoleOutput>
-                        <failsOnError>true</failsOnError>
-                        <includeTestSourceDirectory>true</includeTestSourceDirectory>
-                        <excludes>**/*$logger.java,**/*$bundle.java</excludes>
-                        <suppressionsLocation>etc/checkstyle-suppressions.xml</suppressionsLocation>
-                        <useFile/>
-                    </configuration>
                 </plugin>
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-enforcer-plugin</artifactId>
                     <version>${version.enforcer.plugin}</version>
-                    <configuration>
-                        <rules>
-                            <bannedRepositories>
-                                <message>To build this project, don't use maven repositories over HTTP. Please use HTTPS in your settings.xml or run the build with property insecure.repositories=WARN</message>
-                                <level>ERROR</level>
-                                <bannedRepositories>
-                                    <bannedRepository>http://*</bannedRepository>
-                                </bannedRepositories>
-                                <bannedPluginRepositories>
-                                    <bannedPluginRepository>http://*</bannedPluginRepository>
-                                </bannedPluginRepositories>
-                            </bannedRepositories>
-                            <requireMavenVersion>
-                                <message>To build this project Maven ${maven.min.version} (or greater) is required. Please install it.</message>
-                                <version>${maven.min.version}</version>
-                            </requireMavenVersion>
-                            <requireJavaVersion>
-                                <message>To build this project JDK ${maven.compiler.source} (or greater) is required. Please install it.</message>
-                                <version>${maven.compiler.source}</version>
-                            </requireJavaVersion>
-                        </rules>
-                    </configuration>
+                    <executions>
+                        <execution>
+                            <id>manatoko-enforce</id>
+                            <goals>
+                                <goal>enforce</goal>
+                            </goals>
+                            <configuration>
+                                <rules>
+                                    <bannedRepositories>
+                                        <message>To build this project, don't use maven repositories over HTTP. Please use HTTPS in your settings.xml or run the build with property insecure.repositories=WARN</message>
+                                        <level>ERROR</level>
+                                        <bannedRepositories>
+                                            <bannedRepository>http://*</bannedRepository>
+                                        </bannedRepositories>
+                                        <bannedPluginRepositories>
+                                            <bannedPluginRepository>http://*</bannedPluginRepository>
+                                        </bannedPluginRepositories>
+                                    </bannedRepositories>
+                                    <requireMavenVersion>
+                                        <message>To build this project Maven ${maven.min.version} (or greater) is required. Please install it.</message>
+                                        <version>${maven.min.version}</version>
+                                    </requireMavenVersion>
+                                    <requireJavaVersion>
+                                        <message>To build this project JDK ${maven.compiler.source} (or greater) is required. Please install it.</message>
+                                        <version>${maven.compiler.source}</version>
+                                    </requireJavaVersion>
+                                </rules>
+                            </configuration>
+                        </execution>
+                    </executions>
                 </plugin>
                 <plugin>
                     <groupId>com.mycila</groupId>
                     <artifactId>license-maven-plugin</artifactId>
                     <version>${version.license.plugin}</version>
-                    <configuration>
-                        <header>etc/license.txt</header>
-                        <strictCheck>true</strictCheck>
-                        <aggregate>true</aggregate>
-                        <useDefaultExcludes>true</useDefaultExcludes>
-                        <mapping>
-                            <proto>JAVADOC_STYLE</proto>
-                        </mapping>
-                        <excludes>
-                            <exclude>.sdkmanrc</exclude>
-                            <exclude>LICENSE</exclude>
-                            <exclude>**/*license*.txt</exclude>
-                        </excludes>
-                    </configuration>
+                    <executions>
+                        <execution>
+                            <id>manatoko-check-license</id>
+                            <goals>
+                                <goal>check</goal>
+                            </goals>
+                            <configuration>
+                                <header>manatoko/license.txt</header>
+                                <strictCheck>true</strictCheck>
+                                <aggregate>true</aggregate>
+                                <useDefaultExcludes>true</useDefaultExcludes>
+                                <mapping>
+                                    <proto>JAVADOC_STYLE</proto>
+                                </mapping>
+                                <excludes>
+                                    <exclude>.sdkmanrc</exclude>
+                                    <exclude>LICENSE</exclude>
+                                    <exclude>**/*license*.txt</exclude>
+                                </excludes>
+                            </configuration>
+                        </execution>
+                    </executions>
+                    <dependencies>
+                        <dependency>
+                            <groupId>org.jboss.hal</groupId>
+                            <artifactId>manatoko-build-resources</artifactId>
+                            <version>${project.version}</version>
+                        </dependency>
+                    </dependencies>
                 </plugin>
                 <plugin>
                     <groupId>net.revelc.code.formatter</groupId>
                     <artifactId>formatter-maven-plugin</artifactId>
                     <version>${version.formatter.plugin}</version>
-                    <inherited>false</inherited>
-                    <configuration>
-                        <configFile>etc/eclipse-formatter-config.xml</configFile>
-                    </configuration>
+                    <executions>
+                        <execution>
+                            <id>manatoko-format-code</id>
+                            <goals>
+                                <goal>format</goal>
+                            </goals>
+                            <configuration>
+                                <configFile>manatoko/eclipse-formatter-config.xml</configFile>
+                            </configuration>
+                        </execution>
+                    </executions>
+                    <dependencies>
+                        <dependency>
+                            <groupId>org.jboss.hal</groupId>
+                            <artifactId>manatoko-build-resources</artifactId>
+                            <version>${project.version}</version>
+                        </dependency>
+                    </dependencies>
                 </plugin>
                 <plugin>
                     <groupId>net.revelc.code</groupId>
                     <artifactId>impsort-maven-plugin</artifactId>
                     <version>${version.impsort.plugin}</version>
-                    <configuration>
-                        <groups>java.,javax.,org.,io.,com.</groups>
-                        <removeUnused>true</removeUnused>
-                        <staticAfter>true</staticAfter>
-                    </configuration>
+                    <executions>
+                        <execution>
+                            <id>manatoko-sort-imports</id>
+                            <goals>
+                                <goal>sort</goal>
+                            </goals>
+                            <configuration>
+                                <groups>java.,javax.,org.,io.,com.</groups>
+                                <removeUnused>true</removeUnused>
+                                <staticAfter>true</staticAfter>
+                            </configuration>
+                        </execution>
+                    </executions>
                 </plugin>
             </plugins>
         </pluginManagement>
@@ -395,59 +365,22 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-checkstyle-plugin</artifactId>
-                <executions>
-                    <execution>
-                        <goals>
-                            <goal>checkstyle</goal>
-                        </goals>
-                    </execution>
-                </executions>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-enforcer-plugin</artifactId>
-                <executions>
-                    <execution>
-                        <goals>
-                            <goal>enforce</goal>
-                        </goals>
-                    </execution>
-                </executions>
             </plugin>
             <plugin>
                 <groupId>com.mycila</groupId>
                 <artifactId>license-maven-plugin</artifactId>
-                <executions>
-                    <execution>
-                        <goals>
-                            <goal>check</goal>
-                        </goals>
-                    </execution>
-                </executions>
             </plugin>
             <plugin>
                 <groupId>net.revelc.code.formatter</groupId>
                 <artifactId>formatter-maven-plugin</artifactId>
-                <executions>
-                    <execution>
-                        <id>format</id>
-                        <goals>
-                            <goal>format</goal>
-                        </goals>
-                    </execution>
-                </executions>
             </plugin>
             <plugin>
                 <groupId>net.revelc.code</groupId>
                 <artifactId>impsort-maven-plugin</artifactId>
-                <executions>
-                    <execution>
-                        <id>sort-imports</id>
-                        <goals>
-                            <goal>sort</goal>
-                        </goals>
-                    </execution>
-                </executions>
             </plugin>
         </plugins>
     </build>

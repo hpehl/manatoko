@@ -38,10 +38,7 @@ public class HalContainer extends GenericContainer<HalContainer> {
     private static final Logger LOGGER = LoggerFactory.getLogger(HalContainer.class);
 
     public static HalContainer instance() {
-        return new HalContainer()
-                .withNetwork(Network.INSTANCE)
-                .withNetworkAliases(Network.HAL)
-                .withExposedPorts(PORT)
+        return new HalContainer().withNetwork(Network.INSTANCE).withNetworkAliases(Network.HAL).withExposedPorts(PORT)
                 .waitingFor(Wait.forListeningPort());
     }
 
@@ -94,10 +91,7 @@ public class HalContainer extends GenericContainer<HalContainer> {
             Set<String> params = placeRequest.getParameterNames();
             if (params != null) {
                 for (String param : params) {
-                    builder.append(";")
-                            .append(param)
-                            .append("=")
-                            .append(placeRequest.getParameter(param, null));
+                    builder.append(";").append(param).append("=").append(placeRequest.getParameter(param, null));
                 }
             }
             return builder.toString();

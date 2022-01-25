@@ -29,27 +29,22 @@ import static java.time.temporal.ChronoUnit.SECONDS;
 public class Browser extends BrowserWebDriverContainer<Browser> {
 
     public static Browser chrome() {
-        return new Browser()
-                .withCapabilities(new ChromeOptions());
+        return new Browser().withCapabilities(new ChromeOptions());
     }
 
     public static Browser firefox() {
-        return new Browser()
-                .withCapabilities(new FirefoxOptions());
+        return new Browser().withCapabilities(new FirefoxOptions());
     }
 
     private Browser() {
         super();
-        this.withNetwork(Network.INSTANCE)
-                .waitingFor(Wait.forLogMessage(".*Started Selenium Standalone.*", 1))
+        this.withNetwork(Network.INSTANCE).waitingFor(Wait.forLogMessage(".*Started Selenium Standalone.*", 1))
                 .withStartupTimeout(Duration.of(30, SECONDS));
     }
 
     public WebDriver driver() {
         RemoteWebDriver driver = getWebDriver();
-        driver.manage().timeouts()
-                .pageLoadTimeout(Duration.of(30, SECONDS))
-                .scriptTimeout(Duration.of(20, SECONDS))
+        driver.manage().timeouts().pageLoadTimeout(Duration.of(30, SECONDS)).scriptTimeout(Duration.of(20, SECONDS))
                 .implicitlyWait(Duration.of(10, SECONDS));
         return driver;
     }

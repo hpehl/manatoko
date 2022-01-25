@@ -58,8 +58,7 @@ class SystemPropertyTest {
     static HalContainer console = HalContainer.instance();
 
     @Container
-    static Browser chrome = Browser.chrome()
-            .withRecordingMode(RECORD_FAILING, recordings, MP4);
+    static Browser chrome = Browser.chrome().withRecordingMode(RECORD_FAILING, recordings, MP4);
 
     @BeforeAll
     static void beforeAll() throws Exception {
@@ -89,10 +88,7 @@ class SystemPropertyTest {
     @Test
     void read() {
         var table = driver.findElement(By.id(Ids.SYSTEM_PROPERTY_TABLE));
-        var tds = table.findElements(By.cssSelector("tbody td"))
-                .stream()
-                .map(WebElement::getText)
-                .toList();
+        var tds = table.findElements(By.cssSelector("tbody td")).stream().map(WebElement::getText).toList();
         assertTrue(tds.contains(READ_NAME));
         assertTrue(tds.contains(READ_VALUE));
     }
