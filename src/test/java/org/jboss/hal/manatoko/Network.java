@@ -17,7 +17,18 @@ package org.jboss.hal.manatoko;
 
 public interface Network {
 
+    /**
+     * Becomes the host part of the URL to the standalone HAL console.
+     *
+     * Must be part of the allowed origins defined in the <a
+     * href="https://github.com/hal/wildfly/blob/main/Dockerfile#L9"<code>DockerFile</code></a> of
+     * <code>quay.io/halconsole/wildfly</code>.
+     */
     String HAL = "hal";
+
+    /**
+     * Becomes the host part of the URL returned by {@link WildFlyContainer#managementEndpoint()}
+     */
     String WILDFLY = "wildfly";
 
     org.testcontainers.containers.Network INSTANCE = org.testcontainers.containers.Network.newNetwork();

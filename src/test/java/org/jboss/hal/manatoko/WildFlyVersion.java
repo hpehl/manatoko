@@ -17,6 +17,8 @@ package org.jboss.hal.manatoko;
 
 public enum WildFlyVersion {
 
+    // Must match the available tags at
+    // https://quay.io/repository/halconsole/wildfly?tab=tags
     _26(26);
 
     private final int major;

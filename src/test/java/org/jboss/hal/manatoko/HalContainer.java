@@ -17,16 +17,24 @@ package org.jboss.hal.manatoko;
 
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.List;
+import java.util.Set;
 
+import org.openqa.selenium.WebDriver;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.testcontainers.containers.GenericContainer;
 import org.testcontainers.containers.wait.strategy.Wait;
 import org.testcontainers.utility.DockerImageName;
 
+import com.gwtplatform.mvp.shared.proxy.PlaceRequest;
+import com.gwtplatform.mvp.shared.proxy.TokenFormatException;
+import com.gwtplatform.mvp.shared.proxy.TokenFormatter;
+
 public class HalContainer extends GenericContainer<HalContainer> {
 
     private static final int PORT = 9090;
+    private static final String IMAGE = "quay.io/halconsole/hal";
     private static final Logger LOGGER = LoggerFactory.getLogger(HalContainer.class);
 
     public static HalContainer instance() {
@@ -38,23 +46,61 @@ public class HalContainer extends GenericContainer<HalContainer> {
     }
 
     private String managementEndpoint;
+    private final TokenFormatter tokenFormatter;
 
     private HalContainer() {
-        super(DockerImageName.parse(Image.HAL));
+        super(DockerImageName.parse(IMAGE));
+        this.tokenFormatter = new HalTokenFormatter();
     }
 
     public void connectTo(final WildFlyContainer wildFly) {
         this.managementEndpoint = wildFly.managementEndpoint();
     }
 
-    public String url(final String path, final String fragment) {
-        String slashPath = path.startsWith("/") ? path : "/" + path;
-        String query = managementEndpoint != null ? "connect=" + managementEndpoint : null;
+    public void navigate(WebDriver driver, String nameToken) {
         try {
-            return new URI("http", null, Network.HAL, PORT, slashPath, query, fragment).toString();
+            var placeRequest = new PlaceRequest.Builder().nameToken(nameToken).build();
+            var fragment = tokenFormatter.toPlaceToken(placeRequest);
+            var query = managementEndpoint != null ? "connect=" + managementEndpoint : null;
+            var url = new URI("http", null, Network.HAL, PORT, "/", query, fragment).toString();
+            LOGGER.debug("Navigate to {}", url);
+            driver.get(url);
         } catch (URISyntaxException e) {
-            LOGGER.error("Unable to build URL for path '{}': {}", path, e.getMessage(), e);
-            return null;
+            LOGGER.error("Unable to navigate to '{}': {}", nameToken, e.getMessage(), e);
+        }
+    }
+
+    private static class HalTokenFormatter implements TokenFormatter {
+
+        @Override
+        public String toHistoryToken(List<PlaceRequest> placeRequestHierarchy) throws TokenFormatException {
+            throw new UnsupportedOperationException();
+        }
+
+        @Override
+        public PlaceRequest toPlaceRequest(String placeToken) throws TokenFormatException {
+            throw new UnsupportedOperationException();
+        }
+
+        @Override
+        public List<PlaceRequest> toPlaceRequestHierarchy(String historyToken) throws TokenFormatException {
+            throw new UnsupportedOperationException();
+        }
+
+        @Override
+        public String toPlaceToken(PlaceRequest placeRequest) throws TokenFormatException {
+            StringBuilder builder = new StringBuilder();
+            builder.append(placeRequest.getNameToken());
+            Set<String> params = placeRequest.getParameterNames();
+            if (params != null) {
+                for (String param : params) {
+                    builder.append(";")
+                            .append(param)
+                            .append("=")
+                            .append(placeRequest.getParameter(param, null));
+                }
+            }
+            return builder.toString();
         }
     }
 }

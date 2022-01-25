@@ -34,6 +34,7 @@ import static org.jboss.hal.manatoko.WildFlyConfiguration.STANDALONE;
 public class WildFlyContainer extends GenericContainer<WildFlyContainer> {
 
     private static final int PORT = 9990;
+    private static final String IMAGE = "quay.io/halconsole/wildfly";
     private static final Logger LOGGER = LoggerFactory.getLogger(WildFlyContainer.class);
 
     public static WildFlyContainer version(WildFlyVersion version) {
@@ -53,7 +54,7 @@ public class WildFlyContainer extends GenericContainer<WildFlyContainer> {
     private final WildFlyVersion version;
 
     private WildFlyContainer(WildFlyVersion version) {
-        super(DockerImageName.parse(Image.WILDFLY + ":" + version.version()));
+        super(DockerImageName.parse(IMAGE + ":" + version.version()));
         this.version = version;
     }
 
@@ -65,25 +66,20 @@ public class WildFlyContainer extends GenericContainer<WildFlyContainer> {
     }
 
     public OnlineManagementClient managementClient() {
-        return ManagementClient.onlineLazy(OnlineOptions.standalone().hostAndPort(getHost(), getMappedPort(PORT))
-                .build());
+        // The management client is used in the unit tests on the host machine.
+        // That's why we need to use `getHost()` and `getMappedPort()`.
+        return ManagementClient
+                .onlineLazy(OnlineOptions.standalone().hostAndPort(getHost(), getMappedPort(PORT))
+                        .build());
     }
 
     public String managementEndpoint() {
+        // The URL of management endpoint is used in the HAL container.
+        // That's why we need to use the network name and original port.
         try {
             return new URI("http", null, Network.WILDFLY, PORT, null, null, null).toString();
         } catch (URISyntaxException e) {
             LOGGER.error("Unable to build management endpoint for {}: {}", this, e.getMessage(), e);
-            return null;
-        }
-    }
-
-    public String url(String path) {
-        String slashPath = path.startsWith("/") ? path : "/" + path;
-        try {
-            return new URI("http", null, Network.WILDFLY, PORT, slashPath, null, null).toString();
-        } catch (URISyntaxException e) {
-            LOGGER.error("Unable to build URL for path '{}': {}", path, e.getMessage(), e);
             return null;
         }
     }
