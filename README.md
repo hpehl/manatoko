@@ -24,14 +24,14 @@ class SystemPropertyTest {
             .withRecordingMode(RECORD_FAILING, recordings, MP4);;
 
     @BeforeAll
-    public static void beforeAll() {
+    static void beforeAll() {
         console.connectTo(wildFly);
         OnlineManagementClient client = wildFly.managementClient();
         // use client to set up resources 
     }
 
     @AfterAll
-    public static void afterAll() {
+    static void afterAll() {
         try (var client = wildFly.managementClient()) {
             // clean up resources 
         }

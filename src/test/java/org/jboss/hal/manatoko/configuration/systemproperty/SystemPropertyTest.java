@@ -62,7 +62,7 @@ class SystemPropertyTest {
             .withRecordingMode(RECORD_FAILING, recordings, MP4);
 
     @BeforeAll
-    public static void beforeAll() throws Exception {
+    static void beforeAll() throws Exception {
         console.connectTo(wildFly);
 
         OnlineManagementClient client = wildFly.managementClient();
@@ -71,7 +71,7 @@ class SystemPropertyTest {
     }
 
     @AfterAll
-    public static void afterAll() throws Exception {
+    static void afterAll() throws Exception {
         try (var client = wildFly.managementClient()) {
             Operations operations = new Operations(client);
             operations.removeIfExists(systemPropertyAddress(READ_NAME));
