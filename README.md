@@ -57,6 +57,12 @@ Take a look at the source code for more details.
 
 ## Testcontainers, Podman & macOS
 
-If you're using testcontainers with podman on macOS, please start `./tcpm-tunnel.sh` and run `./tcpm-env.sh`, **before** running the tests.
+If you're using testcontainers with podman on macOS, please start `./tcpm.sh` and make sure to set the following environment variables **before** running the tests.
+
+```sh
+DOCKER_HOST=unix:///tmp/podman.sock
+TESTCONTAINERS_CHECKS_DISABLE=true
+TESTCONTAINERS_RYUK_DISABLED=true
+```
 
 See https://www.testcontainers.org/features/configuration/ and https://github.com/testcontainers/testcontainers-java/issues/2088#issuecomment-911586506 for more details.

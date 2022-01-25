@@ -19,7 +19,7 @@
 # --------------------------------------------------
 #
 # tcpm: script to make (t)est(c)ontainers work with (p)odman on (m)acOS.
-# Starts a SSH tunnel to the podman socket on the podman machine
+# Starts a SSH tunnel to the podman socket on the podman machine.
 # See also https://github.com/testcontainers/testcontainers-java/issues/2088#issuecomment-911586506
 #
 # --------------------------------------------------
