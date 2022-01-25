@@ -83,11 +83,11 @@ class SystemPropertyTest {
     @BeforeEach
     void beforeEach() {
         driver = chrome.driver();
+        console.navigate(driver, NameTokens.SYSTEM_PROPERTIES);
     }
 
     @Test
     void read() {
-        console.navigate(driver, NameTokens.SYSTEM_PROPERTIES);
         var table = driver.findElement(By.id(Ids.SYSTEM_PROPERTY_TABLE));
         var tds = table.findElements(By.cssSelector("tbody td"))
                 .stream()

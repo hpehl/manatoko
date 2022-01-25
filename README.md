@@ -37,10 +37,16 @@ class SystemPropertyTest {
         }
     }
 
+    WebDriver driver;
+
+    @BeforeEach
+    void beforeEach() {
+        driver = chrome.driver();
+        console.navigate(driver, NameTokens.SYSTEM_PROPERTIES);
+    }
+
     @Test
     void read() {
-        WebDriver driver = chrome.driver();
-        console.navigate(driver, NameTokens.SYSTEM_PROPERTIES);
         var table = driver.findElement(By.id(Ids.SYSTEM_PROPERTY_TABLE));
         // asserts
     }
