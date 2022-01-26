@@ -10,9 +10,9 @@ The goal is that tests should be self-contained. Tests can easily
 - use a remote web driver connected to a browser running in a [WebDriver container](https://www.testcontainers.org/modules/webdriver_containers/) (with support of screen recording)
 - leverage [Arquillian Graphene 2](http://arquillian.org/arquillian-graphene/) (using the [Arquillian Drone SPI](https://github.com/arquillian/arquillian-extension-drone/blob/master/docs/drone-spi.adoc))
 
-The biggest advantage of this approach is that it is very easy to run UI tests in a CI environment like GitHub actions (see [ci.yml](.github/workflows/ci.yml)).
+The biggest advantage of this approach is that it is very easy to run UI tests in a CI environment like GitHub Actions (see [ci.yml](.github/workflows/ci.yml)).
 
-This repository is a PoC with a simplified test from the [HAL test suite](https://github.com/hal/testsuite.next) using the above features. In a nutshell, tests look something like this:
+This repository is a PoC with a simplified test from the [HAL test suite](https://github.com/hal/testsuite.next) using the above features. In a nutshell, the test looks something like this:
 
 ```java
 @Testcontainers
