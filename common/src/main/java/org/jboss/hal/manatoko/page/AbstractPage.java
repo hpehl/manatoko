@@ -18,7 +18,10 @@ package org.jboss.hal.manatoko.page;
 import org.jboss.arquillian.core.api.annotation.Inject;
 import org.jboss.arquillian.drone.api.annotation.Drone;
 import org.jboss.hal.manatoko.Console;
+import org.jboss.hal.resources.Ids;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
 
 public abstract class AbstractPage {
 
@@ -28,11 +31,14 @@ public abstract class AbstractPage {
     @Inject
     protected Console console;
 
-    public void navigate() {
-        console.navigate(browser, assertPlace().value());
+    @FindBy(id = Ids.ROOT_CONTAINER)
+    private WebElement rootContainer;
+
+    public WebElement getRootContainer() {
+        return rootContainer;
     }
 
-    private Place assertPlace() {
+    protected Place assertPlace() {
         Place place = this.getClass().getAnnotation(Place.class);
         if (place == null) {
             throw new IllegalArgumentException(
@@ -41,4 +47,7 @@ public abstract class AbstractPage {
         }
         return place;
     }
+
+    /** Navigates to the name token specified in the {@code @Place} annotation. */
+    public abstract void navigate();
 }

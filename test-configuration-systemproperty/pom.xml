@@ -25,13 +25,13 @@
         <version>0.0.1</version>
     </parent>
 
-    <artifactId>manatoko-tests-configuration-systemproperty</artifactId>
-    <name>Manatoko :: Tests :: Configuration :: Systemproperty</name>
+    <artifactId>manatoko-test-configuration-systemproperty</artifactId>
+    <name>Manatoko :: Test :: Configuration :: Systemproperty</name>
 
     <dependencies>
         <dependency>
             <groupId>${project.groupId}</groupId>
-            <artifactId>manatoko-tests-dependencies</artifactId>
+            <artifactId>manatoko-test-dependencies</artifactId>
             <type>pom</type>
             <scope>test</scope>
         </dependency>

@@ -20,7 +20,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>org.jboss.hal</groupId>
-    <artifactId>manatoko-build-resources</artifactId>
-    <name>Manatoko :: Build Resources</name>
+    <artifactId>manatoko-config</artifactId>
+    <name>Manatoko :: Build Configuration</name>
     <version>0.0.1</version>
 </project>

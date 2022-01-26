@@ -23,17 +23,18 @@ import org.jboss.arquillian.core.api.annotation.Inject;
 import org.jboss.arquillian.graphene.enricher.AbstractSearchContextEnricher;
 import org.jboss.arquillian.graphene.enricher.ReflectionHelper;
 import org.jboss.hal.manatoko.Console;
+import org.jboss.hal.manatoko.HalContainer;
 import org.openqa.selenium.SearchContext;
 
-/** Injects an newInstance of {@link Console} into test classes, pages or page fragments. */
-public class ConsoleEnricher extends AbstractSearchContextEnricher {
+/** Injects an newInstance of {@link HalContainer} into test classes, pages or page fragments. */
+public class ManatokoEnricher extends AbstractSearchContextEnricher {
 
     @Override
     public void enrich(SearchContext searchContext, Object target) {
         List<Field> fields = ReflectionHelper.getFieldsWithAnnotation(target.getClass(), Inject.class);
         for (Field field : fields) {
             if (field.getType().isAssignableFrom(Console.class)) {
-                Console console = Console.currentInstance();
+                Console console = new Console();
                 enrichRecursively(searchContext, console);
                 setValue(field, target, console);
             }

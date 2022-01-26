@@ -21,7 +21,7 @@ import org.jboss.hal.resources.Ids;
 import org.openqa.selenium.support.FindBy;
 
 @Place(NameTokens.SYSTEM_PROPERTIES)
-public class SystemPropertyPage extends AbstractPage {
+public class SystemPropertyPage extends BasePage {
 
     @FindBy(id = Ids.SYSTEM_PROPERTY_TABLE)
     private TableFragment table;

@@ -20,7 +20,7 @@ import java.io.File;
 import org.jboss.arquillian.graphene.page.Page;
 import org.jboss.arquillian.junit5.ArquillianExtension;
 import org.jboss.hal.manatoko.Browser;
-import org.jboss.hal.manatoko.Console;
+import org.jboss.hal.manatoko.HalContainer;
 import org.jboss.hal.manatoko.WildFlyContainer;
 import org.jboss.hal.manatoko.page.SystemPropertyPage;
 import org.junit.jupiter.api.AfterAll;
@@ -55,7 +55,7 @@ class SystemPropertyTest {
     static WildFlyContainer wildFly = WildFlyContainer.version(_26);
 
     @Container
-    static Console console = Console.newInstance();
+    static HalContainer console = HalContainer.newInstance();
 
     @Container
     static Browser chrome = Browser.chrome()

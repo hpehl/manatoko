@@ -23,9 +23,9 @@ import org.jboss.arquillian.graphene.spi.enricher.SearchContextTestEnricher;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class TestcontainersExtension implements LoadableExtension {
+public class ManatokoExtension implements LoadableExtension {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(TestcontainersExtension.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(ManatokoExtension.class);
 
     @Override
     public void register(final ExtensionBuilder builder) {
@@ -33,6 +33,6 @@ public class TestcontainersExtension implements LoadableExtension {
         builder.service(Configurator.class, TestcontainersWebDriverFactory.class);
         builder.service(Instantiator.class, TestcontainersWebDriverFactory.class);
         builder.service(Destructor.class, TestcontainersWebDriverFactory.class);
-        builder.service(SearchContextTestEnricher.class, ConsoleEnricher.class);
+        builder.service(SearchContextTestEnricher.class, ManatokoEnricher.class);
     }
 }

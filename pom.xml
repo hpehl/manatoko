@@ -95,10 +95,10 @@
 
     <modules>
         <module>arquillian</module>
-        <module>build-resources</module>
         <module>common</module>
-        <module>tests-configuration-systemproperty</module>
-        <module>tests-dependencies</module>
+        <module>config</module>
+        <module>test-configuration-systemproperty</module>
+        <module>test-dependencies</module>
     </modules>
 
     <dependencyManagement>
@@ -116,7 +116,7 @@
             </dependency>
             <dependency>
                 <groupId>${project.groupId}</groupId>
-                <artifactId>manatoko-tests-dependencies</artifactId>
+                <artifactId>manatoko-test-dependencies</artifactId>
                 <version>${project.version}</version>
                 <type>pom</type>
             </dependency>

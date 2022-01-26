@@ -15,70 +15,60 @@
  */
 package org.jboss.hal.manatoko;
 
-import java.net.URI;
-import java.net.URISyntaxException;
 import java.util.List;
 import java.util.Set;
 
+import org.apache.commons.lang3.StringUtils;
+import org.jboss.arquillian.drone.api.annotation.Drone;
+import org.jboss.hal.resources.Ids;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.testcontainers.containers.GenericContainer;
-import org.testcontainers.containers.wait.strategy.Wait;
-import org.testcontainers.utility.DockerImageName;
 
 import com.gwtplatform.mvp.shared.proxy.PlaceRequest;
 import com.gwtplatform.mvp.shared.proxy.TokenFormatException;
 import com.gwtplatform.mvp.shared.proxy.TokenFormatter;
 
-public class Console extends GenericContainer<Console> {
+import static org.jboss.arquillian.graphene.Graphene.waitModel;
+import static org.junit.Assert.assertEquals;
 
-    private static final int PORT = 9090;
-    private static final String IMAGE = "quay.io/halconsole/hal";
-    private static final Logger LOGGER = LoggerFactory.getLogger(Console.class);
-    private static Console currentInstance = null;
+public class Console {
 
-    public static Console newInstance() {
-        currentInstance = new Console().withNetwork(Network.INSTANCE)
-                .withNetworkAliases(Network.HAL).withExposedPorts(PORT)
-                .waitingFor(Wait.forListeningPort());
-        return currentInstance;
-    }
+    private static final String DOT = ".";
 
-    public static Console currentInstance() {
-        return currentInstance;
-    }
-
-    private String managementEndpoint;
+    @Drone
+    private WebDriver browser;
     private final TokenFormatter tokenFormatter;
 
-    private Console() {
-        super(DockerImageName.parse(IMAGE));
-        this.tokenFormatter = new HalTokenFormatter();
+    public Console() {
+        tokenFormatter = new HalTokenFormatter();
     }
 
-    /**
-     * Tells the HAL standalone console to use the management endpoint of the specified WildFly instance.
-     */
-    public void connectTo(final WildFlyContainer wildFly) {
-        this.managementEndpoint = wildFly.managementEndpoint();
+    // ------------------------------------------------------ navigation
+
+    /** Navigates to the place request and waits until the id {@link Ids#ROOT_CONTAINER} is present. */
+    public void navigate(PlaceRequest request) {
+        navigate(request, By.id(Ids.ROOT_CONTAINER));
     }
 
-    public void navigate(WebDriver driver, String nameToken) {
-        navigate(driver, new PlaceRequest.Builder().nameToken(nameToken).build());
+    /** Navigates to the place request and waits until the selector is present. */
+    public void navigate(PlaceRequest request, By selector) {
+        browser.navigate().to(HalContainer.currentInstance().url(request));
+        waitModel().until().element(selector).is().present();
+        browser.manage().window().maximize();
     }
 
-    public void navigate(WebDriver driver, PlaceRequest placeRequest) {
-        try {
-            String fragment = tokenFormatter.toPlaceToken(placeRequest);
-            String query = managementEndpoint != null ? "connect=" + managementEndpoint : null;
-            String url = new URI("http", null, Network.HAL, PORT, "/", query, fragment).toString();
-            LOGGER.debug("Navigate to {}", url);
-            driver.get(url);
-        } catch (URISyntaxException e) {
-            LOGGER.error("Unable to navigate to '{}': {}", placeRequest, e.getMessage(), e);
-        }
+    public void reload() {
+        browser.navigate().refresh();
+        waitModel().until().element(By.id(Ids.ROOT_CONTAINER)).is().present();
     }
+
+    public void verify(PlaceRequest placeRequest) {
+        String expected = tokenFormatter.toPlaceToken(placeRequest);
+        String actual = StringUtils.substringAfter(browser.getCurrentUrl(), "#");
+        assertEquals(expected, actual);
+    }
+
+    // ------------------------------------------------------ token formatter
 
     private static class HalTokenFormatter implements TokenFormatter {
 

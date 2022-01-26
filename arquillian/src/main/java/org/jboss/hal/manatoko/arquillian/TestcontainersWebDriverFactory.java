@@ -35,19 +35,18 @@ public class TestcontainersWebDriverFactory implements
     @Override
     public TestcontainersConfiguration createConfiguration(final ArquillianDescriptor descriptor,
             final DronePoint<WebDriver> dronePoint) {
-        LOGGER.debug("Create web driver configuration from drone point: " + dronePoint);
         return new TestcontainersConfiguration();
     }
 
     @Override
     public WebDriver createInstance(final TestcontainersConfiguration configuration) {
-        LOGGER.debug("Create web driver newInstance from configuration {}", configuration.getConfigurationName());
+        LOGGER.debug("Create web driver instance from configuration {}", configuration.getConfigurationName());
         if (Browser.currentInstance() != null) {
             WebDriver driver = Browser.currentInstance().webDriver();
             LOGGER.debug("Return web driver from browser container: " + driver);
             return driver;
         } else {
-            throw new IllegalStateException("Unable to create web driver newInstance: browser container not ready!");
+            throw new IllegalStateException("Unable to create web driver instance: browser container not ready!");
         }
     }
 
@@ -58,6 +57,6 @@ public class TestcontainersWebDriverFactory implements
 
     @Override
     public int getPrecedence() {
-        return 1000;
+        return 1;
     }
 }
