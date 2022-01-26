@@ -26,6 +26,8 @@
         <appender-ref ref="STDOUT"/>
     </root>
 
-    <logger name="org.testcontainers" level="INFO"/>
     <logger name="com.github.dockerjava" level="WARN"/>
+    <logger name="org.jboss.arquillian" level="INFO"/>
+    <logger name="org.openqa.selenium" level="INFO"/>
+    <logger name="org.testcontainers" level="INFO"/>
 </configuration>

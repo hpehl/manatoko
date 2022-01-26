@@ -1,54 +1,61 @@
 # Manatoko
 
-Manatoko ([Maori](https://maoridictionary.co.nz/search?keywords=manatoko) for verify, test) is a new approach to test the [HAL](https://hal.github.io) management console. 
+Manatoko ([Maori](https://maoridictionary.co.nz/search?keywords=manatoko) for verify, test) is a new approach to test the [HAL](https://hal.github.io) management console. It builds on top of [testcontainers](https://www.testcontainers.org/). 
 
-The goal is that tests should be self-contained. For tests it should be easy to
+The goal is that tests should be self-contained. Therefore, tests  
 
 - start a fresh WildFly instance (based on [quay.io/halconsole/wildfly](https://quay.io/repository/halconsole/wildfly))
 - run HAL as standalone console (based on [quay.io/halconsole/hal](https://quay.io/repository/halconsole/hal))
-- make sure HAL uses the right management endpoint
-- launch a [`WebDriver`](https://www.testcontainers.org/modules/webdriver_containers/) container which supports screen recording
+- make sure the console uses the right management endpoint
+- use a remote web driver connected to a [WebDriver container](https://www.testcontainers.org/modules/webdriver_containers/)
+- leverage [Arquillian Graphene 2](http://arquillian.org/arquillian-graphene/) (using the [Arquillian Drone SPI](https://github.com/arquillian/arquillian-extension-drone/blob/master/docs/drone-spi.adoc))
 
-This repository is a PoC that the above is possible using [testcontainers](https://www.testcontainers.org/). Testcontainers takes care of the container lifecycle and can inject container instances with the help of some simple annotations. The biggest advantage of this approach is that it is very easy to run UI tests in a CI environment like GitHub actions (see [ci.yml](.github/workflows/ci.yml)). 
+This repository is a PoC with a test from the [HAL test suite](https://github.com/hal/testsuite.next) using the above features. The biggest advantage of this approach is that it is very easy to run UI tests in a CI environment like GitHub actions (see [ci.yml](.github/workflows/ci.yml)). 
 
-Writing tests looks something like this:
+The result is that tests look something like this:
 
 ```java
 @Testcontainers
+@ExtendWith(ArquillianExtension.class)
 class SystemPropertyTest {
 
     @TempDir static File recordings;
     @Container static WildFlyContainer wildFly = WildFlyContainer.version(_26);
     @Container static Console console = Console.newInstance();
     @Container static Browser chrome = Browser.chrome()
-            .withRecordingMode(RECORD_FAILING, recordings, MP4);;
+            .withRecordingMode(RECORD_FAILING, recordings, MP4);
 
     @BeforeAll
-    static void beforeAll() {
+    static void beforeAll() throws Exception {
         console.connectTo(wildFly);
+
         OnlineManagementClient client = wildFly.managementClient();
-        // set up resources 
+        Operations operations = new Operations(client);
+        operations.add(systemPropertyAddress(READ_NAME), Values.empty().and(VALUE, READ_VALUE));
     }
 
     @AfterAll
-    static void afterAll() {
-        try (var client = wildFly.managementClient()) {
-            // clean up resources 
+    static void afterAll() throws Exception {
+        try (OnlineManagementClient client = wildFly.managementClient()) {
+            Operations operations = new Operations(client);
+            operations.removeIfExists(systemPropertyAddress(READ_NAME));
         }
     }
 
     @Page SystemPropertyPage page;
 
+    @BeforeEach
+    void beforeEach() {
+        page.navigate();
+    }
+
     @Test
     void readPage() {
-        page.navigate();
         assertTrue(page.getTable().bodyContains(READ_NAME));
         assertTrue(page.getTable().bodyContains(READ_VALUE));
     }
 }
 ```
-
-Take a look at the source code for more details. 
 
 ## Testcontainers, Podman & macOS
 

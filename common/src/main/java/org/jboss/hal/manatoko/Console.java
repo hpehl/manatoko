@@ -57,20 +57,26 @@ public class Console extends GenericContainer<Console> {
         this.tokenFormatter = new HalTokenFormatter();
     }
 
+    /**
+     * Tells the HAL standalone console to use the management endpoint of the specified WildFly instance.
+     */
     public void connectTo(final WildFlyContainer wildFly) {
         this.managementEndpoint = wildFly.managementEndpoint();
     }
 
     public void navigate(WebDriver driver, String nameToken) {
+        navigate(driver, new PlaceRequest.Builder().nameToken(nameToken).build());
+    }
+
+    public void navigate(WebDriver driver, PlaceRequest placeRequest) {
         try {
-            PlaceRequest placeRequest = new PlaceRequest.Builder().nameToken(nameToken).build();
             String fragment = tokenFormatter.toPlaceToken(placeRequest);
             String query = managementEndpoint != null ? "connect=" + managementEndpoint : null;
             String url = new URI("http", null, Network.HAL, PORT, "/", query, fragment).toString();
             LOGGER.debug("Navigate to {}", url);
             driver.get(url);
         } catch (URISyntaxException e) {
-            LOGGER.error("Unable to navigate to '{}': {}", nameToken, e.getMessage(), e);
+            LOGGER.error("Unable to navigate to '{}': {}", placeRequest, e.getMessage(), e);
         }
     }
 
