@@ -284,8 +284,8 @@
                     </executions>
                     <dependencies>
                         <dependency>
-                            <groupId>org.jboss.hal</groupId>
-                            <artifactId>manatoko-build-resources</artifactId>
+                            <groupId>${project.groupId}</groupId>
+                            <artifactId>manatoko-config</artifactId>
                             <version>${project.version}</version>
                         </dependency>
                         <dependency>
@@ -359,8 +359,8 @@
                     </executions>
                     <dependencies>
                         <dependency>
-                            <groupId>org.jboss.hal</groupId>
-                            <artifactId>manatoko-build-resources</artifactId>
+                            <groupId>${project.groupId}</groupId>
+                            <artifactId>manatoko-config</artifactId>
                             <version>${project.version}</version>
                         </dependency>
                     </dependencies>
@@ -382,8 +382,8 @@
                     </executions>
                     <dependencies>
                         <dependency>
-                            <groupId>org.jboss.hal</groupId>
-                            <artifactId>manatoko-build-resources</artifactId>
+                            <groupId>${project.groupId}</groupId>
+                            <artifactId>manatoko-config</artifactId>
                             <version>${project.version}</version>
                         </dependency>
                     </dependencies>
