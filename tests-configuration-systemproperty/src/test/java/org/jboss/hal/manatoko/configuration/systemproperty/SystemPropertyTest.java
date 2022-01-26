@@ -17,21 +17,18 @@ package org.jboss.hal.manatoko.configuration.systemproperty;
 
 import java.io.File;
 
+import org.jboss.arquillian.graphene.page.Page;
 import org.jboss.arquillian.junit5.ArquillianExtension;
 import org.jboss.hal.manatoko.Browser;
-import org.jboss.hal.manatoko.HalContainer;
+import org.jboss.hal.manatoko.Console;
 import org.jboss.hal.manatoko.WildFlyContainer;
-import org.jboss.hal.meta.token.NameTokens;
-import org.jboss.hal.resources.Ids;
+import org.jboss.hal.manatoko.page.SystemPropertyPage;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.api.io.TempDir;
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
 import org.wildfly.extras.creaper.core.online.OnlineManagementClient;
@@ -58,7 +55,7 @@ class SystemPropertyTest {
     static WildFlyContainer wildFly = WildFlyContainer.version(_26);
 
     @Container
-    static HalContainer console = HalContainer.instance();
+    static Console console = Console.newInstance();
 
     @Container
     static Browser chrome = Browser.chrome()
@@ -75,26 +72,23 @@ class SystemPropertyTest {
 
     @AfterAll
     static void afterAll() throws Exception {
-        try (var client = wildFly.managementClient()) {
+        try (OnlineManagementClient client = wildFly.managementClient()) {
             Operations operations = new Operations(client);
             operations.removeIfExists(systemPropertyAddress(READ_NAME));
         }
     }
 
-    // @Drone
-    WebDriver driver;
+    @Page
+    SystemPropertyPage page;
 
     @BeforeEach
     void beforeEach() {
-        driver = chrome.webDriver();
-        console.navigate(driver, NameTokens.SYSTEM_PROPERTIES);
+        page.navigate();
     }
 
     @Test
-    void read() {
-        var table = driver.findElement(By.id(Ids.SYSTEM_PROPERTY_TABLE));
-        var tds = table.findElements(By.cssSelector("tbody td")).stream().map(WebElement::getText).toList();
-        assertTrue(tds.contains(READ_NAME));
-        assertTrue(tds.contains(READ_VALUE));
+    void readPage() {
+        assertTrue(page.getTable().bodyContains(READ_NAME));
+        assertTrue(page.getTable().bodyContains(READ_VALUE));
     }
 }

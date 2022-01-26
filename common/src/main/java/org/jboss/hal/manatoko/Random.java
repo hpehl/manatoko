@@ -58,8 +58,8 @@ public class Random {
 
     /** Returns a random double between 0.001 and 99.999 */
     public static double numberDouble() {
-        var v = RandomUtils.nextDouble(0.001, 99.999);
-        var str = Double.toString(v);
+        double v = RandomUtils.nextDouble(0.001, 99.999);
+        String str = Double.toString(v);
         v = Double.parseDouble(str.substring(0, str.indexOf('.') + 4));
         return v;
     }
@@ -97,7 +97,7 @@ public class Random {
     }
 
     public static ModelNode properties(int size) {
-        var node = new ModelNode();
+        ModelNode node = new ModelNode();
         for (int i = 0; i < size; i++) {
             node.get(Ids.build(VALUE, String.valueOf(i))).set(name());
         }
@@ -105,7 +105,7 @@ public class Random {
     }
 
     public static ModelNode properties(String key, String value) {
-        var node = new ModelNode();
+        ModelNode node = new ModelNode();
         node.get(key).set(value);
         return node;
     }

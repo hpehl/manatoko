@@ -57,6 +57,7 @@
         <!-- Dependency versions -->
         <version.arquillian>1.7.0.Alpha10</version.arquillian>
         <version.arquillian.drone>3.0.0-alpha.4</version.arquillian.drone>
+        <version.arquillian.graphene>3.0.0-alpha.3</version.arquillian.graphene>
         <version.checkstyle.config>1.0.8.Final</version.checkstyle.config>
         <version.creaper>1.6.1</version.creaper>
         <version.commons.lang3>3.12.0</version.commons.lang3>
@@ -84,7 +85,7 @@
 
         <!-- Build related -->
         <encoding>UTF-8</encoding>
-        <java.version>17</java.version>
+        <java.version>11</java.version>
         <maven.compiler.source>${java.version}</maven.compiler.source>
         <maven.compiler.target>${java.version}</maven.compiler.target>
         <maven.min.version>3.2.5</maven.min.version>
@@ -97,6 +98,7 @@
         <module>build-resources</module>
         <module>common</module>
         <module>tests-configuration-systemproperty</module>
+        <module>tests-dependencies</module>
     </modules>
 
     <dependencyManagement>
@@ -111,6 +113,12 @@
                 <groupId>${project.groupId}</groupId>
                 <artifactId>manatoko-common</artifactId>
                 <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>${project.groupId}</groupId>
+                <artifactId>manatoko-tests-dependencies</artifactId>
+                <version>${project.version}</version>
+                <type>pom</type>
             </dependency>
 
             <!-- WildFly, JBoss & HAL -->
@@ -181,6 +189,21 @@
                 <version>${version.arquillian.drone}</version>
                 <type>pom</type>
                 <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.jboss.arquillian.graphene</groupId>
+                <artifactId>graphene-webdriver-api</artifactId>
+                <version>${version.arquillian.graphene}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.jboss.arquillian.graphene</groupId>
+                <artifactId>graphene-webdriver-spi</artifactId>
+                <version>${version.arquillian.graphene}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.jboss.arquillian.graphene</groupId>
+                <artifactId>graphene-webdriver-impl</artifactId>
+                <version>${version.arquillian.graphene}</version>
             </dependency>
 
             <!-- Selenium -->
@@ -409,17 +432,4 @@
             </plugin>
         </plugins>
     </build>
-
-    <repositories>
-        <repository>
-            <id>jboss-nexus</id>
-            <url>https://repository.jboss.org/nexus/content/groups/public</url>
-            <snapshots>
-                <enabled>false</enabled>
-            </snapshots>
-            <releases>
-                <enabled>true</enabled>
-            </releases>
-        </repository>
-    </repositories>
 </project>

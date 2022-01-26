@@ -18,6 +18,7 @@ package org.jboss.hal.manatoko;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
+import java.util.Set;
 
 import org.openqa.selenium.WebDriver;
 import org.slf4j.Logger;
@@ -30,22 +31,28 @@ import com.gwtplatform.mvp.shared.proxy.PlaceRequest;
 import com.gwtplatform.mvp.shared.proxy.TokenFormatException;
 import com.gwtplatform.mvp.shared.proxy.TokenFormatter;
 
-public class HalContainer extends GenericContainer<HalContainer> {
+public class Console extends GenericContainer<Console> {
 
     private static final int PORT = 9090;
     private static final String IMAGE = "quay.io/halconsole/hal";
-    private static final Logger LOGGER = LoggerFactory.getLogger(HalContainer.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(Console.class);
+    private static Console currentInstance = null;
 
-    public static HalContainer instance() {
-        return new HalContainer().withNetwork(Network.INSTANCE)
+    public static Console newInstance() {
+        currentInstance = new Console().withNetwork(Network.INSTANCE)
                 .withNetworkAliases(Network.HAL).withExposedPorts(PORT)
                 .waitingFor(Wait.forListeningPort());
+        return currentInstance;
+    }
+
+    public static Console currentInstance() {
+        return currentInstance;
     }
 
     private String managementEndpoint;
     private final TokenFormatter tokenFormatter;
 
-    private HalContainer() {
+    private Console() {
         super(DockerImageName.parse(IMAGE));
         this.tokenFormatter = new HalTokenFormatter();
     }
@@ -56,10 +63,10 @@ public class HalContainer extends GenericContainer<HalContainer> {
 
     public void navigate(WebDriver driver, String nameToken) {
         try {
-            var placeRequest = new PlaceRequest.Builder().nameToken(nameToken).build();
-            var fragment = tokenFormatter.toPlaceToken(placeRequest);
-            var query = managementEndpoint != null ? "connect=" + managementEndpoint : null;
-            var url = new URI("http", null, Network.HAL, PORT, "/", query, fragment).toString();
+            PlaceRequest placeRequest = new PlaceRequest.Builder().nameToken(nameToken).build();
+            String fragment = tokenFormatter.toPlaceToken(placeRequest);
+            String query = managementEndpoint != null ? "connect=" + managementEndpoint : null;
+            String url = new URI("http", null, Network.HAL, PORT, "/", query, fragment).toString();
             LOGGER.debug("Navigate to {}", url);
             driver.get(url);
         } catch (URISyntaxException e) {
@@ -86,11 +93,11 @@ public class HalContainer extends GenericContainer<HalContainer> {
 
         @Override
         public String toPlaceToken(PlaceRequest placeRequest) throws TokenFormatException {
-            var builder = new StringBuilder();
+            StringBuilder builder = new StringBuilder();
             builder.append(placeRequest.getNameToken());
-            var params = placeRequest.getParameterNames();
+            Set<String> params = placeRequest.getParameterNames();
             if (params != null) {
-                for (var param : params) {
+                for (String param : params) {
                     builder.append(";").append(param).append("=").append(placeRequest.getParameter(param, null));
                 }
             }

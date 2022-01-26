@@ -13,18 +13,19 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package org.jboss.hal.manatoko.arquillian;
+package org.jboss.hal.manatoko.page;
 
-import org.jboss.arquillian.core.spi.LoadableExtension;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
 
-public class ManatokoExtension implements LoadableExtension {
+/**
+ * Specifies a place in the console. If possible use constants from {@link org.jboss.hal.meta.token.NameTokens}.
+ */
+@Retention(RetentionPolicy.RUNTIME)
+@Target({ ElementType.TYPE })
+public @interface Place {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(ManatokoExtension.class);
-
-    @Override
-    public void register(final ExtensionBuilder extensionBuilder) {
-        LOGGER.info("Register {}", this.getClass().getSimpleName());
-    }
+    String value();
 }

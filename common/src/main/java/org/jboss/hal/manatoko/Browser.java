@@ -20,6 +20,7 @@ import java.time.Duration;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.firefox.FirefoxOptions;
+import org.openqa.selenium.remote.RemoteWebDriver;
 import org.testcontainers.containers.BrowserWebDriverContainer;
 import org.testcontainers.containers.wait.strategy.Wait;
 
@@ -27,12 +28,20 @@ import static java.time.temporal.ChronoUnit.SECONDS;
 
 public class Browser extends BrowserWebDriverContainer<Browser> {
 
+    private static Browser currentInstance = null;
+
+    public static Browser currentInstance() {
+        return currentInstance;
+    }
+
     public static Browser chrome() {
-        return new Browser().withCapabilities(new ChromeOptions());
+        currentInstance = new Browser().withCapabilities(new ChromeOptions());
+        return currentInstance;
     }
 
     public static Browser firefox() {
-        return new Browser().withCapabilities(new FirefoxOptions());
+        currentInstance = new Browser().withCapabilities(new FirefoxOptions());
+        return currentInstance;
     }
 
     private Browser() {
@@ -43,7 +52,7 @@ public class Browser extends BrowserWebDriverContainer<Browser> {
     }
 
     public WebDriver webDriver() {
-        var driver = getWebDriver();
+        RemoteWebDriver driver = getWebDriver();
         driver.manage().timeouts()
                 .pageLoadTimeout(Duration.of(30, SECONDS))
                 .scriptTimeout(Duration.of(20, SECONDS))
