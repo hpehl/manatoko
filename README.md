@@ -19,7 +19,7 @@ class SystemPropertyTest {
 
     @TempDir static File recordings;
     @Container static WildFlyContainer wildFly = WildFlyContainer.version(_26);
-    @Container static HalContainer console = HalContainer.instance();
+    @Container static Console console = Console.newInstance();
     @Container static Browser chrome = Browser.chrome()
             .withRecordingMode(RECORD_FAILING, recordings, MP4);;
 
@@ -27,7 +27,7 @@ class SystemPropertyTest {
     static void beforeAll() {
         console.connectTo(wildFly);
         OnlineManagementClient client = wildFly.managementClient();
-        // use client to set up resources 
+        // set up resources 
     }
 
     @AfterAll
@@ -37,18 +37,13 @@ class SystemPropertyTest {
         }
     }
 
-    WebDriver driver;
-
-    @BeforeEach
-    void beforeEach() {
-        driver = chrome.driver();
-        console.navigate(driver, NameTokens.SYSTEM_PROPERTIES);
-    }
+    @Page SystemPropertyPage page;
 
     @Test
-    void read() {
-        var table = driver.findElement(By.id(Ids.SYSTEM_PROPERTY_TABLE));
-        // asserts
+    void readPage() {
+        page.navigate();
+        assertTrue(page.getTable().bodyContains(READ_NAME));
+        assertTrue(page.getTable().bodyContains(READ_VALUE));
     }
 }
 ```
