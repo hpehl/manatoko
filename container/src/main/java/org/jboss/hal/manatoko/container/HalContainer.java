@@ -39,10 +39,17 @@ public class HalContainer extends GenericContainer<HalContainer> {
         return currentInstance;
     }
 
+    private final String url;
     private String managementEndpoint;
 
     private HalContainer() {
         super(DockerImageName.parse(IMAGE));
+        url = "http://" + Network.HAL + ":" + PORT;
+    }
+
+    @Override
+    public String toString() {
+        return "HalContainer{url='" + url + '\'' + '}';
     }
 
     /**
@@ -50,17 +57,14 @@ public class HalContainer extends GenericContainer<HalContainer> {
      */
     public void connectTo(final WildFlyContainer wildFly) {
         this.managementEndpoint = wildFly.managementEndpoint();
-        logger.info("{} connected to management endpoint {}", IMAGE, managementEndpoint);
+        logger.info("{} connected to management endpoint {}", this, managementEndpoint);
     }
 
     public String consoleEndpoint() {
-        StringBuilder builder = new StringBuilder();
-        builder.append("http://").append(Network.HAL).append(":").append(PORT);
-        if (managementEndpoint != null) {
-            builder.append("?connect=").append(managementEndpoint);
-        } else {
-            logger.warn("No management endpoint defined for {}", IMAGE);
+        if (managementEndpoint == null) {
+            logger.warn("No management endpoint defined for {}", this);
+            return url;
         }
-        return builder.toString();
+        return url + "?connect=" + managementEndpoint;
     }
 }

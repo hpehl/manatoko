@@ -61,7 +61,7 @@ public class WildFlyContainer extends GenericContainer<WildFlyContainer> {
 
     @Override
     public String toString() {
-        return "WildFlyContainer{" + "version=" + version + '}';
+        return "WildFlyContainer{version=" + version + '}';
     }
 
     public OnlineManagementClient managementClient() {
