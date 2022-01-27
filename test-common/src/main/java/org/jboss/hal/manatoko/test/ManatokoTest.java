@@ -15,7 +15,7 @@
  */
 package org.jboss.hal.manatoko.test;
 
-import java.io.File;
+import java.nio.file.Paths;
 
 import org.jboss.arquillian.junit5.ArquillianExtension;
 import org.jboss.hal.manatoko.container.Browser;
@@ -23,12 +23,11 @@ import org.jboss.hal.manatoko.container.HalContainer;
 import org.jboss.hal.manatoko.container.WildFlyContainer;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.junit.jupiter.api.io.TempDir;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
 
 import static org.jboss.hal.manatoko.container.WildFlyVersion._26;
-import static org.testcontainers.containers.BrowserWebDriverContainer.VncRecordingMode.RECORD_FAILING;
+import static org.testcontainers.containers.BrowserWebDriverContainer.VncRecordingMode.RECORD_ALL;
 import static org.testcontainers.containers.VncRecordingContainer.VncRecordingFormat.MP4;
 
 // IMPORTANT!
@@ -38,9 +37,6 @@ import static org.testcontainers.containers.VncRecordingContainer.VncRecordingFo
 @ExtendWith(ArquillianExtension.class)
 public abstract class ManatokoTest {
 
-    @TempDir
-    protected static File recordings;
-
     @Container
     protected static WildFlyContainer wildFly = WildFlyContainer.version(_26);
 
@@ -49,7 +45,7 @@ public abstract class ManatokoTest {
 
     @Container
     protected static Browser chrome = Browser.chrome()
-            .withRecordingMode(RECORD_FAILING, recordings, MP4);
+            .withRecordingMode(RECORD_ALL, Paths.get("target/recordings").toFile(), MP4);
 
     @BeforeAll
     static void beforeAll() {

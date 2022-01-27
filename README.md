@@ -12,50 +12,7 @@ The goal is that tests should be self-contained. Tests can easily
 
 The biggest advantage of this approach is that it is very easy to run UI tests in a CI environment like GitHub Actions (see [ci.yml](.github/workflows/ci.yml)).
 
-This repository is a PoC with a [test](src/test/java/org/jboss/hal/manatoko/configuration/systemproperty/SystemPropertyTest.java) from the [HAL test suite](https://github.com/hal/testsuite.next) using the above features:
-
-```java
-@Testcontainers
-@ExtendWith(ArquillianExtension.class)
-class SystemPropertyTest {
-
-    @TempDir static File recordings;
-    @Container static WildFlyContainer wildFly = WildFlyContainer.version(_26);
-    @Container static Console console = Console.newInstance();
-    @Container static Browser chrome = Browser.chrome()
-            .withRecordingMode(RECORD_FAILING, recordings, MP4);
-
-    @BeforeAll
-    static void beforeAll() throws Exception {
-        console.connectTo(wildFly);
-
-        OnlineManagementClient client = wildFly.managementClient();
-        Operations operations = new Operations(client);
-        operations.add(systemPropertyAddress(READ_NAME), Values.empty().and(VALUE, READ_VALUE));
-    }
-
-    @AfterAll
-    static void afterAll() throws Exception {
-        try (OnlineManagementClient client = wildFly.managementClient()) {
-            Operations operations = new Operations(client);
-            operations.removeIfExists(systemPropertyAddress(READ_NAME));
-        }
-    }
-
-    @Page SystemPropertyPage page;
-
-    @BeforeEach
-    void beforeEach() {
-        page.navigate();
-    }
-
-    @Test
-    void readPage() {
-        assertTrue(page.getTable().bodyContains(READ_NAME));
-        assertTrue(page.getTable().bodyContains(READ_VALUE));
-    }
-}
-```
+This repository is a PoC with a [test](test-configuration-systemproperty/src/test/java/org/jboss/hal/manatoko/configuration/systemproperty/SystemPropertyTest.java) from the [HAL test suite](https://github.com/hal/testsuite.next) using the above features. See also [`ManatokoTest`](test-common/src/main/java/org/jboss/hal/manatoko/test/ManatokoTest.java) for the container setup.
 
 ## Testcontainers, Podman & macOS
 

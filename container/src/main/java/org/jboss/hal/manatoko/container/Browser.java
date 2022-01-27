@@ -56,7 +56,7 @@ public class Browser extends BrowserWebDriverContainer<Browser> {
         driver.manage().timeouts()
                 .pageLoadTimeout(Duration.of(40, SECONDS))
                 .scriptTimeout(Duration.of(30, SECONDS))
-                .implicitlyWait(Duration.of(20, SECONDS));
+                .implicitlyWait(Duration.of(30, SECONDS));
         return driver;
     }
 }

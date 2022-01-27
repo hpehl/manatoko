@@ -41,6 +41,8 @@ import org.openqa.selenium.WebElement;
 import com.gwtplatform.mvp.shared.proxy.PlaceRequest;
 import com.gwtplatform.mvp.shared.proxy.TokenFormatException;
 import com.gwtplatform.mvp.shared.proxy.TokenFormatter;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import static org.jboss.arquillian.graphene.Graphene.createPageFragment;
 import static org.jboss.arquillian.graphene.Graphene.waitGui;
@@ -58,6 +60,7 @@ import static org.junit.Assert.assertEquals;
 public class Console {
 
     private static final String DOT = ".";
+    private static final Logger logger = LoggerFactory.getLogger(Console.class);
 
     @Drone
     private WebDriver browser;
@@ -78,6 +81,7 @@ public class Console {
     public void navigate(PlaceRequest request, By selector) {
         String fragment = tokenFormatter.toPlaceToken(request);
         String url = HalContainer.currentInstance().consoleEndpoint() + "#" + fragment;
+        logger.info("Navigate to {}", url);
         browser.navigate().to(url);
         waitModel().until().element(selector).is().present();
         browser.manage().window().maximize();
