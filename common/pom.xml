@@ -106,7 +106,7 @@
             <artifactId>selenium-remote-driver</artifactId>
         </dependency>
 
-        <!-- Commons -->
+        <!-- Commons & Misc -->
         <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-lang3</artifactId>
@@ -114,6 +114,10 @@
         <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-text</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.jgrapht</groupId>
+            <artifactId>jgrapht-core</artifactId>
         </dependency>
 
         <!-- Logging -->

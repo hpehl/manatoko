@@ -153,7 +153,7 @@
                 <scope>import</scope>
             </dependency>
 
-            <!-- Commons -->
+            <!-- Commons & Misc -->
             <dependency>
                 <groupId>org.apache.commons</groupId>
                 <artifactId>commons-lang3</artifactId>
@@ -163,6 +163,11 @@
                 <groupId>org.apache.commons</groupId>
                 <artifactId>commons-text</artifactId>
                 <version>${version.commons.text}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.jgrapht</groupId>
+                <artifactId>jgrapht-core</artifactId>
+                <version>${version.jgrapht}</version>
             </dependency>
 
             <!-- Logging -->

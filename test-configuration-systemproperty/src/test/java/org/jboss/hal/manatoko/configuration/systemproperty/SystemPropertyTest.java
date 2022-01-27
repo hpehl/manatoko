@@ -72,7 +72,7 @@ class SystemPropertyTest extends ManatokoTest {
     FormFragment form;
 
     @BeforeEach
-    void beforeEach() {
+    void prepare() {
         page.navigate();
         form = page.getForm();
         table = page.getTable();
