@@ -8,7 +8,7 @@ The goal is that tests should be self-contained. Tests can easily
 - run HAL as standalone console (based on [quay.io/halconsole/hal](https://quay.io/repository/halconsole/hal))
 - make sure the console uses the right management endpoint
 - use a remote web driver connected to a browser running in a [WebDriver container](https://www.testcontainers.org/modules/webdriver_containers/) (with support of screen recording)
-- leverage [Arquillian Graphene 2](http://arquillian.org/arquillian-graphene/) (using the [Arquillian Drone SPI](https://github.com/arquillian/arquillian-extension-drone/blob/master/docs/drone-spi.adoc))
+- leverage [Arquillian Graphene 2](http://arquillian.org/arquillian-graphene/) (provided by an [Arquillian Drone extension](https://github.com/arquillian/arquillian-extension-drone/blob/master/docs/drone-spi.adoc))
 
 The biggest advantage of this approach is that it is very easy to run UI tests in a CI environment such as GitHub Actions (like this repository [does](.github/workflows/ci.yml)).
 
