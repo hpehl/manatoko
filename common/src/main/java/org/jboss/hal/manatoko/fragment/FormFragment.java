@@ -15,7 +15,6 @@
  */
 package org.jboss.hal.manatoko.fragment;
 
-import com.google.common.base.Strings;
 import org.jboss.arquillian.core.api.annotation.Inject;
 import org.jboss.arquillian.drone.api.annotation.Drone;
 import org.jboss.arquillian.graphene.findby.ByJQuery;
@@ -32,6 +31,8 @@ import org.openqa.selenium.WebDriverException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
+
+import com.google.common.base.Strings;
 
 import static org.jboss.arquillian.graphene.Graphene.createPageFragment;
 import static org.jboss.arquillian.graphene.Graphene.waitGui;
@@ -52,17 +53,28 @@ public class FormFragment {
 
     private static final String DOT = ".";
 
-    @Drone private WebDriver browser;
-    @Root private WebElement root;
-    @Inject private Console console;
-    @FindBy(css = "a[data-operation=edit]") private WebElement editLink;
-    @FindBy(css = "a[data-operation=reset]") private WebElement resetLink;
-    @FindBy(css = "a[data-operation=remove]") private WebElement removeLink;
-    @FindBy(css = DOT + formButtons + " ." + btnDefault) private WebElement cancelButton;
-    @FindBy(css = DOT + formButtons + " ." + btnPrimary) private WebElement saveButton;
-    @FindBy(css = DOT + readonly) private WebElement readOnlySection;
-    @FindBy(css = DOT + editing) private WebElement editingSection;
-    @FindBy(css = DOT + blankSlatePf) private WebElement blankSlate;
+    @Drone
+    private WebDriver browser;
+    @Root
+    private WebElement root;
+    @Inject
+    private Console console;
+    @FindBy(css = "a[data-operation=edit]")
+    private WebElement editLink;
+    @FindBy(css = "a[data-operation=reset]")
+    private WebElement resetLink;
+    @FindBy(css = "a[data-operation=remove]")
+    private WebElement removeLink;
+    @FindBy(css = DOT + formButtons + " ." + btnDefault)
+    private WebElement cancelButton;
+    @FindBy(css = DOT + formButtons + " ." + btnPrimary)
+    private WebElement saveButton;
+    @FindBy(css = DOT + readonly)
+    private WebElement readOnlySection;
+    @FindBy(css = DOT + editing)
+    private WebElement editingSection;
+    @FindBy(css = DOT + blankSlatePf)
+    private WebElement blankSlate;
 
     // ------------------------------------------------------ empty mode
 

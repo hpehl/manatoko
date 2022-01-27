@@ -15,8 +15,9 @@
  */
 package org.jboss.hal.manatoko.page;
 
-import com.gwtplatform.mvp.shared.proxy.PlaceRequest;
 import org.jboss.hal.manatoko.fragment.finder.FinderPath;
+
+import com.gwtplatform.mvp.shared.proxy.PlaceRequest;
 
 public class Places {
 

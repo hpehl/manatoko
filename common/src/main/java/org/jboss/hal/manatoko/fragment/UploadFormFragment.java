@@ -29,9 +29,12 @@ import static org.jboss.arquillian.graphene.Graphene.waitGui;
 
 public class UploadFormFragment {
 
-    @Root private WebElement root;
-    @FindBy(css = "label[for='" + Ids.UPLOAD_FILE_INPUT + "']") private WebElement uploadFileLabel;
-    @FindBy(id = Ids.UPLOAD_FILE_INPUT) private WebElement fileInput;
+    @Root
+    private WebElement root;
+    @FindBy(css = "label[for='" + Ids.UPLOAD_FILE_INPUT + "']")
+    private WebElement uploadFileLabel;
+    @FindBy(id = Ids.UPLOAD_FILE_INPUT)
+    private WebElement fileInput;
 
     public void uploadFile(File fileToUpload) {
         fileInput.sendKeys(fileToUpload.getAbsolutePath());

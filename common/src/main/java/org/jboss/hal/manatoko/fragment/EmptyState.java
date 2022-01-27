@@ -25,8 +25,10 @@ import static org.jboss.hal.resources.CSS.btnPrimary;
 /** Fragment for an empty state element. */
 public class EmptyState {
 
-    @Root private WebElement root;
-    @FindBy(css = "." + blankSlatePfMainAction + " button." + btnPrimary) private WebElement primaryButton;
+    @Root
+    private WebElement root;
+    @FindBy(css = "." + blankSlatePfMainAction + " button." + btnPrimary)
+    private WebElement primaryButton;
 
     /** Clicks on the main action */
     public void mainAction() {

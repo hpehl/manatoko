@@ -36,9 +36,12 @@ import static org.jboss.hal.resources.CSS.tags;
 
 public class TagsInputFragment {
 
-    @Drone private WebDriver browser;
-    @FindBy(css = "input[type=text]." + tags) private WebElement inputElement;
-    @FindBy(className = "tag-manager-container") private WebElement tagsElement;
+    @Drone
+    private WebDriver browser;
+    @FindBy(css = "input[type=text]." + tags)
+    private WebElement inputElement;
+    @FindBy(className = "tag-manager-container")
+    private WebElement tagsElement;
 
     /** Adds the values to this list item. */
     public TagsInputFragment add(List<String> values) {

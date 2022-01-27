@@ -27,7 +27,8 @@ public class PagerFragment {
 
     private static final String VALUE = "value";
 
-    @Root private WebElement root;
+    @Root
+    private WebElement root;
 
     public void goToFirstPage() {
         if (isFirstPage()) {

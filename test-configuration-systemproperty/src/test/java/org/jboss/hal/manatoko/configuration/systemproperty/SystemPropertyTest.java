@@ -66,8 +66,10 @@ class SystemPropertyTest extends ManatokoTest {
         }
     }
 
-    @Inject CrudOperations crud;
-    @Page SystemPropertyPage page;
+    @Inject
+    CrudOperations crud;
+    @Page
+    SystemPropertyPage page;
     TableFragment table;
     FormFragment form;
 

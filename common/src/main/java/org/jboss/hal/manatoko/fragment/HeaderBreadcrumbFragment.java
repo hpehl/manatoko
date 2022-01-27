@@ -37,7 +37,8 @@ public class HeaderBreadcrumbFragment {
         return value;
     }
 
-    @Root private WebElement root;
+    @Root
+    private WebElement root;
 
     public String lastValue() {
         String value;

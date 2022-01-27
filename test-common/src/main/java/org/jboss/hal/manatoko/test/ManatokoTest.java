@@ -37,11 +37,14 @@ import static org.testcontainers.containers.VncRecordingContainer.VncRecordingFo
 @ExtendWith(ArquillianExtension.class)
 public abstract class ManatokoTest {
 
-    @Container protected static WildFlyContainer wildFly = WildFlyContainer.version(_26);
+    @Container
+    protected static WildFlyContainer wildFly = WildFlyContainer.version(_26);
 
-    @Container protected static HalContainer console = HalContainer.newInstance();
+    @Container
+    protected static HalContainer console = HalContainer.newInstance();
 
-    @Container protected static Browser chrome = Browser.chrome()
+    @Container
+    protected static Browser chrome = Browser.chrome()
             .withRecordingMode(RECORD_FAILING, Paths.get("target/recordings").toFile(), MP4);
 
     @BeforeAll

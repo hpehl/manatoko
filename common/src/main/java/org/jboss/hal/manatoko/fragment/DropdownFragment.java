@@ -25,7 +25,8 @@ import static org.jboss.hal.manatoko.Selectors.contains;
 /** Fragment for a PatternFly dropdown */
 public class DropdownFragment {
 
-    @Root private WebElement root;
+    @Root
+    private WebElement root;
 
     /** Returns if the dropdown contains option with the specified title */
     public boolean containsItem(String title) {

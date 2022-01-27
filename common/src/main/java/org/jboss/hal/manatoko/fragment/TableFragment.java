@@ -35,9 +35,12 @@ import static org.jboss.hal.resources.CSS.halTableButtons;
 /** Fragment for a data table. */
 public class TableFragment {
 
-    @Root private WebElement root;
-    @FindBy(css = "." + halTableButtons) private WebElement buttons;
-    @Inject private Console console;
+    @Root
+    private WebElement root;
+    @FindBy(css = "." + halTableButtons)
+    private WebElement buttons;
+    @Inject
+    private Console console;
     private final List<FormFragment> forms;
     private final List<FormFragment> blankForms;
     private PagerFragment pager;

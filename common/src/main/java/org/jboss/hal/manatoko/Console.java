@@ -18,9 +18,6 @@ package org.jboss.hal.manatoko;
 import java.util.List;
 import java.util.Set;
 
-import com.gwtplatform.mvp.shared.proxy.PlaceRequest;
-import com.gwtplatform.mvp.shared.proxy.TokenFormatException;
-import com.gwtplatform.mvp.shared.proxy.TokenFormatter;
 import org.apache.commons.lang3.StringUtils;
 import org.jboss.arquillian.drone.api.annotation.Drone;
 import org.jboss.hal.manatoko.container.HalContainer;
@@ -43,6 +40,10 @@ import org.openqa.selenium.WebElement;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.gwtplatform.mvp.shared.proxy.PlaceRequest;
+import com.gwtplatform.mvp.shared.proxy.TokenFormatException;
+import com.gwtplatform.mvp.shared.proxy.TokenFormatter;
+
 import static org.jboss.arquillian.graphene.Graphene.createPageFragment;
 import static org.jboss.arquillian.graphene.Graphene.waitGui;
 import static org.jboss.arquillian.graphene.Graphene.waitModel;
@@ -61,7 +62,8 @@ public class Console {
     private static final String DOT = ".";
     private static final Logger logger = LoggerFactory.getLogger(Console.class);
 
-    @Drone private WebDriver browser;
+    @Drone
+    private WebDriver browser;
     private final TokenFormatter tokenFormatter;
 
     public Console() {

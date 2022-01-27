@@ -26,8 +26,10 @@ import static org.jboss.hal.manatoko.Selectors.WRAPPER;
 @Place(NameTokens.SYSTEM_PROPERTIES)
 public class SystemPropertyPage extends BasePage {
 
-    @FindBy(id = Ids.SYSTEM_PROPERTY_TABLE + WRAPPER) private TableFragment table;
-    @FindBy(id = Ids.SYSTEM_PROPERTY_FORM) private FormFragment form;
+    @FindBy(id = Ids.SYSTEM_PROPERTY_TABLE + WRAPPER)
+    private TableFragment table;
+    @FindBy(id = Ids.SYSTEM_PROPERTY_FORM)
+    private FormFragment form;
 
     public TableFragment getTable() {
         return table;

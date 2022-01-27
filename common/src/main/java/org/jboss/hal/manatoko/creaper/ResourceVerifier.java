@@ -18,7 +18,6 @@ package org.jboss.hal.manatoko.creaper;
 import java.io.IOException;
 import java.util.List;
 
-import com.google.common.base.Splitter;
 import org.jboss.dmr.ModelNode;
 import org.jboss.dmr.ModelType;
 import org.jboss.dmr.Property;
@@ -30,6 +29,8 @@ import org.wildfly.extras.creaper.core.online.ModelNodeResult;
 import org.wildfly.extras.creaper.core.online.OnlineManagementClient;
 import org.wildfly.extras.creaper.core.online.operations.Address;
 import org.wildfly.extras.creaper.core.online.operations.Operations;
+
+import com.google.common.base.Splitter;
 
 import static java.util.stream.Collectors.toList;
 import static org.jboss.hal.dmr.ModelDescriptionConstants.ACCESS_TYPE;

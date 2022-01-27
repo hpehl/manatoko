@@ -30,9 +30,12 @@ import static org.jboss.hal.manatoko.Selectors.contains;
 /** Fragment for the console footer. Use {@link Console#footer()} to get an instance. */
 public class FooterFragment {
 
-    @Drone private WebDriver browser;
-    @Root private WebElement root;
-    @Inject private Console console;
+    @Drone
+    private WebDriver browser;
+    @Root
+    private WebElement root;
+    @Inject
+    private Console console;
 
     public DialogFragment openSettingsWindow() {
         final By settingsLink = ByJQuery.selector("a." + CSS.clickable + contains("Settings"));

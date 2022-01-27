@@ -28,7 +28,8 @@ import static org.jboss.hal.resources.CSS.modalFooter;
 /** Page fragment for modal dialogs. Use {@link org.jboss.hal.manatoko.Console#dialog()} to get an instance. */
 public class DialogFragment {
 
-    @Root protected WebElement root;
+    @Root
+    protected WebElement root;
 
     /** Clicks on the primary button and waits until the dialog has been closed. */
     public void primaryButton() {

@@ -25,9 +25,12 @@ import org.openqa.selenium.support.FindBy;
 
 public abstract class AbstractPage {
 
-    @Drone protected WebDriver browser;
-    @Inject protected Console console;
-    @FindBy(id = Ids.ROOT_CONTAINER) private WebElement rootContainer;
+    @Drone
+    protected WebDriver browser;
+    @Inject
+    protected Console console;
+    @FindBy(id = Ids.ROOT_CONTAINER)
+    private WebElement rootContainer;
 
     public WebElement getRootContainer() {
         return rootContainer;
