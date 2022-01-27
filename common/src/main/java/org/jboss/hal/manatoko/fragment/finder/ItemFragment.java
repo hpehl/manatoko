@@ -37,10 +37,8 @@ import static org.jboss.hal.resources.CSS.dropdownToggle;
 /** Fragment for a finder item. Use {@link ColumnFragment#selectItem(String)} to get an instance. */
 public class ItemFragment {
 
-    @Drone
-    private WebDriver browser;
-    @Root
-    private WebElement root;
+    @Drone private WebDriver browser;
+    @Root private WebElement root;
     private String itemId;
     private static final String DOT = ".";
 
@@ -80,7 +78,7 @@ public class ItemFragment {
 
     /**
      * Check the default action name in the dropdown and select this default action
-     * 
+     *
      * @throws IllegalStateException if actual default action name differs from the expected one
      */
     public void defaultAction(String expectedDefaultActionName) {
@@ -109,7 +107,7 @@ public class ItemFragment {
 
     /**
      * Useful to determine icon type.
-     * 
+     *
      * @return content of class attribute
      * @throws NoSuchElementException if there is no icon in the item
      */

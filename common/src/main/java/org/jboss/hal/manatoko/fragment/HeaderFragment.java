@@ -35,29 +35,16 @@ import static org.jboss.hal.resources.CSS.navbarPrimary;
  */
 public class HeaderFragment {
 
-    @FindBy(id = Ids.RELOAD_LINK)
-    private WebElement reload;
-
-    @FindBy(id = Ids.NONE_PROGRESSING_LINK)
-    private WebElement nonProgressingOp;
-
-    @FindBy(id = Ids.MESSAGES_LINK)
-    private WebElement notifications;
-
-    @FindBy(id = Ids.BADEGE_ICON)
-    private WebElement badgeIcon;
-
-    @FindBy(css = "." + drawerPf + "." + drawerPfHal)
-    private NotificationDrawerFragment notificationDrawer;
-
-    @FindBy(css = "ul." + nav + "." + navbarNav + "." + navbarPrimary + " > li > a")
-    private List<WebElement> topLevelCategories;
-
-    @FindBy(css = "ul." + nav + "." + navbarNav + "." + navbarPrimary + " > li.active > a")
-    private WebElement selectedTopLevelCategory;
-
-    @FindBy(css = "ol." + CSS.breadcrumb + "." + halBreadcrumb)
-    private HeaderBreadcrumbFragment breadcrumb;
+    @FindBy(id = Ids.RELOAD_LINK) private WebElement reload;
+    @FindBy(id = Ids.NONE_PROGRESSING_LINK) private WebElement nonProgressingOp;
+    @FindBy(id = Ids.MESSAGES_LINK) private WebElement notifications;
+    @FindBy(id = Ids.BADEGE_ICON) private WebElement badgeIcon;
+    @FindBy(css = "." + drawerPf + "." + drawerPfHal) private NotificationDrawerFragment notificationDrawer;
+    @FindBy(css = "ul." + nav + "." + navbarNav + "." + navbarPrimary
+            + " > li > a") private List<WebElement> topLevelCategories;
+    @FindBy(css = "ul." + nav + "." + navbarNav + "." + navbarPrimary
+            + " > li.active > a") private WebElement selectedTopLevelCategory;
+    @FindBy(css = "ol." + CSS.breadcrumb + "." + halBreadcrumb) private HeaderBreadcrumbFragment breadcrumb;
 
     public NotificationDrawerFragment openNotificationDrawer() {
         notifications.click();

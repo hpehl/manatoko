@@ -28,10 +28,8 @@ import static org.jboss.arquillian.graphene.Graphene.waitGui;
 /** Fragment for the vertical navigation. Provides methods to select primary and secondary items. */
 public class VerticalNavigationFragment {
 
-    @Root
-    private WebElement root;
-    @Drone
-    private WebDriver browser;
+    @Root private WebElement root;
+    @Drone private WebDriver browser;
 
     public void selectPrimary(String id) {
         selectItem(id);

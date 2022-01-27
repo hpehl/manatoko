@@ -35,12 +35,9 @@ import static org.jboss.hal.resources.CSS.finderItem;
 /** Page fragment for one finder column. Use {@link FinderFragment#column(String)} to get an instance. */
 public class ColumnFragment {
 
-    @Drone
-    private WebDriver browser;
-    @Root
-    private WebElement root;
-    @Inject
-    private Console console;
+    @Drone private WebDriver browser;
+    @Root private WebElement root;
+    @Inject private Console console;
     private String columnId;
 
     // ------------------------------------------------------ column

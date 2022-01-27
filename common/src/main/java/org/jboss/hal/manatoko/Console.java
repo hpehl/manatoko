@@ -18,6 +18,9 @@ package org.jboss.hal.manatoko;
 import java.util.List;
 import java.util.Set;
 
+import com.gwtplatform.mvp.shared.proxy.PlaceRequest;
+import com.gwtplatform.mvp.shared.proxy.TokenFormatException;
+import com.gwtplatform.mvp.shared.proxy.TokenFormatter;
 import org.apache.commons.lang3.StringUtils;
 import org.jboss.arquillian.drone.api.annotation.Drone;
 import org.jboss.hal.manatoko.container.HalContainer;
@@ -37,10 +40,6 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-
-import com.gwtplatform.mvp.shared.proxy.PlaceRequest;
-import com.gwtplatform.mvp.shared.proxy.TokenFormatException;
-import com.gwtplatform.mvp.shared.proxy.TokenFormatter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -62,8 +61,7 @@ public class Console {
     private static final String DOT = ".";
     private static final Logger logger = LoggerFactory.getLogger(Console.class);
 
-    @Drone
-    private WebDriver browser;
+    @Drone private WebDriver browser;
     private final TokenFormatter tokenFormatter;
 
     public Console() {

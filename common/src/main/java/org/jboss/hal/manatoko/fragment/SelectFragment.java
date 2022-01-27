@@ -31,12 +31,9 @@ import static org.jboss.hal.resources.CSS.selectpicker;
  */
 public class SelectFragment {
 
-    @FindBy(css = "button." + dropdownToggle)
-    private WebElement button;
-    @FindBy(css = "div." + dropdownMenu)
-    private WebElement menu;
-    @FindBy(css = "select." + selectpicker)
-    private WebElement select;
+    @FindBy(css = "button." + dropdownToggle) private WebElement button;
+    @FindBy(css = "div." + dropdownMenu) private WebElement menu;
+    @FindBy(css = "select." + selectpicker) private WebElement select;
 
     /** Selects the specified text. */
     public void select(String text) {

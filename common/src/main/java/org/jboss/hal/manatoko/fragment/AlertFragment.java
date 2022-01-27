@@ -25,8 +25,7 @@ import static org.jboss.hal.resources.CSS.alertWarning;
 
 public class AlertFragment {
 
-    @Root
-    private WebElement root;
+    @Root private WebElement root;
 
     public boolean isSuccess() {
         return hasClass(alertSuccess);
