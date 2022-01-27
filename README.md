@@ -1,6 +1,6 @@
 # Manatoko
 
-Manatoko ([Maori](https://maoridictionary.co.nz/search?keywords=manatoko) for verify, test) is a new approach to test the [HAL](https://hal.github.io) management console. It builds on top of [testcontainers](https://www.testcontainers.org/). 
+Manatoko ([Maori](https://maoridictionary.co.nz/search?keywords=manatoko) for verify, test) is a new approach to test the [HAL](https://hal.github.io) management console. It builds on top of [Testcontainers](https://www.testcontainers.org/). 
 
 The goal is that tests should be self-contained. Tests can easily
 
