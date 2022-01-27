@@ -48,7 +48,7 @@ public abstract class ManatokoTest {
             .withRecordingMode(RECORD_ALL, Paths.get("target/recordings").toFile(), MP4);
 
     @BeforeAll
-    static void beforeAll() {
+    static void connect() {
         console.connectTo(wildFly);
     }
 }

@@ -27,7 +27,6 @@ public abstract class AbstractPage {
 
     @Drone
     protected WebDriver browser;
-
     @Inject
     protected Console console;
 

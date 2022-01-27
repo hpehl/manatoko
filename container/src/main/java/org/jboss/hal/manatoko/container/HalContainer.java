@@ -15,6 +15,8 @@
  */
 package org.jboss.hal.manatoko.container;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.testcontainers.containers.GenericContainer;
 import org.testcontainers.containers.wait.strategy.Wait;
 import org.testcontainers.utility.DockerImageName;
@@ -23,6 +25,7 @@ public class HalContainer extends GenericContainer<HalContainer> {
 
     private static final int PORT = 9090;
     private static final String IMAGE = "quay.io/halconsole/hal";
+    private static final Logger logger = LoggerFactory.getLogger(HalContainer.class);
     private static HalContainer currentInstance = null;
 
     public static HalContainer newInstance() {
@@ -47,6 +50,7 @@ public class HalContainer extends GenericContainer<HalContainer> {
      */
     public void connectTo(final WildFlyContainer wildFly) {
         this.managementEndpoint = wildFly.managementEndpoint();
+        logger.info("{} connected to management endpoint {}", IMAGE, managementEndpoint);
     }
 
     public String consoleEndpoint() {
@@ -54,6 +58,8 @@ public class HalContainer extends GenericContainer<HalContainer> {
         builder.append("http://").append(Network.HAL).append(":").append(PORT);
         if (managementEndpoint != null) {
             builder.append("?connect=").append(managementEndpoint);
+        } else {
+            logger.warn("No management endpoint defined for {}", IMAGE);
         }
         return builder.toString();
     }

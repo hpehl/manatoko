@@ -47,7 +47,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 class SystemPropertyTest extends ManatokoTest {
 
     @BeforeAll
-    static void beforeAll() throws Exception {
+    static void setupModel() throws Exception {
         OnlineManagementClient client = wildFly.managementClient();
         Operations operations = new Operations(client);
         operations.add(systemPropertyAddress(READ_NAME), Values.empty().and(VALUE, READ_VALUE));
@@ -56,7 +56,7 @@ class SystemPropertyTest extends ManatokoTest {
     }
 
     @AfterAll
-    static void afterAll() throws Exception {
+    static void teardownModel() throws Exception {
         try (OnlineManagementClient client = wildFly.managementClient()) {
             Operations operations = new Operations(client);
             operations.removeIfExists(systemPropertyAddress(CREATE_NAME));
@@ -68,8 +68,10 @@ class SystemPropertyTest extends ManatokoTest {
 
     @Inject
     CrudOperations crud;
+
     @Page
     SystemPropertyPage page;
+
     TableFragment table;
     FormFragment form;
 
