@@ -24,8 +24,7 @@ import static org.jboss.arquillian.graphene.Graphene.waitGui;
 /** Fragment for a tab element. */
 public class TabsFragment {
 
-    @Root
-    private WebElement root;
+    @Root private WebElement root;
 
     /** Switch to the pane with the specified id. */
     public void select(String id) {

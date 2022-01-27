@@ -35,8 +35,7 @@ public class CrudOperations {
 
     private static final OnlineManagementClient client = WildFlyContainer.currentInstance().managementClient();
 
-    @Inject
-    private Console console;
+    @Inject private Console console;
 
     // ------------------------------------------------------ create
 

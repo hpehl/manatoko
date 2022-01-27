@@ -32,16 +32,11 @@ import static org.jboss.hal.resources.CSS.blankSlatePf;
  */
 public class NotificationDrawerFragment {
 
-    @Root
-    private WebElement root;
-    @FindBy(css = "." + blankSlatePf)
-    private WebElement blankSlate;
-    @FindBy(id = Ids.NOTIFICATION_DRAWER_CLOSE)
-    private WebElement close;
-    @FindBy(id = Ids.NOTIFICATION_DRAWER_CLEAR_ALL)
-    private WebElement clearAll;
-    @FindBy(id = Ids.NOTIFICATION_DRAWER_MARK_ALL_READ)
-    private WebElement markAllRead;
+    @Root private WebElement root;
+    @FindBy(css = "." + blankSlatePf) private WebElement blankSlate;
+    @FindBy(id = Ids.NOTIFICATION_DRAWER_CLOSE) private WebElement close;
+    @FindBy(id = Ids.NOTIFICATION_DRAWER_CLEAR_ALL) private WebElement clearAll;
+    @FindBy(id = Ids.NOTIFICATION_DRAWER_MARK_ALL_READ) private WebElement markAllRead;
 
     public void clearAll() {
         if (clearAll.isDisplayed()) {

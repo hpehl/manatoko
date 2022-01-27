@@ -37,10 +37,8 @@ import static org.jboss.hal.resources.CSS.dropdownToggle;
 /** Fragment for a finder item. Use {@link ColumnFragment#selectItem(String)} to get an instance. */
 public class ItemFragment {
 
-    @Drone
-    private WebDriver browser;
-    @Root
-    private WebElement root;
+    @Drone private WebDriver browser;
+    @Root private WebElement root;
     private String itemId;
     private static final String DOT = ".";
 

@@ -38,12 +38,9 @@ import static org.jboss.hal.resources.CSS.value;
 /** Fragment for the finder preview. Use {@link FinderFragment#preview()} to get an instance. */
 public class FinderPreviewFragment {
 
-    @Drone
-    private WebDriver browser;
-    @Root
-    private WebElement root;
-    @Inject
-    private Console console;
+    @Drone private WebDriver browser;
+    @Root private WebElement root;
+    @Inject private Console console;
 
     public AlertFragment getAlert() {
         return createPageFragment(AlertFragment.class, root.findElement(By.className(alert)));

@@ -40,8 +40,7 @@ public class FinderFragment {
                 .append(Ids.RUNTIME_SUBSYSTEM, subsystem);
     }
 
-    @Drone
-    private WebDriver browser;
+    @Drone private WebDriver browser;
 
     /** Returns the specified column. */
     public ColumnFragment column(String columnId) {

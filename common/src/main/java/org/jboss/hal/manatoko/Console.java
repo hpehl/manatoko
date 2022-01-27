@@ -62,8 +62,7 @@ public class Console {
     private static final String DOT = ".";
     private static final Logger logger = LoggerFactory.getLogger(Console.class);
 
-    @Drone
-    private WebDriver browser;
+    @Drone private WebDriver browser;
     private final TokenFormatter tokenFormatter;
 
     public Console() {

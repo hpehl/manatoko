@@ -44,14 +44,10 @@ public class WizardFragment {
 
     private static final Logger log = LoggerFactory.getLogger(WizardFragment.class);
 
-    @Root
-    protected WebElement root;
-    @FindBy(css = "." + modalFooter + " ." + btnPrimary)
-    private WebElement primaryButton;
-    @FindBy(css = "." + modalFooter + " ." + btnCancel)
-    private WebElement cancelButton;
-    @FindByJQuery("." + modalFooter + " ." + btnDefault + ":contains('Back')")
-    private WebElement backButton;
+    @Root protected WebElement root;
+    @FindBy(css = "." + modalFooter + " ." + btnPrimary) private WebElement primaryButton;
+    @FindBy(css = "." + modalFooter + " ." + btnCancel) private WebElement cancelButton;
+    @FindByJQuery("." + modalFooter + " ." + btnDefault + ":contains('Back')") private WebElement backButton;
 
     /** Clicks on back and waits until the element with the specified ID (which must be part of this wizard) is visible */
     public void back(String waitForId) {

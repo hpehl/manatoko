@@ -53,28 +53,17 @@ public class FormFragment {
 
     private static final String DOT = ".";
 
-    @Drone
-    private WebDriver browser;
-    @Root
-    private WebElement root;
-    @Inject
-    private Console console;
-    @FindBy(css = "a[data-operation=edit]")
-    private WebElement editLink;
-    @FindBy(css = "a[data-operation=reset]")
-    private WebElement resetLink;
-    @FindBy(css = "a[data-operation=remove]")
-    private WebElement removeLink;
-    @FindBy(css = DOT + formButtons + " ." + btnDefault)
-    private WebElement cancelButton;
-    @FindBy(css = DOT + formButtons + " ." + btnPrimary)
-    private WebElement saveButton;
-    @FindBy(css = DOT + readonly)
-    private WebElement readOnlySection;
-    @FindBy(css = DOT + editing)
-    private WebElement editingSection;
-    @FindBy(css = DOT + blankSlatePf)
-    private WebElement blankSlate;
+    @Drone private WebDriver browser;
+    @Root private WebElement root;
+    @Inject private Console console;
+    @FindBy(css = "a[data-operation=edit]") private WebElement editLink;
+    @FindBy(css = "a[data-operation=reset]") private WebElement resetLink;
+    @FindBy(css = "a[data-operation=remove]") private WebElement removeLink;
+    @FindBy(css = DOT + formButtons + " ." + btnDefault) private WebElement cancelButton;
+    @FindBy(css = DOT + formButtons + " ." + btnPrimary) private WebElement saveButton;
+    @FindBy(css = DOT + readonly) private WebElement readOnlySection;
+    @FindBy(css = DOT + editing) private WebElement editingSection;
+    @FindBy(css = DOT + blankSlatePf) private WebElement blankSlate;
 
     // ------------------------------------------------------ empty mode
 
