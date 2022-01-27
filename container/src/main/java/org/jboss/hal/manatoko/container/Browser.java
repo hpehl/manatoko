@@ -54,9 +54,9 @@ public class Browser extends BrowserWebDriverContainer<Browser> {
     public WebDriver webDriver() {
         RemoteWebDriver driver = getWebDriver();
         driver.manage().timeouts()
-                .pageLoadTimeout(Duration.of(30, SECONDS))
-                .scriptTimeout(Duration.of(20, SECONDS))
-                .implicitlyWait(Duration.of(10, SECONDS));
+                .pageLoadTimeout(Duration.of(40, SECONDS))
+                .scriptTimeout(Duration.of(30, SECONDS))
+                .implicitlyWait(Duration.of(20, SECONDS));
         return driver;
     }
 }

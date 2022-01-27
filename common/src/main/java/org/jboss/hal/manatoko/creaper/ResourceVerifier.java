@@ -55,10 +55,10 @@ public class ResourceVerifier {
     private static final int DEFAULT_TIMEOUT = 500;
     private static final Logger log = LoggerFactory.getLogger(ResourceVerifier.class);
 
-    private Address address;
-    private OnlineManagementClient client;
-    private int timeout;
-    private Operations ops;
+    private final Address address;
+    private final OnlineManagementClient client;
+    private final int timeout;
+    private final Operations ops;
     private ResourceDescription resourceDescription;
 
     public ResourceVerifier(Address address, OnlineManagementClient client) {
@@ -676,7 +676,7 @@ public class ResourceVerifier {
     }
 
     @FunctionalInterface
-    public static interface PropagationChecker {
+    public interface PropagationChecker {
 
         boolean finallyPropagated() throws Exception;
     }
