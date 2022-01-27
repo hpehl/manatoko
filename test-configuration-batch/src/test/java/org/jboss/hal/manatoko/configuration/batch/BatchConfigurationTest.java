@@ -26,6 +26,7 @@ import org.jboss.hal.manatoko.test.ManatokoTest;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.wildfly.extras.creaper.core.online.OnlineManagementClient;
 import org.wildfly.extras.creaper.core.online.operations.Operations;
@@ -33,6 +34,7 @@ import org.wildfly.extras.creaper.core.online.operations.Operations;
 import static org.jboss.hal.dmr.ModelDescriptionConstants.RESTART_JOBS_ON_RESUME;
 import static org.jboss.hal.manatoko.fixture.BatchFixtures.SUBSYSTEM_ADDRESS;
 
+@Disabled
 class BatchConfigurationTest extends ManatokoTest {
 
     private static BackupAndRestoreAttributes backup;
