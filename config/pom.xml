@@ -19,8 +19,15 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>org.jboss.hal</groupId>
+    <parent>
+        <groupId>org.jboss.hal</groupId>
+        <artifactId>manatoko-parent</artifactId>
+        <version>0.0.1</version>
+        <relativePath>../pom.xml</relativePath>
+    </parent>
+
     <artifactId>manatoko-config</artifactId>
-    <name>Manatoko :: Build Configuration</name>
-    <version>0.0.1</version>
+    <name>Manatoko :: Configuration</name>
+    <description>Configuration for checkstyle, eclipse formatter and license check</description>
+    <packaging>jar</packaging>
 </project>

@@ -25,11 +25,11 @@ import org.slf4j.LoggerFactory;
 
 public class ManatokoExtension implements LoadableExtension {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(ManatokoExtension.class);
+    private static final Logger logger = LoggerFactory.getLogger(ManatokoExtension.class);
 
     @Override
     public void register(final ExtensionBuilder builder) {
-        LOGGER.info("Register {}", this.getClass().getSimpleName());
+        logger.info("Register {}", this.getClass().getSimpleName());
         builder.service(Configurator.class, TestcontainersWebDriverFactory.class);
         builder.service(Instantiator.class, TestcontainersWebDriverFactory.class);
         builder.service(Destructor.class, TestcontainersWebDriverFactory.class);

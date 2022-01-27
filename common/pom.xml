@@ -21,14 +21,23 @@
 
     <parent>
         <groupId>org.jboss.hal</groupId>
-        <artifactId>manatoko-parent</artifactId>
+        <artifactId>manatoko-code-parent</artifactId>
         <version>0.0.1</version>
+        <relativePath>../code-parent/pom.xml</relativePath>
     </parent>
 
     <artifactId>manatoko-common</artifactId>
+    <packaging>jar</packaging>
     <name>Manatoko :: Common</name>
+    <description>Fragments, pages and common code used in tests</description>
 
     <dependencies>
+        <!-- Manatoko -->
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>manatoko-container</artifactId>
+        </dependency>
+
         <!-- WildFly, JBoss & HAL -->
         <dependency>
             <groupId>org.wildfly.core</groupId>

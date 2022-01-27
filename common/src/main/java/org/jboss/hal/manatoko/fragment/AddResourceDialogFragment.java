@@ -13,31 +13,25 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package org.jboss.hal.manatoko;
+package org.jboss.hal.manatoko.fragment;
 
-public enum WildFlyConfiguration {
+import org.openqa.selenium.support.FindBy;
 
-    FULL("standalone-full"),
+import static org.jboss.hal.resources.CSS.formSection;
+import static org.jboss.hal.resources.CSS.modalBody;
 
-    FULL_HA("standalone-ha"),
+/** Page fragment for an add resource dialog with a add-only form. */
+public class AddResourceDialogFragment extends DialogFragment {
 
-    HA("standalone"),
+    @FindBy(css = "." + modalBody + " ." + formSection)
+    private FormFragment form;
 
-    LOAD_BALANCER("standalone-load-balancer"),
-
-    MICROPROFILE("standalone-microprofile"),
-
-    MICROPROFILE_HA("standalone-microprofile-ha"),
-
-    STANDALONE("standalone");
-
-    private final String name;
-
-    WildFlyConfiguration(String name) {
-        this.name = name;
+    public FormFragment getForm() {
+        return form;
     }
 
-    public String configuration() {
-        return name + "-insecure.xml";
+    /** Shortcut for {@link DialogFragment#primaryButton()} */
+    public void add() {
+        primaryButton();
     }
 }

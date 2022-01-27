@@ -12,7 +12,7 @@ The goal is that tests should be self-contained. Tests can easily
 
 The biggest advantage of this approach is that it is very easy to run UI tests in a CI environment like GitHub Actions (see [ci.yml](.github/workflows/ci.yml)).
 
-This repository is a PoC with a simplified test from the [HAL test suite](https://github.com/hal/testsuite.next) using the above features. In a nutshell, the test looks something like this:
+This repository is a PoC with a [test](src/test/java/org/jboss/hal/manatoko/configuration/systemproperty/SystemPropertyTest.java) from the [HAL test suite](https://github.com/hal/testsuite.next) using the above features:
 
 ```java
 @Testcontainers

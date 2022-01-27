@@ -23,10 +23,10 @@ import org.jboss.arquillian.core.api.annotation.Inject;
 import org.jboss.arquillian.graphene.enricher.AbstractSearchContextEnricher;
 import org.jboss.arquillian.graphene.enricher.ReflectionHelper;
 import org.jboss.hal.manatoko.Console;
-import org.jboss.hal.manatoko.HalContainer;
+import org.jboss.hal.manatoko.CrudOperations;
 import org.openqa.selenium.SearchContext;
 
-/** Injects an newInstance of {@link HalContainer} into test classes, pages or page fragments. */
+/** Injects instances of common classes into test classes, pages or page fragments. */
 public class ManatokoEnricher extends AbstractSearchContextEnricher {
 
     @Override
@@ -37,6 +37,11 @@ public class ManatokoEnricher extends AbstractSearchContextEnricher {
                 Console console = new Console();
                 enrichRecursively(searchContext, console);
                 setValue(field, target, console);
+            }
+            if (field.getType().isAssignableFrom(CrudOperations.class)) {
+                CrudOperations crud = new CrudOperations();
+                enrichRecursively(searchContext, crud);
+                setValue(field, target, crud);
             }
         }
     }

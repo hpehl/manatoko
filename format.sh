@@ -96,7 +96,7 @@ parse_params() {
 
 parse_params "$@"
 setup_colors
-mvn -pl arquillian,common,test-configuration-systemproperty \
-  com.mycila:license-maven-plugin:format@manatoko-check-license \
-  net.revelc.code.formatter:formatter-maven-plugin:format@manatoko-format-code \
-  net.revelc.code:impsort-maven-plugin:sort@manatoko-sort-imports
+mvn \
+  com.mycila:license-maven-plugin:format \
+  net.revelc.code.formatter:formatter-maven-plugin:format \
+  net.revelc.code:impsort-maven-plugin:sort

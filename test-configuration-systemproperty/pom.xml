@@ -21,19 +21,12 @@
 
     <parent>
         <groupId>org.jboss.hal</groupId>
-        <artifactId>manatoko-parent</artifactId>
+        <artifactId>manatoko-test-parent</artifactId>
         <version>0.0.1</version>
+        <relativePath>../test-parent/pom.xml</relativePath>
     </parent>
 
     <artifactId>manatoko-test-configuration-systemproperty</artifactId>
+    <packaging>jar</packaging>
     <name>Manatoko :: Test :: Configuration :: Systemproperty</name>
-
-    <dependencies>
-        <dependency>
-            <groupId>${project.groupId}</groupId>
-            <artifactId>manatoko-test-dependencies</artifactId>
-            <type>pom</type>
-            <scope>test</scope>
-        </dependency>
-    </dependencies>
 </project>

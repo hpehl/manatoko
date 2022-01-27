@@ -13,14 +13,10 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package org.jboss.hal.manatoko;
+package org.jboss.hal.manatoko.container;
 
-import java.net.URI;
-import java.net.URISyntaxException;
 import java.time.Duration;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.testcontainers.containers.GenericContainer;
 import org.testcontainers.containers.wait.strategy.Wait;
 import org.testcontainers.utility.DockerImageName;
@@ -29,26 +25,31 @@ import org.wildfly.extras.creaper.core.online.OnlineManagementClient;
 import org.wildfly.extras.creaper.core.online.OnlineOptions;
 
 import static java.time.temporal.ChronoUnit.SECONDS;
-import static org.jboss.hal.manatoko.WildFlyConfiguration.STANDALONE;
+import static org.jboss.hal.manatoko.container.WildFlyConfiguration.STANDALONE;
 
 public class WildFlyContainer extends GenericContainer<WildFlyContainer> {
 
     private static final int PORT = 9990;
     private static final String IMAGE = "quay.io/halconsole/wildfly";
-    private static final Logger LOGGER = LoggerFactory.getLogger(WildFlyContainer.class);
+    private static WildFlyContainer currentInstance = null;
 
     public static WildFlyContainer version(WildFlyVersion version) {
         return version(version, STANDALONE);
     }
 
     public static WildFlyContainer version(WildFlyVersion version, WildFlyConfiguration configuration) {
-        return new WildFlyContainer(version)
+        currentInstance = new WildFlyContainer(version)
                 .withNetwork(Network.INSTANCE)
                 .withNetworkAliases(Network.WILDFLY)
                 .withCommand("-c", configuration.configuration())
                 .withExposedPorts(PORT)
                 .waitingFor(Wait.forLogMessage(".*WildFly Full.*started in.*", 1))
                 .withStartupTimeout(Duration.of(300, SECONDS));
+        return currentInstance;
+    }
+
+    public static WildFlyContainer currentInstance() {
+        return currentInstance;
     }
 
     private final WildFlyVersion version;
@@ -73,11 +74,6 @@ public class WildFlyContainer extends GenericContainer<WildFlyContainer> {
     public String managementEndpoint() {
         // The URL of management endpoint is used in the HAL container.
         // That's why we need to use the network name and original port.
-        try {
-            return new URI("http", null, Network.WILDFLY, PORT, null, null, null).toString();
-        } catch (URISyntaxException e) {
-            LOGGER.error("Unable to build management endpoint for {}: {}", this, e.getMessage(), e);
-            return null;
-        }
+        return "http://" + Network.WILDFLY + ":" + PORT;
     }
 }

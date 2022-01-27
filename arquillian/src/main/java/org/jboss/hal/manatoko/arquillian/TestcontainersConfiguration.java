@@ -30,6 +30,7 @@ public class TestcontainersConfiguration implements DroneConfiguration<Testconta
     }
 
     @Override
+    @Deprecated
     public TestcontainersConfiguration configure(final ArquillianDescriptor descriptor,
             final Class<? extends Annotation> qualifier) {
         return new TestcontainersConfiguration();

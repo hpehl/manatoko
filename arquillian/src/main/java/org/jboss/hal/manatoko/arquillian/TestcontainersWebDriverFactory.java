@@ -20,7 +20,7 @@ import org.jboss.arquillian.drone.spi.Configurator;
 import org.jboss.arquillian.drone.spi.Destructor;
 import org.jboss.arquillian.drone.spi.DronePoint;
 import org.jboss.arquillian.drone.spi.Instantiator;
-import org.jboss.hal.manatoko.Browser;
+import org.jboss.hal.manatoko.container.Browser;
 import org.openqa.selenium.WebDriver;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -30,7 +30,7 @@ public class TestcontainersWebDriverFactory implements
         Instantiator<WebDriver, TestcontainersConfiguration>,
         Destructor<WebDriver> {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(TestcontainersWebDriverFactory.class);
+    private static final Logger logger = LoggerFactory.getLogger(TestcontainersWebDriverFactory.class);
 
     @Override
     public TestcontainersConfiguration createConfiguration(final ArquillianDescriptor descriptor,
@@ -40,10 +40,10 @@ public class TestcontainersWebDriverFactory implements
 
     @Override
     public WebDriver createInstance(final TestcontainersConfiguration configuration) {
-        LOGGER.debug("Create web driver instance from configuration {}", configuration.getConfigurationName());
+        logger.debug("Create web driver instance from configuration {}", configuration.getConfigurationName());
         if (Browser.currentInstance() != null) {
             WebDriver driver = Browser.currentInstance().webDriver();
-            LOGGER.debug("Return web driver from browser container: " + driver);
+            logger.debug("Return web driver from browser container: " + driver);
             return driver;
         } else {
             throw new IllegalStateException("Unable to create web driver instance: browser container not ready!");
