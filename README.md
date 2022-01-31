@@ -18,7 +18,10 @@ The goal is that tests should be self-contained. Containers are started when nec
 
 The biggest advantage of this approach is that it is very easy to run UI tests in a CI environment (as this repository [does](.github/workflows/ci.yml)).
 
-This repository is a PoC with some [tests](test-configuration-systemproperty/src/test/java/org/jboss/hal/manatoko/configuration/systemproperty/SystemPropertyTest.java) from the [HAL test suite](https://github.com/hal/testsuite.next) using the above features.
+This repository is a PoC with some tests from the [HAL test suite](https://github.com/hal/testsuite.next) using the above features:
+
+- [`BatchConfigurationTest`](test-configuration-batch/src/test/java/org/jboss/hal/manatoko/configuration/batch/BatchConfigurationTest.java)
+- [`SystemPropertyTest`](test-configuration-systemproperty/src/test/java/org/jboss/hal/manatoko/configuration/systemproperty/SystemPropertyTest.java)
 
 ## Run Tests
 
