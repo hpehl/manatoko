@@ -19,46 +19,30 @@ import org.jboss.arquillian.core.api.annotation.Inject;
 import org.jboss.arquillian.graphene.page.Page;
 import org.jboss.hal.manatoko.Console;
 import org.jboss.hal.manatoko.CrudOperations;
-import org.jboss.hal.manatoko.creaper.command.BackupAndRestoreAttributes;
 import org.jboss.hal.manatoko.fragment.FormFragment;
 import org.jboss.hal.manatoko.page.BatchPage;
-import org.jboss.hal.manatoko.test.ManatokoTest;
-import org.junit.jupiter.api.AfterAll;
+import org.jboss.hal.manatoko.test.WildFlyTest;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
-import org.wildfly.extras.creaper.core.online.OnlineManagementClient;
 import org.wildfly.extras.creaper.core.online.operations.Operations;
 
 import static org.jboss.hal.dmr.ModelDescriptionConstants.RESTART_JOBS_ON_RESUME;
 import static org.jboss.hal.manatoko.fixture.BatchFixtures.SUBSYSTEM_ADDRESS;
 
-@Disabled
-class BatchConfigurationTest extends ManatokoTest {
+class BatchConfigurationTest extends WildFlyTest {
 
-    private static BackupAndRestoreAttributes backup;
     private static boolean restart;
 
     @BeforeAll
     static void setupModel() throws Exception {
-        OnlineManagementClient client = wildFly.managementClient();
-        Operations operations = new Operations(client);
-        backup = new BackupAndRestoreAttributes.Builder(SUBSYSTEM_ADDRESS).build();
+        Operations operations = new Operations(wildFly.managementClient());
         restart = operations.readAttribute(SUBSYSTEM_ADDRESS, RESTART_JOBS_ON_RESUME).booleanValue();
-        client.apply(backup.backup());
     }
 
-    @AfterAll
-    static void teardownModel() throws Exception {
-        try (OnlineManagementClient client = wildFly.managementClient()) {
-            client.apply(backup.restore());
-        }
-    }
-
+    @Page BatchPage page;
     @Inject Console console;
     @Inject CrudOperations crud;
-    @Page BatchPage page;
     FormFragment form;
 
     @BeforeEach

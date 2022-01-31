@@ -25,9 +25,21 @@ import org.jboss.arquillian.graphene.enricher.ReflectionHelper;
 import org.jboss.hal.manatoko.Console;
 import org.jboss.hal.manatoko.CrudOperations;
 import org.openqa.selenium.SearchContext;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-/** Injects instances of common classes into test classes, pages or page fragments. */
+/**
+ * Injects instances of the common classes into test classes, pages or page fragments.
+ * <p>
+ * The following classes can be injected by this enricher:
+ * <ul>
+ *     <li>{@link Console}</li>
+ *     <li>{@link CrudOperations}</li>
+ * </ul>
+ */
 public class ManatokoEnricher extends AbstractSearchContextEnricher {
+
+    private static final Logger logger = LoggerFactory.getLogger(ManatokoEnricher.class);
 
     @Override
     public void enrich(SearchContext searchContext, Object target) {
@@ -35,11 +47,15 @@ public class ManatokoEnricher extends AbstractSearchContextEnricher {
         for (Field field : fields) {
             if (field.getType().isAssignableFrom(Console.class)) {
                 Console console = new Console();
+                logger.debug("Enrich {}.{} with console {}",
+                        target.getClass().getSimpleName(), field.getName(), console);
                 enrichRecursively(searchContext, console);
                 setValue(field, target, console);
             }
             if (field.getType().isAssignableFrom(CrudOperations.class)) {
                 CrudOperations crud = new CrudOperations();
+                logger.debug("Enrich {}.{} with CRUD operations {}",
+                        target.getClass().getSimpleName(), field.getName(), crud);
                 enrichRecursively(searchContext, crud);
                 setValue(field, target, crud);
             }

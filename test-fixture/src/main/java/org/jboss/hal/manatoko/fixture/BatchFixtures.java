@@ -1,17 +1,17 @@
 /*
- * Copyright 2015-2016 Red Hat, Inc, and individual contributors.
+ *  Copyright 2022 Red Hat
  *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
+ *  Licensed under the Apache License, Version 2.0 (the "License");
+ *  you may not use this file except in compliance with the License.
+ *  You may obtain a copy of the License at
  *
- * http://www.apache.org/licenses/LICENSE-2.0
+ *      http://www.apache.org/licenses/LICENSE-2.0
  *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+ *  Unless required by applicable law or agreed to in writing, software
+ *  distributed under the License is distributed on an "AS IS" BASIS,
+ *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *  See the License for the specific language governing permissions and
+ *  limitations under the License.
  */
 package org.jboss.hal.manatoko.fixture;
 
@@ -44,7 +44,6 @@ public final class BatchFixtures {
         return SUBSYSTEM_ADDRESS.and("in-memory-job-repository", name);
     }
 
-
     // ------------------------------------------------------ jdbc repository
 
     public static final String DATA_SOURCE = Ids.build("ds", Random.name());
@@ -56,7 +55,6 @@ public final class BatchFixtures {
         return SUBSYSTEM_ADDRESS.and("jdbc-job-repository", name);
     }
 
-
     // ------------------------------------------------------ thread factory
 
     public static final String THREAD_FACTORY_CREATE = Ids.build(THREAD_FACTORY_PREFIX, CrudConstants.CREATE, Random.name());
@@ -67,7 +65,6 @@ public final class BatchFixtures {
     public static Address threadFactoryAddress(String name) {
         return SUBSYSTEM_ADDRESS.and(THREAD_FACTORY, name);
     }
-
 
     // ------------------------------------------------------ thread pool
 

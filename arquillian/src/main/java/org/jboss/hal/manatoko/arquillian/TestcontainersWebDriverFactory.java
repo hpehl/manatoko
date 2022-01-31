@@ -15,6 +15,7 @@
  */
 package org.jboss.hal.manatoko.arquillian;
 
+import com.google.common.base.Stopwatch;
 import org.jboss.arquillian.config.descriptor.api.ArquillianDescriptor;
 import org.jboss.arquillian.drone.spi.Configurator;
 import org.jboss.arquillian.drone.spi.Destructor;
@@ -41,12 +42,17 @@ public class TestcontainersWebDriverFactory implements
     @Override
     public WebDriver createInstance(final TestcontainersConfiguration configuration) {
         logger.debug("Create web driver instance from configuration {}", configuration.getConfigurationName());
-        if (Browser.currentInstance() != null) {
-            WebDriver driver = Browser.currentInstance().webDriver();
-            logger.debug("Return web driver from browser container: " + driver);
+        if (Browser.instance() != null) {
+            logger.debug("Browser container available. Trying to get remote web driver...");
+            Stopwatch stopwatch = Stopwatch.createStarted();
+            WebDriver driver = Browser.instance().webDriver();
+            stopwatch.stop();
+            logger.debug("Return web driver {} from browser container after {}", driver, stopwatch);
             return driver;
         } else {
-            throw new IllegalStateException("Unable to create web driver instance: browser container not ready!");
+            String message = "Unable to create web driver instance: browser container not ready!";
+            logger.error(message);
+            throw new IllegalStateException(message);
         }
     }
 

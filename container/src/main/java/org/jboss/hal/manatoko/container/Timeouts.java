@@ -13,11 +13,20 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package org.jboss.hal.manatoko.test;
+package org.jboss.hal.manatoko.container;
 
-import org.jboss.arquillian.junit5.ArquillianExtension;
-import org.junit.jupiter.api.extension.ExtendWith;
+import java.time.Duration;
 
-@ExtendWith({SystemSetupExtension.class, ArquillianExtension.class})
-public abstract class ManatokoTest {
+import static java.time.temporal.ChronoUnit.MILLIS;
+import static java.time.temporal.ChronoUnit.SECONDS;
+
+interface Timeouts {
+
+    Duration BROWSER_STARTUP_TIMEOUT = Duration.of(66, SECONDS);
+    Duration WEB_DRIVER_INIT_TIMEOUT = Duration.of(3333, MILLIS);
+    Duration WILDFLY_STARTUP_TIMEOUT = Duration.of(333, SECONDS);
+
+    Duration WEBDRIVER_PAGE_LOAD_TIMEOUT = Duration.of(33, SECONDS);
+    Duration WEBDRIVER_SCRIPT_TIMEOUT = Duration.of(22, SECONDS);
+    Duration WEBDRIVER_IMPLICIT_WAIT_TIMEOUT = Duration.of(11, SECONDS);
 }

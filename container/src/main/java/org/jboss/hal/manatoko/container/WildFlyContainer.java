@@ -15,8 +15,8 @@
  */
 package org.jboss.hal.manatoko.container;
 
-import java.time.Duration;
-
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.testcontainers.containers.GenericContainer;
 import org.testcontainers.containers.wait.strategy.Wait;
 import org.testcontainers.utility.DockerImageName;
@@ -24,44 +24,71 @@ import org.wildfly.extras.creaper.core.ManagementClient;
 import org.wildfly.extras.creaper.core.online.OnlineManagementClient;
 import org.wildfly.extras.creaper.core.online.OnlineOptions;
 
-import static java.time.temporal.ChronoUnit.SECONDS;
 import static org.jboss.hal.manatoko.container.WildFlyConfiguration.STANDALONE;
 
 public class WildFlyContainer extends GenericContainer<WildFlyContainer> {
 
     private static final int PORT = 9990;
     private static final String IMAGE = "quay.io/halconsole/wildfly";
-    private static WildFlyContainer currentInstance = null;
+    private static final Logger logger = LoggerFactory.getLogger(WildFlyContainer.class);
+    private static WildFlyContainer instance = null;
 
     public static WildFlyContainer version(WildFlyVersion version) {
         return version(version, STANDALONE);
     }
 
     public static WildFlyContainer version(WildFlyVersion version, WildFlyConfiguration configuration) {
-        currentInstance = new WildFlyContainer(version)
-                .withNetwork(Network.INSTANCE)
+        if (instance != null && instance.isRunning()) {
+            instance.stop();
+        }
+        instance = new WildFlyContainer(version, configuration);
+        return instance;
+    }
+
+    public static WildFlyContainer instance() {
+        if (instance == null || !instance.isRunning()) {
+            throw new IllegalStateException("WildFly container has not yet been started.");
+        }
+        return instance;
+    }
+
+    private final WildFlyVersion version;
+    private final WildFlyConfiguration configuration;
+    private final String managementEndpoint;
+
+    private WildFlyContainer(WildFlyVersion version, WildFlyConfiguration configuration) {
+        super(DockerImageName.parse(IMAGE + ":" + version.version()));
+        withNetwork(Network.INSTANCE)
                 .withNetworkAliases(Network.WILDFLY)
                 .withCommand("-c", configuration.configuration())
                 .withExposedPorts(PORT)
                 .waitingFor(Wait.forLogMessage(".*WildFly Full.*started in.*", 1))
-                .withStartupTimeout(Duration.of(300, SECONDS));
-        return currentInstance;
-    }
+                .withStartupTimeout(Timeouts.WILDFLY_STARTUP_TIMEOUT);
 
-    public static WildFlyContainer currentInstance() {
-        return currentInstance;
-    }
-
-    private final WildFlyVersion version;
-
-    private WildFlyContainer(WildFlyVersion version) {
-        super(DockerImageName.parse(IMAGE + ":" + version.version()));
         this.version = version;
+        this.configuration = configuration;
+        this.managementEndpoint = "http://" + Network.WILDFLY + ":" + PORT;
     }
 
     @Override
     public String toString() {
-        return "WildFlyContainer{version=" + version + '}';
+        return "WildFlyContainer{" +
+                "version=" + version +
+                ", configuration=" + configuration +
+                ", managementEndpoint='" + managementEndpoint + '\'' +
+                '}';
+    }
+
+    @Override
+    public void start() {
+        super.start();
+        logger.info("WildFly started: {}", this);
+    }
+
+    @Override
+    public void stop() {
+        super.stop();
+        logger.info("WildFly stopped: {}", this);
     }
 
     public OnlineManagementClient managementClient() {
@@ -74,6 +101,6 @@ public class WildFlyContainer extends GenericContainer<WildFlyContainer> {
     public String managementEndpoint() {
         // The URL of management endpoint is used in the HAL container.
         // That's why we need to use the network name and original port.
-        return "http://" + Network.WILDFLY + ":" + PORT;
+        return managementEndpoint;
     }
 }

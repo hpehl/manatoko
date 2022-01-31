@@ -33,7 +33,7 @@ import static org.jboss.hal.dmr.ModelDescriptionConstants.NAME;
 /** Methods useful to test and verify CRUD operations in application views. */
 public class CrudOperations {
 
-    private static final OnlineManagementClient client = WildFlyContainer.currentInstance().managementClient();
+    private static final OnlineManagementClient client = WildFlyContainer.instance().managementClient();
 
     @Inject private Console console;
 

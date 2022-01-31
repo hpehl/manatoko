@@ -79,7 +79,7 @@ public class Console {
     /** Navigates to the place request and waits until the selector is present. */
     public void navigate(PlaceRequest request, By selector) {
         String fragment = tokenFormatter.toPlaceToken(request);
-        String url = HalContainer.currentInstance().consoleEndpoint() + "#" + fragment;
+        String url = HalContainer.instance().consoleEndpoint() + "#" + fragment;
         logger.info("Navigate to {}", url);
         browser.navigate().to(url);
         waitModel().until().element(selector).is().present();

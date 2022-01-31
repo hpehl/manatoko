@@ -1,17 +1,17 @@
 /*
- * Copyright 2015-2016 Red Hat, Inc, and individual contributors.
+ *  Copyright 2022 Red Hat
  *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
+ *  Licensed under the Apache License, Version 2.0 (the "License");
+ *  you may not use this file except in compliance with the License.
+ *  You may obtain a copy of the License at
  *
- * http://www.apache.org/licenses/LICENSE-2.0
+ *      http://www.apache.org/licenses/LICENSE-2.0
  *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+ *  Unless required by applicable law or agreed to in writing, software
+ *  distributed under the License is distributed on an "AS IS" BASIS,
+ *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *  See the License for the specific language governing permissions and
+ *  limitations under the License.
  */
 package org.jboss.hal.manatoko.creaper.command;
 
@@ -35,8 +35,12 @@ import org.wildfly.extras.creaper.core.online.operations.Operations;
 import org.wildfly.extras.creaper.core.online.operations.ReadResourceOption;
 
 /**
- * <p>A command for making backups and restores of attributes at given address.</p>
- * <p>Backup does not descend to children, it backups attributes only at given address!</p>
+ * <p>
+ * A command for making backups and restores of attributes at given address.
+ * </p>
+ * <p>
+ * Backup does not descend to children, it backups attributes only at given address!
+ * </p>
  */
 public final class BackupAndRestoreAttributes {
 
@@ -81,7 +85,6 @@ public final class BackupAndRestoreAttributes {
             return attributeMap;
         }
 
-
         @Override
         public void apply(OnlineCommandContext ctx) throws Exception {
             if (BackupAndRestoreAttributes.this.backup == null) {
@@ -91,7 +94,7 @@ public final class BackupAndRestoreAttributes {
             Map<String, ModelNode> attributeValueMap = propertyListToMap(
                     BackupAndRestoreAttributes.this.backup.asPropertyList());
 
-            if (dependencies != null) { //process dependencies
+            if (dependencies != null) { // process dependencies
                 for (String attributeName : dependencies) {
                     if (!attributeValueMap.containsKey(attributeName)) {
                         throw new CommandFailedException(
@@ -107,7 +110,7 @@ public final class BackupAndRestoreAttributes {
             }
 
             for (Map.Entry<String, ModelNode> attributeEntry : attributeValueMap.entrySet()) {
-                if (excluded == null || !excluded.contains(attributeEntry.getKey())) { //attribute is not excluded
+                if (excluded == null || !excluded.contains(attributeEntry.getKey())) { // attribute is not excluded
                     logger.info("Adding attribute '" + attributeEntry + "' to batch.");
                     batch.writeAttribute(address, attributeEntry.getKey(), attributeEntry.getValue());
                 }
@@ -116,7 +119,7 @@ public final class BackupAndRestoreAttributes {
             Operations ops = new Operations(ctx.client);
             ops.batch(batch);
 
-            BackupAndRestoreAttributes.this.backup = null; //can be reused after restoring attributes
+            BackupAndRestoreAttributes.this.backup = null; // can be reused after restoring attributes
         }
 
     };
@@ -129,7 +132,6 @@ public final class BackupAndRestoreAttributes {
         return restorePart;
     }
 
-
     public static final class Builder {
 
         private Address address;
@@ -141,8 +143,7 @@ public final class BackupAndRestoreAttributes {
         }
 
         /**
-         * Add dependency. Any dependency and dependent attribute will be restored even if it is present in excluded
-         * list.
+         * Add dependency. Any dependency and dependent attribute will be restored even if it is present in excluded list.
          */
         public Builder dependency(String attribute, String dependsOn) {
             if (dependencies == null && dependsOn != null) {
@@ -152,7 +153,7 @@ public final class BackupAndRestoreAttributes {
                 dependencies.addVertex(attribute);
                 dependencies.addVertex(dependsOn);
                 dependencies.addEdge(dependsOn,
-                        attribute); //throws an unchecked exception if graph becomes cyclic after adding
+                        attribute); // throws an unchecked exception if graph becomes cyclic after adding
             }
             return this;
         }

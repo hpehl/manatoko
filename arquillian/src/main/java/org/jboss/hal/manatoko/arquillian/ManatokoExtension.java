@@ -29,7 +29,7 @@ public class ManatokoExtension implements LoadableExtension {
 
     @Override
     public void register(final ExtensionBuilder builder) {
-        logger.info("Register {}", this.getClass().getSimpleName());
+        logger.debug("{} registered", this.getClass().getSimpleName());
         builder.service(Configurator.class, TestcontainersWebDriverFactory.class);
         builder.service(Instantiator.class, TestcontainersWebDriverFactory.class);
         builder.service(Destructor.class, TestcontainersWebDriverFactory.class);

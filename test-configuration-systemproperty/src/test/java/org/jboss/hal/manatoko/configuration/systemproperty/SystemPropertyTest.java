@@ -22,12 +22,10 @@ import org.jboss.hal.manatoko.Random;
 import org.jboss.hal.manatoko.fragment.FormFragment;
 import org.jboss.hal.manatoko.fragment.TableFragment;
 import org.jboss.hal.manatoko.page.SystemPropertyPage;
-import org.jboss.hal.manatoko.test.ManatokoTest;
-import org.junit.jupiter.api.AfterAll;
+import org.jboss.hal.manatoko.test.WildFlyTest;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.wildfly.extras.creaper.core.online.OnlineManagementClient;
 import org.wildfly.extras.creaper.core.online.operations.Operations;
 import org.wildfly.extras.creaper.core.online.operations.Values;
 
@@ -44,26 +42,14 @@ import static org.jboss.hal.manatoko.fixture.SystemPropertyFixtures.UPDATE_VALUE
 import static org.jboss.hal.manatoko.fixture.SystemPropertyFixtures.systemPropertyAddress;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-class SystemPropertyTest extends ManatokoTest {
+class SystemPropertyTest extends WildFlyTest {
 
     @BeforeAll
     static void setupModel() throws Exception {
-        OnlineManagementClient client = wildFly.managementClient();
-        Operations operations = new Operations(client);
+        Operations operations = new Operations(wildFly.managementClient());
         operations.add(systemPropertyAddress(READ_NAME), Values.empty().and(VALUE, READ_VALUE));
         operations.add(systemPropertyAddress(UPDATE_NAME), Values.empty().and(VALUE, UPDATE_VALUE));
         operations.add(systemPropertyAddress(DELETE_NAME), Values.empty().and(VALUE, DELETE_VALUE));
-    }
-
-    @AfterAll
-    static void teardownModel() throws Exception {
-        try (OnlineManagementClient client = wildFly.managementClient()) {
-            Operations operations = new Operations(client);
-            operations.removeIfExists(systemPropertyAddress(CREATE_NAME));
-            operations.removeIfExists(systemPropertyAddress(READ_NAME));
-            operations.removeIfExists(systemPropertyAddress(UPDATE_NAME));
-            operations.removeIfExists(systemPropertyAddress(DELETE_NAME));
-        }
     }
 
     @Page SystemPropertyPage page;

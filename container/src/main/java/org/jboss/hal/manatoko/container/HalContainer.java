@@ -26,17 +26,13 @@ public class HalContainer extends GenericContainer<HalContainer> {
     private static final int PORT = 9090;
     private static final String IMAGE = "quay.io/halconsole/hal";
     private static final Logger logger = LoggerFactory.getLogger(HalContainer.class);
-    private static HalContainer currentInstance = null;
+    private static HalContainer instance = null;
 
-    public static HalContainer newInstance() {
-        currentInstance = new HalContainer().withNetwork(Network.INSTANCE)
-                .withNetworkAliases(Network.HAL).withExposedPorts(PORT)
-                .waitingFor(Wait.forListeningPort());
-        return currentInstance;
-    }
-
-    public static HalContainer currentInstance() {
-        return currentInstance;
+    public static HalContainer instance() {
+        if (instance == null) {
+            instance = new HalContainer();
+        }
+        return instance;
     }
 
     private final String url;
@@ -44,6 +40,11 @@ public class HalContainer extends GenericContainer<HalContainer> {
 
     private HalContainer() {
         super(DockerImageName.parse(IMAGE));
+        withNetwork(Network.INSTANCE)
+                .withNetworkAliases(Network.HAL)
+                .withExposedPorts(PORT)
+                .waitingFor(Wait.forListeningPort());
+
         url = "http://" + Network.HAL + ":" + PORT;
     }
 
@@ -52,12 +53,24 @@ public class HalContainer extends GenericContainer<HalContainer> {
         return "HalContainer{url='" + url + '\'' + '}';
     }
 
+    @Override
+    public void start() {
+        super.start();
+        logger.info("HAL started: {}", this);
+    }
+
+    @Override
+    public void stop() {
+        super.stop();
+        logger.info("HAL stopped: {}", this);
+    }
+
     /**
      * Tells the HAL standalone console to use the management endpoint of the specified WildFly instance.
      */
     public void connectTo(final WildFlyContainer wildFly) {
         this.managementEndpoint = wildFly.managementEndpoint();
-        logger.info("{} connected to management endpoint {}", this, managementEndpoint);
+        logger.info("{} connected to {}", this, wildFly);
     }
 
     public String consoleEndpoint() {
