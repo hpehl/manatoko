@@ -24,18 +24,12 @@ import org.wildfly.extras.creaper.core.ManagementClient;
 import org.wildfly.extras.creaper.core.online.OnlineManagementClient;
 import org.wildfly.extras.creaper.core.online.OnlineOptions;
 
-import static org.jboss.hal.manatoko.container.WildFlyConfiguration.STANDALONE;
-
 public class WildFlyContainer extends GenericContainer<WildFlyContainer> {
 
     private static final int PORT = 9990;
     private static final String IMAGE = "quay.io/halconsole/wildfly";
     private static final Logger logger = LoggerFactory.getLogger(WildFlyContainer.class);
     private static WildFlyContainer instance = null;
-
-    public static WildFlyContainer version(WildFlyVersion version) {
-        return version(version, STANDALONE);
-    }
 
     public static WildFlyContainer version(WildFlyVersion version, WildFlyConfiguration configuration) {
         if (instance != null && instance.isRunning()) {
