@@ -6,14 +6,14 @@ Manatoko ([Maori](https://maoridictionary.co.nz/search?keywords=manatoko) for ve
 - [Arquillian Graphene 2](http://arquillian.org/arquillian-graphene/) and [Arquillian Drone](http://arquillian.org/arquillian-extension-drone/)
 - [JUnit 5](https://junit.org/junit5/)
 
-The goal is that tests should be self-contained. Containers are started when necessary and test classes can focus on testing the UI and verifying management model changes.
+The goal is that tests should be self-contained. Containers are started when necessary and test classes can focus on testing the UI and verifying management model changes. Therefore, this repository defines a testing lifecycle and some base classes:  
 
 1. Before **all** tests (one time setup)
    1. Provide a remote web driver connected to a browser running in a [WebDriver container](https://www.testcontainers.org/modules/webdriver_containers/) (with support of screen recording)
    3. Start a HAL standalone console (based on [quay.io/halconsole/hal](https://quay.io/repository/halconsole/hal))
 2. Before **all** tests of a class extending [`WildFlyTest`](test-common/src/main/java/org/jboss/hal/manatoko/test/WildFlyTest.java)
    1. Start a fresh WildFly instance (based on [quay.io/halconsole/wildfly](https://quay.io/repository/halconsole/wildfly))
-3. For all tests
+3. All tests (extending [`ManatokoTest`](test-common/src/main/java/org/jboss/hal/manatoko/test/ManatokoTest.java))
    1. Leverage [Arquillian Graphene 2](http://arquillian.org/arquillian-graphene/) (provided by an [Arquillian Drone extension](https://github.com/arquillian/arquillian-extension-drone/blob/master/docs/drone-spi.adoc))
 
 The biggest advantage of this approach is that it is very easy to run UI tests in a CI environment (as this repository [does](.github/workflows/ci.yml)).
@@ -28,7 +28,13 @@ This repository is a PoC with some tests from the [HAL test suite](https://githu
 In the base directory, simple execute
 
 ```shell
-./mvnw verify -P all-tests 
+./mvnw test -P all-tests 
+```
+
+If you want to run only specific tests, change into one of the `test-configuration-*` directory and execute
+
+```shell
+./mvnw test 
 ```
 
 ## Testcontainers, Podman & macOS
