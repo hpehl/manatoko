@@ -25,6 +25,8 @@ import org.slf4j.LoggerFactory;
 import org.testcontainers.containers.BrowserWebDriverContainer;
 import org.testcontainers.containers.wait.strategy.Wait;
 
+import static org.jboss.hal.manatoko.container.Timeouts.WEB_DRIVER_INIT_TIMEOUT;
+import static org.jboss.hal.manatoko.container.Timeouts.WEB_DRIVER_INIT_TRIES;
 import static org.testcontainers.containers.BrowserWebDriverContainer.VncRecordingMode.RECORD_FAILING;
 import static org.testcontainers.containers.VncRecordingContainer.VncRecordingFormat.MP4;
 
@@ -59,18 +61,33 @@ public class Browser extends BrowserWebDriverContainer<Browser> {
     @Override
     public void start() {
         super.start();
-        try {
-            logger.debug("Waiting for web driver...");
-            Thread.sleep(Timeouts.WEB_DRIVER_INIT_TIMEOUT.toMillis());
-        } catch (InterruptedException e) {
-            logger.warn("Interrupted while waiting for web driver: {}", e.getMessage());
-        }
-        webDriver = getWebDriver();
+        webDriver = failSafeWebDriver();
         webDriver.manage().timeouts()
                 .pageLoadTimeout(Timeouts.WEBDRIVER_PAGE_LOAD_TIMEOUT)
                 .scriptTimeout(Timeouts.WEBDRIVER_SCRIPT_TIMEOUT)
                 .implicitlyWait(Timeouts.WEBDRIVER_IMPLICIT_WAIT_TIMEOUT);
         logger.info("Browser started: {}", this);
+    }
+
+    private RemoteWebDriver failSafeWebDriver() {
+        RemoteWebDriver webDriver = null;
+        for (int i = 0; i < WEB_DRIVER_INIT_TRIES && webDriver == null; i++) {
+            try {
+                logger.debug("Try to initialize web driver #{}", i);
+                webDriver = getWebDriver();
+            } catch (Throwable t) {
+                logger.error("Unable to initialize web driver: {} (try #{})", t.getMessage(), i);
+                try {
+                    Thread.sleep(WEB_DRIVER_INIT_TIMEOUT.toMillis());
+                } catch (InterruptedException ignore) {}
+            }
+        }
+        if (webDriver == null) {
+            throw new IllegalStateException(
+                    String.format("Unable to initialize web driver after %d tries", WEB_DRIVER_INIT_TRIES));
+        }
+        logger.info("Initialized web driver: {}", webDriver);
+        return webDriver;
     }
 
     @Override

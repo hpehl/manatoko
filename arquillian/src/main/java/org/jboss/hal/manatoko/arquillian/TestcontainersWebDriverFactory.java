@@ -15,7 +15,6 @@
  */
 package org.jboss.hal.manatoko.arquillian;
 
-import com.google.common.base.Stopwatch;
 import org.jboss.arquillian.config.descriptor.api.ArquillianDescriptor;
 import org.jboss.arquillian.drone.spi.Configurator;
 import org.jboss.arquillian.drone.spi.Destructor;
@@ -25,6 +24,8 @@ import org.jboss.hal.manatoko.container.Browser;
 import org.openqa.selenium.WebDriver;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import com.google.common.base.Stopwatch;
 
 public class TestcontainersWebDriverFactory implements
         Configurator<WebDriver, TestcontainersConfiguration>,

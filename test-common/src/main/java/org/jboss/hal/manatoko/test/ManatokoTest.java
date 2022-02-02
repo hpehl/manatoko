@@ -18,6 +18,6 @@ package org.jboss.hal.manatoko.test;
 import org.jboss.arquillian.junit5.ArquillianExtension;
 import org.junit.jupiter.api.extension.ExtendWith;
 
-@ExtendWith({SystemSetupExtension.class, ArquillianExtension.class})
+@ExtendWith({ SystemSetupExtension.class, ArquillianExtension.class })
 public abstract class ManatokoTest {
 }

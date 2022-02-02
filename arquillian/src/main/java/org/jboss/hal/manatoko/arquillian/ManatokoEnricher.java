@@ -33,8 +33,8 @@ import org.slf4j.LoggerFactory;
  * <p>
  * The following classes can be injected by this enricher:
  * <ul>
- *     <li>{@link Console}</li>
- *     <li>{@link CrudOperations}</li>
+ * <li>{@link Console}</li>
+ * <li>{@link CrudOperations}</li>
  * </ul>
  */
 public class ManatokoEnricher extends AbstractSearchContextEnricher {
