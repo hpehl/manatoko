@@ -15,6 +15,7 @@
  */
 package org.jboss.hal.manatoko.container;
 
+import org.jboss.hal.manatoko.environment.Environment;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.testcontainers.containers.GenericContainer;
@@ -46,9 +47,9 @@ public class WildFlyContainer extends GenericContainer<WildFlyContainer> {
         return instance;
     }
 
+    private boolean started;
     private final WildFlyVersion version;
     private final WildFlyConfiguration configuration;
-    private final String managementEndpoint;
 
     private WildFlyContainer(WildFlyVersion version, WildFlyConfiguration configuration) {
         super(DockerImageName.parse(IMAGE + ":" + version.version()));
@@ -59,9 +60,9 @@ public class WildFlyContainer extends GenericContainer<WildFlyContainer> {
                 .waitingFor(Wait.forLogMessage(".*WildFly Full.*started in.*", 1))
                 .withStartupTimeout(Timeouts.WILDFLY_STARTUP_TIMEOUT);
 
+        this.started = false;
         this.version = version;
         this.configuration = configuration;
-        this.managementEndpoint = "http://" + Network.WILDFLY + ":" + PORT;
     }
 
     @Override
@@ -69,32 +70,40 @@ public class WildFlyContainer extends GenericContainer<WildFlyContainer> {
         return "WildFlyContainer{" +
                 "version=" + version +
                 ", configuration=" + configuration +
-                ", managementEndpoint='" + managementEndpoint + '\'' +
+                ", managementEndpoint='" + managementEndpoint() + '\'' +
                 '}';
     }
 
     @Override
     public void start() {
         super.start();
+        started = true;
         logger.info("WildFly started: {}", this);
     }
 
     @Override
     public void stop() {
         super.stop();
+        started = false;
         logger.info("WildFly stopped: {}", this);
     }
 
     public OnlineManagementClient managementClient() {
         // The management client is used in the unit tests on the host machine.
-        // That's why we need to use `getHost()` and `getMappedPort()`.
+        // That's why we always need to use `getHost()` and `getMappedPort()`.
+        if (!started) {
+            throw new IllegalStateException(
+                    String.format("Unable to get management client for %s: Container has not been started yet!", this));
+        }
         return ManagementClient
                 .onlineLazy(OnlineOptions.standalone().hostAndPort(getHost(), getMappedPort(PORT)).build());
     }
 
     public String managementEndpoint() {
-        // The URL of management endpoint is used in the HAL container.
-        // That's why we need to use the network name and original port.
-        return managementEndpoint;
+        if (Environment.instance().local() && started) {
+            return "http://" + getHost() + ":" + getMappedPort(PORT);
+        } else {
+            return "http://" + Network.WILDFLY + ":" + PORT;
+        }
     }
 }

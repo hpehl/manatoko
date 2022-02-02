@@ -15,6 +15,7 @@
  */
 package org.jboss.hal.manatoko.container;
 
+import org.jboss.hal.manatoko.environment.Environment;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.testcontainers.containers.GenericContainer;
@@ -35,7 +36,7 @@ public class HalContainer extends GenericContainer<HalContainer> {
         return instance;
     }
 
-    private final String url;
+    private boolean started;
     private String managementEndpoint;
 
     private HalContainer() {
@@ -44,24 +45,25 @@ public class HalContainer extends GenericContainer<HalContainer> {
                 .withNetworkAliases(Network.HAL)
                 .withExposedPorts(PORT)
                 .waitingFor(Wait.forListeningPort());
-
-        url = "http://" + Network.HAL + ":" + PORT;
+        started = false;
     }
 
     @Override
     public String toString() {
-        return "HalContainer{url='" + url + '\'' + '}';
+        return "HalContainer{consoleEndpoint='" + consoleEndpoint() + '\'' + '}';
     }
 
     @Override
     public void start() {
         super.start();
+        started = true;
         logger.info("HAL started: {}", this);
     }
 
     @Override
     public void stop() {
         super.stop();
+        started = false;
         logger.info("HAL stopped: {}", this);
     }
 
@@ -69,15 +71,24 @@ public class HalContainer extends GenericContainer<HalContainer> {
      * Tells the HAL standalone console to use the management endpoint of the specified WildFly instance.
      */
     public void connectTo(final WildFlyContainer wildFly) {
-        this.managementEndpoint = wildFly.managementEndpoint();
+        managementEndpoint = wildFly.managementEndpoint();
         logger.info("{} connected to {}", this, wildFly);
     }
 
     public String consoleEndpoint() {
         if (managementEndpoint == null) {
             logger.warn("No management endpoint defined for {}", this);
-            return url;
+            return url();
+        } else {
+            return url() + "?connect=" + managementEndpoint;
         }
-        return url + "?connect=" + managementEndpoint;
+    }
+
+    public String url() {
+        if (Environment.instance().local() && started) {
+            return "http://" + getHost() + ":" + getMappedPort(PORT);
+        } else {
+            return "http://" + Network.HAL + ":" + PORT;
+        }
     }
 }

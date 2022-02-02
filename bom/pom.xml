@@ -50,6 +50,11 @@
             </dependency>
             <dependency>
                 <groupId>${project.groupId}</groupId>
+                <artifactId>manatoko-environment</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>${project.groupId}</groupId>
                 <artifactId>manatoko-test-common</artifactId>
                 <version>${project.version}</version>
             </dependency>

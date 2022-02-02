@@ -17,6 +17,7 @@ package org.jboss.hal.manatoko.test;
 
 import org.jboss.hal.manatoko.container.Browser;
 import org.jboss.hal.manatoko.container.HalContainer;
+import org.jboss.hal.manatoko.environment.Environment;
 import org.junit.jupiter.api.extension.BeforeAllCallback;
 import org.junit.jupiter.api.extension.ExtensionContext;
 
@@ -37,7 +38,9 @@ public class SystemSetupExtension implements BeforeAllCallback, ExtensionContext
     synchronized private static void systemSetup() {
         if (!systemReady) {
             systemReady = true;
-            Browser.instance().start();
+            if (Environment.instance().remote()) {
+                Browser.instance().start();
+            }
             HalContainer.instance().start();
         }
     }
@@ -62,7 +65,7 @@ public class SystemSetupExtension implements BeforeAllCallback, ExtensionContext
         if (HalContainer.instance() != null) {
             HalContainer.instance().stop();
         }
-        if (Browser.instance() != null) {
+        if (Environment.instance().remote() && Browser.instance() != null) {
             Browser.instance().stop();
         }
     }

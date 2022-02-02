@@ -20,6 +20,7 @@ import org.jboss.arquillian.drone.spi.Configurator;
 import org.jboss.arquillian.drone.spi.Destructor;
 import org.jboss.arquillian.drone.spi.Instantiator;
 import org.jboss.arquillian.graphene.spi.enricher.SearchContextTestEnricher;
+import org.jboss.hal.manatoko.environment.Environment;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -29,10 +30,16 @@ public class ManatokoExtension implements LoadableExtension {
 
     @Override
     public void register(final ExtensionBuilder builder) {
-        logger.debug("{} registered", this.getClass().getSimpleName());
-        builder.service(Configurator.class, TestcontainersWebDriverFactory.class);
-        builder.service(Instantiator.class, TestcontainersWebDriverFactory.class);
-        builder.service(Destructor.class, TestcontainersWebDriverFactory.class);
+        if (Environment.instance().local()) {
+            logger.info("Use Graphene extensions");
+            // Graphene extensions will take over since the Testcontainers extensions aren't registered!
+        } else if (Environment.instance().remote()) {
+            logger.info("Register Testcontainers extensions");
+            builder.service(Configurator.class, TestcontainersWebDriverFactory.class);
+            builder.service(Instantiator.class, TestcontainersWebDriverFactory.class);
+            builder.service(Destructor.class, TestcontainersWebDriverFactory.class);
+        }
+        logger.info("Register Manatoko enricher");
         builder.service(SearchContextTestEnricher.class, ManatokoEnricher.class);
     }
 }

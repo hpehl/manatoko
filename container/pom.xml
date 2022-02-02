@@ -32,6 +32,12 @@
     <description>Containers based on testcontainers.org</description>
 
     <dependencies>
+        <!-- Manatoko -->
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>manatoko-environment</artifactId>
+        </dependency>
+
         <!-- WildFly, JBoss & HAL -->
         <dependency>
             <groupId>org.wildfly.extras.creaper</groupId>

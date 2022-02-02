@@ -93,6 +93,7 @@
         <maven.min.version>3.2.5</maven.min.version>
         <project.build.sourceEncoding>${encoding}</project.build.sourceEncoding>
         <project.reporting.outputEncoding>${encoding}</project.reporting.outputEncoding>
+        <test.environment>remote</test.environment>
     </properties>
 
     <modules>
@@ -102,6 +103,7 @@
         <module>common</module>
         <module>config</module>
         <module>container</module>
+        <module>environment</module>
         <module>test-common</module>
         <module>test-fixture</module>
         <module>test-parent</module>
@@ -112,6 +114,12 @@
     <build/>
 
     <profiles>
+        <profile>
+            <id>local</id>
+            <properties>
+                <test.environment>local</test.environment>
+            </properties>
+        </profile>
         <profile>
             <id>all-tests</id>
             <modules>

@@ -68,17 +68,6 @@
         </dependency>
 
         <!-- Arquillian -->
-        <!--
-            Don't use
-            <dependency>
-                <groupId>org.jboss.arquillian.graphene</groupId>
-                <artifactId>graphene-webdriver</artifactId>
-                <type>pom</type>
-                <scope>test</scope>
-            </dependency>
-            1) brings in too much dependencies
-            2) interferes with the testcontainers web driver extension
-        -->
         <dependency>
             <groupId>org.jboss.arquillian.graphene</groupId>
             <artifactId>graphene-webdriver-api</artifactId>
@@ -202,9 +191,27 @@
                             <name>java.util.logging.manager</name>
                             <value>org.jboss.logmanager.LogManager</value>
                         </property>
+                        <property>
+                            <name>test.environment</name>
+                            <value>${test.environment}</value>
+                        </property>
                     </systemProperties>
                 </configuration>
             </plugin>
         </plugins>
     </build>
+
+    <profiles>
+        <profile>
+            <id>local</id>
+            <dependencies>
+                <dependency>
+                    <groupId>org.jboss.arquillian.graphene</groupId>
+                    <artifactId>graphene-webdriver</artifactId>
+                    <type>pom</type>
+                    <scope>test</scope>
+                </dependency>
+            </dependencies>
+        </profile>
+    </profiles>
 </project>

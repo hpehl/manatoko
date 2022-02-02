@@ -19,7 +19,12 @@
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xsi:schemaLocation="http://jboss.org/schema/arquillian http://jboss.org/schema/arquillian/arquillian_1_0.xsd">
 
+    <extension qualifier="webdriver">
+        <property name="browser">chrome</property>
+    </extension>
+
     <extension qualifier="graphene">
+        <property name="browser">chrome</property>
         <property name="waitGuiInterval">10</property>
         <property name="waitAjaxInterval">20</property>
         <property name="waitModelInterval">30</property>

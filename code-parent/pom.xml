@@ -113,6 +113,12 @@
             </dependency>
             <dependency>
                 <groupId>org.jboss.arquillian.graphene</groupId>
+                <artifactId>graphene-webdriver</artifactId>
+                <version>${version.arquillian.graphene}</version>
+                <type>pom</type>
+            </dependency>
+            <dependency>
+                <groupId>org.jboss.arquillian.graphene</groupId>
                 <artifactId>graphene-webdriver-api</artifactId>
                 <version>${version.arquillian.graphene}</version>
             </dependency>
