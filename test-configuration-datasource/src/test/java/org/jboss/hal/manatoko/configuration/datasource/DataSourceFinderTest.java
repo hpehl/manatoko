@@ -15,6 +15,7 @@
  */
 package org.jboss.hal.manatoko.configuration.datasource;
 
+import com.gwtplatform.mvp.shared.proxy.PlaceRequest;
 import org.jboss.arquillian.core.api.annotation.Inject;
 import org.jboss.hal.manatoko.Console;
 import org.jboss.hal.manatoko.Random;
@@ -26,14 +27,11 @@ import org.jboss.hal.manatoko.util.Library;
 import org.jboss.hal.meta.token.NameTokens;
 import org.jboss.hal.resources.Ids;
 import org.jboss.hal.resources.Names;
-import org.jboss.hal.resources.UIConstants;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.wildfly.extras.creaper.commands.datasources.AddDataSource;
 import org.wildfly.extras.creaper.core.online.OnlineManagementClient;
-
-import com.gwtplatform.mvp.shared.proxy.PlaceRequest;
 
 import static org.jboss.hal.dmr.ModelDescriptionConstants.DATASOURCES;
 import static org.jboss.hal.dmr.ModelDescriptionConstants.ENABLED;
