@@ -19,13 +19,11 @@ import org.jboss.arquillian.core.api.annotation.Inject;
 import org.jboss.arquillian.drone.api.annotation.Drone;
 import org.jboss.hal.manatoko.Console;
 import org.jboss.hal.manatoko.Random;
-import org.jboss.hal.manatoko.fragment.finder.ColumnFragment;
 import org.jboss.hal.manatoko.test.WildFlyTest;
 import org.jboss.hal.meta.token.NameTokens;
 import org.jboss.hal.resources.Ids;
 import org.jboss.hal.resources.Names;
 import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -64,18 +62,6 @@ class DataSourceEnableSubstitutionValueTest extends WildFlyTest {
 
     @Inject Console console;
     @Drone WebDriver browser;
-    ColumnFragment column;
-
-    @BeforeEach
-    void prepare() throws Exception {
-        Administration administration = new Administration(client);
-        Operations operations = new Operations(client);
-        operations.add(Address.root().and("system-property", H2_ENABLED_VARIABLE), Values.of("value", "true"))
-                .assertSuccess();
-        operations.writeAttribute(dataSourceAddress(DATA_SOURCE_TEST), "enabled", H2_ENABLED_VARIABLE_COMPLETE)
-                .assertSuccess();
-        administration.reloadIfRequired();
-    }
 
     /**
      * Test display DataSource list if datasource has a property substitution
@@ -83,8 +69,16 @@ class DataSourceEnableSubstitutionValueTest extends WildFlyTest {
      * @see <a href="https://issues.jboss.org/browse/HAL-1572">HAL-1572</a>
      */
     @Test
-    void displayDatasourceListTest() {
-        column = console.finder(NameTokens.CONFIGURATION, configurationSubsystemPath(DATASOURCES)
+    void displayDatasourceListTest() throws Exception {
+        Administration administration = new Administration(client);
+        Operations operations = new Operations(client);
+        operations.add(Address.root().and("system-property", H2_ENABLED_VARIABLE), Values.of("value", "true"))
+                .assertSuccess();
+        operations.writeAttribute(dataSourceAddress(DATA_SOURCE_TEST), "enabled", H2_ENABLED_VARIABLE_COMPLETE)
+                .assertSuccess();
+        administration.reloadIfRequired();
+
+        console.finder(NameTokens.CONFIGURATION, configurationSubsystemPath(DATASOURCES)
                 .append(Ids.DATA_SOURCE_DRIVER, Ids.asId(Names.DATASOURCES)))
                 .column(Ids.DATA_SOURCE_CONFIGURATION);
         assertTrue(By.cssSelector("." + alertDismissable).findElements(browser).isEmpty(),

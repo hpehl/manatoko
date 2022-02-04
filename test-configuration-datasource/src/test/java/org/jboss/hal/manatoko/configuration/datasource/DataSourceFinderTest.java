@@ -22,6 +22,7 @@ import org.jboss.hal.manatoko.creaper.ResourceVerifier;
 import org.jboss.hal.manatoko.fragment.finder.ColumnFragment;
 import org.jboss.hal.manatoko.page.Places;
 import org.jboss.hal.manatoko.test.WildFlyTest;
+import org.jboss.hal.manatoko.util.Library;
 import org.jboss.hal.meta.token.NameTokens;
 import org.jboss.hal.resources.Ids;
 import org.jboss.hal.resources.Names;
@@ -157,6 +158,7 @@ class DataSourceFinderTest extends WildFlyTest {
         console.confirmationDialog().confirm();
 
         console.verifySuccess();
+        console.waitNoNotification();
         assertFalse(column.containsItem(Ids.dataSourceConfiguration(DATA_SOURCE_DELETE, false)));
         new ResourceVerifier(dataSourceAddress(DATA_SOURCE_DELETE), client)
                 .verifyDoesNotExist();

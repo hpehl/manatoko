@@ -85,13 +85,13 @@ public class TagsInputFragment {
         }
     }
 
-    private TagsInputFragment internalAdd(String value, String verifyText) {
+    private TagsInputFragment internalAdd(String value, String verify) {
         inputElement.clear();
         waitGui().until().element(inputElement).value().equalTo("");
         inputElement.sendKeys(value);
         inputElement.sendKeys(Keys.RETURN);
-        By tagSelector = ByJQuery.selector("." + tagManagerTag + " > span" + contains(verifyText));
-        waitGui().until().element(tagSelector).is().visible();
+        By tagSelector = ByJQuery.selector("." + tagManagerTag + " > span" + contains(verify));
+        waitGui().until().element(tagSelector).is().present();
         return this;
     }
 }
