@@ -1,29 +1,45 @@
-# Manatoko
-
 Manatoko ([Maori](https://maoridictionary.co.nz/search?keywords=manatoko) for verify, test) is a new approach to test the [HAL](https://hal.github.io) management console. It builds on top of
 
 - [Testcontainers](https://www.testcontainers.org/)
 - [Arquillian Graphene 2](http://arquillian.org/arquillian-graphene/) and [Arquillian Drone](http://arquillian.org/arquillian-extension-drone/)
 - [JUnit 5](https://junit.org/junit5/)
 
-The goal is that tests should be self-contained. Containers are started when necessary and test classes can focus on testing the UI and verifying management model changes. Therefore, this repository defines a testing lifecycle and some base classes:  
+The goal is that tests should be self-contained. Containers are started and stopped when necessary and tests can focus on testing the UI and verifying management model changes. 
+
+# Test Environment
+
+Tests can be run in two modes, controlled by the system property `test.environment`. Valid values are either `local` or `remote`. 
+
+## Remote
+
+This is the default mode. In this mode a [web river container](https://www.testcontainers.org/modules/webdriver_containers/) (with support of screen recording) is stated before all tests. An Arquillian extension is registered which provides a remote web driver connected to the browser running in this container. 
+
+## Local
+
+This mode is activated by the maven profile `local`. In this mode the browser is started locally and Arquillian Graphene takes care of providing the web driver.
+
+# Lifecycle
+
+Independent of the mode, a HAL standalone console (based on [quay.io/halconsole/hal](https://quay.io/repository/halconsole/hal)) is started before all tests.  
+
+Therefore, this repository defines a testing lifecycle and some base classes:  
 
 1. Before **all** tests (one time setup)
-   1. Provide a remote web driver connected to a browser running in a [WebDriver container](https://www.testcontainers.org/modules/webdriver_containers/) (with support of screen recording)
-   3. Start a HAL standalone console (based on [quay.io/halconsole/hal](https://quay.io/repository/halconsole/hal))
-2. Before **all** tests of a class extending [`WildFlyTest`](test-common/src/main/java/org/jboss/hal/manatoko/test/WildFlyTest.java)
+   1. 
+   2. Start a HAL standalone console (based on [quay.io/halconsole/hal](https://quay.io/repository/halconsole/hal))
+2. Before **all** tests of a class extending [`WildFlyTest`](test-common/src/main/java/org/jboss/hal/testsuite/test/WildFlyTest.java)
    1. Start a fresh WildFly instance (based on [quay.io/halconsole/wildfly](https://quay.io/repository/halconsole/wildfly))
-3. All tests (extending [`ManatokoTest`](test-common/src/main/java/org/jboss/hal/manatoko/test/ManatokoTest.java))
+3. All tests (extending [`ManatokoTest`](test-common/src/main/java/org/jboss/hal/testsuite/test/ManatokoTest.java))
    1. Leverage [Arquillian Graphene 2](http://arquillian.org/arquillian-graphene/) (provided by an [Arquillian Drone extension](https://github.com/arquillian/arquillian-extension-drone/blob/master/docs/drone-spi.adoc))
 
 The biggest advantage of this approach is that it is very easy to run UI tests in a CI environment (as this repository [does](.github/workflows/ci.yml)).
 
 This repository is a PoC with some tests from the [HAL test suite](https://github.com/hal/testsuite.next) using the above features:
 
-- [`BatchConfigurationTest`](test-configuration-batch/src/test/java/org/jboss/hal/manatoko/configuration/batch/BatchConfigurationTest.java)
-- [`SystemPropertyTest`](test-configuration-systemproperty/src/test/java/org/jboss/hal/manatoko/configuration/systemproperty/SystemPropertyTest.java)
+- [`BatchConfigurationTest`](test-configuration-batch/src/test/java/org/jboss/hal/testsuite/configuration/batch/BatchConfigurationTest.java)
+- [`SystemPropertyTest`](test-configuration-systemproperty/src/test/java/org/jboss/hal/testsuite/configuration/systemproperty/SystemPropertyTest.java)
 
-## Run Tests
+# Run Tests
 
 In the base directory, simple execute
 
@@ -37,7 +53,7 @@ If you want to run only specific tests, change into one of the `test-configurati
 ./mvnw test 
 ```
 
-## Testcontainers, Podman & macOS
+# Testcontainers, Podman & macOS
 
 If you're using testcontainers with podman on macOS, please start `./tcpm.sh` and make sure to set the following environment variables **before** running the tests.
 
