@@ -136,8 +136,8 @@ public class WizardFragment {
         } catch (TimeoutException e) {
             try {
                 root.findElement(
-                                ByJQuery.selector(
-                                        "." + wizardPfComplete + " ." + blankSlatePfSecondaryAction + " a:contains(Details)"))
+                        ByJQuery.selector(
+                                "." + wizardPfComplete + " ." + blankSlatePfSecondaryAction + " a:contains(Details)"))
                         .click();
                 String errorText = root.findElement(By.className(wizardHalErrorText)).getText();
                 logger.error("Wizard failed with detail error message '{}'.", errorText);

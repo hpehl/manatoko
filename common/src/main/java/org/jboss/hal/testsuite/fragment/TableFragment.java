@@ -28,9 +28,9 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
 import static org.jboss.arquillian.graphene.Graphene.waitGui;
-import static org.jboss.hal.testsuite.Selectors.contains;
 import static org.jboss.hal.resources.CSS.columnAction;
 import static org.jboss.hal.resources.CSS.halTableButtons;
+import static org.jboss.hal.testsuite.Selectors.contains;
 
 /** Fragment for a data table. */
 public class TableFragment {

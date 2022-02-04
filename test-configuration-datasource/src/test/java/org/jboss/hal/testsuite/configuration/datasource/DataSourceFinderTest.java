@@ -15,7 +15,6 @@
  */
 package org.jboss.hal.testsuite.configuration.datasource;
 
-import com.gwtplatform.mvp.shared.proxy.PlaceRequest;
 import org.jboss.arquillian.core.api.annotation.Inject;
 import org.jboss.hal.meta.token.NameTokens;
 import org.jboss.hal.resources.Ids;
@@ -35,6 +34,8 @@ import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
 import org.wildfly.extras.creaper.commands.datasources.AddDataSource;
 import org.wildfly.extras.creaper.core.online.OnlineManagementClient;
+
+import com.gwtplatform.mvp.shared.proxy.PlaceRequest;
 
 import static org.jboss.hal.dmr.ModelDescriptionConstants.DATASOURCES;
 import static org.jboss.hal.dmr.ModelDescriptionConstants.ENABLED;
@@ -99,7 +100,7 @@ class DataSourceFinderTest {
     @BeforeEach
     void prepare() {
         column = console.finder(NameTokens.CONFIGURATION, configurationSubsystemPath(DATASOURCES)
-                        .append(Ids.DATA_SOURCE_DRIVER, Ids.asId(Names.DATASOURCES)))
+                .append(Ids.DATA_SOURCE_DRIVER, Ids.asId(Names.DATASOURCES)))
                 .column(Ids.DATA_SOURCE_CONFIGURATION);
     }
 

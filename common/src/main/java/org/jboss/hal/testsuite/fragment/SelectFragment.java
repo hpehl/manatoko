@@ -21,10 +21,10 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
 import static org.jboss.arquillian.graphene.Graphene.waitGui;
-import static org.jboss.hal.testsuite.Selectors.contains;
 import static org.jboss.hal.resources.CSS.dropdownMenu;
 import static org.jboss.hal.resources.CSS.dropdownToggle;
 import static org.jboss.hal.resources.CSS.selectpicker;
+import static org.jboss.hal.testsuite.Selectors.contains;
 
 /**
  * Fragment for a bootstrap select element. Root should be the div w/ class {@link org.jboss.hal.resources.CSS#bootstrapSelect}

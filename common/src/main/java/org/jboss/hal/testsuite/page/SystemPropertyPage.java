@@ -15,10 +15,10 @@
  */
 package org.jboss.hal.testsuite.page;
 
-import org.jboss.hal.testsuite.fragment.FormFragment;
-import org.jboss.hal.testsuite.fragment.TableFragment;
 import org.jboss.hal.meta.token.NameTokens;
 import org.jboss.hal.resources.Ids;
+import org.jboss.hal.testsuite.fragment.FormFragment;
+import org.jboss.hal.testsuite.fragment.TableFragment;
 import org.openqa.selenium.support.FindBy;
 
 import static org.jboss.hal.testsuite.Selectors.WRAPPER;

@@ -16,8 +16,8 @@
 package org.jboss.hal.testsuite.dmr;
 
 import org.jboss.dmr.ModelNode;
-import org.jboss.hal.testsuite.Random;
 import org.jboss.hal.resources.Ids;
+import org.jboss.hal.testsuite.Random;
 
 import static org.jboss.hal.dmr.ModelDescriptionConstants.ALIAS;
 import static org.jboss.hal.dmr.ModelDescriptionConstants.CLEAR_TEXT;

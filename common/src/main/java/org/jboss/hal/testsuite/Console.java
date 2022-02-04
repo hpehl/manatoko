@@ -18,9 +18,6 @@ package org.jboss.hal.testsuite;
 import java.util.List;
 import java.util.Set;
 
-import com.gwtplatform.mvp.shared.proxy.PlaceRequest;
-import com.gwtplatform.mvp.shared.proxy.TokenFormatException;
-import com.gwtplatform.mvp.shared.proxy.TokenFormatter;
 import org.apache.commons.lang3.StringUtils;
 import org.jboss.arquillian.drone.api.annotation.Drone;
 import org.jboss.hal.resources.Ids;
@@ -41,6 +38,10 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+
+import com.gwtplatform.mvp.shared.proxy.PlaceRequest;
+import com.gwtplatform.mvp.shared.proxy.TokenFormatException;
+import com.gwtplatform.mvp.shared.proxy.TokenFormatter;
 
 import static org.jboss.arquillian.graphene.Graphene.createPageFragment;
 import static org.jboss.arquillian.graphene.Graphene.waitGui;
@@ -218,10 +219,10 @@ public class Console {
     /**
      * Scrolls the specified element into the visible area of the browser window.
      *
-     * @param element               to scroll to
+     * @param element to scroll to
      * @param scrollIntoViewOptions - see
-     *                              <a href="https://developer.mozilla.org/en-US/docs/Web/API/Element/scrollIntoView#Parameters">related js
-     *                              documentation</a>
+     *        <a href="https://developer.mozilla.org/en-US/docs/Web/API/Element/scrollIntoView#Parameters">related js
+     *        documentation</a>
      * @return provided element
      */
     public WebElement scrollIntoView(WebElement element, String scrollIntoViewOptions) {
@@ -252,7 +253,6 @@ public class Console {
     }
 
     // ------------------------------------------------------ token formatter
-
 
     private static class HalTokenFormatter implements TokenFormatter {
 

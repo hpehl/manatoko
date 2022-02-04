@@ -1,13 +1,28 @@
+/*
+ *  Copyright 2022 Red Hat
+ *
+ *  Licensed under the Apache License, Version 2.0 (the "License");
+ *  you may not use this file except in compliance with the License.
+ *  You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *  Unless required by applicable law or agreed to in writing, software
+ *  distributed under the License is distributed on an "AS IS" BASIS,
+ *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *  See the License for the specific language governing permissions and
+ *  limitations under the License.
+ */
 package org.jboss.hal.testsuite.page;
 
+import org.jboss.hal.meta.token.NameTokens;
+import org.jboss.hal.resources.Ids;
 import org.jboss.hal.testsuite.fragment.DialogFragment;
 import org.jboss.hal.testsuite.fragment.DropdownFragment;
 import org.jboss.hal.testsuite.fragment.WizardFragment;
 import org.jboss.hal.testsuite.fragment.finder.ColumnFragment;
 import org.jboss.hal.testsuite.fragment.finder.FinderPath;
 import org.jboss.hal.testsuite.fragment.finder.ItemFragment;
-import org.jboss.hal.meta.token.NameTokens;
-import org.jboss.hal.resources.Ids;
 
 import static org.jboss.hal.dmr.ModelDescriptionConstants.SERVER_GROUPS;
 
@@ -116,14 +131,14 @@ public class DeploymentPage extends BasePage {
 
     private ColumnFragment getContentRepositoryDeploymentColumn() {
         return console.finder(NameTokens.DEPLOYMENTS, new FinderPath()
-                        .append(Ids.DEPLOYMENT_BROWSE_BY, "content-repository"))
+                .append(Ids.DEPLOYMENT_BROWSE_BY, "content-repository"))
                 .column(Ids.CONTENT);
     }
 
     private ColumnFragment getServerGroupDeploymentColumn(String serverGroupName) {
         return console.finder(NameTokens.DEPLOYMENTS, new FinderPath()
-                        .append(Ids.DEPLOYMENT_BROWSE_BY, SERVER_GROUPS)
-                        .append(Ids.DEPLOYMENT_SERVER_GROUP, Ids.build("sg", serverGroupName)))
+                .append(Ids.DEPLOYMENT_BROWSE_BY, SERVER_GROUPS)
+                .append(Ids.DEPLOYMENT_SERVER_GROUP, Ids.build("sg", serverGroupName)))
                 .column(Ids.SERVER_GROUP_DEPLOYMENT);
     }
 

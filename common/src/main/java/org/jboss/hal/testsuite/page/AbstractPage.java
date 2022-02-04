@@ -17,8 +17,8 @@ package org.jboss.hal.testsuite.page;
 
 import org.jboss.arquillian.core.api.annotation.Inject;
 import org.jboss.arquillian.drone.api.annotation.Drone;
-import org.jboss.hal.testsuite.Console;
 import org.jboss.hal.resources.Ids;
+import org.jboss.hal.testsuite.Console;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;

@@ -30,9 +30,9 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
 import static org.jboss.arquillian.graphene.Graphene.waitGui;
-import static org.jboss.hal.testsuite.Selectors.contains;
 import static org.jboss.hal.resources.CSS.tagManagerTag;
 import static org.jboss.hal.resources.CSS.tags;
+import static org.jboss.hal.testsuite.Selectors.contains;
 
 public class TagsInputFragment {
 

@@ -98,7 +98,7 @@ class DataSourceCreateTest {
     @BeforeEach
     void prepare() {
         column = console.finder(NameTokens.CONFIGURATION, configurationSubsystemPath(DATASOURCES)
-                        .append(Ids.DATA_SOURCE_DRIVER, Ids.asId(Names.DATASOURCES)))
+                .append(Ids.DATA_SOURCE_DRIVER, Ids.asId(Names.DATASOURCES)))
                 .column(Ids.DATA_SOURCE_CONFIGURATION);
     }
 
