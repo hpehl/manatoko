@@ -26,6 +26,7 @@ import org.jboss.hal.manatoko.util.Library;
 import org.jboss.hal.meta.token.NameTokens;
 import org.jboss.hal.resources.Ids;
 import org.jboss.hal.resources.Names;
+import org.jboss.hal.resources.UIConstants;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -45,6 +46,7 @@ import static org.jboss.hal.manatoko.fixture.DataSourceFixtures.DATA_SOURCE_TEST
 import static org.jboss.hal.manatoko.fixture.DataSourceFixtures.dataSourceAddress;
 import static org.jboss.hal.manatoko.fixture.DataSourceFixtures.h2ConnectionUrl;
 import static org.jboss.hal.manatoko.fragment.finder.FinderFragment.configurationSubsystemPath;
+import static org.jboss.hal.resources.UIConstants.MEDIUM_TIMEOUT;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -158,7 +160,7 @@ class DataSourceFinderTest extends WildFlyTest {
         console.confirmationDialog().confirm();
 
         console.verifySuccess();
-        console.waitNoNotification();
+        Library.letsSleep(MEDIUM_TIMEOUT);
         assertFalse(column.containsItem(Ids.dataSourceConfiguration(DATA_SOURCE_DELETE, false)));
         new ResourceVerifier(dataSourceAddress(DATA_SOURCE_DELETE), client)
                 .verifyDoesNotExist();
