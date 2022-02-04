@@ -31,10 +31,11 @@ public class ManatokoExtension implements LoadableExtension {
     @Override
     public void register(final ExtensionBuilder builder) {
         if (Environment.instance().local()) {
-            logger.info("Use Graphene extensions");
-            // Graphene extensions will take over since the Testcontainers extensions aren't registered!
+            logger.info("Use Arquillian Graphene 2 extension");
+            // No need to register anything. Graphene extension found in the classpath
+            // will take over, since the Testcontainers extension isn't registered!
         } else if (Environment.instance().remote()) {
-            logger.info("Register Testcontainers extensions");
+            logger.info("Register Testcontainers extension");
             builder.service(Configurator.class, TestcontainersWebDriverFactory.class);
             builder.service(Instantiator.class, TestcontainersWebDriverFactory.class);
             builder.service(Destructor.class, TestcontainersWebDriverFactory.class);

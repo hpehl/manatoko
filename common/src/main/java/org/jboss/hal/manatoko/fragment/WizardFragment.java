@@ -39,38 +39,51 @@ import static org.jboss.hal.resources.CSS.wizardHalErrorText;
 import static org.jboss.hal.resources.CSS.wizardPfComplete;
 import static org.jboss.hal.resources.CSS.wizardPfSuccessIcon;
 
-/** Page fragment for wizards. Use {@link org.jboss.hal.manatoko.Console#wizard()} to get an instance. */
+/**
+ * Page fragment for wizards. Use {@link org.jboss.hal.manatoko.Console#wizard()} to get an instance.
+ */
 public class WizardFragment {
 
-    private static final Logger log = LoggerFactory.getLogger(WizardFragment.class);
+    private static final String DOT = ".";
+    private static final Logger logger = LoggerFactory.getLogger(WizardFragment.class);
 
-    @Root protected WebElement root;
-    @FindBy(css = "." + modalFooter + " ." + btnPrimary) private WebElement primaryButton;
-    @FindBy(css = "." + modalFooter + " ." + btnCancel) private WebElement cancelButton;
-    @FindByJQuery("." + modalFooter + " ." + btnDefault + ":contains('Back')") private WebElement backButton;
+    @Root private WebElement root;
+    @FindBy(css = DOT + modalFooter + " ." + btnPrimary) private WebElement primaryButton;
+    @FindBy(css = DOT + modalFooter + " ." + btnCancel) private WebElement cancelButton;
+    @FindByJQuery(DOT + modalFooter + " ." + btnDefault + ":contains('Back')") private WebElement backButton;
 
-    /** Clicks on back and waits until the element with the specified ID (which must be part of this wizard) is visible */
+    /**
+     * Clicks on back and waits until the element with the specified ID (which must be part of this wizard) is visible
+     */
     public void back(String waitForId) {
         back(By.id(waitForId));
     }
 
-    /** Clicks on back and waits until the specified element (which must be part of this wizard) is visible */
+    /**
+     * Clicks on back and waits until the specified element (which must be part of this wizard) is visible
+     */
     public void back(By waitFor) {
         backButton.click();
         verifyStep(waitFor);
     }
 
-    /** Clicks on next */
+    /**
+     * Clicks on next
+     */
     public void next() {
         primaryButton.click();
     }
 
-    /** Clicks on next and waits until the element with the specified ID (which must be part of this wizard) is visible */
+    /**
+     * Clicks on next and waits until the element with the specified ID (which must be part of this wizard) is visible
+     */
     public void next(String waitForId) {
         next(By.id(waitForId));
     }
 
-    /** Clicks on next and waits until the specified element (which must be part of this wizard) is visible */
+    /**
+     * Clicks on next and waits until the specified element (which must be part of this wizard) is visible
+     */
     public void next(By waitFor) {
         root.findElement(ByJQuery.selector("." + modalFooter + " ." + btnPrimary + ":visible")).click();
         verifyStep(waitFor);
@@ -85,13 +98,17 @@ public class WizardFragment {
         waitGui().until().element(root).is().not().visible();
     }
 
-    /** Clicks on finish and expects the wizard is closed */
+    /**
+     * Clicks on finish and expects the wizard is closed
+     */
     public void finish() {
         primaryButton.click();
         waitGui().until().element(root).is().not().visible();
     }
 
-    /** Clicks on finish and expects the wizard is <em>not</em> closed */
+    /**
+     * Clicks on finish and expects the wizard is <em>not</em> closed
+     */
     public WizardFragment finishStayOpen() {
         primaryButton.click();
         return this;
@@ -102,25 +119,30 @@ public class WizardFragment {
         waitGui().until().element(root).is().not().visible();
     }
 
-    /** Waits until the success icon is visible */
+    /**
+     * Waits until the success icon is visible
+     */
     public WizardFragment verifySuccess() {
         verifySuccess(waitGui());
         return this;
     }
 
-    /** Waits using the specified wait instance until the success icon is visible */
+    /**
+     * Waits using the specified wait instance until the success icon is visible
+     */
     public void verifySuccess(WebDriverWait<Void> wait) {
         try {
             wait.until().element(By.cssSelector("." + wizardPfComplete + " ." + wizardPfSuccessIcon)).is().visible();
         } catch (TimeoutException e) {
             try {
                 root.findElement(
-                        ByJQuery.selector("." + wizardPfComplete + " ." + blankSlatePfSecondaryAction + " a:contains(Details)"))
+                                ByJQuery.selector(
+                                        "." + wizardPfComplete + " ." + blankSlatePfSecondaryAction + " a:contains(Details)"))
                         .click();
                 String errorText = root.findElement(By.className(wizardHalErrorText)).getText();
-                log.error("Wizard failed with detail error message '{}'.", errorText);
+                logger.error("Wizard failed with detail error message '{}'.", errorText);
             } catch (NoSuchElementException e1) {
-                log.warn("Cannot find error Details link.", e1);
+                logger.warn("Cannot find error Details link.", e1);
             }
             throw e;
         }

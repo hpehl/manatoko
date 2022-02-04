@@ -77,15 +77,12 @@ class DataSourceCreateCredRefTest extends WildFlyTest {
 
     @Inject Console console;
     ColumnFragment column;
-    WizardFragment wizard;
 
     @BeforeEach
     void prepare() {
         column = console.finder(NameTokens.CONFIGURATION, configurationSubsystemPath(DATASOURCES)
                 .append(Ids.DATA_SOURCE_DRIVER, Ids.asId(Names.DATASOURCES)))
                 .column(Ids.DATA_SOURCE_CONFIGURATION);
-        column.dropdownAction(Ids.DATA_SOURCE_ADD_ACTIONS, Ids.DATA_SOURCE_ADD);
-        wizard = console.wizard();
     }
 
     /**
@@ -94,6 +91,8 @@ class DataSourceCreateCredRefTest extends WildFlyTest {
      */
     @Test
     void createH2() throws Exception {
+        column.dropdownAction(Ids.DATA_SOURCE_ADD_ACTIONS, Ids.DATA_SOURCE_ADD);
+        WizardFragment wizard = console.wizard();
         wizard.getRoot().findElement(By.cssSelector(H2_CSS_SELECTOR)).click();
         wizard.next(Ids.DATA_SOURCE_NAMES_FORM);
         FormFragment namesForms = wizard.getForm(Ids.DATA_SOURCE_NAMES_FORM);

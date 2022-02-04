@@ -81,7 +81,7 @@ abstract class DataSourceCredRefBase extends WildFlyTest {
     }
 
     @Page DataSourcePage page;
-    FormFragment form;
+    protected FormFragment form;
 
     @BeforeEach
     void prepare() {

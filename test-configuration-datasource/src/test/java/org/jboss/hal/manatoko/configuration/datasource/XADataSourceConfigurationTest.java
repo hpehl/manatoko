@@ -136,7 +136,8 @@ class XADataSourceConfigurationTest extends WildFlyTest {
         console.verifySuccess();
         for (Property key : properties.asPropertyList()) {
             String value = key.getValue().asString();
-            Address address = xaDataSourceAddress(XA_DATA_SOURCE_UPDATE).and(XA_DATASOURCE_PROPERTIES, key.getName());
+            Address address = xaDataSourceAddress(XA_DATA_SOURCE_UPDATE)
+                    .and(XA_DATASOURCE_PROPERTIES, key.getName());
             new ResourceVerifier(address, client).verifyAttribute(VALUE, value);
         }
     }

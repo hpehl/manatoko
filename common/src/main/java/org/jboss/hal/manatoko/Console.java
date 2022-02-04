@@ -18,6 +18,9 @@ package org.jboss.hal.manatoko;
 import java.util.List;
 import java.util.Set;
 
+import com.gwtplatform.mvp.shared.proxy.PlaceRequest;
+import com.gwtplatform.mvp.shared.proxy.TokenFormatException;
+import com.gwtplatform.mvp.shared.proxy.TokenFormatter;
 import org.apache.commons.lang3.StringUtils;
 import org.jboss.arquillian.drone.api.annotation.Drone;
 import org.jboss.hal.manatoko.container.HalContainer;
@@ -39,10 +42,6 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import com.gwtplatform.mvp.shared.proxy.PlaceRequest;
-import com.gwtplatform.mvp.shared.proxy.TokenFormatException;
-import com.gwtplatform.mvp.shared.proxy.TokenFormatter;
 
 import static org.jboss.arquillian.graphene.Graphene.createPageFragment;
 import static org.jboss.arquillian.graphene.Graphene.waitGui;
@@ -71,12 +70,16 @@ public class Console {
 
     // ------------------------------------------------------ navigation
 
-    /** Navigates to the place request and waits until the id {@link Ids#ROOT_CONTAINER} is present. */
+    /**
+     * Navigates to the place request and waits until the id {@link Ids#ROOT_CONTAINER} is present.
+     */
     public void navigate(PlaceRequest request) {
         navigate(request, By.id(Ids.ROOT_CONTAINER));
     }
 
-    /** Navigates to the place request and waits until the selector is present. */
+    /**
+     * Navigates to the place request and waits until the selector is present.
+     */
     public void navigate(PlaceRequest request, By selector) {
         String fragment = tokenFormatter.toPlaceToken(request);
         String url = HalContainer.instance().consoleEndpoint() + "#" + fragment;
@@ -99,7 +102,9 @@ public class Console {
 
     // ------------------------------------------------------ notification
 
-    /** Waits until all notifications are gone. */
+    /**
+     * Waits until all notifications are gone.
+     */
     public void waitNoNotification() {
         List<WebElement> dismissibleNotifications = By.cssSelector(DOT + alertDismissable).findElements(browser);
         for (WebElement notification : dismissibleNotifications) {
@@ -111,17 +116,23 @@ public class Console {
         waitModel().until().element(By.cssSelector(DOT + toastNotificationsListPf + ":empty")).is().present();
     }
 
-    /** Verifies that a success notification is visible */
+    /**
+     * Verifies that a success notification is visible
+     */
     public void verifySuccess() {
         verifyNotification(alertSuccess);
     }
 
-    /** Verifies that an error notification is visible */
+    /**
+     * Verifies that an error notification is visible
+     */
     public void verifyError() {
         verifyNotification(alertDanger);
     }
 
-    /** Verify there is no error notification */
+    /**
+     * Verify there is no error notification
+     */
     public boolean verifyNoError() {
         return By.cssSelector(DOT + toastNotificationsListPf + " ." + alertDanger).findElements(browser).size() < 1;
     }
@@ -134,17 +145,23 @@ public class Console {
 
     // ------------------------------------------------------ fragment access (a-z)
 
-    /** Returns the currently opened add resource dialog. */
+    /**
+     * Returns the currently opened add resource dialog.
+     */
     public AddResourceDialogFragment addResourceDialog() {
         return dialog(AddResourceDialogFragment.class);
     }
 
-    /** Returns the currently opened confirmation dialog. */
+    /**
+     * Returns the currently opened confirmation dialog.
+     */
     public ConfirmationDialogFragment confirmationDialog() {
         return dialog(ConfirmationDialogFragment.class);
     }
 
-    /** Returns the currently opened dialog. */
+    /**
+     * Returns the currently opened dialog.
+     */
     public DialogFragment dialog() {
         return dialog(DialogFragment.class);
     }
@@ -156,12 +173,16 @@ public class Console {
         return createPageFragment(dialogClass, dialogElement);
     }
 
-    /** Navigates to the specified token, creates and returns the finder fragment */
+    /**
+     * Navigates to the specified token, creates and returns the finder fragment
+     */
     public FinderFragment finder(String token) {
         return finder(token, null);
     }
 
-    /** Navigates to the specified token, selects the finder path, creates and returns the finder fragment */
+    /**
+     * Navigates to the specified token, selects the finder path, creates and returns the finder fragment
+     */
     public FinderFragment finder(String token, FinderPath path) {
         By selector = By.id(Ids.FINDER);
         if (path != null && !path.isEmpty()) {
@@ -190,13 +211,9 @@ public class Console {
     }
 
     public WizardFragment wizard() {
-        return wizard(WizardFragment.class);
-    }
-
-    public <T extends WizardFragment> T wizard(Class<T> clazz) {
         By wizardSelector = By.id(Ids.HAL_WIZARD);
         waitGui().until().element(wizardSelector).is().visible();
-        return createPageFragment(clazz, browser.findElement(wizardSelector));
+        return createPageFragment(WizardFragment.class, browser.findElement(wizardSelector));
     }
 
     // ------------------------------------------------------ elements
@@ -204,10 +221,10 @@ public class Console {
     /**
      * Scrolls the specified element into the visible area of the browser window.
      *
-     * @param element to scroll to
+     * @param element               to scroll to
      * @param scrollIntoViewOptions - see
-     *        <a href="https://developer.mozilla.org/en-US/docs/Web/API/Element/scrollIntoView#Parameters">related js
-     *        documentation</a>
+     *                              <a href="https://developer.mozilla.org/en-US/docs/Web/API/Element/scrollIntoView#Parameters">related js
+     *                              documentation</a>
      * @return provided element
      */
     public WebElement scrollIntoView(WebElement element, String scrollIntoViewOptions) {
@@ -238,6 +255,7 @@ public class Console {
     }
 
     // ------------------------------------------------------ token formatter
+
 
     private static class HalTokenFormatter implements TokenFormatter {
 

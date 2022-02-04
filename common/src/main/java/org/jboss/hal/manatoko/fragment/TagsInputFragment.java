@@ -43,20 +43,20 @@ public class TagsInputFragment {
     /** Adds the values to this list item. */
     public TagsInputFragment add(List<String> values) {
         for (String value : values) {
-            internalAdd(value);
+            internalAdd(value, value);
         }
         return this;
     }
 
     /** Adds a value to this list item. */
     public TagsInputFragment add(String value) {
-        return internalAdd(value);
+        return internalAdd(value, value);
     }
 
     /** Adds the name/value pairs to this properties item. */
     public TagsInputFragment add(ModelNode values) {
         for (Property property : values.asPropertyList()) {
-            internalAdd(property.getName() + "=" + property.getValue().asString());
+            internalAdd(property.getName() + "=" + property.getValue().asString(), property.getName());
         }
         return this;
     }
@@ -64,14 +64,14 @@ public class TagsInputFragment {
     /** Adds the name/value pairs to this properties item. */
     public TagsInputFragment add(Map<String, String> values) {
         for (Map.Entry<String, String> entry : values.entrySet()) {
-            internalAdd(entry.getKey() + "=" + entry.getValue());
+            internalAdd(entry.getKey() + "=" + entry.getValue(), entry.getKey());
         }
         return this;
     }
 
     /** Adds a name/value pair to this properties item. */
     public TagsInputFragment add(String name, String value) {
-        return internalAdd(name + "=" + value);
+        return internalAdd(name + "=" + value, name);
     }
 
     public void removeTags() {
@@ -85,12 +85,12 @@ public class TagsInputFragment {
         }
     }
 
-    private TagsInputFragment internalAdd(String value) {
+    private TagsInputFragment internalAdd(String value, String verifyText) {
         inputElement.clear();
         waitGui().until().element(inputElement).value().equalTo("");
         inputElement.sendKeys(value);
         inputElement.sendKeys(Keys.RETURN);
-        By tagSelector = ByJQuery.selector("." + tagManagerTag + " > span" + contains(value));
+        By tagSelector = ByJQuery.selector("." + tagManagerTag + " > span" + contains(verifyText));
         waitGui().until().element(tagSelector).is().visible();
         return this;
     }

@@ -29,5 +29,5 @@
     <artifactId>manatoko-test-noop</artifactId>
     <packaging>jar</packaging>
     <name>Manatoko :: Test :: Noop</name>
-    <description>Empty test which does nothing. Used to make sure general setup is working.</description>
+    <description>Empty test which does nothing. Used to make sure the general setup is working.</description>
 </project>

@@ -85,15 +85,12 @@ class DataSourceCreateTest extends WildFlyTest {
     @Drone WebDriver browser;
     @Inject Console console;
     ColumnFragment column;
-    WizardFragment wizard;
 
     @BeforeEach
     void prepare() {
         column = console.finder(NameTokens.CONFIGURATION, configurationSubsystemPath(DATASOURCES)
-                .append(Ids.DATA_SOURCE_DRIVER, Ids.asId(Names.DATASOURCES)))
+                        .append(Ids.DATA_SOURCE_DRIVER, Ids.asId(Names.DATASOURCES)))
                 .column(Ids.DATA_SOURCE_CONFIGURATION);
-        column.dropdownAction(Ids.DATA_SOURCE_ADD_ACTIONS, Ids.DATA_SOURCE_ADD);
-        wizard = console.wizard();
     }
 
     /**
@@ -101,6 +98,8 @@ class DataSourceCreateTest extends WildFlyTest {
      */
     @Test
     void createExisting() {
+        column.dropdownAction(Ids.DATA_SOURCE_ADD_ACTIONS, Ids.DATA_SOURCE_ADD);
+        WizardFragment wizard = console.wizard();
         wizard.getRoot().findElement(By.cssSelector(H2_CSS_SELECTOR)).click();
         wizard.next(Ids.DATA_SOURCE_NAMES_FORM);
         FormFragment namesForms = wizard.getForm(Ids.DATA_SOURCE_NAMES_FORM);
@@ -118,6 +117,8 @@ class DataSourceCreateTest extends WildFlyTest {
     @Test
     void createCustom() throws Exception {
         // choose template
+        column.dropdownAction(Ids.DATA_SOURCE_ADD_ACTIONS, Ids.DATA_SOURCE_ADD);
+        WizardFragment wizard = console.wizard();
         wizard.getRoot().findElement(By.cssSelector("input[type=radio][name=template][value=custom]")).click();
         wizard.next(Ids.DATA_SOURCE_NAMES_FORM);
 
@@ -165,6 +166,8 @@ class DataSourceCreateTest extends WildFlyTest {
      */
     @Test
     void createH2() throws Exception {
+        column.dropdownAction(Ids.DATA_SOURCE_ADD_ACTIONS, Ids.DATA_SOURCE_ADD);
+        WizardFragment wizard = console.wizard();
         wizard.getRoot().findElement(By.cssSelector(H2_CSS_SELECTOR)).click();
         wizard.next(Ids.DATA_SOURCE_NAMES_FORM);
         wizard.next(Ids.DATA_SOURCE_DRIVER_FORM);
@@ -200,6 +203,8 @@ class DataSourceCreateTest extends WildFlyTest {
         Administration administration = new Administration(client);
         administration.reloadIfRequired();
 
+        column.dropdownAction(Ids.DATA_SOURCE_ADD_ACTIONS, Ids.DATA_SOURCE_ADD);
+        WizardFragment wizard = console.wizard();
         wizard.getRoot().findElement(By.cssSelector(H2_CSS_SELECTOR)).click();
         wizard.next(Ids.DATA_SOURCE_NAMES_FORM);
         FormFragment namesForms = wizard.getForm(Ids.DATA_SOURCE_NAMES_FORM);
@@ -213,8 +218,7 @@ class DataSourceCreateTest extends WildFlyTest {
 
         browser.findElement(By.id(Ids.DATA_SOURCE_TEST_CONNECTION)).click();
         wizard.verifySuccess(waitModel());
-        handlePossibleException(WizardFragment::cancel,
-                "not possible to click Cancel button in the wizard!");
+        handlePossibleException(wizard, WizardFragment::cancel, "not possible to click Cancel button in the wizard!");
 
         String itemId = Ids.dataSourceConfiguration(DATA_SOURCE_CREATE_TEST_CANCEL, false);
         Assertions.assertFalse(column.containsItem(itemId));
@@ -226,6 +230,8 @@ class DataSourceCreateTest extends WildFlyTest {
      */
     @Test
     void createTestFinish() throws Exception {
+        column.dropdownAction(Ids.DATA_SOURCE_ADD_ACTIONS, Ids.DATA_SOURCE_ADD);
+        WizardFragment wizard = console.wizard();
         wizard.getRoot().findElement(By.cssSelector(H2_CSS_SELECTOR)).click();
         wizard.next(Ids.DATA_SOURCE_NAMES_FORM);
         FormFragment namesForms = wizard.getForm(Ids.DATA_SOURCE_NAMES_FORM);
@@ -272,6 +278,8 @@ class DataSourceCreateTest extends WildFlyTest {
      */
     @Test
     void createTestChange() throws Exception {
+        column.dropdownAction(Ids.DATA_SOURCE_ADD_ACTIONS, Ids.DATA_SOURCE_ADD);
+        WizardFragment wizard = console.wizard();
         wizard.getRoot().findElement(By.cssSelector(H2_CSS_SELECTOR)).click();
         wizard.next(Ids.DATA_SOURCE_NAMES_FORM);
         FormFragment namesForms = wizard.getForm(Ids.DATA_SOURCE_NAMES_FORM);
@@ -286,7 +294,7 @@ class DataSourceCreateTest extends WildFlyTest {
 
         browser.findElement(By.id(Ids.DATA_SOURCE_TEST_CONNECTION)).click();
         wizard.verifySuccess(waitModel());
-        handlePossibleException(wizard -> wizard.back(Ids.DATA_SOURCE_CONNECTION_FORM),
+        handlePossibleException(wizard, wzd -> wzd.back(Ids.DATA_SOURCE_CONNECTION_FORM),
                 "not possible to click Back button in the wizard!");
 
         FormFragment connectionForm = wizard.getForm(Ids.DATA_SOURCE_CONNECTION_FORM);
@@ -318,7 +326,7 @@ class DataSourceCreateTest extends WildFlyTest {
                 .verifyAttribute(USER_NAME, "changed");
     }
 
-    private void handlePossibleException(Consumer<WizardFragment> action, String failMessage) {
+    private void handlePossibleException(WizardFragment wizard, Consumer<WizardFragment> action, String failMessage) {
         try {
             action.accept(wizard);
         } catch (InvalidElementStateException e) {

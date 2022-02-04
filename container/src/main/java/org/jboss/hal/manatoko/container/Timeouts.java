@@ -22,8 +22,6 @@ import static java.time.temporal.ChronoUnit.SECONDS;
 
 interface Timeouts {
 
-    int WEB_DRIVER_INIT_TRIES = 5;
-    Duration WEB_DRIVER_INIT_TIMEOUT = Duration.of(555, MILLIS);
     Duration BROWSER_STARTUP_TIMEOUT = Duration.of(66, SECONDS);
     Duration WILDFLY_STARTUP_TIMEOUT = Duration.of(333, SECONDS);
 
