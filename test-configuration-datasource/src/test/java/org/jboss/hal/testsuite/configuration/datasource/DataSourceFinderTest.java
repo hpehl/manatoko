@@ -59,10 +59,11 @@ class DataSourceFinderTest {
 
     @Container static WildFlyContainer wildFly = WildFlyContainer.version(_26, STANDALONE);
     static final String H2_DRIVER_NAME = "h2";
-    static final OnlineManagementClient client = wildFly.managementClient();
+    static OnlineManagementClient client;
 
     @BeforeAll
     static void setupModel() throws Exception {
+        client = wildFly.managementClient();
         client.apply(new AddDataSource.Builder<>(DATA_SOURCE_DELETE)
                 .driverName(H2_DRIVER_NAME)
                 .jndiName(Random.jndiName(DATA_SOURCE_DELETE))

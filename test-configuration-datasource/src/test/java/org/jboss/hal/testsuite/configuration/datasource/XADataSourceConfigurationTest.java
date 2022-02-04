@@ -54,10 +54,11 @@ import static org.jboss.hal.testsuite.fixtures.DataSourceFixtures.xaDataSourceAd
 class XADataSourceConfigurationTest {
 
     @Container static WildFlyContainer wildFly = WildFlyContainer.version(_26, STANDALONE);
-    static final OnlineManagementClient client = wildFly.managementClient();
+    static OnlineManagementClient client;
 
     @BeforeAll
     static void setupModel() throws Exception {
+        client = wildFly.managementClient();
         client.apply(new AddXADataSource.Builder<>(XA_DATA_SOURCE_UPDATE)
                 .driverName("h2")
                 .jndiName(Random.jndiName(XA_DATA_SOURCE_UPDATE))

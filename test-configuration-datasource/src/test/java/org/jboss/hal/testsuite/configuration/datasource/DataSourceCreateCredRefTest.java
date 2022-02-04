@@ -70,10 +70,11 @@ class DataSourceCreateCredRefTest {
 
     @Container static WildFlyContainer wildFly = WildFlyContainer.version(_26, STANDALONE);
     static final String H2_CSS_SELECTOR = "input[type=radio][name=template][value=h2]";
-    static final OnlineManagementClient client = wildFly.managementClient();
+    static OnlineManagementClient client;
 
     @BeforeAll
     static void setupModel() throws Exception {
+        client = wildFly.managementClient();
         Operations operations = new Operations(client);
         Values credParams = Values
                 .of(PATH, CRED_ST_CREATE)

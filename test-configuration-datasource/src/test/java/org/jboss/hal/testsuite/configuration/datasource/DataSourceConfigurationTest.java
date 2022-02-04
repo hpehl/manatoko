@@ -68,10 +68,11 @@ import static org.jboss.hal.testsuite.fixtures.DataSourceFixtures.h2ConnectionUr
 class DataSourceConfigurationTest {
 
     @Container static WildFlyContainer wildFly = WildFlyContainer.version(_26, STANDALONE);
-    static final OnlineManagementClient client = wildFly.managementClient();
+    static OnlineManagementClient client;
 
     @BeforeAll
     static void setupModel() throws Exception {
+        client = wildFly.managementClient();
         client.apply(new AddDataSource.Builder<>(DATA_SOURCE_UPDATE)
                 .driverName("h2")
                 .jndiName(Random.jndiName(DATA_SOURCE_UPDATE))

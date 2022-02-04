@@ -1,3 +1,5 @@
+# Manatoko
+
 Manatoko ([Maori](https://maoridictionary.co.nz/search?keywords=manatoko) for verify, test) is a new approach to test the [HAL](https://hal.github.io) management console. It builds on top of
 
 - [Testcontainers](https://www.testcontainers.org/)
@@ -6,7 +8,7 @@ Manatoko ([Maori](https://maoridictionary.co.nz/search?keywords=manatoko) for ve
 
 The goal is that tests should be self-contained. Containers are started and stopped when necessary and tests can focus on testing the UI and verifying management model changes. The biggest advantage of this approach is that it is very easy to run UI tests in a CI environment (as this repository [does](.github/workflows/ci.yml)).
 
-# Write Tests
+## Write Tests
 
 Tests need to be annotated with two annotations (in this order!):
 
@@ -47,12 +49,17 @@ class SystemPropertyTest {
 }
 ```
 
-# Run Tests
+## Run Tests
 
 Tests can be run in two modes, controlled by the system property `test.environment`. Valid values are either `local` or `remote`.
 
-- `remote`: this is the default mode. In this mode a [web river container](https://www.testcontainers.org/modules/webdriver_containers/) (with support of screen recording) is stated before all tests. An Arquillian extension is registered which provides a remote web driver connected to the browser running in this container.
-- `local`: this mode is activated by the maven profile `local`. In this mode a browser is started locally and Arquillian Graphene takes care of providing the web driver.
+### Remote
+
+This is the default mode. In this mode a [web driver container](https://www.testcontainers.org/modules/webdriver_containers/) (with support of screen recording) is stated before all tests. An Arquillian extension is registered which provides a remote web driver connected to the browser running in this container.
+
+### Local
+
+This mode is activated by the maven profile `local`. In this mode a browser is started locally and Arquillian Graphene takes care of providing the web driver.
 
 To run all tests, simply execute
 
@@ -81,7 +88,7 @@ If you want to execute one specific test or test method, use one of the followin
 
 If you want to debug a test, append `-Dmaven.surefire.debug` and attach a debugger to port 5005. 
 
-# Testcontainers, Podman & macOS
+## Testcontainers, Podman & macOS
 
 If you're using testcontainers with podman on macOS, please start `./tcpm.sh` and make sure to set the following environment variables **before** running the tests.
 

@@ -79,10 +79,11 @@ class DataSourceCreateTest {
 
     @Container static WildFlyContainer wildFly = WildFlyContainer.version(_26, STANDALONE);
     static final String H2_CSS_SELECTOR = "input[type=radio][name=template][value=h2]";
-    static final OnlineManagementClient client = wildFly.managementClient();
+    static OnlineManagementClient client;
 
     @BeforeAll
     static void setupModel() throws Exception {
+        client = wildFly.managementClient();
         client.apply(new AddDataSource.Builder<>(DATA_SOURCE_CREATE_EXISTING)
                 .driverName("h2")
                 .jndiName(Random.jndiName(DATA_SOURCE_CREATE_EXISTING))
