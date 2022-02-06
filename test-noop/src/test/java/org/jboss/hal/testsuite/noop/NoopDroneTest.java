@@ -16,11 +16,11 @@
 package org.jboss.hal.testsuite.noop;
 
 import org.jboss.arquillian.drone.api.annotation.Drone;
-import org.jboss.hal.testsuite.test.Manatoko;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.WebDriver;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.jboss.hal.testsuite.test.Manatoko;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 

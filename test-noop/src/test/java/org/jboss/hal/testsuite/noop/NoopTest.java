@@ -15,10 +15,10 @@
  */
 package org.jboss.hal.testsuite.noop;
 
-import org.jboss.hal.testsuite.test.Manatoko;
 import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.jboss.hal.testsuite.test.Manatoko;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 

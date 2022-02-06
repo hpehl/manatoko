@@ -209,9 +209,13 @@ public class Console {
     }
 
     public WizardFragment wizard() {
+        return wizard(WizardFragment.class);
+    }
+
+    public <T extends WizardFragment> T wizard(Class<T> wizardClass) {
         By wizardSelector = By.id(Ids.HAL_WIZARD);
         waitGui().until().element(wizardSelector).is().visible();
-        return createPageFragment(WizardFragment.class, browser.findElement(wizardSelector));
+        return createPageFragment(wizardClass, browser.findElement(wizardSelector));
     }
 
     // ------------------------------------------------------ elements

@@ -25,12 +25,12 @@ import org.jboss.arquillian.junit5.ArquillianExtension;
 import org.junit.jupiter.api.extension.ExtendWith;
 
 /**
- * {@code @Manatoko} is a composite JUnit Jupiter extension to activate {@code @SystemSetupExtension} and
- * {@code @ArquillianExtension}.
+ * {@code @Manatoko} is a composite JUnit Jupiter extension to activate {@code @SystemSetupExtension},
+ * {@code @TestcontainersExtension} and {@code @ArquillianExtension}.
  */
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
-@ExtendWith({ SystemSetupExtension.class, ArquillianExtension.class })
+@ExtendWith({SystemSetupExtension.class, ArquillianExtension.class})
 @Inherited
 public @interface Manatoko {
 }

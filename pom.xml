@@ -126,6 +126,8 @@
                 <module>test-noop</module>
                 <module>test-configuration-batch</module>
                 <module>test-configuration-datasource</module>
+                <module>test-configuration-distributableweb</module>
+                <module>test-configuration-ee</module>
                 <module>test-configuration-systemproperty</module>
             </modules>
         </profile>
@@ -134,6 +136,8 @@
             <modules>
                 <module>test-configuration-batch</module>
                 <module>test-configuration-datasource</module>
+                <module>test-configuration-distributableweb</module>
+                <module>test-configuration-ee</module>
                 <module>test-configuration-systemproperty</module>
             </modules>
         </profile>

@@ -13,27 +13,21 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package org.jboss.hal.testsuite.page;
+package org.jboss.hal.testsuite.page.configuration;
 
 import org.jboss.hal.meta.token.NameTokens;
 import org.jboss.hal.resources.Ids;
 import org.jboss.hal.testsuite.fragment.FormFragment;
-import org.jboss.hal.testsuite.fragment.TableFragment;
+import org.jboss.hal.testsuite.page.BasePage;
+import org.jboss.hal.testsuite.page.Place;
 import org.openqa.selenium.support.FindBy;
 
-import static org.jboss.hal.testsuite.Selectors.WRAPPER;
+@Place(NameTokens.MICRO_PROFILE_METRICS)
+public class MicroprofileMetricsPage extends BasePage {
 
-@Place(NameTokens.SYSTEM_PROPERTIES)
-public class SystemPropertyPage extends BasePage {
+    @FindBy(id = Ids.MICRO_PROFILE_METRICS_FORM) private FormFragment microprofileMetricsForm;
 
-    @FindBy(id = Ids.SYSTEM_PROPERTY_TABLE + WRAPPER) private TableFragment table;
-    @FindBy(id = Ids.SYSTEM_PROPERTY_FORM) private FormFragment form;
-
-    public TableFragment getTable() {
-        return table;
-    }
-
-    public FormFragment getForm() {
-        return form;
+    public FormFragment getMicroprofileMetricsForm() {
+        return microprofileMetricsForm;
     }
 }

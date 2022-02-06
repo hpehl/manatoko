@@ -13,7 +13,7 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package org.jboss.hal.testsuite.page;
+package org.jboss.hal.testsuite.page.deployment;
 
 import org.jboss.hal.meta.token.NameTokens;
 import org.jboss.hal.resources.Ids;
@@ -23,6 +23,8 @@ import org.jboss.hal.testsuite.fragment.WizardFragment;
 import org.jboss.hal.testsuite.fragment.finder.ColumnFragment;
 import org.jboss.hal.testsuite.fragment.finder.FinderPath;
 import org.jboss.hal.testsuite.fragment.finder.ItemFragment;
+import org.jboss.hal.testsuite.page.BasePage;
+import org.jboss.hal.testsuite.page.Place;
 
 import static org.jboss.hal.dmr.ModelDescriptionConstants.SERVER_GROUPS;
 

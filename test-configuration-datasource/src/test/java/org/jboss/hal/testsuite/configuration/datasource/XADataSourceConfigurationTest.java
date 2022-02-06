@@ -28,12 +28,12 @@ import org.jboss.hal.testsuite.Random;
 import org.jboss.hal.testsuite.container.WildFlyContainer;
 import org.jboss.hal.testsuite.creaper.ResourceVerifier;
 import org.jboss.hal.testsuite.fragment.FormFragment;
-import org.jboss.hal.testsuite.page.DataSourcePage;
-import org.jboss.hal.testsuite.test.Manatoko;
+import org.jboss.hal.testsuite.page.configuration.DataSourcePage;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.testcontainers.junit.jupiter.Container;
+import org.jboss.hal.testsuite.test.Manatoko;
 import org.testcontainers.junit.jupiter.Testcontainers;
 import org.wildfly.extras.creaper.commands.datasources.AddXADataSource;
 import org.wildfly.extras.creaper.core.online.OnlineManagementClient;
@@ -49,8 +49,8 @@ import static org.jboss.hal.testsuite.fixtures.DataSourceFixtures.XA_DATA_SOURCE
 import static org.jboss.hal.testsuite.fixtures.DataSourceFixtures.h2ConnectionUrl;
 import static org.jboss.hal.testsuite.fixtures.DataSourceFixtures.xaDataSourceAddress;
 
-@Testcontainers
 @Manatoko
+@Testcontainers
 class XADataSourceConfigurationTest {
 
     @Container static WildFlyContainer wildFly = WildFlyContainer.version(_26, STANDALONE);

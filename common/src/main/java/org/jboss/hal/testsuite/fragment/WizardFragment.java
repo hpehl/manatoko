@@ -47,7 +47,7 @@ public class WizardFragment {
     private static final String DOT = ".";
     private static final Logger logger = LoggerFactory.getLogger(WizardFragment.class);
 
-    @Root private WebElement root;
+    @Root protected WebElement root;
     @FindBy(css = DOT + modalFooter + " ." + btnPrimary) private WebElement primaryButton;
     @FindBy(css = DOT + modalFooter + " ." + btnCancel) private WebElement cancelButton;
     @FindByJQuery(DOT + modalFooter + " ." + btnDefault + ":contains('Back')") private WebElement backButton;

@@ -30,27 +30,38 @@ import org.wildfly.extras.creaper.core.online.operations.Address;
 
 import static org.jboss.hal.dmr.ModelDescriptionConstants.NAME;
 
-/** Methods useful to test and verify CRUD operations in application views. */
+/**
+ * Methods useful to test and verify CRUD operations in application views.
+ */
 public class CrudOperations {
 
-    private static final OnlineManagementClient client = WildFlyContainer.instance().managementClient();
-
     @Inject private Console console;
+    private final OnlineManagementClient client;
+
+    public CrudOperations() {
+        this.client = WildFlyContainer.instance().managementClient();
+    }
 
     // ------------------------------------------------------ create
 
-    /** Adds a resource using the 'Add' button of the specified table. */
+    /**
+     * Adds a resource using the 'Add' button of the specified table.
+     */
     public void create(Address address, TableFragment table, String name) throws Exception {
         create(address, table, form -> form.text(NAME, name));
     }
 
-    /** Adds a resource using the 'Add' button of the specified table. */
+    /**
+     * Adds a resource using the 'Add' button of the specified table.
+     */
     public void create(Address address, TableFragment table, Consumer<FormFragment> initialValues)
             throws Exception {
         create(address, table, initialValues, ResourceVerifier::verifyExists);
     }
 
-    /** Adds a resource using the 'Add' button of the specified table. */
+    /**
+     * Adds a resource using the 'Add' button of the specified table.
+     */
     public void create(Address address, TableFragment table, Consumer<FormFragment> initialValues,
             VerifyChanges verifyChanges) throws Exception {
         console.waitNoNotification();
@@ -62,18 +73,24 @@ public class CrudOperations {
         verifyChanges.verify(new ResourceVerifier(address, client));
     }
 
-    /** Adds a singleton resource using the main action of an empty state. */
+    /**
+     * Adds a singleton resource using the main action of an empty state.
+     */
     public void createSingleton(Address address, FormFragment form) throws Exception {
         createSingleton(address, form, null);
     }
 
-    /** Adds a singleton resource using the main action of an empty state and the specified initial form values. */
+    /**
+     * Adds a singleton resource using the main action of an empty state and the specified initial form values.
+     */
     public void createSingleton(Address address, FormFragment form, Consumer<FormFragment> initialValues)
             throws Exception {
         createSingleton(address, form, initialValues, ResourceVerifier::verifyExists);
     }
 
-    /** Adds a singleton resource using the main action of an empty state and the specified initial form values. */
+    /**
+     * Adds a singleton resource using the main action of an empty state and the specified initial form values.
+     */
     public void createSingleton(Address address, FormFragment form, Consumer<FormFragment> initialValues,
             VerifyChanges verifyChanges) throws Exception {
         form.emptyState().mainAction();
@@ -89,23 +106,31 @@ public class CrudOperations {
 
     // ------------------------------------------------------ create and expect error
 
-    /** Tries to add a resource and expects client side errors. */
+    /**
+     * Tries to add a resource and expects client side errors.
+     */
     public void createWithError(TableFragment table, String name, String expectError) {
         createWithError(table, form -> form.text(NAME, name), expectError);
     }
 
-    /** Tries to add a resource and expects client side errors. */
+    /**
+     * Tries to add a resource and expects client side errors.
+     */
     public void createWithError(TableFragment table, Consumer<FormFragment> initialValues,
             String expectError) {
         createWithErrorAndCloseDialogIfRequested(table, initialValues, expectError, false);
     }
 
-    /** Tries to add a resource and expects client side errors. Afterwards close dialog to clean up. */
+    /**
+     * Tries to add a resource and expects client side errors. Afterwards close dialog to clean up.
+     */
     public void createWithErrorAndCancelDialog(TableFragment table, String name, String expectError) {
         createWithErrorAndCancelDialog(table, form -> form.text(NAME, name), expectError);
     }
 
-    /** Tries to add a resource and expects client side errors. Afterwards close dialog to clean up. */
+    /**
+     * Tries to add a resource and expects client side errors. Afterwards close dialog to clean up.
+     */
     public void createWithErrorAndCancelDialog(TableFragment table, Consumer<FormFragment> initialValues,
             String expectError) {
         createWithErrorAndCloseDialogIfRequested(table, initialValues, expectError, true);
@@ -129,12 +154,16 @@ public class CrudOperations {
 
     // ------------------------------------------------------ reset
 
-    /** Resets the specified form and verifies the related resource. */
+    /**
+     * Resets the specified form and verifies the related resource.
+     */
     public void reset(Address address, FormFragment form) throws Exception {
         reset(address, form, ResourceVerifier::verifyReset);
     }
 
-    /** Resets the specified form and verifies the related resource. */
+    /**
+     * Resets the specified form and verifies the related resource.
+     */
     public void reset(Address address, FormFragment form, VerifyChanges verifyChanges) throws Exception {
         form.reset();
         console.verifySuccess();
@@ -143,37 +172,51 @@ public class CrudOperations {
 
     // ------------------------------------------------------ update
 
-    /** Updates the specified attribue of the form with a random value and verifies the changes. */
+    /**
+     * Updates the specified attribue of the form with a random value and verifies the changes.
+     */
     public void update(Address address, FormFragment form, String attribute) throws Exception {
         update(address, form, attribute, Random.name());
     }
 
-    /** Updates the specified form and verifies the changes. */
+    /**
+     * Updates the specified form and verifies the changes.
+     */
     public void update(Address address, FormFragment form, String attribute, boolean value) throws Exception {
         update(address, form, f -> f.flip(attribute, value), verifier -> verifier.verifyAttribute(attribute, value));
     }
 
-    /** Updates the specified form and verifies the changes. */
+    /**
+     * Updates the specified form and verifies the changes.
+     */
     public void update(Address address, FormFragment form, String attribute, int value) throws Exception {
         update(address, form, f -> f.number(attribute, value), verifier -> verifier.verifyAttribute(attribute, value));
     }
 
-    /** Updates the specified form and verifies the changes. */
+    /**
+     * Updates the specified form and verifies the changes.
+     */
     public void update(Address address, FormFragment form, String attribute, double value) throws Exception {
         update(address, form, f -> f.number(attribute, value), verifier -> verifier.verifyAttribute(attribute, value));
     }
 
-    /** Updates the specified form and verifies the changes. */
+    /**
+     * Updates the specified form and verifies the changes.
+     */
     public void update(Address address, FormFragment form, String attribute, long value) throws Exception {
         update(address, form, f -> f.number(attribute, value), verifier -> verifier.verifyAttribute(attribute, value));
     }
 
-    /** Updates the specified form and verifies the changes. */
+    /**
+     * Updates the specified form and verifies the changes.
+     */
     public void update(Address address, FormFragment form, String attribute, String value) throws Exception {
         update(address, form, f -> f.text(attribute, value), verifier -> verifier.verifyAttribute(attribute, value));
     }
 
-    /** Updates the specified form and verifies the changes. */
+    /**
+     * Updates the specified form and verifies the changes.
+     */
     public void update(Address address, FormFragment form, String attribute, List<String> values) throws Exception {
         update(address, form, f -> f.list(attribute).add(values), verifier -> {
             for (String value : values) {
@@ -182,13 +225,17 @@ public class CrudOperations {
         });
     }
 
-    /** Updates the specified form and verifies the changes. */
+    /**
+     * Updates the specified form and verifies the changes.
+     */
     public void update(Address address, FormFragment form, String attribute, ModelNode value) throws Exception {
         update(address, form, f -> f.properties(attribute).add(value),
                 verifier -> verifier.verifyAttribute(attribute, value));
     }
 
-    /** Updates the specified form and verifies the changes. */
+    /**
+     * Updates the specified form and verifies the changes.
+     */
     public void update(Address address, FormFragment form, Consumer<FormFragment> modifyFields,
             VerifyChanges verifyChanges) throws Exception {
         form.edit();
@@ -201,17 +248,23 @@ public class CrudOperations {
 
     // ------------------------------------------------------ update and expect error
 
-    /** Tries to update the specified form and expects client side errors. */
+    /**
+     * Tries to update the specified form and expects client side errors.
+     */
     public void updateWithError(FormFragment form, String attribute, int value) {
         updateWithError(form, f -> f.number(attribute, value), attribute);
     }
 
-    /** Tries to update the specified form and expects client side errors. */
+    /**
+     * Tries to update the specified form and expects client side errors.
+     */
     public void updateWithError(FormFragment form, String attribute, String value) {
         updateWithError(form, f -> f.text(attribute, value), attribute);
     }
 
-    /** Tries to update the specified form and expects client side errors. */
+    /**
+     * Tries to update the specified form and expects client side errors.
+     */
     public void updateWithError(FormFragment form, Consumer<FormFragment> modifyFields, String... expectError) {
         form.edit();
         modifyFields.accept(form);
@@ -226,12 +279,16 @@ public class CrudOperations {
 
     // ------------------------------------------------------ delete
 
-    /** Removes the named resource from the table and verifies that it no longer exists. */
+    /**
+     * Removes the named resource from the table and verifies that it no longer exists.
+     */
     public void delete(Address address, TableFragment table, String name) throws Exception {
         delete(address, table, name, ResourceVerifier::verifyDoesNotExist);
     }
 
-    /** Removes the named resource from the table and verifies that it no longer exists. */
+    /**
+     * Removes the named resource from the table and verifies that it no longer exists.
+     */
     public void delete(Address address, TableFragment table, String name, VerifyChanges verifyChanges)
             throws Exception {
         console.waitNoNotification();
@@ -240,12 +297,16 @@ public class CrudOperations {
         verifyChanges.verify(new ResourceVerifier(address, client));
     }
 
-    /** Removes a singleton resource and verifies that the resource no longer exists. */
+    /**
+     * Removes a singleton resource and verifies that the resource no longer exists.
+     */
     public void deleteSingleton(Address address, FormFragment form) throws Exception {
         deleteSingleton(address, form, ResourceVerifier::verifyDoesNotExist);
     }
 
-    /** Removes a singleton resource and verifies that the resource no longer exists. */
+    /**
+     * Removes a singleton resource and verifies that the resource no longer exists.
+     */
     public void deleteSingleton(Address address, FormFragment form, VerifyChanges verifyChanges) throws Exception {
         form.remove();
         console.verifySuccess();
