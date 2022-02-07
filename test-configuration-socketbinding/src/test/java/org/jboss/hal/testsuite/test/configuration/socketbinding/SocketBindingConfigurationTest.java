@@ -27,6 +27,7 @@ import org.jboss.hal.testsuite.page.configuration.SocketBindingPage;
 import org.jboss.hal.testsuite.test.Manatoko;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
@@ -46,6 +47,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @Manatoko
 @Testcontainers
+@Disabled // TODO Fix test issues
 class SocketBindingConfigurationTest {
 
     @Container static WildFlyContainer wildFly = WildFlyContainer.version(_26, STANDALONE);
