@@ -12,14 +12,24 @@ jobs:
           - test-configuration-distributableweb
           - test-configuration-ee
           - test-configuration-iiop
+          - test-configuration-infinispan
           - test-configuration-interface
           - test-configuration-io
+          - test-configuration-jca
+          - test-configuration-jmx
+          - test-configuration-jpa
+          - test-configuration-jsf
           - test-configuration-logging
           - test-configuration-mail
+          - test-configuration-messaging
+          - test-configuration-modcluster
+          - test-configuration-path
           - test-configuration-remoting
           - test-configuration-resourceadapter
+          - test-configuration-socketbinding
           - test-configuration-systemproperty
           - test-configuration-transaction
+          - test-noop
     runs-on: ubuntu-latest
     steps:
       - name: Checkout

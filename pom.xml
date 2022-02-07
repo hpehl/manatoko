@@ -123,7 +123,6 @@
         <profile>
             <id>all-tests</id>
             <modules>
-                <module>test-noop</module>
                 <module>test-configuration-batch</module>
                 <module>test-configuration-datasource</module>
                 <module>test-configuration-distributableweb</module>
@@ -132,13 +131,21 @@
                 <module>test-configuration-infinispan</module>
                 <module>test-configuration-interface</module>
                 <module>test-configuration-io</module>
+                <module>test-configuration-jca</module>
+                <module>test-configuration-jmx</module>
+                <module>test-configuration-jpa</module>
+                <module>test-configuration-jsf</module>
                 <module>test-configuration-logging</module>
                 <module>test-configuration-mail</module>
                 <module>test-configuration-messaging</module>
+                <module>test-configuration-modcluster</module>
+                <module>test-configuration-path</module>
                 <module>test-configuration-remoting</module>
                 <module>test-configuration-resourceadapter</module>
-                <module>test-configuration-transaction</module>
+                <module>test-configuration-socketbinding</module>
                 <module>test-configuration-systemproperty</module>
+                <module>test-configuration-transaction</module>
+                <module>test-noop</module>
             </modules>
         </profile>
         <profile>
@@ -151,13 +158,21 @@
                 <module>test-configuration-iiop</module>
                 <module>test-configuration-infinispan</module>
                 <module>test-configuration-interface</module>
+                <module>test-configuration-io</module>
+                <module>test-configuration-jca</module>
+                <module>test-configuration-jmx</module>
+                <module>test-configuration-jpa</module>
+                <module>test-configuration-jsf</module>
                 <module>test-configuration-logging</module>
                 <module>test-configuration-mail</module>
                 <module>test-configuration-messaging</module>
+                <module>test-configuration-modcluster</module>
+                <module>test-configuration-path</module>
                 <module>test-configuration-remoting</module>
                 <module>test-configuration-resourceadapter</module>
-                <module>test-configuration-transaction</module>
+                <module>test-configuration-socketbinding</module>
                 <module>test-configuration-systemproperty</module>
+                <module>test-configuration-transaction</module>
             </modules>
         </profile>
         <profile>
