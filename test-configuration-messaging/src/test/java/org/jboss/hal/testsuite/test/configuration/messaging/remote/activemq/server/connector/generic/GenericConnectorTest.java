@@ -1,0 +1,113 @@
+/*
+ *  Copyright 2022 Red Hat
+ *
+ *  Licensed under the Apache License, Version 2.0 (the "License");
+ *  you may not use this file except in compliance with the License.
+ *  You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *  Unless required by applicable law or agreed to in writing, software
+ *  distributed under the License is distributed on an "AS IS" BASIS,
+ *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *  See the License for the specific language governing permissions and
+ *  limitations under the License.
+ */
+package org.jboss.hal.testsuite.test.configuration.messaging.remote.activemq.server.connector.generic;
+
+import org.jboss.arquillian.core.api.annotation.Inject;
+import org.jboss.arquillian.graphene.page.Page;
+import org.jboss.hal.dmr.ModelDescriptionConstants;
+import org.jboss.hal.testsuite.Console;
+import org.jboss.hal.testsuite.CrudOperations;
+import org.jboss.hal.testsuite.Random;
+import org.jboss.hal.testsuite.container.WildFlyContainer;
+import org.jboss.hal.testsuite.creaper.ResourceVerifier;
+import org.jboss.hal.testsuite.creaper.command.AddLocalSocketBinding;
+import org.jboss.hal.testsuite.dmr.ModelNodeGenerator;
+import org.jboss.hal.testsuite.fixtures.MessagingFixtures;
+import org.jboss.hal.testsuite.page.configuration.MessagingRemoteActiveMQPage;
+import org.jboss.hal.testsuite.test.Manatoko;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.testcontainers.junit.jupiter.Container;
+import org.testcontainers.junit.jupiter.Testcontainers;
+import org.wildfly.extras.creaper.core.online.OnlineManagementClient;
+import org.wildfly.extras.creaper.core.online.operations.Operations;
+import org.wildfly.extras.creaper.core.online.operations.Values;
+
+import static org.jboss.hal.testsuite.container.WildFlyConfiguration.FULL_HA;
+import static org.jboss.hal.testsuite.container.WildFlyVersion._26;
+import static org.jboss.hal.testsuite.fixtures.MessagingFixtures.RemoteActiveMQServer;
+
+@Manatoko
+@Testcontainers
+class GenericConnectorTest {
+
+    private static final String GENERIC_CONNECTOR_CREATE = "generic-connector-to-create-" + Random.name();
+    private static final String GENERIC_CONNECTOR_UPDATE = "generic-connector-to-update-" + Random.name();
+    private static final String GENERIC_CONNECTOR_DELETE = "generic-connector-to-delete-" + Random.name();
+    private static final String LOCAL_SOCKET_BINDING = "local-socket-binding-" + Random.name();
+    @Container static WildFlyContainer wildFly = WildFlyContainer.version(_26, FULL_HA);
+
+    @BeforeAll
+    static void setupModel() throws Exception {
+        OnlineManagementClient client = wildFly.managementClient();
+        Operations operations = new Operations(client);
+        operations.add(RemoteActiveMQServer.genericConnectorAddress(GENERIC_CONNECTOR_UPDATE),
+                Values.of(MessagingFixtures.FACTORY_CLASS, Random.name())).assertSuccess();
+        operations.add(RemoteActiveMQServer.genericConnectorAddress(GENERIC_CONNECTOR_DELETE),
+                Values.of(MessagingFixtures.FACTORY_CLASS, Random.name())).assertSuccess();
+        AddLocalSocketBinding addLocalSocketBinding = new AddLocalSocketBinding(LOCAL_SOCKET_BINDING);
+        client.apply(addLocalSocketBinding);
+    }
+
+    @Inject Console console;
+    @Inject CrudOperations crudOperations;
+    @Page MessagingRemoteActiveMQPage page;
+
+    @BeforeEach
+    void prepare() {
+        page.navigate();
+        console.verticalNavigation().selectSecondary("msg-remote-connector-group-item", "msg-remote-connector-item");
+    }
+
+    @Test
+    void create() throws Exception {
+        crudOperations.create(RemoteActiveMQServer.genericConnectorAddress(GENERIC_CONNECTOR_CREATE),
+                page.getGenericConnectorTable(),
+                formFragment -> {
+                    formFragment.text(ModelDescriptionConstants.NAME, GENERIC_CONNECTOR_CREATE);
+                    formFragment.text(MessagingFixtures.FACTORY_CLASS, Random.name());
+                }, ResourceVerifier::verifyExists);
+    }
+
+    @Test
+    void remove() throws Exception {
+        crudOperations.delete(RemoteActiveMQServer.genericConnectorAddress(GENERIC_CONNECTOR_DELETE),
+                page.getGenericConnectorTable(), GENERIC_CONNECTOR_DELETE);
+    }
+
+    @Test
+    void editFactoryClass() throws Exception {
+        page.getGenericConnectorTable().select(GENERIC_CONNECTOR_UPDATE);
+        crudOperations.update(RemoteActiveMQServer.genericConnectorAddress(GENERIC_CONNECTOR_UPDATE),
+                page.getGenericConnectorForm(), MessagingFixtures.FACTORY_CLASS);
+    }
+
+    @Test
+    void editParams() throws Exception {
+        page.getGenericConnectorTable().select(GENERIC_CONNECTOR_UPDATE);
+        crudOperations.update(RemoteActiveMQServer.genericConnectorAddress(GENERIC_CONNECTOR_UPDATE),
+                page.getGenericConnectorForm(), "params",
+                new ModelNodeGenerator.ModelNodePropertiesBuilder().addProperty(Random.name(), Random.name()).build());
+    }
+
+    @Test
+    void editSocketBinding() throws Exception {
+        page.getGenericConnectorTable().select(GENERIC_CONNECTOR_UPDATE);
+        crudOperations.update(RemoteActiveMQServer.genericConnectorAddress(GENERIC_CONNECTOR_UPDATE),
+                page.getGenericConnectorForm(), "socket-binding", LOCAL_SOCKET_BINDING);
+    }
+}

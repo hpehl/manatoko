@@ -104,8 +104,8 @@
         <module>config</module>
         <module>container</module>
         <module>environment</module>
+        <module>fixture</module>
         <module>test-common</module>
-        <module>test-fixture</module>
         <module>test-parent</module>
     </modules>
 
@@ -129,10 +129,12 @@
                 <module>test-configuration-distributableweb</module>
                 <module>test-configuration-ee</module>
                 <module>test-configuration-iiop</module>
+                <module>test-configuration-infinispan</module>
                 <module>test-configuration-interface</module>
                 <module>test-configuration-io</module>
                 <module>test-configuration-logging</module>
                 <module>test-configuration-mail</module>
+                <module>test-configuration-messaging</module>
                 <module>test-configuration-remoting</module>
                 <module>test-configuration-resourceadapter</module>
                 <module>test-configuration-transaction</module>
@@ -147,9 +149,11 @@
                 <module>test-configuration-distributableweb</module>
                 <module>test-configuration-ee</module>
                 <module>test-configuration-iiop</module>
+                <module>test-configuration-infinispan</module>
                 <module>test-configuration-interface</module>
                 <module>test-configuration-logging</module>
                 <module>test-configuration-mail</module>
+                <module>test-configuration-messaging</module>
                 <module>test-configuration-remoting</module>
                 <module>test-configuration-resourceadapter</module>
                 <module>test-configuration-transaction</module>
