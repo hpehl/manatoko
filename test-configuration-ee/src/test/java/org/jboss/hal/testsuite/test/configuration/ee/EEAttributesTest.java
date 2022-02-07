@@ -23,10 +23,10 @@ import org.jboss.hal.testsuite.CrudOperations;
 import org.jboss.hal.testsuite.container.WildFlyContainer;
 import org.jboss.hal.testsuite.fragment.FormFragment;
 import org.jboss.hal.testsuite.page.configuration.EEPage;
+import org.jboss.hal.testsuite.test.Manatoko;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.testcontainers.junit.jupiter.Container;
-import org.jboss.hal.testsuite.test.Manatoko;
 import org.testcontainers.junit.jupiter.Testcontainers;
 
 import static org.jboss.hal.testsuite.container.WildFlyConfiguration.STANDALONE;

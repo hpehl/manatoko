@@ -23,10 +23,10 @@ import org.jboss.hal.testsuite.CrudOperations;
 import org.jboss.hal.testsuite.container.WildFlyContainer;
 import org.jboss.hal.testsuite.fragment.FormFragment;
 import org.jboss.hal.testsuite.page.configuration.EEPage;
+import org.jboss.hal.testsuite.test.Manatoko;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.testcontainers.junit.jupiter.Container;
-import org.jboss.hal.testsuite.test.Manatoko;
 import org.testcontainers.junit.jupiter.Testcontainers;
 
 import static org.jboss.hal.dmr.ModelDescriptionConstants.CONTEXT_SERVICE;
@@ -36,7 +36,7 @@ import static org.jboss.hal.testsuite.fixtures.EEFixtures.DEFAULT_BINDINGS_ADDRE
 
 @Manatoko
 @Testcontainers
-public class DefaultBindingsTest {
+class DefaultBindingsTest {
 
     @Container static WildFlyContainer wildFly = WildFlyContainer.version(_26, STANDALONE);
 
@@ -46,19 +46,19 @@ public class DefaultBindingsTest {
     FormFragment form;
 
     @BeforeEach
-    public void prepare() {
+    void prepare() {
         page.navigate();
         console.verticalNavigation().selectPrimary(Ids.EE_DEFAULT_BINDINGS_ITEM);
         form = page.getDefaultBindingsForm();
     }
 
     @Test
-    public void update() throws Exception {
+    void update() throws Exception {
         crud.update(DEFAULT_BINDINGS_ADDRESS, form, CONTEXT_SERVICE);
     }
 
     @Test
-    public void reset() throws Exception {
+    void reset() throws Exception {
         crud.reset(DEFAULT_BINDINGS_ADDRESS, form);
     }
 }
