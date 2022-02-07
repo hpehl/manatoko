@@ -34,7 +34,6 @@ import org.wildfly.extras.creaper.core.online.OnlineManagementClient;
 import org.wildfly.extras.creaper.core.online.operations.Operations;
 
 import static org.jboss.hal.dmr.ModelDescriptionConstants.CLIENT_SSL_CONTEXT;
-import static org.jboss.hal.dmr.ModelDescriptionConstants.ELYTRON;
 import static org.jboss.hal.dmr.ModelDescriptionConstants.GROUP;
 import static org.jboss.hal.dmr.ModelDescriptionConstants.IDENTITY;
 import static org.jboss.hal.dmr.ModelDescriptionConstants.IIOP_OPENJDK;
@@ -46,7 +45,7 @@ import static org.jboss.hal.dmr.ModelDescriptionConstants.SECURITY_DOMAIN;
 import static org.jboss.hal.dmr.ModelDescriptionConstants.SERVER_SSL_CONTEXT;
 import static org.jboss.hal.dmr.ModelDescriptionConstants.SOCKET_BINDING;
 import static org.jboss.hal.dmr.ModelDescriptionConstants.TRANSACTIONS;
-import static org.jboss.hal.testsuite.container.WildFlyConfiguration.HA;
+import static org.jboss.hal.testsuite.container.WildFlyConfiguration.FULL;
 import static org.jboss.hal.testsuite.container.WildFlyVersion._26;
 import static org.jboss.hal.testsuite.fixtures.IIOPFixtures.AUTH_METHOD;
 import static org.jboss.hal.testsuite.fixtures.IIOPFixtures.CALLER_PROPAGATION;
@@ -69,7 +68,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 @Testcontainers
 class IIOPTest {
 
-    @Container static WildFlyContainer wildFly = WildFlyContainer.version(_26, HA);
+    @Container static WildFlyContainer wildFly = WildFlyContainer.version(_26, FULL);
 
     @BeforeAll
     static void setupModel() throws Exception {
@@ -130,15 +129,6 @@ class IIOPTest {
             resourceVerifier.verifyAttribute(EXPORT_CORBALOC, true);
             resourceVerifier.verifyAttribute(ROOT_CONTEXT, DEFAULT_ROOT_CONTEXT);
         });
-    }
-
-    @Test
-    void updateInitializers() throws Exception {
-        page.getTabs().select(Ids.build(IIOP_PREFIX, GROUP, "initializers", Ids.TAB));
-        form = page.getInitializersForm();
-        crud.update(SUBSYSTEM_ADDRESS, form,
-                f -> f.select(SECURITY, ELYTRON),
-                resourceVerifier -> resourceVerifier.verifyAttribute(SECURITY, ELYTRON));
     }
 
     @Test

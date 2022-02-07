@@ -19,9 +19,9 @@ public enum WildFlyConfiguration {
 
     FULL("standalone-full"),
 
-    FULL_HA("standalone-ha"),
+    FULL_HA("standalone-full-ha"),
 
-    HA("standalone"),
+    HA("standalone-ha"),
 
     LOAD_BALANCER("standalone-load-balancer"),
 
