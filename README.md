@@ -6,7 +6,7 @@ Manatoko ([Maori](https://maoridictionary.co.nz/search?keywords=manatoko) for ve
 - [Arquillian Graphene 2](http://arquillian.org/arquillian-graphene/) and [Arquillian Drone](http://arquillian.org/arquillian-extension-drone/)
 - [JUnit 5](https://junit.org/junit5/)
 
-The goal is that tests should be self-contained. Containers are started and stopped when necessary and tests can focus on testing the UI and verifying management model changes. The biggest advantage of this approach is that it is very easy to run UI tests in a CI environment (as this repository [does](.github/workflows/ci.yml)).
+The goal is that tests should be self-contained. Containers are started and stopped when necessary and tests can focus on testing the UI and verifying management model changes. The biggest advantage of this approach is that it is very easy to run UI tests in a CI environment (as this repository [does](.github/workflows/test.yml)).
 
 ## Write Tests
 
@@ -17,7 +17,7 @@ Tests need to be annotated with two annotations (in this order!):
    - `ArquillianExtension`: Takes care about the Arquillian integration
 2. `@Testcontainers`: Takes care of starting containers marked with `@Container`.
 
-A simple test which tests adding a new system property could look like this:
+A simple test which tests adding a new system property looks like this:
 
 ```java
 @Manatoko
@@ -55,7 +55,7 @@ Tests can be run in two modes, controlled by the system property `test.environme
 
 ### Remote
 
-This is the default mode. In this mode a [web driver container](https://www.testcontainers.org/modules/webdriver_containers/) (with support of screen recording) is stated before all tests. An Arquillian extension is registered which provides a remote web driver connected to the browser running in this container.
+This is the default mode. In this mode a [web driver container](https://www.testcontainers.org/modules/webdriver_containers/) (with support of screen recording) is started before all tests. An Arquillian extension is registered which provides a remote web driver connected to the browser running in this container.
 
 ### Local
 
