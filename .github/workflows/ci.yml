@@ -3,16 +3,32 @@ name: Build and Run tests with Maven
 on: [push]
 
 jobs:
-  build:
+  test:
+    strategy:
+      matrix:
+        module:
+          - test-configuration-batch
+          - test-configuration-datasource
+          - test-configuration-distributableweb
+          - test-configuration-ee
+          - test-configuration-iiop
+          - test-configuration-interface
+          - test-configuration-io
+          - test-configuration-logging
+          - test-configuration-mail
+          - test-configuration-remoting
+          - test-configuration-resourceadapter
+          - test-configuration-systemproperty
+          - test-configuration-transaction
     runs-on: ubuntu-latest
-
     steps:
-      - uses: actions/checkout@v2
+      - name: Checkout
+        uses: actions/checkout@v2
       - name: Set up JDK 11
         uses: actions/setup-java@v2
         with:
           java-version: '11'
           distribution: 'temurin'
           cache: maven
-      - name: Build with Maven
-        run: mvn --batch-mode -P all-tests verify
+      - name: Test with Maven
+        run: mvn --batch-mode --projects ${{ matrix.module }} test --also-make -P all-tests
