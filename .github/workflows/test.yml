@@ -1,4 +1,4 @@
-name: Build and Run tests with Maven
+name: HAL UI Test
 
 on: [push]
 
@@ -24,11 +24,11 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
-      - name: Set up JDK 11
+      - name: Set up JDK
         uses: actions/setup-java@v2
         with:
           java-version: '11'
           distribution: 'temurin'
           cache: maven
-      - name: Test with Maven
-        run: mvn --batch-mode --projects ${{ matrix.module }} test --also-make -P all-tests
+      - name: Run Tests
+        run: mvn --batch-mode --projects ${{ matrix.module }} --also-make -P all-tests test
