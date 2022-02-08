@@ -1,3 +1,18 @@
+/*
+ *  Copyright 2022 Red Hat
+ *
+ *  Licensed under the Apache License, Version 2.0 (the "License");
+ *  you may not use this file except in compliance with the License.
+ *  You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *  Unless required by applicable law or agreed to in writing, software
+ *  distributed under the License is distributed on an "AS IS" BASIS,
+ *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *  See the License for the specific language governing permissions and
+ *  limitations under the License.
+ */
 package org.jboss.hal.testsuite.test.configuration.web.services.client.configuration;
 
 import java.util.HashMap;
@@ -31,14 +46,14 @@ import static org.jboss.hal.testsuite.container.WildFlyVersion._26;
 @Testcontainers
 class ClientConfigurationTest {
 
-    private static final String CLIENT_CONFIGURATION_CREATE =
-            "client-configuration-to-be-created-" + RandomStringUtils.randomAlphanumeric(7);
+    private static final String CLIENT_CONFIGURATION_CREATE = "client-configuration-to-be-created-"
+            + RandomStringUtils.randomAlphanumeric(7);
 
-    private static final String CLIENT_CONFIGURATION_EDIT =
-            "client-configuration-to-be-edited-" + RandomStringUtils.randomAlphanumeric(7);
+    private static final String CLIENT_CONFIGURATION_EDIT = "client-configuration-to-be-edited-"
+            + RandomStringUtils.randomAlphanumeric(7);
 
-    private static final String CLIENT_CONFIGURATION_REMOVE =
-            "client-configuration-to-be-removed-" + RandomStringUtils.randomAlphanumeric(7);
+    private static final String CLIENT_CONFIGURATION_REMOVE = "client-configuration-to-be-removed-"
+            + RandomStringUtils.randomAlphanumeric(7);
 
     @Container static WildFlyContainer wildFly = WildFlyContainer.version(_26, STANDALONE);
     private static OnlineManagementClient client;
@@ -83,8 +98,8 @@ class ClientConfigurationTest {
                     WebServicesFixtures.clientConfigurationAddress(CLIENT_CONFIGURATION_EDIT)
                             .and("property", entry.getKey()),
                     client)
-                    .verifyExists()
-                    .verifyAttribute("value", entry.getValue());
+                            .verifyExists()
+                            .verifyAttribute("value", entry.getValue());
         }
     }
 

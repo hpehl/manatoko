@@ -1,3 +1,18 @@
+/*
+ *  Copyright 2022 Red Hat
+ *
+ *  Licensed under the Apache License, Version 2.0 (the "License");
+ *  you may not use this file except in compliance with the License.
+ *  You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *  Unless required by applicable law or agreed to in writing, software
+ *  distributed under the License is distributed on an "AS IS" BASIS,
+ *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *  See the License for the specific language governing permissions and
+ *  limitations under the License.
+ */
 package org.jboss.hal.testsuite.test.configuration.web.services.client.configuration;
 
 import org.apache.commons.lang3.RandomStringUtils;
@@ -25,25 +40,25 @@ import static org.jboss.hal.testsuite.container.WildFlyVersion._26;
 @Testcontainers
 class PostHandlerChainTest {
 
-    private static final String CLIENT_CONFIGURATION_EDIT =
-            "client-configuration-to-be-edited-" + RandomStringUtils.randomAlphanumeric(7);
+    private static final String CLIENT_CONFIGURATION_EDIT = "client-configuration-to-be-edited-"
+            + RandomStringUtils.randomAlphanumeric(7);
 
-    private static final WebServicesFixtures.HandlerChain POST_HANDLER_CHAIN_CREATE =
-            new WebServicesFixtures.HandlerChain.Builder(CLIENT_CONFIGURATION_EDIT)
+    private static final WebServicesFixtures.HandlerChain POST_HANDLER_CHAIN_CREATE = new WebServicesFixtures.HandlerChain.Builder(
+            CLIENT_CONFIGURATION_EDIT)
                     .handlerChainName("post-handler-chain-to-be-created-" + RandomStringUtils.randomAlphanumeric(7))
                     .clientConfiguration()
                     .postHandlerChain()
                     .build();
 
-    private static final WebServicesFixtures.HandlerChain POST_HANDLER_CHAIN_EDIT =
-            new WebServicesFixtures.HandlerChain.Builder(CLIENT_CONFIGURATION_EDIT)
+    private static final WebServicesFixtures.HandlerChain POST_HANDLER_CHAIN_EDIT = new WebServicesFixtures.HandlerChain.Builder(
+            CLIENT_CONFIGURATION_EDIT)
                     .handlerChainName("post-handler-chain-to-be-edited-" + RandomStringUtils.randomAlphanumeric(7))
                     .clientConfiguration()
                     .postHandlerChain()
                     .build();
 
-    private static final WebServicesFixtures.HandlerChain POST_HANDLER_CHAIN_DELETE =
-            new WebServicesFixtures.HandlerChain.Builder(CLIENT_CONFIGURATION_EDIT)
+    private static final WebServicesFixtures.HandlerChain POST_HANDLER_CHAIN_DELETE = new WebServicesFixtures.HandlerChain.Builder(
+            CLIENT_CONFIGURATION_EDIT)
                     .handlerChainName("post-handler-chain-to-be-removed-" + RandomStringUtils.randomAlphanumeric(7))
                     .clientConfiguration()
                     .postHandlerChain()
