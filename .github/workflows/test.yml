@@ -9,6 +9,7 @@ jobs:
         module:
           - test-configuration-batch
           - test-configuration-datasource
+          - test-configuration-deploymentscanner
           - test-configuration-distributableweb
           - test-configuration-ee
           - test-configuration-iiop
@@ -16,6 +17,7 @@ jobs:
           - test-configuration-interface
           - test-configuration-io
           - test-configuration-jca
+          - test-configuration-jgroups
           - test-configuration-jmx
           - test-configuration-jpa
           - test-configuration-jsf
@@ -29,7 +31,7 @@ jobs:
           - test-configuration-socketbinding
           - test-configuration-systemproperty
           - test-configuration-transaction
-          - test-noop
+          - test-configuration-webservice
     runs-on: ubuntu-latest
     steps:
       - name: Checkout

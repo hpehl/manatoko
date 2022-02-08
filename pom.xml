@@ -125,6 +125,7 @@
             <modules>
                 <module>test-configuration-batch</module>
                 <module>test-configuration-datasource</module>
+                <module>test-configuration-deploymentscanner</module>
                 <module>test-configuration-distributableweb</module>
                 <module>test-configuration-ee</module>
                 <module>test-configuration-iiop</module>
@@ -132,6 +133,7 @@
                 <module>test-configuration-interface</module>
                 <module>test-configuration-io</module>
                 <module>test-configuration-jca</module>
+                <module>test-configuration-jgroups</module>
                 <module>test-configuration-jmx</module>
                 <module>test-configuration-jpa</module>
                 <module>test-configuration-jsf</module>
@@ -145,6 +147,7 @@
                 <module>test-configuration-socketbinding</module>
                 <module>test-configuration-systemproperty</module>
                 <module>test-configuration-transaction</module>
+                <module>test-configuration-webservice</module>
                 <module>test-noop</module>
             </modules>
         </profile>
@@ -153,6 +156,7 @@
             <modules>
                 <module>test-configuration-batch</module>
                 <module>test-configuration-datasource</module>
+                <module>test-configuration-deploymentscanner</module>
                 <module>test-configuration-distributableweb</module>
                 <module>test-configuration-ee</module>
                 <module>test-configuration-iiop</module>
@@ -160,6 +164,7 @@
                 <module>test-configuration-interface</module>
                 <module>test-configuration-io</module>
                 <module>test-configuration-jca</module>
+                <module>test-configuration-jgroups</module>
                 <module>test-configuration-jmx</module>
                 <module>test-configuration-jpa</module>
                 <module>test-configuration-jsf</module>
@@ -173,6 +178,7 @@
                 <module>test-configuration-socketbinding</module>
                 <module>test-configuration-systemproperty</module>
                 <module>test-configuration-transaction</module>
+                <module>test-configuration-webservice</module>
             </modules>
         </profile>
         <profile>
