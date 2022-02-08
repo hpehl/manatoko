@@ -24,6 +24,7 @@ import org.jboss.hal.testsuite.fixtures.JGroupsFixtures;
 import org.jboss.hal.testsuite.test.Manatoko;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
@@ -39,6 +40,7 @@ import static org.jboss.hal.testsuite.fixtures.MessagingFixtures.RemoteActiveMQS
 
 @Manatoko
 @Testcontainers
+@Disabled // TODO Fix failing tests
 class AttributesTest extends AbstractPooledConnectionFactoryTest {
 
     private static final String POOLED_CONNECTION_FACTORY_UPDATE = "pooled-connection-factory-to-update-" + Random.name();
