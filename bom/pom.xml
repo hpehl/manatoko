@@ -40,7 +40,7 @@
             </dependency>
             <dependency>
                 <groupId>${project.groupId}</groupId>
-                <artifactId>manatoko-common</artifactId>
+                <artifactId>manatoko-command</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
@@ -60,7 +60,17 @@
             </dependency>
             <dependency>
                 <groupId>${project.groupId}</groupId>
+                <artifactId>manatoko-management-model</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>${project.groupId}</groupId>
                 <artifactId>manatoko-test-common</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>${project.groupId}</groupId>
+                <artifactId>manatoko-ui</artifactId>
                 <version>${project.version}</version>
             </dependency>
         </dependencies>

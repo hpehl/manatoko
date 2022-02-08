@@ -20,16 +20,11 @@ import org.jboss.arquillian.graphene.page.Page;
 import org.jboss.hal.dmr.ModelDescriptionConstants;
 import org.jboss.hal.testsuite.Console;
 import org.jboss.hal.testsuite.CrudOperations;
-import org.jboss.hal.testsuite.Random;
 import org.jboss.hal.testsuite.fragment.WizardFragment;
 import org.jboss.hal.testsuite.fragment.finder.ColumnFragment;
 import org.jboss.hal.testsuite.page.configuration.MessagingServerHaPolicyPage;
 import org.wildfly.extras.creaper.core.online.operations.Address;
-import org.wildfly.extras.creaper.core.online.operations.Batch;
-import org.wildfly.extras.creaper.core.online.operations.Operations;
-import org.wildfly.extras.creaper.core.online.operations.Values;
 
-import static org.jboss.hal.dmr.ModelDescriptionConstants.PATH;
 import static org.jboss.hal.resources.Ids.MESSAGING_HA_REPLICATION;
 import static org.jboss.hal.resources.Ids.MESSAGING_HA_REPLICATION_COLOCATED;
 import static org.jboss.hal.resources.Ids.MESSAGING_HA_REPLICATION_LIVE_ONLY;
@@ -39,32 +34,17 @@ import static org.jboss.hal.resources.Ids.MESSAGING_HA_SHARED_STORE;
 import static org.jboss.hal.resources.Ids.MESSAGING_HA_SHARED_STORE_COLOCATED;
 import static org.jboss.hal.resources.Ids.MESSAGING_HA_SHARED_STORE_MASTER;
 import static org.jboss.hal.resources.Ids.MESSAGING_HA_SHARED_STORE_SLAVE;
-import static org.jboss.hal.testsuite.fixtures.MessagingFixtures.BINDINGS_DIRECTORY;
-import static org.jboss.hal.testsuite.fixtures.MessagingFixtures.JOURNAL_DIRECTORY;
-import static org.jboss.hal.testsuite.fixtures.MessagingFixtures.LARGE_MESSAGES_DIRECTORY;
-import static org.jboss.hal.testsuite.fixtures.MessagingFixtures.PAGING_DIRECTORY;
 import static org.jboss.hal.testsuite.fixtures.MessagingFixtures.SRV_UPDATE;
 import static org.jboss.hal.testsuite.fixtures.MessagingFixtures.haPolicyAddress;
-import static org.jboss.hal.testsuite.fixtures.MessagingFixtures.serverAddress;
-import static org.jboss.hal.testsuite.fixtures.MessagingFixtures.serverPathAddress;
 
 abstract class AbstractHaPolicyTest {
-
-    protected static void prepareServer(Operations operations) throws Exception {
-        Batch batchSrvUpd = new Batch();
-        batchSrvUpd.add(serverAddress(SRV_UPDATE));
-        batchSrvUpd.add(serverPathAddress(SRV_UPDATE, BINDINGS_DIRECTORY), Values.of(PATH, Random.name()));
-        batchSrvUpd.add(serverPathAddress(SRV_UPDATE, JOURNAL_DIRECTORY), Values.of(PATH, Random.name()));
-        batchSrvUpd.add(serverPathAddress(SRV_UPDATE, LARGE_MESSAGES_DIRECTORY), Values.of(PATH, Random.name()));
-        batchSrvUpd.add(serverPathAddress(SRV_UPDATE, PAGING_DIRECTORY), Values.of(PATH, Random.name()));
-        operations.batch(batchSrvUpd).assertSuccess();
-    }
 
     @Page protected MessagingServerHaPolicyPage page;
     @Inject protected Console console;
     @Inject protected CrudOperations crudOperations;
     protected ColumnFragment column;
     protected WizardFragment wizard;
+
 
     enum HAPolicy {
         LIVE_ONLY(MESSAGING_HA_REPLICATION, MESSAGING_HA_REPLICATION_LIVE_ONLY,
@@ -106,6 +86,7 @@ abstract class AbstractHaPolicyTest {
             consumer.accept(this);
         }
     }
+
 
     @FunctionalInterface
     interface HAPolicyConsumer {

@@ -17,6 +17,7 @@ package org.jboss.hal.testsuite.test.configuration.messaging.server.connections.
 
 import org.jboss.hal.resources.Ids;
 import org.jboss.hal.testsuite.Random;
+import org.jboss.hal.testsuite.command.AddMessagingServer;
 import org.jboss.hal.testsuite.container.WildFlyContainer;
 import org.jboss.hal.testsuite.fragment.FormFragment;
 import org.jboss.hal.testsuite.fragment.TableFragment;
@@ -24,7 +25,6 @@ import org.jboss.hal.testsuite.test.Manatoko;
 import org.jboss.hal.testsuite.test.configuration.messaging.server.connections.AbstractServerConnectionsTest;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
@@ -48,7 +48,6 @@ import static org.jboss.hal.testsuite.fixtures.MessagingFixtures.connectorGeneri
 
 @Manatoko
 @Testcontainers
-@Disabled // TODO Fix failing tests
 class GenericConnectorTest extends AbstractServerConnectionsTest {
 
     @Container static WildFlyContainer wildFly = WildFlyContainer.version(_26, FULL_HA);
@@ -56,8 +55,8 @@ class GenericConnectorTest extends AbstractServerConnectionsTest {
     @BeforeAll
     static void setupModel() throws Exception {
         OnlineManagementClient client = wildFly.managementClient();
+        client.apply(new AddMessagingServer(SRV_UPDATE));
         Operations operations = new Operations(client);
-        createServer(operations, SRV_UPDATE);
         operations.add(connectorGenericAddress(SRV_UPDATE, CONN_GEN_UPDATE), Values.of(FACTORY_CLASS, Random.name()))
                 .assertSuccess();
         operations.add(connectorGenericAddress(SRV_UPDATE, CONN_GEN_DELETE), Values.of(FACTORY_CLASS, Random.name()))

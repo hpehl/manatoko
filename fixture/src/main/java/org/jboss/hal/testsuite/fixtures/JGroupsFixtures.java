@@ -16,8 +16,8 @@
 package org.jboss.hal.testsuite.fixtures;
 
 import org.jboss.hal.resources.Ids;
-import org.jboss.hal.testsuite.CrudConstants;
 import org.jboss.hal.testsuite.Random;
+import org.jboss.hal.testsuite.model.CrudConstants;
 import org.wildfly.extras.creaper.core.online.operations.Address;
 
 import static org.jboss.hal.dmr.ModelDescriptionConstants.CHANNEL;

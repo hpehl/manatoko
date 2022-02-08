@@ -16,7 +16,8 @@
      limitations under the License.
 
 -->
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
@@ -100,13 +101,15 @@
         <module>arquillian</module>
         <module>bom</module>
         <module>code-parent</module>
-        <module>common</module>
+        <module>command</module>
         <module>config</module>
         <module>container</module>
         <module>environment</module>
         <module>fixture</module>
+        <module>management-model</module>
         <module>test-common</module>
         <module>test-parent</module>
+        <module>ui</module>
     </modules>
 
     <!-- No dependencies, no build configuration here! This is done in parent-code. -->

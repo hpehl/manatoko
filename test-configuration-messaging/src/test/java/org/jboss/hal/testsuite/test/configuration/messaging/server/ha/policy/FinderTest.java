@@ -15,23 +15,22 @@
  */
 package org.jboss.hal.testsuite.test.configuration.messaging.server.ha.policy;
 
+import com.gwtplatform.mvp.shared.proxy.PlaceRequest;
 import org.jboss.hal.meta.token.NameTokens;
 import org.jboss.hal.resources.Ids;
+import org.jboss.hal.testsuite.command.AddMessagingServer;
 import org.jboss.hal.testsuite.container.WildFlyContainer;
-import org.jboss.hal.testsuite.creaper.ResourceVerifier;
 import org.jboss.hal.testsuite.fragment.WizardFragment;
+import org.jboss.hal.testsuite.model.ResourceVerifier;
 import org.jboss.hal.testsuite.test.Manatoko;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.By;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
 import org.wildfly.extras.creaper.core.online.OnlineManagementClient;
 import org.wildfly.extras.creaper.core.online.operations.Operations;
-
-import com.gwtplatform.mvp.shared.proxy.PlaceRequest;
 
 import static org.jboss.arquillian.graphene.Graphene.waitModel;
 import static org.jboss.hal.dmr.ModelDescriptionConstants.MESSAGING_ACTIVEMQ;
@@ -56,7 +55,6 @@ import static org.jboss.hal.testsuite.fragment.finder.FinderFragment.configurati
 
 @Manatoko
 @Testcontainers
-@Disabled // TODO Fix failing tests
 class FinderTest extends AbstractHaPolicyTest {
 
     @Container static WildFlyContainer wildFly = WildFlyContainer.version(_26, FULL_HA);
@@ -67,7 +65,7 @@ class FinderTest extends AbstractHaPolicyTest {
     static void setupModel() throws Exception {
         client = wildFly.managementClient();
         operations = new Operations(client);
-        prepareServer(operations);
+        client.apply(new AddMessagingServer(SRV_UPDATE));
     }
 
     private final HAPolicyConsumer createPolicyInFinder = (haPolicy -> {
@@ -95,17 +93,17 @@ class FinderTest extends AbstractHaPolicyTest {
     });
 
     @BeforeEach
-    void prepare() throws Exception {
+    void prepare() {
         column = console.finder(NameTokens.CONFIGURATION, configurationSubsystemPath(MESSAGING_ACTIVEMQ)
-                .append(Ids.MESSAGING_CATEGORY, SERVER)
-                .append(MESSAGING_SERVER_CONFIGURATION, messagingServer(SRV_UPDATE)))
+                        .append(Ids.MESSAGING_CATEGORY, SERVER)
+                        .append(MESSAGING_SERVER_CONFIGURATION, messagingServer(SRV_UPDATE)))
                 .column(MESSAGING_SERVER_SETTINGS);
     }
 
-    void refreshConfigurationColumn() throws Exception {
+    void refreshConfigurationColumn() {
         // after the previous operations, it is necessary to refresh the "server" column
         console.finder(NameTokens.CONFIGURATION, configurationSubsystemPath(MESSAGING_ACTIVEMQ)
-                .append(Ids.MESSAGING_CATEGORY, SERVER))
+                        .append(Ids.MESSAGING_CATEGORY, SERVER))
                 .column(MESSAGING_SERVER_CONFIGURATION)
                 .refresh();
         prepare();

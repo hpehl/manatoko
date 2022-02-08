@@ -20,12 +20,12 @@ import org.jboss.arquillian.graphene.page.Page;
 import org.jboss.hal.testsuite.Console;
 import org.jboss.hal.testsuite.CrudOperations;
 import org.jboss.hal.testsuite.Random;
+import org.jboss.hal.testsuite.command.AddRemoteSocketBinding;
 import org.jboss.hal.testsuite.container.WildFlyContainer;
-import org.jboss.hal.testsuite.creaper.command.AddRemoteSocketBinding;
-import org.jboss.hal.testsuite.dmr.ModelNodeGenerator;
+import org.jboss.hal.testsuite.model.AvailablePortFinder;
+import org.jboss.hal.testsuite.model.ModelNodeGenerator;
 import org.jboss.hal.testsuite.page.configuration.ScatteredCachePage;
 import org.jboss.hal.testsuite.test.Manatoko;
-import org.jboss.hal.testsuite.util.AvailablePortFinder;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
@@ -108,7 +108,8 @@ class AttributesTest {
     @Test
     void toggleFetchState() throws Exception {
         console.waitNoNotification();
-        boolean fetchState = operations.readAttribute(hotrodStoreAddress(CACHE_CONTAINER, SCATTERED_CACHE), "fetch-state")
+        boolean fetchState = operations.readAttribute(hotrodStoreAddress(CACHE_CONTAINER, SCATTERED_CACHE),
+                "fetch-state")
                 .booleanValue(true);
         crudOperations.update(hotrodStoreAddress(CACHE_CONTAINER, SCATTERED_CACHE), page.getHotrodStoreAttributesForm(),
                 "fetch-state", !fetchState);
@@ -124,7 +125,8 @@ class AttributesTest {
     @Test
     void togglePassivation() throws Exception {
         console.waitNoNotification();
-        boolean passivation = operations.readAttribute(hotrodStoreAddress(CACHE_CONTAINER, SCATTERED_CACHE), "passivation")
+        boolean passivation = operations.readAttribute(hotrodStoreAddress(CACHE_CONTAINER, SCATTERED_CACHE),
+                "passivation")
                 .booleanValue(true);
         crudOperations.update(hotrodStoreAddress(CACHE_CONTAINER, SCATTERED_CACHE), page.getHotrodStoreAttributesForm(),
                 "passivation", !passivation);

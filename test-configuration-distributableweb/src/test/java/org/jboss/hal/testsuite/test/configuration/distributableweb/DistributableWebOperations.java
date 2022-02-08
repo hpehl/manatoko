@@ -16,9 +16,9 @@
 package org.jboss.hal.testsuite.test.configuration.distributableweb;
 
 import org.jboss.hal.testsuite.Random;
-import org.jboss.hal.testsuite.creaper.command.AddRemoteSocketBinding;
-import org.jboss.hal.testsuite.dmr.ModelNodeGenerator;
-import org.jboss.hal.testsuite.util.AvailablePortFinder;
+import org.jboss.hal.testsuite.command.AddRemoteSocketBinding;
+import org.jboss.hal.testsuite.model.AvailablePortFinder;
+import org.jboss.hal.testsuite.model.ModelNodeGenerator;
 import org.wildfly.extras.creaper.commands.infinispan.cache.AddLocalCache;
 import org.wildfly.extras.creaper.core.online.OnlineManagementClient;
 import org.wildfly.extras.creaper.core.online.operations.Batch;

@@ -18,14 +18,15 @@ package org.jboss.hal.testsuite.test.configuration.messaging.server.destinations
 import org.jboss.hal.meta.token.NameTokens;
 import org.jboss.hal.resources.Ids;
 import org.jboss.hal.testsuite.Random;
+import org.jboss.hal.testsuite.command.AddMessagingServer;
 import org.jboss.hal.testsuite.container.WildFlyContainer;
-import org.jboss.hal.testsuite.creaper.ResourceVerifier;
 import org.jboss.hal.testsuite.fragment.FormFragment;
 import org.jboss.hal.testsuite.fragment.TableFragment;
 import org.jboss.hal.testsuite.fragment.finder.ColumnFragment;
 import org.jboss.hal.testsuite.fragment.finder.FinderPath;
+import org.jboss.hal.testsuite.model.ResourceVerifier;
+import org.jboss.hal.testsuite.model.ServerEnvironmentUtils;
 import org.jboss.hal.testsuite.test.Manatoko;
-import org.jboss.hal.testsuite.util.ServerEnvironmentUtils;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
@@ -64,9 +65,9 @@ class JMSTopicTest extends AbstractServerDestinationsTest {
     @BeforeAll
     static void setupModel() throws Exception {
         client = wildFly.managementClient();
-        Operations operations = new Operations(client);
+        client.apply(new AddMessagingServer(SRV_UPDATE));
         serverEnvironmentUtils = new ServerEnvironmentUtils(client);
-        createServer(operations, SRV_UPDATE);
+        Operations operations = new Operations(client);
         operations.add(jmsTopicAddress(SRV_UPDATE, JMSTOPIC_UPDATE), Values.ofList(ENTRIES, Random.name()))
                 .assertSuccess();
         operations.add(jmsTopicAddress(SRV_UPDATE, JMSTOPIC_DELETE), Values.ofList(ENTRIES, Random.name()))

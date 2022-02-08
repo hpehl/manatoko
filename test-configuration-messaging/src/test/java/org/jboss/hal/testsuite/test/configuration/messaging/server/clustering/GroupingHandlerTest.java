@@ -17,13 +17,13 @@ package org.jboss.hal.testsuite.test.configuration.messaging.server.clustering;
 
 import org.jboss.hal.resources.Ids;
 import org.jboss.hal.testsuite.Random;
+import org.jboss.hal.testsuite.command.AddMessagingServer;
 import org.jboss.hal.testsuite.container.WildFlyContainer;
 import org.jboss.hal.testsuite.fragment.FormFragment;
 import org.jboss.hal.testsuite.fragment.TableFragment;
 import org.jboss.hal.testsuite.test.Manatoko;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
@@ -48,7 +48,6 @@ import static org.jboss.hal.testsuite.fixtures.MessagingFixtures.groupingHandler
 
 @Manatoko
 @Testcontainers
-@Disabled // TODO Fix failing tests
 class GroupingHandlerTest extends AbstractClusteringTest {
 
     private static final Values GH_PARAMS = Values.of(GROUPING_HANDLER_ADDRESS, Random.name())
@@ -59,8 +58,8 @@ class GroupingHandlerTest extends AbstractClusteringTest {
     @BeforeAll
     static void setupModel() throws Exception {
         OnlineManagementClient client = wildFly.managementClient();
+        client.apply(new AddMessagingServer(SRV_UPDATE));
         Operations operations = new Operations(client);
-        createServer(operations, SRV_UPDATE);
         operations.add(groupingHandlerAddress(SRV_UPDATE, GH_UPDATE), GH_PARAMS).assertSuccess();
         operations.add(groupingHandlerAddress(SRV_UPDATE, GH_DELETE), GH_PARAMS).assertSuccess();
     }

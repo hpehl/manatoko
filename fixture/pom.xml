@@ -35,7 +35,7 @@
         <!-- Manatoko -->
         <dependency>
             <groupId>${project.groupId}</groupId>
-            <artifactId>manatoko-common</artifactId>
+            <artifactId>manatoko-management-model</artifactId>
         </dependency>
 
         <!-- WildFly, JBoss & HAL -->

@@ -17,13 +17,13 @@ package org.jboss.hal.testsuite.test.configuration.messaging.server.ha.policy;
 
 import org.jboss.arquillian.graphene.findby.ByJQuery;
 import org.jboss.hal.dmr.ModelDescriptionConstants;
+import org.jboss.hal.testsuite.command.AddMessagingServer;
 import org.jboss.hal.testsuite.container.WildFlyContainer;
-import org.jboss.hal.testsuite.creaper.ResourceVerifier;
 import org.jboss.hal.testsuite.fixtures.MessagingFixtures;
 import org.jboss.hal.testsuite.fragment.EmptyState;
+import org.jboss.hal.testsuite.model.ResourceVerifier;
 import org.jboss.hal.testsuite.test.Manatoko;
 import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.By;
 import org.testcontainers.junit.jupiter.Container;
@@ -33,10 +33,10 @@ import org.wildfly.extras.creaper.core.online.operations.Operations;
 
 import static org.jboss.hal.testsuite.container.WildFlyConfiguration.FULL_HA;
 import static org.jboss.hal.testsuite.container.WildFlyVersion._26;
+import static org.jboss.hal.testsuite.fixtures.MessagingFixtures.SRV_UPDATE;
 
 @Manatoko
 @Testcontainers
-@Disabled // TODO Fix failing tests
 class ViewTest extends AbstractHaPolicyTest {
 
     @Container static WildFlyContainer wildFly = WildFlyContainer.version(_26, FULL_HA);
@@ -46,8 +46,8 @@ class ViewTest extends AbstractHaPolicyTest {
     @BeforeAll
     static void setupModel() throws Exception {
         client = wildFly.managementClient();
+        client.apply(new AddMessagingServer(SRV_UPDATE));
         operations = new Operations(client);
-        prepareServer(operations);
     }
 
     private final HAPolicyConsumer createPolicyInView = haPolicy -> {

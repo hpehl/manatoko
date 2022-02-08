@@ -23,9 +23,9 @@ import org.jboss.hal.testsuite.Random;
 import org.wildfly.extras.creaper.core.online.operations.Address;
 
 import static org.jboss.hal.dmr.ModelDescriptionConstants.MICROPROFILE_CONFIG_SMALLRYE;
-import static org.jboss.hal.testsuite.CrudConstants.CREATE;
-import static org.jboss.hal.testsuite.CrudConstants.DELETE;
-import static org.jboss.hal.testsuite.CrudConstants.UPDATE;
+import static org.jboss.hal.testsuite.model.CrudConstants.CREATE;
+import static org.jboss.hal.testsuite.model.CrudConstants.DELETE;
+import static org.jboss.hal.testsuite.model.CrudConstants.UPDATE;
 
 public class MicroprofileConfigFixtures {
 

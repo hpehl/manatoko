@@ -17,7 +17,7 @@ package org.jboss.hal.testsuite.test.configuration.infinispan.remote.cache.conta
 
 import org.jboss.hal.testsuite.Random;
 import org.jboss.hal.testsuite.container.WildFlyContainer;
-import org.jboss.hal.testsuite.dmr.ModelNodeGenerator;
+import org.jboss.hal.testsuite.model.ModelNodeGenerator;
 import org.jboss.hal.testsuite.test.Manatoko;
 import org.jboss.hal.testsuite.test.configuration.infinispan.remote.cache.container.AbstractRemoteCacheContainerTest;
 import org.junit.jupiter.api.BeforeAll;

@@ -16,6 +16,7 @@
 package org.jboss.hal.testsuite.test.configuration.messaging.server.connections.acceptor.in.vm;
 
 import org.jboss.hal.resources.Ids;
+import org.jboss.hal.testsuite.command.AddMessagingServer;
 import org.jboss.hal.testsuite.container.WildFlyContainer;
 import org.jboss.hal.testsuite.fragment.FormFragment;
 import org.jboss.hal.testsuite.fragment.TableFragment;
@@ -23,7 +24,6 @@ import org.jboss.hal.testsuite.test.Manatoko;
 import org.jboss.hal.testsuite.test.configuration.messaging.server.connections.AbstractServerConnectionsTest;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
@@ -49,7 +49,6 @@ import static org.jboss.hal.testsuite.fixtures.MessagingFixtures.acceptorInVMAdd
 
 @Manatoko
 @Testcontainers
-@Disabled // TODO Fix failing tests
 class InVMAcceptorTest extends AbstractServerConnectionsTest {
 
     @Container static WildFlyContainer wildFly = WildFlyContainer.version(_26, FULL_HA);
@@ -57,8 +56,8 @@ class InVMAcceptorTest extends AbstractServerConnectionsTest {
     @BeforeAll
     static void setupModel() throws Exception {
         OnlineManagementClient client = wildFly.managementClient();
+        client.apply(new AddMessagingServer(SRV_UPDATE));
         Operations operations = new Operations(client);
-        createServer(operations, SRV_UPDATE);
         operations.add(acceptorInVMAddress(SRV_UPDATE, ACCP_INVM_UPDATE), Values.of(SERVER_ID, 11)).assertSuccess();
         operations.add(acceptorInVMAddress(SRV_UPDATE, ACCP_INVM_TRY_UPDATE), Values.of(SERVER_ID, 12)).assertSuccess();
         operations.add(acceptorInVMAddress(SRV_UPDATE, ACCP_INVM_DELETE), Values.of(SERVER_ID, 22)).assertSuccess();

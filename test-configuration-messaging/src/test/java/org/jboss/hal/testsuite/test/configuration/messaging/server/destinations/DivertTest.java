@@ -16,13 +16,13 @@
 package org.jboss.hal.testsuite.test.configuration.messaging.server.destinations;
 
 import org.jboss.hal.testsuite.Random;
+import org.jboss.hal.testsuite.command.AddMessagingServer;
 import org.jboss.hal.testsuite.container.WildFlyContainer;
 import org.jboss.hal.testsuite.fragment.FormFragment;
 import org.jboss.hal.testsuite.fragment.TableFragment;
 import org.jboss.hal.testsuite.test.Manatoko;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
@@ -46,7 +46,6 @@ import static org.jboss.hal.testsuite.fixtures.MessagingFixtures.divertAddress;
 
 @Manatoko
 @Testcontainers
-@Disabled // TODO Fix failing tests
 class DivertTest extends AbstractServerDestinationsTest {
 
     @Container static WildFlyContainer wildFly = WildFlyContainer.version(_26, FULL_HA);
@@ -54,8 +53,8 @@ class DivertTest extends AbstractServerDestinationsTest {
     @BeforeAll
     static void setupModel() throws Exception {
         OnlineManagementClient client = wildFly.managementClient();
+        client.apply(new AddMessagingServer(SRV_UPDATE));
         Operations operations = new Operations(client);
-        createServer(operations, SRV_UPDATE);
         operations.add(divertAddress(SRV_UPDATE, DIVERT_UPDATE),
                 Values.of(DIVERT_ADDRESS, Random.name()).and(FORWARDING_ADDRESS, Random.name())).assertSuccess();
         operations.add(divertAddress(SRV_UPDATE, DIVERT_DELETE),

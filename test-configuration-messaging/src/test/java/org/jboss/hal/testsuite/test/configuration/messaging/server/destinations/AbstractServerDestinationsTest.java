@@ -15,40 +15,15 @@
  */
 package org.jboss.hal.testsuite.test.configuration.messaging.server.destinations;
 
-import java.io.IOException;
-
 import org.jboss.arquillian.core.api.annotation.Inject;
 import org.jboss.arquillian.graphene.page.Page;
 import org.jboss.hal.testsuite.Console;
 import org.jboss.hal.testsuite.CrudOperations;
-import org.jboss.hal.testsuite.Random;
 import org.jboss.hal.testsuite.page.configuration.MessagingServerDestinationsPage;
-import org.wildfly.extras.creaper.core.online.operations.Batch;
-import org.wildfly.extras.creaper.core.online.operations.Operations;
-import org.wildfly.extras.creaper.core.online.operations.Values;
-
-import static org.jboss.hal.dmr.ModelDescriptionConstants.PATH;
-import static org.jboss.hal.testsuite.fixtures.MessagingFixtures.BINDINGS_DIRECTORY;
-import static org.jboss.hal.testsuite.fixtures.MessagingFixtures.ELYTRON_DOMAIN;
-import static org.jboss.hal.testsuite.fixtures.MessagingFixtures.JOURNAL_DIRECTORY;
-import static org.jboss.hal.testsuite.fixtures.MessagingFixtures.LARGE_MESSAGES_DIRECTORY;
-import static org.jboss.hal.testsuite.fixtures.MessagingFixtures.PAGING_DIRECTORY;
-import static org.jboss.hal.testsuite.fixtures.MessagingFixtures.serverAddress;
-import static org.jboss.hal.testsuite.fixtures.MessagingFixtures.serverPathAddress;
 
 abstract class AbstractServerDestinationsTest {
 
     protected static final String ID_DELIMITER = "-";
-
-    protected static void createServer(Operations operations, String name) throws IOException {
-        Batch batchSrvUpd = new Batch();
-        batchSrvUpd.add(serverAddress(name), Values.of(ELYTRON_DOMAIN, "ApplicationDomain"));
-        batchSrvUpd.add(serverPathAddress(name, BINDINGS_DIRECTORY), Values.of(PATH, Random.name()));
-        batchSrvUpd.add(serverPathAddress(name, JOURNAL_DIRECTORY), Values.of(PATH, Random.name()));
-        batchSrvUpd.add(serverPathAddress(name, LARGE_MESSAGES_DIRECTORY), Values.of(PATH, Random.name()));
-        batchSrvUpd.add(serverPathAddress(name, PAGING_DIRECTORY), Values.of(PATH, Random.name()));
-        operations.batch(batchSrvUpd).assertSuccess();
-    }
 
     @Inject protected Console console;
     @Inject protected CrudOperations crudOperations;
