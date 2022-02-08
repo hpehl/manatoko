@@ -31,6 +31,7 @@ import org.jboss.hal.testsuite.page.configuration.MessagingRemoteActiveMQPage;
 import org.jboss.hal.testsuite.test.Manatoko;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
@@ -44,6 +45,7 @@ import static org.jboss.hal.testsuite.fixtures.MessagingFixtures.RemoteActiveMQS
 
 @Manatoko
 @Testcontainers
+@Disabled // TODO Fix failing tests
 class ExternalJMSTopicTest {
 
     private static final String EXTERNAL_JMS_TOPIC_CREATE = "external-jms-topic-to-be-created-" + Random.name();

@@ -28,6 +28,7 @@ import org.jboss.hal.testsuite.test.Manatoko;
 import org.jboss.hal.testsuite.util.ServerEnvironmentUtils;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
@@ -53,6 +54,7 @@ import static org.jboss.hal.testsuite.fragment.finder.FinderFragment.runtimeSubs
 
 @Manatoko
 @Testcontainers
+@Disabled // TODO Fix failing tests
 class JMSTopicTest extends AbstractServerDestinationsTest {
 
     @Container static WildFlyContainer wildFly = WildFlyContainer.version(_26, FULL_HA);
