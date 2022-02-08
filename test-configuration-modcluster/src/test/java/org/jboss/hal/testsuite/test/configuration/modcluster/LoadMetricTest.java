@@ -87,9 +87,9 @@ class LoadMetricTest {
     @Test
     void create() throws Exception {
         crud.create(loadMetricAddress(PROXY_UPDATE, LOAD_METRIC_CREATE), table, f -> {
-                    f.text(NAME, LOAD_METRIC_CREATE);
-                    f.select(TYPE, "cpu");
-                },
+            f.text(NAME, LOAD_METRIC_CREATE);
+            f.select(TYPE, "cpu");
+        },
                 ver -> ver.verifyAttribute(TYPE, "cpu"));
     }
 

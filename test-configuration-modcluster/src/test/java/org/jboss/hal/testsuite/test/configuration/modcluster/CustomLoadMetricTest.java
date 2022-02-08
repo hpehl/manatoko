@@ -87,9 +87,9 @@ class CustomLoadMetricTest {
     @Test
     void create() throws Exception {
         crud.create(customLoadMetricAddress(PROXY_UPDATE, CUSTOM_LOAD_METRIC_CREATE), table, f -> {
-                    f.text(NAME, CUSTOM_LOAD_METRIC_CREATE);
-                    f.text(CLASS, CLASS_NAME);
-                },
+            f.text(NAME, CUSTOM_LOAD_METRIC_CREATE);
+            f.text(CLASS, CLASS_NAME);
+        },
                 ver -> ver.verifyAttribute(CLASS, CLASS_NAME));
     }
 

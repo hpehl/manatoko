@@ -15,7 +15,6 @@
  */
 package org.jboss.hal.testsuite.test.configuration.modcluster;
 
-import com.gwtplatform.mvp.shared.proxy.PlaceRequest;
 import org.jboss.arquillian.core.api.annotation.Inject;
 import org.jboss.hal.meta.token.NameTokens;
 import org.jboss.hal.resources.Ids;
@@ -36,6 +35,8 @@ import org.testcontainers.junit.jupiter.Testcontainers;
 import org.wildfly.extras.creaper.core.online.OnlineManagementClient;
 import org.wildfly.extras.creaper.core.online.operations.Operations;
 import org.wildfly.extras.creaper.core.online.operations.Values;
+
+import com.gwtplatform.mvp.shared.proxy.PlaceRequest;
 
 import static org.jboss.hal.dmr.ModelDescriptionConstants.HTTPS;
 import static org.jboss.hal.dmr.ModelDescriptionConstants.LISTENER;
