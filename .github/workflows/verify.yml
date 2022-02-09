@@ -3,7 +3,7 @@ name: Verify Codebase
 on: push
 
 jobs:
-  test:
+  verify:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -14,5 +14,5 @@ jobs:
           java-version: '11'
           distribution: 'temurin'
           cache: maven
-      - name: Run Tests
+      - name: Run Verify
         run: mvn --batch-mode -P all-tests -DskipTests verify
