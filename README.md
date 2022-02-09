@@ -105,7 +105,7 @@ Formats the codebase by applying the following maven goals:
 Validates the codebase by applying the following maven goals:
 
 - [`enforder:enforce`](https://maven.apache.org/enforcer/maven-enforcer-plugin/enforce-mojo.html)
-- [`checkstyle-check`](https://maven.apache.org/plugins/maven-checkstyle-plugin/check-mojo.html)
+- [`checkstyle:check`](https://maven.apache.org/plugins/maven-checkstyle-plugin/check-mojo.html)
 - [`license-maven-plugin:check`](https://mycila.carbou.me/license-maven-plugin/#goals)
 - [`formatter-maven-plugin:validate`](https://code.revelc.net/formatter-maven-plugin/validate-mojo.html)
 - [`impsort-maven-plugin:check`](https://code.revelc.net/impsort-maven-plugin/check-mojo.html)
