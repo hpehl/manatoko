@@ -100,6 +100,8 @@ Formats the codebase by applying the following maven goals:
 - [`formatter-maven-plugin:format`](https://code.revelc.net/formatter-maven-plugin/format-mojo.html)
 - [`impsort-maven-plugin:sort`](https://code.revelc.net/impsort-maven-plugin/sort-mojo.html)
 
+The goals use the configuration in [code-parent/pom.xml](code-parent/pom.xml#L201) and [config/src/main/resources/manatoko](config/src/main/resources/manatoko).  
+
 ### `validate.sh`
 
 Validates the codebase by applying the following maven goals:
@@ -109,14 +111,20 @@ Validates the codebase by applying the following maven goals:
 - [`license-maven-plugin:check`](https://mycila.carbou.me/license-maven-plugin/#goals)
 - [`formatter-maven-plugin:validate`](https://code.revelc.net/formatter-maven-plugin/validate-mojo.html)
 - [`impsort-maven-plugin:check`](https://code.revelc.net/impsort-maven-plugin/check-mojo.html)
+
+The goals use the configuration in [code-parent/pom.xml](code-parent/pom.xml#L201) and [config/src/main/resources/manatoko](config/src/main/resources/manatoko).
   
 ### `gh-test-all.sh`
 
-Runs all tests in all test modules. This script triggers the workflow defined in [`test-all.yml`](.github/workflows/test-all.yml). The tests are run in parallel, but please note that this might take some time. 
+Runs all tests in all test modules. This script triggers the workflow defined in [`test-all.yml`](.github/workflows/test-all.yml). The tests are run in parallel, but please note that this might take some time.
+
+The script requires [GitHub CLI](https://cli.github.com/) to be present and configured on your machine. 
 
 ### `gh-test-single.sh`
 
 Runs the tests of a single test module given as argument. This script triggers the workflow defined in [`test-single.yml`](.github/workflows/test-single.yml).
+
+The script requires [GitHub CLI](https://cli.github.com/) to be present and configured on your machine.
 
 ### `tcpm.sh`
 
