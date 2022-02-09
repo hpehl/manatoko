@@ -100,7 +100,7 @@ Formats the codebase by applying the following maven goals:
 - [`formatter-maven-plugin:format`](https://code.revelc.net/formatter-maven-plugin/format-mojo.html)
 - [`impsort-maven-plugin:sort`](https://code.revelc.net/impsort-maven-plugin/sort-mojo.html)
 
-The goals use the configuration in [code-parent/pom.xml](code-parent/pom.xml#L201) and [config/src/main/resources/manatoko](config/src/main/resources/manatoko).  
+The goals use the plugin configuration in [code-parent/pom.xml](code-parent/pom.xml#L201) and the resources in [config/src/main/resources/manatoko](config/src/main/resources/manatoko).  
 
 ### `validate.sh`
 
@@ -112,7 +112,7 @@ Validates the codebase by applying the following maven goals:
 - [`formatter-maven-plugin:validate`](https://code.revelc.net/formatter-maven-plugin/validate-mojo.html)
 - [`impsort-maven-plugin:check`](https://code.revelc.net/impsort-maven-plugin/check-mojo.html)
 
-The goals use the configuration in [code-parent/pom.xml](code-parent/pom.xml#L201) and [config/src/main/resources/manatoko](config/src/main/resources/manatoko).
+The goals use the plugin configuration in [code-parent/pom.xml](code-parent/pom.xml#L201) and the resources in [config/src/main/resources/manatoko](config/src/main/resources/manatoko).
   
 ### `gh-test-all.sh`
 
