@@ -6,7 +6,7 @@ Manatoko ([Maori](https://maoridictionary.co.nz/search?keywords=manatoko) for ve
 - [Arquillian Graphene 2](http://arquillian.org/arquillian-graphene/) and [Arquillian Drone](http://arquillian.org/arquillian-extension-drone/)
 - [JUnit 5](https://junit.org/junit5/)
 
-The goal is that tests should be self-contained. Containers are started and stopped when necessary and tests can focus on testing the UI and verifying management model changes. The biggest advantage of this approach is that it is very easy to run UI tests in a CI environment (as this repository [does](.github/workflows/test.yml)).
+The goal is that tests should be self-contained. Containers are started and stopped when necessary and tests can focus on testing the UI and verifying management model changes. The biggest advantage of this approach is that it is very easy to run UI tests in a CI environment.
 
 ## Write Tests
 
@@ -88,7 +88,37 @@ If you want to execute one specific test or test method, use one of the followin
 
 If you want to debug a test, append `-Dmaven.surefire.debug` and attach a debugger to port 5005. 
 
-## Testcontainers, Podman & macOS
+## Scripts
+
+This repository contains various scripts to automate tasks.
+
+### `format.sh`
+
+Formats the codebase by applying the following maven goals:
+
+- [`license-maven-plugin:format`](https://mycila.carbou.me/license-maven-plugin/#goals)
+- [`formatter-maven-plugin:format`](https://code.revelc.net/formatter-maven-plugin/format-mojo.html)
+- [`impsort-maven-plugin:sort`](https://code.revelc.net/impsort-maven-plugin/sort-mojo.html)
+
+### `validate.sh`
+
+Validates the codebase by applying the following maven goals:
+
+- [`enforder:enforce`](https://maven.apache.org/enforcer/maven-enforcer-plugin/enforce-mojo.html)
+- [`checkstyle-check`](https://maven.apache.org/plugins/maven-checkstyle-plugin/check-mojo.html)
+- [`license-maven-plugin:check`](https://mycila.carbou.me/license-maven-plugin/#goals)
+- [`formatter-maven-plugin:validate`](https://code.revelc.net/formatter-maven-plugin/validate-mojo.html)
+- [`impsort-maven-plugin:check`](https://code.revelc.net/impsort-maven-plugin/check-mojo.html)
+  
+### `gh-test-all.sh`
+
+Runs all tests in all test modules. This script triggers the workflow defined in [`test-all.yml`](.github/workflows/test-all.yml). The tests are run in parallel, but please note that this might take some time. 
+
+### `gh-test-single.sh`
+
+Runs the tests of a single test module given as argument. This script triggers the workflow defined in [`test-single.yml`](.github/workflows/test-single.yml).
+
+### `tcpm.sh`
 
 If you're using testcontainers with podman on macOS, please start `./tcpm.sh` and make sure to set the following environment variables **before** running the tests.
 
