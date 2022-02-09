@@ -122,7 +122,7 @@ The script requires [GitHub CLI](https://cli.github.com/) to be present and conf
 
 ### `gh-test-single.sh`
 
-Runs the tests of a single test module given as argument. This script triggers the workflow defined in [`test-single.yml`](.github/workflows/test-single.yml).
+Runs the tests of a single test module given as an argument. This script triggers the workflow defined in [`test-single.yml`](.github/workflows/test-single.yml).
 
 The script requires [GitHub CLI](https://cli.github.com/) to be present and configured on your machine.
 
