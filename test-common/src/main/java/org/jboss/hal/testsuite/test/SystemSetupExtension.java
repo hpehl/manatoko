@@ -35,7 +35,7 @@ public class SystemSetupExtension implements BeforeAllCallback, ExtensionContext
      * Separate method with 'synchronized static' required for make sure procedure will be executed only once across all
      * simultaneously running threads
      */
-    synchronized private static void systemSetup() {
+    private static synchronized void systemSetup() {
         if (!systemReady) {
             systemReady = true;
             if (Environment.instance().remote()) {

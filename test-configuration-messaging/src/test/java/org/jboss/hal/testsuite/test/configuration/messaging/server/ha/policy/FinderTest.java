@@ -15,7 +15,6 @@
  */
 package org.jboss.hal.testsuite.test.configuration.messaging.server.ha.policy;
 
-import com.gwtplatform.mvp.shared.proxy.PlaceRequest;
 import org.jboss.hal.meta.token.NameTokens;
 import org.jboss.hal.resources.Ids;
 import org.jboss.hal.testsuite.command.AddMessagingServer;
@@ -31,6 +30,8 @@ import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
 import org.wildfly.extras.creaper.core.online.OnlineManagementClient;
 import org.wildfly.extras.creaper.core.online.operations.Operations;
+
+import com.gwtplatform.mvp.shared.proxy.PlaceRequest;
 
 import static org.jboss.arquillian.graphene.Graphene.waitModel;
 import static org.jboss.hal.dmr.ModelDescriptionConstants.MESSAGING_ACTIVEMQ;
@@ -95,15 +96,15 @@ class FinderTest extends AbstractHaPolicyTest {
     @BeforeEach
     void prepare() {
         column = console.finder(NameTokens.CONFIGURATION, configurationSubsystemPath(MESSAGING_ACTIVEMQ)
-                        .append(Ids.MESSAGING_CATEGORY, SERVER)
-                        .append(MESSAGING_SERVER_CONFIGURATION, messagingServer(SRV_UPDATE)))
+                .append(Ids.MESSAGING_CATEGORY, SERVER)
+                .append(MESSAGING_SERVER_CONFIGURATION, messagingServer(SRV_UPDATE)))
                 .column(MESSAGING_SERVER_SETTINGS);
     }
 
     void refreshConfigurationColumn() {
         // after the previous operations, it is necessary to refresh the "server" column
         console.finder(NameTokens.CONFIGURATION, configurationSubsystemPath(MESSAGING_ACTIVEMQ)
-                        .append(Ids.MESSAGING_CATEGORY, SERVER))
+                .append(Ids.MESSAGING_CATEGORY, SERVER))
                 .column(MESSAGING_SERVER_CONFIGURATION)
                 .refresh();
         prepare();

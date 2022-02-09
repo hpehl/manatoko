@@ -31,11 +31,11 @@ public class RadioButtonGroup {
     /**
      * All radio buttons relevant to single choice.
      */
-    private List<WebElement> choices;
+    private final List<WebElement> choices;
 
     /**
      * Finds all radio input elements related to choice of given name.
-     * 
+     *
      * @param name name of the value the radio buttons set
      */
     public RadioButtonGroup(String name, WebElement root) {
@@ -45,6 +45,7 @@ public class RadioButtonGroup {
 
     /**
      * @param i index of the radio button
+     *
      * @return radio input of i-th choice
      */
     public WebElement getRadioElementByIndex(int i) {
@@ -53,23 +54,26 @@ public class RadioButtonGroup {
 
     /**
      * @param value value of the radio input element
+     *
      * @return radio input of given value
      */
     public WebElement getRadioElementByValue(String value) {
-        Optional<WebElement> found = choices.stream().filter(radio -> radio.getAttribute("value").equals(value)).findFirst();
-        if (!found.isPresent()) {
+        Optional<WebElement> found = choices.stream().filter(radio -> radio.getAttribute("value").equals(value))
+                .findFirst();
+        if (found.isEmpty()) {
             throw new NoSuchElementException("Radio input element of value '" + value + "' not found.");
         }
         return found.get();
     }
 
     /**
-     * @param value of the radio input element
+     * @param id the id of the radio input element
+     *
      * @return radio input of given value
      */
     public WebElement getRadioElementById(String id) {
         Optional<WebElement> found = choices.stream().filter(radio -> radio.getAttribute("id").equals(id)).findFirst();
-        if (!found.isPresent()) {
+        if (found.isEmpty()) {
             throw new NoSuchElementException("Radio input element of id '" + id + "' not found.");
         }
         return found.get();
@@ -77,7 +81,7 @@ public class RadioButtonGroup {
 
     /**
      * Picks the radio button.
-     * 
+     *
      * @param index index of the button to select
      */
     public void pickByIndex(int index) {
@@ -88,7 +92,7 @@ public class RadioButtonGroup {
 
     /**
      * Picks the radio button.
-     * 
+     *
      * @param value of the button to select
      */
     public void pickByValue(String value) {
@@ -99,7 +103,7 @@ public class RadioButtonGroup {
 
     /**
      * Picks the radio button.
-     * 
+     *
      * @param id of the button to select
      */
     public void pickById(String id) {

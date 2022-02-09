@@ -1,0 +1,23 @@
+name: HAL UI Test Single Module
+
+on:
+  workflow_dispatch:
+    inputs:
+      module:
+        description: 'The module (directory name) to test'
+        required: true
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Set up JDK
+        uses: actions/setup-java@v2
+        with:
+          java-version: '11'
+          distribution: 'temurin'
+          cache: maven
+      - name: Run Tests
+        run: mvn --batch-mode --projects ${{ github.event.inputs.module }} --also-make -P all-tests test

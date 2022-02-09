@@ -45,7 +45,6 @@ abstract class AbstractHaPolicyTest {
     protected ColumnFragment column;
     protected WizardFragment wizard;
 
-
     enum HAPolicy {
         LIVE_ONLY(MESSAGING_HA_REPLICATION, MESSAGING_HA_REPLICATION_LIVE_ONLY,
                 haPolicyAddress(SRV_UPDATE, ModelDescriptionConstants.LIVE_ONLY)),
@@ -86,7 +85,6 @@ abstract class AbstractHaPolicyTest {
             consumer.accept(this);
         }
     }
-
 
     @FunctionalInterface
     interface HAPolicyConsumer {

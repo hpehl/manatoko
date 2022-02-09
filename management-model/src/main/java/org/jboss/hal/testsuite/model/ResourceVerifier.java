@@ -118,12 +118,10 @@ public class ResourceVerifier {
     /**
      * Verifies the value of attribute in model.
      */
-    public ResourceVerifier verifyAttribute(String attributeName, ModelNode expectedValue,
-            String errorMessageSuffix) throws Exception {
+    public ResourceVerifier verifyAttribute(String attributeName, ModelNode expectedValue, String errorMessageSuffix)
+            throws Exception {
         boolean nested = attributeName.contains(".");
-        String baseAttributeName = nested
-                ? attributeName.substring(0, attributeName.indexOf('.'))
-                : attributeName;
+        String baseAttributeName = nested ? attributeName.substring(0, attributeName.indexOf('.')) : attributeName;
         waitFor(() -> {
             ModelNodeResult actualResult = ops.readAttribute(address, baseAttributeName);
             return actualResult.isSuccess() && actualResult.hasDefinedValue()
@@ -227,8 +225,7 @@ public class ResourceVerifier {
         return verifyAttribute(attributeName, new ModelNode(expectedValue));
     }
 
-    public ResourceVerifier verifyAttributeNotEqual(String attributeName, ModelNode notExpectedValue)
-            throws Exception {
+    public ResourceVerifier verifyAttributeNotEqual(String attributeName, ModelNode notExpectedValue) throws Exception {
         waitFor(() -> !attributeEquals(attributeName, notExpectedValue));
 
         assertFalse(attributeEquals(attributeName, notExpectedValue),
@@ -275,9 +272,8 @@ public class ResourceVerifier {
             String errorMessageSuffix) throws Exception {
         waitFor(() -> {
             ModelNodeResult actualResult = ops.readAttribute(address, attributeName);
-            return actualResult.isSuccess() &&
-                    actualResult.hasDefined(RESULT) &&
-                    isModelNodePresentInListAttributeValue(attributeName, value);
+            return actualResult.isSuccess() && actualResult.hasDefined(RESULT)
+                    && isModelNodePresentInListAttributeValue(attributeName, value);
         });
 
         ModelNodeResult modelNodeResult = ops.readAttribute(address, attributeName);
@@ -285,8 +281,8 @@ public class ResourceVerifier {
 
         assertTrue(isModelNodePresentInListAttributeValue(attributeName, value),
                 "Given value '" + value.toString() + "' is not present in list attribute '" + attributeName
-                        + "' with value '" + modelNodeResult.value() + " '!" +
-                        (errorMessageSuffix == null || errorMessageSuffix.isEmpty() ? "" : " " + errorMessageSuffix));
+                        + "' with value '" + modelNodeResult.value() + " '!"
+                        + (errorMessageSuffix == null || errorMessageSuffix.isEmpty() ? "" : " " + errorMessageSuffix));
         return this;
     }
 
@@ -301,9 +297,8 @@ public class ResourceVerifier {
             String value) throws Exception {
         waitFor(() -> {
             ModelNodeResult actualResult = ops.readAttribute(address, listAttributeName);
-            return actualResult.isSuccess() &&
-                    actualResult.hasDefined(RESULT) &&
-                    isSingleValuePresentInListAttributeValue(listAttributeName, innerAttribute, value);
+            return actualResult.isSuccess() && actualResult.hasDefined(RESULT)
+                    && isSingleValuePresentInListAttributeValue(listAttributeName, innerAttribute, value);
         });
 
         ModelNodeResult modelNodeResult = ops.readAttribute(address, listAttributeName);
@@ -327,9 +322,8 @@ public class ResourceVerifier {
             ModelNode value) throws Exception {
         waitFor(() -> {
             ModelNodeResult actualResult = ops.readAttribute(address, listAttributeName);
-            return actualResult.isSuccess() &&
-                    actualResult.hasDefined(RESULT) &&
-                    isSingleValuePresentInListAttributeValue(listAttributeName, innerAttribute, value);
+            return actualResult.isSuccess() && actualResult.hasDefined(RESULT)
+                    && isSingleValuePresentInListAttributeValue(listAttributeName, innerAttribute, value);
         });
 
         ModelNodeResult modelNodeResult = ops.readAttribute(address, listAttributeName);
@@ -356,13 +350,12 @@ public class ResourceVerifier {
      * @param innerObjectValue The inner object value
      */
     public ResourceVerifier verifyListAttributeContainsSingleValueOfList(String listAttribute, String objectAttribute,
-            String objectValue,
-            String innerListAttribute, String innerObjectAttribute, String innerObjectValue) throws Exception {
+            String objectValue, String innerListAttribute, String innerObjectAttribute, String innerObjectValue)
+            throws Exception {
         waitFor(() -> {
             ModelNodeResult actualResult = ops.readAttribute(address, listAttribute);
-            return actualResult.isSuccess() &&
-                    actualResult.hasDefined(RESULT) &&
-                    isSingleValuePresentInInnerListAttributeValue(listAttribute, objectAttribute, objectValue,
+            return actualResult.isSuccess() && actualResult.hasDefined(RESULT)
+                    && isSingleValuePresentInInnerListAttributeValue(listAttribute, objectAttribute, objectValue,
                             innerListAttribute, innerObjectAttribute, innerObjectValue);
         });
 
@@ -371,10 +364,8 @@ public class ResourceVerifier {
 
         String pair = innerObjectAttribute + EQ + innerObjectValue;
         String path = listAttribute + "/" + objectAttribute + EQ + objectValue + "/" + innerListAttribute;
-        String msg = "The attribute=value pair '" + pair + "' is not present in path: '" + path + " with attribute value '"
-                + modelNodeResult
-                        .value()
-                + END_STR;
+        String msg = "The attribute=value pair '" + pair + "' is not present in path: '" + path
+                + " with attribute value '" + modelNodeResult.value() + END_STR;
         assertTrue(isSingleValuePresentInInnerListAttributeValue(listAttribute, objectAttribute, objectValue,
                 innerListAttribute, innerObjectAttribute, innerObjectValue), msg);
         return this;
@@ -393,13 +384,11 @@ public class ResourceVerifier {
      * @param objectValue The inner object value
      */
     public ResourceVerifier verifyListAttributeContainsObjectValue(String listAttribute, String filterAttribute,
-            String filterValue,
-            String singletonAttribute, ModelNode objectValue) throws Exception {
+            String filterValue, String singletonAttribute, ModelNode objectValue) throws Exception {
         waitFor(() -> {
             ModelNodeResult actualResult = ops.readAttribute(address, listAttribute);
-            return actualResult.isSuccess() &&
-                    actualResult.hasDefinedValue() &&
-                    ModelNodeUtils.isObjectPresentInModelNodeList(actualResult.get(RESULT), filterAttribute,
+            return actualResult.isSuccess() && actualResult.hasDefinedValue()
+                    && ModelNodeUtils.isObjectPresentInModelNodeList(actualResult.get(RESULT), filterAttribute,
                             filterValue, singletonAttribute, objectValue);
         });
 
@@ -407,8 +396,8 @@ public class ResourceVerifier {
         modelNodeResult.assertSuccess();
 
         String path = address + "." + listAttribute + "={" + filterAttribute + "=" + filterValue + "}";
-        String errorMessage = "For path: " + path + ". The expected model in " + singletonAttribute + " is " + objectValue
-                + ", but was not found.";
+        String errorMessage = "For path: " + path + ". The expected model in " + singletonAttribute + " is "
+                + objectValue + ", but was not found.";
         boolean found = ModelNodeUtils.isObjectPresentInModelNodeList(modelNodeResult.get(RESULT), filterAttribute,
                 filterValue, singletonAttribute, objectValue);
         assertTrue(found, errorMessage);
@@ -440,22 +429,20 @@ public class ResourceVerifier {
      * @param value Value which should be present in the list.
      */
     public ResourceVerifier verifyListAttributeDoesNotContainValue(String attributeName, ModelNode value,
-            String errorMessageSuffix)
-            throws Exception {
+            String errorMessageSuffix) throws Exception {
         waitFor(() -> {
             ModelNodeResult actualResult = ops.readAttribute(address, attributeName);
-            return actualResult.isSuccess() &&
-                    actualResult.hasDefined(RESULT) &&
-                    !isModelNodePresentInListAttributeValue(attributeName, value);
+            return actualResult.isSuccess() && actualResult.hasDefined(RESULT)
+                    && !isModelNodePresentInListAttributeValue(attributeName, value);
         });
 
         final ModelNodeResult modelNodeResult = ops.readAttribute(address, attributeName);
         modelNodeResult.assertSuccess();
 
         assertFalse(isModelNodePresentInListAttributeValue(attributeName, value),
-                "Given value '" + value.toString() + "' should not be present in list attribute '" +
-                        attributeName + " '!" +
-                        (errorMessageSuffix == null || errorMessageSuffix.isEmpty() ? "" : " " + errorMessageSuffix));
+                "Given value '" + value.toString() + "' should not be present in list attribute '" + attributeName
+                        + " '!"
+                        + (errorMessageSuffix == null || errorMessageSuffix.isEmpty() ? "" : " " + errorMessageSuffix));
         return this;
     }
 
@@ -470,9 +457,8 @@ public class ResourceVerifier {
             String innerAttribute, String value) throws Exception {
         waitFor(() -> {
             ModelNodeResult actualResult = ops.readAttribute(address, listAttributeName);
-            return actualResult.isSuccess() &&
-                    actualResult.hasDefined(RESULT) &&
-                    !isSingleValuePresentInListAttributeValue(listAttributeName, innerAttribute, value);
+            return actualResult.isSuccess() && actualResult.hasDefined(RESULT)
+                    && !isSingleValuePresentInListAttributeValue(listAttributeName, innerAttribute, value);
         });
 
         ModelNodeResult modelNodeResult = ops.readAttribute(address, listAttributeName);
@@ -499,14 +485,12 @@ public class ResourceVerifier {
      * @param innerObjectValue The inner object value
      */
     public ResourceVerifier verifyListAttributeDoesNotContainsSingleValueOfList(String listAttribute,
-            String objectAttribute,
-            String objectValue,
-            String innerListAttribute, String innerObjectAttribute, String innerObjectValue) throws Exception {
+            String objectAttribute, String objectValue, String innerListAttribute, String innerObjectAttribute,
+            String innerObjectValue) throws Exception {
         waitFor(() -> {
             ModelNodeResult actualResult = ops.readAttribute(address, listAttribute);
-            return actualResult.isSuccess() &&
-                    actualResult.hasDefined(RESULT) &&
-                    isSingleValuePresentInInnerListAttributeValue(listAttribute, objectAttribute, objectValue,
+            return actualResult.isSuccess() && actualResult.hasDefined(RESULT)
+                    && isSingleValuePresentInInnerListAttributeValue(listAttribute, objectAttribute, objectValue,
                             innerListAttribute, innerObjectAttribute, innerObjectValue);
         });
 
@@ -515,10 +499,8 @@ public class ResourceVerifier {
 
         String pair = innerObjectAttribute + EQ + innerObjectValue;
         String path = listAttribute + "/" + objectAttribute + EQ + objectValue + "/" + innerListAttribute;
-        String msg = "The attribute=value pair '" + pair + "' is not present in path: '" + path + " with attribute value '"
-                + modelNodeResult
-                        .value()
-                + END_STR;
+        String msg = "The attribute=value pair '" + pair + "' is not present in path: '" + path
+                + " with attribute value '" + modelNodeResult.value() + END_STR;
         assertFalse(isSingleValuePresentInInnerListAttributeValue(listAttribute, objectAttribute, objectValue,
                 innerListAttribute, innerObjectAttribute, innerObjectValue), msg);
         return this;
@@ -539,9 +521,8 @@ public class ResourceVerifier {
             String filterValue, String singletonAttribute) throws Exception {
         waitFor(() -> {
             ModelNodeResult actualResult = ops.readAttribute(address, listAttribute);
-            return actualResult.isSuccess() &&
-                    actualResult.hasDefinedValue() &&
-                    ModelNodeUtils.isObjectUndefinedInModelNodeList(actualResult.get(RESULT), filterAttribute,
+            return actualResult.isSuccess() && actualResult.hasDefinedValue()
+                    && ModelNodeUtils.isObjectUndefinedInModelNodeList(actualResult.get(RESULT), filterAttribute,
                             filterValue, singletonAttribute);
         });
 
@@ -594,8 +575,8 @@ public class ResourceVerifier {
     }
 
     private boolean isSingleValuePresentInInnerListAttributeValue(String listAttribute, String objectAttribute,
-            String objectValue,
-            String innerListAttribute, String innerObjectAttribute, String innerObjectValue) throws IOException {
+            String objectValue, String innerListAttribute, String innerObjectAttribute, String innerObjectValue)
+            throws IOException {
         final ModelNodeResult modelNodeResult = ops.readAttribute(address, listAttribute);
         if (modelNodeResult.isSuccess()) {
             ModelNode listInnerNode = modelNodeResult.get(RESULT);
@@ -624,18 +605,17 @@ public class ResourceVerifier {
     private ResourceVerifier verifyDefaultValues() throws Exception {
         ResourceDescription resourceDescription = resourceDescription();
         List<String> attributesWithDefaultValues = resourceDescription.getAttributes().stream()
-                .filter(property -> property.getValue().hasDefined(DEFAULT))
-                .map(Property::getName)
-                .collect(toList());
+                .filter(property -> property.getValue().hasDefined(DEFAULT)).map(Property::getName).collect(toList());
         for (String name : attributesWithDefaultValues) {
             ModelType attributeType = resourceDescription.getAttribute(name).get(TYPE).asType();
             ModelNode defaultValue = resourceDescription.defaultValue(name);
             if (attributeType != defaultValue.getType()) {
                 // some resource descriptions are malformed :-(
                 // skip these, since verifyAttribute() cannot cope with it: 0 != 0L
-                log.warn("Malformed resource description for {} in {}: " +
-                        "Attribute type is {}, but default value uses {}! " +
-                        "Will skip this attribute in verifyDefaultValues()",
+                log.warn(
+                        "Malformed resource description for {} in {}: "
+                                + "Attribute type is {}, but default value uses {}! "
+                                + "Will skip this attribute in verifyDefaultValues()",
                         name, address, attributeType, defaultValue.getType());
                 continue;
             }
@@ -648,29 +628,22 @@ public class ResourceVerifier {
      * Verifies that all attributes which are marked as nillable and don't have a default value are undefined
      */
     private ResourceVerifier verifyNillable() throws Exception {
-        List<String> nillableAttributes = resourceDescription().getAttributes().stream()
-                .filter(property -> {
-                    ModelNode attributeDescription = property.getValue();
-                    boolean nillable = attributeDescription.hasDefined(NILLABLE) &&
-                            attributeDescription.get(NILLABLE).asBoolean();
-                    boolean readOnly = attributeDescription.hasDefined(ACCESS_TYPE) &&
-                            READ_ONLY.equals(attributeDescription.get(ACCESS_TYPE).asString());
-                    boolean alternatives = attributeDescription.hasDefined(ALTERNATIVES) &&
-                            !attributeDescription.get(ALTERNATIVES).asList().isEmpty();
-                    boolean hasDefault = attributeDescription.hasDefined(DEFAULT);
-                    ModelType type = attributeDescription.get(TYPE).asType();
-                    boolean simpleValueType = attributeDescription.hasDefined(VALUE_TYPE) &&
-                            attributeDescription.get(VALUE_TYPE).getType() != ModelType.OBJECT;
-                    boolean nillableType = (type == ModelType.EXPRESSION ||
-                            type == ModelType.LIST ||
-                            type == ModelType.OBJECT ||
-                            type == ModelType.PROPERTY ||
-                            type == ModelType.STRING) &&
-                            simpleValueType;
-                    return nillable && !readOnly && !alternatives && !hasDefault && nillableType;
-                })
-                .map(Property::getName)
-                .collect(toList());
+        List<String> nillableAttributes = resourceDescription().getAttributes().stream().filter(property -> {
+            ModelNode attributeDescription = property.getValue();
+            boolean nillable = attributeDescription.hasDefined(NILLABLE)
+                    && attributeDescription.get(NILLABLE).asBoolean();
+            boolean readOnly = attributeDescription.hasDefined(ACCESS_TYPE)
+                    && READ_ONLY.equals(attributeDescription.get(ACCESS_TYPE).asString());
+            boolean alternatives = attributeDescription.hasDefined(ALTERNATIVES)
+                    && !attributeDescription.get(ALTERNATIVES).asList().isEmpty();
+            boolean hasDefault = attributeDescription.hasDefined(DEFAULT);
+            ModelType type = attributeDescription.get(TYPE).asType();
+            boolean simpleValueType = attributeDescription.hasDefined(VALUE_TYPE)
+                    && attributeDescription.get(VALUE_TYPE).getType() != ModelType.OBJECT;
+            boolean nillableType = (type == ModelType.EXPRESSION || type == ModelType.LIST || type == ModelType.OBJECT
+                    || type == ModelType.PROPERTY || type == ModelType.STRING) && simpleValueType;
+            return nillable && !readOnly && !alternatives && !hasDefault && nillableType;
+        }).map(Property::getName).collect(toList());
         for (String attribute : nillableAttributes) {
             verifyAttributeIsUndefined(attribute, String.format("Attribute '%s' in '%s'", attribute, address));
         }
