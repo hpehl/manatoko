@@ -1,3 +1,5 @@
+[![Verify Codebase](https://github.com/hpehl/manatoko/actions/workflows/verify.yml/badge.svg)](https://github.com/hpehl/manatoko/actions/workflows/verify.yml)
+
 # Manatoko
 
 Manatoko ([Maori](https://maoridictionary.co.nz/search?keywords=manatoko) for verify, test) is a new approach to test the [HAL](https://hal.github.io) management console. It builds on top of
