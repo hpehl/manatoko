@@ -48,7 +48,6 @@ EOF
 
 cleanup() {
   trap - SIGINT SIGTERM ERR EXIT
-  rm -f /tmp/podman.sock 2>/dev/null
 }
 
 setup_colors() {
