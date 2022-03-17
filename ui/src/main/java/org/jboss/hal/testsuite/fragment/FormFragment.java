@@ -15,6 +15,8 @@
  */
 package org.jboss.hal.testsuite.fragment;
 
+import java.util.List;
+
 import org.jboss.arquillian.core.api.annotation.Inject;
 import org.jboss.arquillian.drone.api.annotation.Drone;
 import org.jboss.arquillian.graphene.findby.ByJQuery;
@@ -25,6 +27,7 @@ import org.jboss.hal.testsuite.Console;
 import org.openqa.selenium.By;
 import org.openqa.selenium.ElementClickInterceptedException;
 import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebDriverException;
@@ -36,6 +39,7 @@ import com.google.common.base.Strings;
 
 import static org.jboss.arquillian.graphene.Graphene.createPageFragment;
 import static org.jboss.arquillian.graphene.Graphene.waitGui;
+import static org.jboss.hal.resources.CSS.autocompleteSuggestions;
 import static org.jboss.hal.resources.CSS.blankSlatePf;
 import static org.jboss.hal.resources.CSS.bootstrapSelect;
 import static org.jboss.hal.resources.CSS.btnDefault;
@@ -167,6 +171,15 @@ public class FormFragment {
         waitGui().until().element(inputElement).value().equalTo("");
         inputElement.sendKeys(value);
         waitGui().until().element(inputElement).value().equalTo(value);
+
+        // get rid of any open auto suggestions popup,
+        // which might interfere with save or cancel buttons
+        List<WebElement> autoSuggestions = By.cssSelector(DOT + autocompleteSuggestions).findElements(browser);
+        for (WebElement autoSuggestion : autoSuggestions) {
+            if (autoSuggestion.isDisplayed()) {
+                inputElement.sendKeys(Keys.TAB);
+            }
+        }
     }
 
     public void textByLabel(String labelContent, String value) {
