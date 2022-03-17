@@ -130,7 +130,7 @@ The script requires [GitHub CLI](https://cli.github.com/) to be present and conf
 
 ### `tcpm.sh`
 
-If you're using testcontainers with podman <4.x on macOS, please start `./tcpm.sh` and make sure to set the following environment variables **before** running the tests.
+If you're using testcontainers with Podman 3.x on macOS, please start `./tcpm.sh` and make sure to set the following environment variables **before** running the tests.
 
 ```sh
 DOCKER_HOST=unix:///tmp/podman.sock
@@ -140,14 +140,14 @@ TESTCONTAINERS_RYUK_DISABLED=true
 
 See https://www.testcontainers.org/features/configuration/ and https://github.com/testcontainers/testcontainers-java/issues/2088#issuecomment-911586506 for details.
 
-For podman 4.x, `tcpm.sh` is not necessary. You can either 
+For Podman 4.x, `tcpm.sh` is not necessary. You can either call
 
 ```shell
 sudo podman-mac-helper install
 ```
 
-or 
+or set
 
 ```shell
-export `DOCKER_HOST='unix:///~/.local/share/containers/podman/machine/podman-machine-default/podman.sock'`
+export DOCKER_HOST='unix:///~/.local/share/containers/podman/machine/podman-machine-default/podman.sock'
 ```
