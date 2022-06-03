@@ -39,7 +39,7 @@ import org.wildfly.extras.creaper.core.online.operations.Values;
 import static org.jboss.hal.dmr.ModelDescriptionConstants.NAME;
 import static org.jboss.hal.dmr.ModelDescriptionConstants.SOCKET_BINDING;
 import static org.jboss.hal.testsuite.container.WildFlyConfiguration.STANDALONE;
-import static org.jboss.hal.testsuite.container.WildFlyVersion._26;
+import static org.jboss.hal.testsuite.container.WildFlyVersion._26_1;
 import static org.jboss.hal.testsuite.fixtures.RemotingFixtures.AUTHENTICATION_PROVIDER;
 import static org.jboss.hal.testsuite.fixtures.RemotingFixtures.CONNECTOR_CREATE;
 import static org.jboss.hal.testsuite.fixtures.RemotingFixtures.CONNECTOR_DELETE;
@@ -53,7 +53,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 @Testcontainers
 class ConnectorTest {
 
-    @Container static WildFlyContainer wildFly = WildFlyContainer.version(_26, STANDALONE);
+    @Container static WildFlyContainer wildFly = WildFlyContainer.version(_26_1, STANDALONE);
 
     @BeforeAll
     static void setupModel() throws Exception {

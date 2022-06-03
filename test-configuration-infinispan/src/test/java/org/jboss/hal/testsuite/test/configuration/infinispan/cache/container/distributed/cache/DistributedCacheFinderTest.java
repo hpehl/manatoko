@@ -36,7 +36,7 @@ import org.wildfly.extras.creaper.core.online.operations.admin.Administration;
 
 import static org.jboss.hal.dmr.ModelDescriptionConstants.INFINISPAN;
 import static org.jboss.hal.testsuite.container.WildFlyConfiguration.FULL_HA;
-import static org.jboss.hal.testsuite.container.WildFlyVersion._26;
+import static org.jboss.hal.testsuite.container.WildFlyVersion._26_1;
 import static org.jboss.hal.testsuite.fixtures.InfinispanFixtures.cacheContainerAddress;
 import static org.jboss.hal.testsuite.fixtures.InfinispanFixtures.distributedCacheAddress;
 import static org.jboss.hal.testsuite.fragment.finder.FinderFragment.configurationSubsystemPath;
@@ -48,7 +48,7 @@ class DistributedCacheFinderTest {
 
     static final String CACHE_CONTAINER = "cache-container-" + Random.name();
     static final String DISTRIBUTED_CACHE_CREATE = "distributed-cache-create-" + Random.name();
-    @Container static WildFlyContainer wildFly = WildFlyContainer.version(_26, FULL_HA);
+    @Container static WildFlyContainer wildFly = WildFlyContainer.version(_26_1, FULL_HA);
     private static OnlineManagementClient client;
 
     @BeforeAll

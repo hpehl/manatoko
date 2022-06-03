@@ -41,7 +41,7 @@ import com.gwtplatform.mvp.shared.proxy.PlaceRequest;
 import static org.jboss.hal.dmr.ModelDescriptionConstants.INET_ADDRESS;
 import static org.jboss.hal.dmr.ModelDescriptionConstants.NAME;
 import static org.jboss.hal.testsuite.container.WildFlyConfiguration.STANDALONE;
-import static org.jboss.hal.testsuite.container.WildFlyVersion._26;
+import static org.jboss.hal.testsuite.container.WildFlyVersion._26_1;
 import static org.jboss.hal.testsuite.fixtures.InterfaceFixtures.CREATE;
 import static org.jboss.hal.testsuite.fixtures.InterfaceFixtures.DELETE;
 import static org.jboss.hal.testsuite.fixtures.InterfaceFixtures.LOCALHOST;
@@ -54,7 +54,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 @Testcontainers
 class InterfaceFinderTest {
 
-    @Container static WildFlyContainer wildFly = WildFlyContainer.version(_26, STANDALONE);
+    @Container static WildFlyContainer wildFly = WildFlyContainer.version(_26_1, STANDALONE);
     static OnlineManagementClient client;
 
     @BeforeAll

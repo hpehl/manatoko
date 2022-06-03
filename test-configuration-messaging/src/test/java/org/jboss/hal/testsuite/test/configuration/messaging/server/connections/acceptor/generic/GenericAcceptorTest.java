@@ -38,7 +38,7 @@ import static org.jboss.hal.dmr.ModelDescriptionConstants.SERVER;
 import static org.jboss.hal.resources.Ids.ITEM;
 import static org.jboss.hal.resources.Ids.MESSAGING_ACCEPTOR;
 import static org.jboss.hal.testsuite.container.WildFlyConfiguration.FULL_HA;
-import static org.jboss.hal.testsuite.container.WildFlyVersion._26;
+import static org.jboss.hal.testsuite.container.WildFlyVersion._26_1;
 import static org.jboss.hal.testsuite.fixtures.MessagingFixtures.ACCP_GEN_CREATE;
 import static org.jboss.hal.testsuite.fixtures.MessagingFixtures.ACCP_GEN_DELETE;
 import static org.jboss.hal.testsuite.fixtures.MessagingFixtures.ACCP_GEN_TRY_UPDATE;
@@ -51,7 +51,7 @@ import static org.jboss.hal.testsuite.fixtures.MessagingFixtures.acceptorGeneric
 @Testcontainers
 class GenericAcceptorTest extends AbstractServerConnectionsTest {
 
-    @Container static WildFlyContainer wildFly = WildFlyContainer.version(_26, FULL_HA);
+    @Container static WildFlyContainer wildFly = WildFlyContainer.version(_26_1, FULL_HA);
 
     @BeforeAll
     static void setupModel() throws Exception {

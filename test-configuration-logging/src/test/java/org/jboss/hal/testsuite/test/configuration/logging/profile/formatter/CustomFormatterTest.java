@@ -38,7 +38,7 @@ import static org.jboss.hal.dmr.ModelDescriptionConstants.CLASS;
 import static org.jboss.hal.dmr.ModelDescriptionConstants.MODULE;
 import static org.jboss.hal.dmr.ModelDescriptionConstants.PROPERTIES;
 import static org.jboss.hal.testsuite.container.WildFlyConfiguration.STANDALONE;
-import static org.jboss.hal.testsuite.container.WildFlyVersion._26;
+import static org.jboss.hal.testsuite.container.WildFlyVersion._26_1;
 import static org.jboss.hal.testsuite.fixtures.LoggingFixtures.CUSTOM_FORMATTER_CLASS_1_VALUE;
 import static org.jboss.hal.testsuite.fixtures.LoggingFixtures.CUSTOM_FORMATTER_MODULE_VALUE;
 import static org.jboss.hal.testsuite.fixtures.LoggingFixtures.LOGGING_PROFILE_FORMATTER_ITEM;
@@ -53,7 +53,7 @@ import static org.jboss.hal.testsuite.fixtures.LoggingFixtures.CustomFormatter.C
 class CustomFormatterTest extends AbstractCustomFormatterTest {
 
     static final String LOGGING_PROFILE = "logging-profile-" + Random.name();
-    @Container static WildFlyContainer wildFly = WildFlyContainer.version(_26, STANDALONE);
+    @Container static WildFlyContainer wildFly = WildFlyContainer.version(_26_1, STANDALONE);
 
     @BeforeAll
     static void setupModel() throws Exception {

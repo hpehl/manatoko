@@ -38,7 +38,7 @@ import org.wildfly.extras.creaper.core.online.operations.Values;
 import static org.jboss.hal.dmr.ModelDescriptionConstants.JNDI_NAME;
 import static org.jboss.hal.dmr.ModelDescriptionConstants.NAME;
 import static org.jboss.hal.testsuite.container.WildFlyConfiguration.STANDALONE;
-import static org.jboss.hal.testsuite.container.WildFlyVersion._26;
+import static org.jboss.hal.testsuite.container.WildFlyVersion._26_1;
 import static org.jboss.hal.testsuite.fixtures.EEFixtures.EXECUTOR_CREATE;
 import static org.jboss.hal.testsuite.fixtures.EEFixtures.EXECUTOR_DELETE;
 import static org.jboss.hal.testsuite.fixtures.EEFixtures.EXECUTOR_READ;
@@ -49,7 +49,7 @@ import static org.jboss.hal.testsuite.fixtures.EEFixtures.executorAddress;
 @Testcontainers
 class ExecutorTest {
 
-    @Container static WildFlyContainer wildFly = WildFlyContainer.version(_26, STANDALONE);
+    @Container static WildFlyContainer wildFly = WildFlyContainer.version(_26_1, STANDALONE);
 
     @BeforeAll
     static void setupModel() throws Exception {

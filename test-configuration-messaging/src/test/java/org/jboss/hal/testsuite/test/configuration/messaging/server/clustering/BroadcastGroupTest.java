@@ -37,7 +37,7 @@ import static org.jboss.hal.dmr.ModelDescriptionConstants.SOCKET_BINDING;
 import static org.jboss.hal.resources.Ids.ITEM;
 import static org.jboss.hal.resources.Ids.MESSAGING_BROADCAST_GROUP;
 import static org.jboss.hal.testsuite.container.WildFlyConfiguration.FULL_HA;
-import static org.jboss.hal.testsuite.container.WildFlyVersion._26;
+import static org.jboss.hal.testsuite.container.WildFlyVersion._26_1;
 import static org.jboss.hal.testsuite.fixtures.MessagingFixtures.BG_CREATE;
 import static org.jboss.hal.testsuite.fixtures.MessagingFixtures.BG_DELETE;
 import static org.jboss.hal.testsuite.fixtures.MessagingFixtures.BG_UPDATE;
@@ -52,7 +52,7 @@ import static org.jboss.hal.testsuite.fixtures.MessagingFixtures.broadcastGroupA
 @Disabled // TODO Fix failing tests
 class BroadcastGroupTest extends AbstractClusteringTest {
 
-    @Container static WildFlyContainer wildFly = WildFlyContainer.version(_26, FULL_HA);
+    @Container static WildFlyContainer wildFly = WildFlyContainer.version(_26_1, FULL_HA);
 
     @BeforeAll
     static void setupModel() throws Exception {

@@ -42,7 +42,7 @@ import static org.jboss.hal.resources.Ids.ITEM;
 import static org.jboss.hal.resources.Ids.MESSAGING_CONNECTOR;
 import static org.jboss.hal.resources.Ids.MESSAGING_REMOTE_CONNECTOR;
 import static org.jboss.hal.testsuite.container.WildFlyConfiguration.FULL_HA;
-import static org.jboss.hal.testsuite.container.WildFlyVersion._26;
+import static org.jboss.hal.testsuite.container.WildFlyVersion._26_1;
 import static org.jboss.hal.testsuite.fixtures.MessagingFixtures.CONN_REM_CREATE;
 import static org.jboss.hal.testsuite.fixtures.MessagingFixtures.CONN_REM_DELETE;
 import static org.jboss.hal.testsuite.fixtures.MessagingFixtures.CONN_REM_UPDATE;
@@ -54,7 +54,7 @@ import static org.jboss.hal.testsuite.fixtures.MessagingFixtures.connectorRemote
 @Disabled // TODO Fix failing tests
 class RemoteConnectorTest extends AbstractServerConnectionsTest {
 
-    @Container static WildFlyContainer wildFly = WildFlyContainer.version(_26, FULL_HA);
+    @Container static WildFlyContainer wildFly = WildFlyContainer.version(_26_1, FULL_HA);
 
     @BeforeAll
     static void setupModel() throws Exception {

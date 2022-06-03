@@ -30,7 +30,7 @@ import org.wildfly.extras.creaper.core.online.operations.Values;
 import org.wildfly.extras.creaper.core.online.operations.admin.Administration;
 
 import static org.jboss.hal.testsuite.container.WildFlyConfiguration.FULL_HA;
-import static org.jboss.hal.testsuite.container.WildFlyVersion._26;
+import static org.jboss.hal.testsuite.container.WildFlyVersion._26_1;
 import static org.jboss.hal.testsuite.fixtures.InfinispanFixtures.SOCKET_BINDINGS;
 import static org.jboss.hal.testsuite.fixtures.InfinispanFixtures.remoteClusterAddress;
 import static org.jboss.hal.testsuite.fixtures.InfinispanFixtures.threadPoolAddress;
@@ -43,7 +43,7 @@ class ThreadPoolTest extends AbstractRemoteCacheContainerTest {
     private static final String REMOTE_SOCKET_BINDING = "remote-socket-binding-" + Random.name();
     private static final String REMOTE_SOCKET_BINDING_CLUSTER = "remote-socket-binding-cluster-" + Random.name();
     private static final String REMOTE_CLUSTER = "remote-cluster-" + Random.name();
-    @Container static WildFlyContainer wildFly = WildFlyContainer.version(_26, FULL_HA);
+    @Container static WildFlyContainer wildFly = WildFlyContainer.version(_26_1, FULL_HA);
 
     @BeforeAll
     static void setupModel() throws Exception {

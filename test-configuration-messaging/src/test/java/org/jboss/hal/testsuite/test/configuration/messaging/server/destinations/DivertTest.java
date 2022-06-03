@@ -35,7 +35,7 @@ import static org.jboss.hal.dmr.ModelDescriptionConstants.SERVER;
 import static org.jboss.hal.resources.Ids.ITEM;
 import static org.jboss.hal.resources.Ids.MESSAGING_DIVERT;
 import static org.jboss.hal.testsuite.container.WildFlyConfiguration.FULL_HA;
-import static org.jboss.hal.testsuite.container.WildFlyVersion._26;
+import static org.jboss.hal.testsuite.container.WildFlyVersion._26_1;
 import static org.jboss.hal.testsuite.fixtures.MessagingFixtures.DIVERT_ADDRESS;
 import static org.jboss.hal.testsuite.fixtures.MessagingFixtures.DIVERT_CREATE;
 import static org.jboss.hal.testsuite.fixtures.MessagingFixtures.DIVERT_DELETE;
@@ -48,7 +48,7 @@ import static org.jboss.hal.testsuite.fixtures.MessagingFixtures.divertAddress;
 @Testcontainers
 class DivertTest extends AbstractServerDestinationsTest {
 
-    @Container static WildFlyContainer wildFly = WildFlyContainer.version(_26, FULL_HA);
+    @Container static WildFlyContainer wildFly = WildFlyContainer.version(_26_1, FULL_HA);
 
     @BeforeAll
     static void setupModel() throws Exception {

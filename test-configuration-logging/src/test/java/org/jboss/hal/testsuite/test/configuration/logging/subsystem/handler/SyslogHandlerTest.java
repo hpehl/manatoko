@@ -35,7 +35,7 @@ import org.wildfly.extras.creaper.core.online.operations.Address;
 import org.wildfly.extras.creaper.core.online.operations.Operations;
 
 import static org.jboss.hal.testsuite.container.WildFlyConfiguration.STANDALONE;
-import static org.jboss.hal.testsuite.container.WildFlyVersion._26;
+import static org.jboss.hal.testsuite.container.WildFlyVersion._26_1;
 import static org.jboss.hal.testsuite.fixtures.LoggingFixtures.LOGGING_HANDLER_ITEM;
 import static org.jboss.hal.testsuite.fixtures.LoggingFixtures.PatternFormatter.PATTERN_FORMATTER_REF;
 import static org.jboss.hal.testsuite.fixtures.LoggingFixtures.SyslogHandler.SYSLOG_HANDLER_DELETE;
@@ -46,7 +46,7 @@ import static org.jboss.hal.testsuite.fixtures.LoggingFixtures.SyslogHandler.SYS
 @Disabled // TODO Fix failing tests
 class SyslogHandlerTest extends AbstractSyslogHandlerTest {
 
-    @Container static WildFlyContainer wildFly = WildFlyContainer.version(_26, STANDALONE);
+    @Container static WildFlyContainer wildFly = WildFlyContainer.version(_26_1, STANDALONE);
 
     @BeforeAll
     static void setupModel() throws Exception {

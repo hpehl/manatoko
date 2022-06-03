@@ -40,7 +40,7 @@ import org.wildfly.extras.creaper.core.online.operations.Values;
 import static java.util.Arrays.asList;
 import static org.jboss.hal.dmr.ModelDescriptionConstants.SOCKET_BINDING;
 import static org.jboss.hal.testsuite.container.WildFlyConfiguration.STANDALONE;
-import static org.jboss.hal.testsuite.container.WildFlyVersion._26;
+import static org.jboss.hal.testsuite.container.WildFlyVersion._26_1;
 import static org.jboss.hal.testsuite.fixtures.RemotingFixtures.CONNECTOR_REF;
 import static org.jboss.hal.testsuite.fixtures.RemotingFixtures.HTTP_CONNECTOR_SECURITY;
 import static org.jboss.hal.testsuite.fixtures.RemotingFixtures.HTTP_CONNECTOR_SECURITY_LISTENER;
@@ -56,7 +56,7 @@ import static org.jboss.hal.testsuite.fixtures.undertow.UndertowFixtures.httpLis
 @TestMethodOrder(MethodOrderer.MethodName.class)
 class HttpConnectorSecurityTest {
 
-    @Container static WildFlyContainer wildFly = WildFlyContainer.version(_26, STANDALONE);
+    @Container static WildFlyContainer wildFly = WildFlyContainer.version(_26_1, STANDALONE);
 
     @BeforeAll
     static void setupModel() throws Exception {

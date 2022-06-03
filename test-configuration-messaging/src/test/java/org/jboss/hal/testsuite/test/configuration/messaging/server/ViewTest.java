@@ -62,7 +62,7 @@ import static org.jboss.hal.resources.Ids.TAB;
 import static org.jboss.hal.testsuite.Message.valueMustBeMasked;
 import static org.jboss.hal.testsuite.Message.valueMustBeUnmasked;
 import static org.jboss.hal.testsuite.container.WildFlyConfiguration.FULL_HA;
-import static org.jboss.hal.testsuite.container.WildFlyVersion._26;
+import static org.jboss.hal.testsuite.container.WildFlyVersion._26_1;
 import static org.jboss.hal.testsuite.fixtures.MessagingFixtures.APPLICATION_DOMAIN;
 import static org.jboss.hal.testsuite.fixtures.MessagingFixtures.BINDINGS_DIRECTORY;
 import static org.jboss.hal.testsuite.fixtures.MessagingFixtures.CLUSTER_CREDENTIAL_REFERENCE;
@@ -90,7 +90,7 @@ class ViewTest {
     private static final String ID_DELIMITER = "-";
     private static final String JOURNAL = "journal";
 
-    @Container static WildFlyContainer wildFly = WildFlyContainer.version(_26, FULL_HA);
+    @Container static WildFlyContainer wildFly = WildFlyContainer.version(_26_1, FULL_HA);
     private static OnlineManagementClient client;
 
     @BeforeAll

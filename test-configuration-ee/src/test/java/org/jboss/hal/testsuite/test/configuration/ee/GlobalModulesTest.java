@@ -35,7 +35,7 @@ import org.wildfly.extras.creaper.core.online.operations.Operations;
 import static org.jboss.hal.dmr.ModelDescriptionConstants.GLOBAL_MODULES;
 import static org.jboss.hal.dmr.ModelDescriptionConstants.NAME;
 import static org.jboss.hal.testsuite.container.WildFlyConfiguration.STANDALONE;
-import static org.jboss.hal.testsuite.container.WildFlyVersion._26;
+import static org.jboss.hal.testsuite.container.WildFlyVersion._26_1;
 import static org.jboss.hal.testsuite.fixtures.EEFixtures.GLOBAL_MODULES_CREATE;
 import static org.jboss.hal.testsuite.fixtures.EEFixtures.GLOBAL_MODULES_DELETE;
 import static org.jboss.hal.testsuite.fixtures.EEFixtures.SUBSYSTEM_ADDRESS;
@@ -45,7 +45,7 @@ import static org.jboss.hal.testsuite.fixtures.EEFixtures.globalModule;
 @Testcontainers
 class GlobalModulesTest {
 
-    @Container static WildFlyContainer wildFly = WildFlyContainer.version(_26, STANDALONE);
+    @Container static WildFlyContainer wildFly = WildFlyContainer.version(_26_1, STANDALONE);
 
     @BeforeAll
     static void setupModel() throws Exception {

@@ -46,7 +46,7 @@ import static org.jboss.hal.dmr.ModelDescriptionConstants.NAME;
 import static org.jboss.hal.resources.Ids.JMS_BRIDGE;
 import static org.jboss.hal.resources.Ids.JMS_BRIDGE_ITEM;
 import static org.jboss.hal.testsuite.container.WildFlyConfiguration.FULL_HA;
-import static org.jboss.hal.testsuite.container.WildFlyVersion._26;
+import static org.jboss.hal.testsuite.container.WildFlyVersion._26_1;
 import static org.jboss.hal.testsuite.fixtures.MessagingFixtures.AT_MOST_ONCE;
 import static org.jboss.hal.testsuite.fixtures.MessagingFixtures.CONNECTION_FACTORY_VALUE;
 import static org.jboss.hal.testsuite.fixtures.MessagingFixtures.DESTINATION_QUEUE;
@@ -91,7 +91,7 @@ class FinderTest {
                 .and(TARGET_DESTINATION, DESTINATION_QUEUE);
     }
 
-    @Container static WildFlyContainer wildFly = WildFlyContainer.version(_26, FULL_HA);
+    @Container static WildFlyContainer wildFly = WildFlyContainer.version(_26_1, FULL_HA);
 
     @BeforeAll
     static void setupModel() throws Exception {

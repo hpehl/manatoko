@@ -55,7 +55,7 @@ import static org.jboss.hal.resources.Ids.ITEM;
 import static org.jboss.hal.resources.Ids.MESSAGING_SERVER;
 import static org.jboss.hal.resources.Ids.TAB;
 import static org.jboss.hal.testsuite.container.WildFlyConfiguration.FULL_HA;
-import static org.jboss.hal.testsuite.container.WildFlyVersion._26;
+import static org.jboss.hal.testsuite.container.WildFlyVersion._26_1;
 import static org.jboss.hal.testsuite.fixtures.MessagingFixtures.CALL_TIMEOUT;
 import static org.jboss.hal.testsuite.fixtures.MessagingFixtures.DG_UPDATE;
 import static org.jboss.hal.testsuite.fixtures.MessagingFixtures.JGROUPS_CHANNEL;
@@ -74,7 +74,7 @@ import static org.jboss.hal.testsuite.fixtures.MessagingFixtures.pooledConnectio
 @Disabled // TODO Fix failing tests
 class PooledConnectionFactoryTest extends AbstractServerConnectionsTest {
 
-    @Container static WildFlyContainer wildFly = WildFlyContainer.version(_26, FULL_HA);
+    @Container static WildFlyContainer wildFly = WildFlyContainer.version(_26_1, FULL_HA);
     private static OnlineManagementClient client;
     private static Operations operations;
 

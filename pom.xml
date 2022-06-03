@@ -7,7 +7,7 @@
      you may not use this file except in compliance with the License.
      You may obtain a copy of the License at
 
-         http://www.apache.org/licenses/LICENSE-2.0
+         https://www.apache.org/licenses/LICENSE-2.0
 
      Unless required by applicable law or agreed to in writing, software
      distributed under the License is distributed on an "AS IS" BASIS,
@@ -83,8 +83,8 @@
         <version.license.plugin>4.1</version.license.plugin>
 
         <!-- Repos, URLs & protocols -->
-        <repo.scm.connection>git@github.com:hal/manatoko.git</repo.scm.connection>
-        <repo.scm.url>https://github.com/hal/manatoko</repo.scm.url>
+        <repo.scm.connection>git@github.com:hpehl/manatoko.git</repo.scm.connection>
+        <repo.scm.url>https://github.com/hpehl/manatoko</repo.scm.url>
 
         <!-- Build related -->
         <encoding>UTF-8</encoding>
@@ -99,10 +99,10 @@
 
     <modules>
         <module>arquillian</module>
+        <module>build-config</module>
         <module>bom</module>
         <module>code-parent</module>
         <module>command</module>
-        <module>config</module>
         <module>container</module>
         <module>environment</module>
         <module>fixture</module>
@@ -112,9 +112,139 @@
         <module>ui</module>
     </modules>
 
-    <!-- No dependencies, no build configuration here! This is done in parent-code. -->
+    <!-- No dependencies configuration here! This is done in parent-code. -->
     <dependencies/>
-    <build/>
+
+    <build>
+        <!--
+            All plugins are declared and (partly) configured here.
+            Some of them are redefined in code-parent
+        -->
+        <pluginManagement>
+            <plugins>
+                <!-- Ordered by artifactID -->
+                <plugin>
+                    <groupId>net.revelc.code.formatter</groupId>
+                    <artifactId>formatter-maven-plugin</artifactId>
+                    <version>${version.formatter.plugin}</version>
+                </plugin>
+                <plugin>
+                    <groupId>com.mycila</groupId>
+                    <artifactId>license-maven-plugin</artifactId>
+                    <version>${version.license.plugin}</version>
+                    <configuration>
+                        <header>build-config/src/main/resources/etc/license.txt</header>
+                        <strictCheck>true</strictCheck>
+                        <aggregate>true</aggregate>
+                        <useDefaultExcludes>true</useDefaultExcludes>
+                        <excludes>
+                            <exclude>.sdkmanrc</exclude>
+                            <exclude>LICENSE</exclude>
+                            <exclude>**/*license*.txt</exclude>
+                        </excludes>
+                    </configuration>
+                </plugin>
+                <plugin>
+                    <groupId>net.revelc.code</groupId>
+                    <artifactId>impsort-maven-plugin</artifactId>
+                    <version>${version.impsort.plugin}</version>
+                    <configuration>
+                        <groups>java.,javax.,org.,io.,com.</groups>
+                        <removeUnused>true</removeUnused>
+                        <staticAfter>true</staticAfter>
+                    </configuration>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-checkstyle-plugin</artifactId>
+                    <configuration>
+                        <configLocation>wildfly-checkstyle/checkstyle.xml</configLocation>
+                        <consoleOutput>true</consoleOutput>
+                        <failsOnError>true</failsOnError>
+                        <includeTestSourceDirectory>true</includeTestSourceDirectory>
+                        <excludes>**/*$logger.java,**/*$bundle.java</excludes>
+                        <useFile/>
+                    </configuration>
+                    <dependencies>
+                        <dependency>
+                            <groupId>org.wildfly.checkstyle</groupId>
+                            <artifactId>wildfly-checkstyle-config</artifactId>
+                            <version>${version.checkstyle.config}</version>
+                        </dependency>
+                    </dependencies>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-enforcer-plugin</artifactId>
+                    <configuration>
+                        <rules>
+                            <bannedRepositories>
+                                <message>To build this project, don't use maven repositories over HTTP. Please use HTTPS
+                                    in your settings.xml or run the build with property insecure.repositories=WARN
+                                </message>
+                                <level>ERROR</level>
+                                <bannedRepositories>
+                                    <bannedRepository>http://*</bannedRepository>
+                                </bannedRepositories>
+                                <bannedPluginRepositories>
+                                    <bannedPluginRepository>http://*</bannedPluginRepository>
+                                </bannedPluginRepositories>
+                            </bannedRepositories>
+                            <requireMavenVersion>
+                                <message>To build this project Maven ${maven.min.version} (or greater) is required.
+                                    Please install it.
+                                </message>
+                                <version>${maven.min.version}</version>
+                            </requireMavenVersion>
+                            <requireJavaVersion>
+                                <message>To build this project JDK ${maven.compiler.source} (or greater) is required.
+                                    Please install it.
+                                </message>
+                                <version>${maven.compiler.source}</version>
+                            </requireJavaVersion>
+                        </rules>
+                    </configuration>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+
+        <plugins>
+            <!-- Ordered by artifactID -->
+            <plugin>
+                <groupId>com.mycila</groupId>
+                <artifactId>license-maven-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>license-format</id>
+                        <phase>process-sources</phase>
+                        <goals>
+                            <goal>format</goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                        <id>license-check</id>
+                        <phase>verify</phase>
+                        <goals>
+                            <goal>check</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-enforcer-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>enforcer-enforce</id>
+                        <phase>initialize</phase>
+                        <goals>
+                            <goal>enforce</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
 
     <profiles>
         <profile>

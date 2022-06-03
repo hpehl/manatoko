@@ -42,7 +42,7 @@ import static org.jboss.arquillian.graphene.Graphene.waitGui;
 import static org.jboss.hal.dmr.ModelDescriptionConstants.PROPERTIES;
 import static org.jboss.hal.dmr.ModelDescriptionConstants.SOCKET_BINDING;
 import static org.jboss.hal.testsuite.container.WildFlyConfiguration.HA;
-import static org.jboss.hal.testsuite.container.WildFlyVersion._26;
+import static org.jboss.hal.testsuite.container.WildFlyVersion._26_1;
 import static org.jboss.hal.testsuite.fixtures.JGroupsFixtures.JGROUPS_TCP;
 import static org.jboss.hal.testsuite.fixtures.JGroupsFixtures.PROTOCOL_CREATE;
 import static org.jboss.hal.testsuite.fixtures.JGroupsFixtures.PROTOCOL_DELETE;
@@ -58,7 +58,7 @@ import static org.jboss.hal.testsuite.fixtures.JGroupsFixtures.transportAddress;
 @TestMethodOrder(MethodOrderer.MethodName.class)
 public class StackProtocolTest {
 
-    @Container static WildFlyContainer wildFly = WildFlyContainer.version(_26, HA);
+    @Container static WildFlyContainer wildFly = WildFlyContainer.version(_26_1, HA);
 
     @BeforeAll
     static void setupModel() throws Exception {

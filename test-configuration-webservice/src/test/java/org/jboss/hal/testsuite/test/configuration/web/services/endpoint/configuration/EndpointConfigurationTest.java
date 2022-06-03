@@ -40,7 +40,7 @@ import org.wildfly.extras.creaper.core.online.OnlineManagementClient;
 import org.wildfly.extras.creaper.core.online.operations.Operations;
 
 import static org.jboss.hal.testsuite.container.WildFlyConfiguration.STANDALONE;
-import static org.jboss.hal.testsuite.container.WildFlyVersion._26;
+import static org.jboss.hal.testsuite.container.WildFlyVersion._26_1;
 
 @Manatoko
 @Testcontainers
@@ -55,7 +55,7 @@ class EndpointConfigurationTest {
     private static final String END_POINT_CONFIGURATION_REMOVE = "endpoint-configuration-to-be-removed-"
             + RandomStringUtils.randomAlphanumeric(7);
 
-    @Container static WildFlyContainer wildFly = WildFlyContainer.version(_26, STANDALONE);
+    @Container static WildFlyContainer wildFly = WildFlyContainer.version(_26_1, STANDALONE);
     private static OnlineManagementClient client;
 
     @BeforeAll
@@ -98,8 +98,8 @@ class EndpointConfigurationTest {
                     WebServicesFixtures.endpointConfigurationAddress(END_POINT_CONFIGURATION_EDIT)
                             .and("property", entry.getKey()),
                     client)
-                            .verifyExists()
-                            .verifyAttribute("value", entry.getValue());
+                    .verifyExists()
+                    .verifyAttribute("value", entry.getValue());
         }
     }
 

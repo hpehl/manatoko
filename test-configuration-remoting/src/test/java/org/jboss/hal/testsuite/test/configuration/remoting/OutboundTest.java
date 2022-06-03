@@ -40,7 +40,7 @@ import static org.jboss.hal.dmr.ModelDescriptionConstants.NAME;
 import static org.jboss.hal.dmr.ModelDescriptionConstants.PROPERTY;
 import static org.jboss.hal.dmr.ModelDescriptionConstants.VALUE;
 import static org.jboss.hal.testsuite.container.WildFlyConfiguration.STANDALONE;
-import static org.jboss.hal.testsuite.container.WildFlyVersion._26;
+import static org.jboss.hal.testsuite.container.WildFlyVersion._26_1;
 import static org.jboss.hal.testsuite.fixtures.RemotingFixtures.BACKLOG;
 import static org.jboss.hal.testsuite.fixtures.RemotingFixtures.OUTBOUND_CREATE;
 import static org.jboss.hal.testsuite.fixtures.RemotingFixtures.OUTBOUND_DELETE;
@@ -55,7 +55,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 @Testcontainers
 class OutboundTest {
 
-    @Container static WildFlyContainer wildFly = WildFlyContainer.version(_26, STANDALONE);
+    @Container static WildFlyContainer wildFly = WildFlyContainer.version(_26_1, STANDALONE);
     private static OnlineManagementClient client;
 
     @BeforeAll

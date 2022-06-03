@@ -49,7 +49,7 @@ import static org.jboss.hal.resources.Ids.MESSAGING_SERVER_HA_POLICY;
 import static org.jboss.hal.resources.Ids.MESSAGING_SERVER_SETTINGS;
 import static org.jboss.hal.resources.Ids.messagingServer;
 import static org.jboss.hal.testsuite.container.WildFlyConfiguration.FULL_HA;
-import static org.jboss.hal.testsuite.container.WildFlyVersion._26;
+import static org.jboss.hal.testsuite.container.WildFlyVersion._26_1;
 import static org.jboss.hal.testsuite.fixtures.MessagingFixtures.SRV_UPDATE;
 import static org.jboss.hal.testsuite.fixtures.MessagingFixtures.haPolicyAddress;
 import static org.jboss.hal.testsuite.fragment.finder.FinderFragment.configurationSubsystemPath;
@@ -58,7 +58,7 @@ import static org.jboss.hal.testsuite.fragment.finder.FinderFragment.configurati
 @Testcontainers
 class FinderTest extends AbstractHaPolicyTest {
 
-    @Container static WildFlyContainer wildFly = WildFlyContainer.version(_26, FULL_HA);
+    @Container static WildFlyContainer wildFly = WildFlyContainer.version(_26_1, FULL_HA);
     private static OnlineManagementClient client;
     private static Operations operations;
 

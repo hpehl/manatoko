@@ -39,7 +39,7 @@ import org.wildfly.extras.creaper.core.online.operations.Values;
 import static org.jboss.hal.dmr.ModelDescriptionConstants.FILE;
 import static org.jboss.hal.dmr.ModelDescriptionConstants.PATH;
 import static org.jboss.hal.testsuite.container.WildFlyConfiguration.STANDALONE;
-import static org.jboss.hal.testsuite.container.WildFlyVersion._26;
+import static org.jboss.hal.testsuite.container.WildFlyVersion._26_1;
 import static org.jboss.hal.testsuite.fixtures.LoggingFixtures.LOGGING_PROFILE_HANDLER_ITEM;
 import static org.jboss.hal.testsuite.fixtures.LoggingFixtures.NAME;
 import static org.jboss.hal.testsuite.fixtures.LoggingFixtures.PATH_VALUE;
@@ -54,7 +54,7 @@ import static org.jboss.hal.testsuite.fixtures.LoggingFixtures.PeriodicHandler.P
 class PeriodicHandlerTest extends AbstractPeriodicHandlerTest {
 
     private static final String LOGGING_PROFILE = "logging-profile-" + Random.name();
-    @Container static WildFlyContainer wildFly = WildFlyContainer.version(_26, STANDALONE);
+    @Container static WildFlyContainer wildFly = WildFlyContainer.version(_26_1, STANDALONE);
 
     @BeforeAll
     static void setupModel() throws Exception {

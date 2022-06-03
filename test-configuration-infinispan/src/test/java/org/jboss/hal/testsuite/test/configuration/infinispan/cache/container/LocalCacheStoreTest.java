@@ -53,7 +53,7 @@ import static org.jboss.hal.dmr.ModelDescriptionConstants.STORE;
 import static org.jboss.hal.resources.CSS.bootstrapSelect;
 import static org.jboss.hal.resources.Ids.LOCAL_CACHE;
 import static org.jboss.hal.testsuite.container.WildFlyConfiguration.FULL_HA;
-import static org.jboss.hal.testsuite.container.WildFlyVersion._26;
+import static org.jboss.hal.testsuite.container.WildFlyVersion._26_1;
 import static org.jboss.hal.testsuite.fixtures.InfinispanFixtures.CC_UPDATE;
 import static org.jboss.hal.testsuite.fixtures.InfinispanFixtures.LC_NO_STORE;
 import static org.jboss.hal.testsuite.fixtures.InfinispanFixtures.MAX_BATCH_SIZE;
@@ -65,7 +65,7 @@ import static org.jboss.hal.testsuite.fixtures.InfinispanFixtures.storeAddress;
 @TestMethodOrder(MethodOrderer.MethodName.class)
 class LocalCacheStoreTest {
 
-    @Container static WildFlyContainer wildFly = WildFlyContainer.version(_26, FULL_HA);
+    @Container static WildFlyContainer wildFly = WildFlyContainer.version(_26_1, FULL_HA);
     private static OnlineManagementClient client;
 
     @BeforeAll

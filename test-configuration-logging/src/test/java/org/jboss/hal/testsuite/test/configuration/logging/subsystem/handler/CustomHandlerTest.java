@@ -38,7 +38,7 @@ import org.wildfly.extras.creaper.core.online.operations.Values;
 import static org.jboss.hal.dmr.ModelDescriptionConstants.CLASS;
 import static org.jboss.hal.dmr.ModelDescriptionConstants.MODULE;
 import static org.jboss.hal.testsuite.container.WildFlyConfiguration.STANDALONE;
-import static org.jboss.hal.testsuite.container.WildFlyVersion._26;
+import static org.jboss.hal.testsuite.container.WildFlyVersion._26_1;
 import static org.jboss.hal.testsuite.fixtures.LoggingFixtures.CLASS_VALUE;
 import static org.jboss.hal.testsuite.fixtures.LoggingFixtures.LOGGING_HANDLER_ITEM;
 import static org.jboss.hal.testsuite.fixtures.LoggingFixtures.MODULE_VALUE;
@@ -51,7 +51,7 @@ import static org.jboss.hal.testsuite.fixtures.LoggingFixtures.CustomHandler.CUS
 @Disabled // TODO Fix failing tests
 class CustomHandlerTest extends AbstractCustomHandlerTest {
 
-    @Container static WildFlyContainer wildFly = WildFlyContainer.version(_26, STANDALONE);
+    @Container static WildFlyContainer wildFly = WildFlyContainer.version(_26_1, STANDALONE);
 
     @BeforeAll
     static void setupModel() throws Exception {

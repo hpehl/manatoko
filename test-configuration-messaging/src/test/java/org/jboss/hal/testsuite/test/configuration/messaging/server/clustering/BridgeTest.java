@@ -53,7 +53,7 @@ import static org.jboss.hal.resources.Ids.ITEM;
 import static org.jboss.hal.resources.Ids.MESSAGING_SERVER;
 import static org.jboss.hal.resources.Ids.TAB;
 import static org.jboss.hal.testsuite.container.WildFlyConfiguration.FULL_HA;
-import static org.jboss.hal.testsuite.container.WildFlyVersion._26;
+import static org.jboss.hal.testsuite.container.WildFlyVersion._26_1;
 import static org.jboss.hal.testsuite.fixtures.MessagingFixtures.BRIDGE_CREATE;
 import static org.jboss.hal.testsuite.fixtures.MessagingFixtures.BRIDGE_DELETE;
 import static org.jboss.hal.testsuite.fixtures.MessagingFixtures.BRIDGE_UPDATE;
@@ -69,7 +69,7 @@ class BridgeTest extends AbstractClusteringTest {
     private static final Values BRIDGE_PARAMS = Values.of(QUEUE_NAME, Random.name())
             .andList(STATIC_CONNECTORS, HTTP_CONNECTOR);
 
-    @Container static WildFlyContainer wildFly = WildFlyContainer.version(_26, FULL_HA);
+    @Container static WildFlyContainer wildFly = WildFlyContainer.version(_26_1, FULL_HA);
     private static OnlineManagementClient client;
     private static Operations operations;
 

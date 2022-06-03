@@ -43,7 +43,7 @@ import static org.jboss.hal.dmr.ModelDescriptionConstants.NAME;
 import static org.jboss.hal.dmr.ModelDescriptionConstants.VALUE;
 import static org.jboss.hal.dmr.ModelDescriptionConstants.XA_DATASOURCE_PROPERTIES;
 import static org.jboss.hal.testsuite.container.WildFlyConfiguration.STANDALONE;
-import static org.jboss.hal.testsuite.container.WildFlyVersion._26;
+import static org.jboss.hal.testsuite.container.WildFlyVersion._26_1;
 import static org.jboss.hal.testsuite.fixtures.DataSourceFixtures.URL_DELIMITER;
 import static org.jboss.hal.testsuite.fixtures.DataSourceFixtures.XA_DATA_SOURCE_UPDATE;
 import static org.jboss.hal.testsuite.fixtures.DataSourceFixtures.h2ConnectionUrl;
@@ -53,7 +53,7 @@ import static org.jboss.hal.testsuite.fixtures.DataSourceFixtures.xaDataSourceAd
 @Testcontainers
 class XADataSourceConfigurationTest {
 
-    @Container static WildFlyContainer wildFly = WildFlyContainer.version(_26, STANDALONE);
+    @Container static WildFlyContainer wildFly = WildFlyContainer.version(_26_1, STANDALONE);
     static OnlineManagementClient client;
 
     @BeforeAll

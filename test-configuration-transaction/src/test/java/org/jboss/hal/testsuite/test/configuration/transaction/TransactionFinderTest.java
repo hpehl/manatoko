@@ -30,13 +30,13 @@ import org.testcontainers.junit.jupiter.Testcontainers;
 import com.gwtplatform.mvp.shared.proxy.PlaceRequest;
 
 import static org.jboss.hal.testsuite.container.WildFlyConfiguration.STANDALONE;
-import static org.jboss.hal.testsuite.container.WildFlyVersion._26;
+import static org.jboss.hal.testsuite.container.WildFlyVersion._26_1;
 
 @Manatoko
 @Testcontainers
 class TransactionFinderTest {
 
-    @Container static WildFlyContainer wildFly = WildFlyContainer.version(_26, STANDALONE);
+    @Container static WildFlyContainer wildFly = WildFlyContainer.version(_26_1, STANDALONE);
 
     @Inject Console console;
 

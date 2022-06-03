@@ -47,7 +47,7 @@ import static org.jboss.hal.dmr.ModelDescriptionConstants.DEFAULT;
 import static org.jboss.hal.dmr.ModelDescriptionConstants.MAX_THREADS;
 import static org.jboss.hal.dmr.ModelDescriptionConstants.SOCKET_BINDING;
 import static org.jboss.hal.testsuite.container.WildFlyConfiguration.HA;
-import static org.jboss.hal.testsuite.container.WildFlyVersion._26;
+import static org.jboss.hal.testsuite.container.WildFlyVersion._26_1;
 import static org.jboss.hal.testsuite.fixtures.JGroupsFixtures.JGROUPS_TCP;
 import static org.jboss.hal.testsuite.fixtures.JGroupsFixtures.SITE;
 import static org.jboss.hal.testsuite.fixtures.JGroupsFixtures.STACK_CREATE;
@@ -62,7 +62,7 @@ import static org.jboss.hal.testsuite.fixtures.JGroupsFixtures.transportThreadPo
 @Disabled // TODO Fix failing tests
 class StackTransportTest {
 
-    @Container static WildFlyContainer wildFly = WildFlyContainer.version(_26, HA);
+    @Container static WildFlyContainer wildFly = WildFlyContainer.version(_26_1, HA);
 
     @BeforeAll
     static void setupModel() throws Exception {

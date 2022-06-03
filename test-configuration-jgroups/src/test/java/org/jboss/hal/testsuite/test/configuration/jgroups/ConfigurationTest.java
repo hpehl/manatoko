@@ -35,7 +35,7 @@ import org.wildfly.extras.creaper.core.online.operations.Operations;
 
 import static org.jboss.hal.dmr.ModelDescriptionConstants.EE;
 import static org.jboss.hal.testsuite.container.WildFlyConfiguration.HA;
-import static org.jboss.hal.testsuite.container.WildFlyVersion._26;
+import static org.jboss.hal.testsuite.container.WildFlyVersion._26_1;
 import static org.jboss.hal.testsuite.fixtures.JGroupsFixtures.DEFAULT_CHANNEL;
 import static org.jboss.hal.testsuite.fixtures.JGroupsFixtures.SUBSYSTEM_ADDRESS;
 import static org.jboss.hal.testsuite.fixtures.JGroupsFixtures.TCP;
@@ -45,7 +45,7 @@ import static org.jboss.hal.testsuite.fixtures.JGroupsFixtures.TCP;
 @Disabled // TODO Fix failing tests
 class ConfigurationTest {
 
-    @Container static WildFlyContainer wildFly = WildFlyContainer.version(_26, HA);
+    @Container static WildFlyContainer wildFly = WildFlyContainer.version(_26_1, HA);
 
     @BeforeAll
     static void setupModel() throws Exception {

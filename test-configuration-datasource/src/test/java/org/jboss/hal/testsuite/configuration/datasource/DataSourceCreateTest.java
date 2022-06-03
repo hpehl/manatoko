@@ -53,7 +53,7 @@ import static org.jboss.hal.dmr.ModelDescriptionConstants.NAME;
 import static org.jboss.hal.dmr.ModelDescriptionConstants.PASSWORD;
 import static org.jboss.hal.dmr.ModelDescriptionConstants.USER_NAME;
 import static org.jboss.hal.testsuite.container.WildFlyConfiguration.STANDALONE;
-import static org.jboss.hal.testsuite.container.WildFlyVersion._26;
+import static org.jboss.hal.testsuite.container.WildFlyVersion._26_1;
 import static org.jboss.hal.testsuite.fixtures.DataSourceFixtures.DATA_SOURCE_CREATE_CUSTOM;
 import static org.jboss.hal.testsuite.fixtures.DataSourceFixtures.DATA_SOURCE_CREATE_EXISTING;
 import static org.jboss.hal.testsuite.fixtures.DataSourceFixtures.DATA_SOURCE_CREATE_H2;
@@ -77,7 +77,7 @@ import static org.junit.jupiter.api.Assertions.fail;
 @Testcontainers
 class DataSourceCreateTest {
 
-    @Container static WildFlyContainer wildFly = WildFlyContainer.version(_26, STANDALONE);
+    @Container static WildFlyContainer wildFly = WildFlyContainer.version(_26_1, STANDALONE);
     static final String H2_CSS_SELECTOR = "input[type=radio][name=template][value=h2]";
     static OnlineManagementClient client;
 

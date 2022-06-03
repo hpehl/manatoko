@@ -38,7 +38,7 @@ import org.wildfly.extras.creaper.core.online.operations.Operations;
 import org.wildfly.extras.creaper.core.online.operations.Values;
 
 import static org.jboss.hal.testsuite.container.WildFlyConfiguration.STANDALONE;
-import static org.jboss.hal.testsuite.container.WildFlyVersion._26;
+import static org.jboss.hal.testsuite.container.WildFlyVersion._26_1;
 
 @Manatoko
 @Testcontainers
@@ -49,30 +49,30 @@ class PostHandlerChainHandlerTest {
 
     private static final WebServicesFixtures.HandlerChain POST_HANDLER_CHAIN_EDIT = new WebServicesFixtures.HandlerChain.Builder(
             CLIENT_CONFIGURATION_EDIT)
-                    .handlerChainName("pre-handler-chain-to-be-edited-" + RandomStringUtils.randomAlphanumeric(7))
-                    .clientConfiguration()
-                    .postHandlerChain()
-                    .build();
+            .handlerChainName("pre-handler-chain-to-be-edited-" + RandomStringUtils.randomAlphanumeric(7))
+            .clientConfiguration()
+            .postHandlerChain()
+            .build();
 
     private static final WebServicesFixtures.Handler POST_HANDLER_CHAIN_HANDLER_CREATE = new WebServicesFixtures.Handler.Builder(
             "post-handler-chain-handler-to-be-created-" + RandomStringUtils.randomAlphanumeric(7))
-                    .className(Random.name())
-                    .handlerChain(POST_HANDLER_CHAIN_EDIT)
-                    .build();
+            .className(Random.name())
+            .handlerChain(POST_HANDLER_CHAIN_EDIT)
+            .build();
 
     private static final WebServicesFixtures.Handler POST_HANDLER_CHAIN_HANDLER_DELETE = new WebServicesFixtures.Handler.Builder(
             "post-handler-chain-handler-to-be-removed-" + RandomStringUtils.randomAlphanumeric(7))
-                    .className(Random.name())
-                    .handlerChain(POST_HANDLER_CHAIN_EDIT)
-                    .build();
+            .className(Random.name())
+            .handlerChain(POST_HANDLER_CHAIN_EDIT)
+            .build();
 
     private static final WebServicesFixtures.Handler POST_HANDLER_CHAIN_HANDLER_EDIT = new WebServicesFixtures.Handler.Builder(
             "post-handler-chain-handler-to-be-edited-" + RandomStringUtils.randomAlphanumeric(7))
-                    .className(Random.name())
-                    .handlerChain(POST_HANDLER_CHAIN_EDIT)
-                    .build();
+            .className(Random.name())
+            .handlerChain(POST_HANDLER_CHAIN_EDIT)
+            .build();
 
-    @Container static WildFlyContainer wildFly = WildFlyContainer.version(_26, STANDALONE);
+    @Container static WildFlyContainer wildFly = WildFlyContainer.version(_26_1, STANDALONE);
 
     @BeforeAll
     static void setupModel() throws Exception {

@@ -42,7 +42,7 @@ import org.wildfly.extras.creaper.core.online.operations.Values;
 
 import static org.jboss.hal.dmr.ModelDescriptionConstants.OUTBOUND_SOCKET_BINDING_REF;
 import static org.jboss.hal.testsuite.container.WildFlyConfiguration.STANDALONE;
-import static org.jboss.hal.testsuite.container.WildFlyVersion._26;
+import static org.jboss.hal.testsuite.container.WildFlyVersion._26_1;
 import static org.jboss.hal.testsuite.fixtures.LoggingFixtures.LOGGING_HANDLER_ITEM;
 import static org.jboss.hal.testsuite.fixtures.LoggingFixtures.NAMED_FORMATTER;
 import static org.jboss.hal.testsuite.fixtures.LoggingFixtures.SocketHandler;
@@ -52,7 +52,7 @@ import static org.jboss.hal.testsuite.fixtures.LoggingFixtures.SocketHandler;
 @Disabled // TODO Fix failing tests
 class SocketHandlerTest extends AbstractSocketHandlerTest {
 
-    @Container static WildFlyContainer wildFly = WildFlyContainer.version(_26, STANDALONE);
+    @Container static WildFlyContainer wildFly = WildFlyContainer.version(_26_1, STANDALONE);
     static final String SSL_CONTEXT = "client-ssl-context-" + Random.name();
 
     @BeforeAll

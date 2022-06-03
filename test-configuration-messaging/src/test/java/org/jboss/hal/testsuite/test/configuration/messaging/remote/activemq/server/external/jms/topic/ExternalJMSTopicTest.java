@@ -40,7 +40,7 @@ import org.wildfly.extras.creaper.core.online.operations.Operations;
 import org.wildfly.extras.creaper.core.online.operations.Values;
 
 import static org.jboss.hal.testsuite.container.WildFlyConfiguration.FULL_HA;
-import static org.jboss.hal.testsuite.container.WildFlyVersion._26;
+import static org.jboss.hal.testsuite.container.WildFlyVersion._26_1;
 import static org.jboss.hal.testsuite.fixtures.MessagingFixtures.RemoteActiveMQServer;
 
 @Manatoko
@@ -52,7 +52,7 @@ class ExternalJMSTopicTest {
     private static final String EXTERNAL_JMS_TOPIC_UPDATE = "external-jms-topic-to-be-updated-" + Random.name();
     private static final String EXTERNAL_JMS_TOPIC_DELETE = "external-jms-topic-to-be-deleted-" + Random.name();
 
-    @Container static WildFlyContainer wildFly = WildFlyContainer.version(_26, FULL_HA);
+    @Container static WildFlyContainer wildFly = WildFlyContainer.version(_26_1, FULL_HA);
     private static Operations operations;
 
     @BeforeAll

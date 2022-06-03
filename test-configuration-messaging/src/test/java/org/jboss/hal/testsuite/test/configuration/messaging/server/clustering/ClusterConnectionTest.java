@@ -41,7 +41,7 @@ import static org.jboss.hal.dmr.ModelDescriptionConstants.STATIC_CONNECTORS;
 import static org.jboss.hal.resources.Ids.ITEM;
 import static org.jboss.hal.resources.Ids.MESSAGING_CLUSTER_CONNECTION;
 import static org.jboss.hal.testsuite.container.WildFlyConfiguration.FULL_HA;
-import static org.jboss.hal.testsuite.container.WildFlyVersion._26;
+import static org.jboss.hal.testsuite.container.WildFlyVersion._26_1;
 import static org.jboss.hal.testsuite.fixtures.MessagingFixtures.CALL_TIMEOUT;
 import static org.jboss.hal.testsuite.fixtures.MessagingFixtures.CC_CREATE;
 import static org.jboss.hal.testsuite.fixtures.MessagingFixtures.CC_DELETE;
@@ -59,7 +59,7 @@ class ClusterConnectionTest extends AbstractClusteringTest {
             .and(CONNECTOR_NAME, HTTP_CONNECTOR)
             .and(DISCOVERY_GROUP, Random.name());
 
-    @Container static WildFlyContainer wildFly = WildFlyContainer.version(_26, FULL_HA);
+    @Container static WildFlyContainer wildFly = WildFlyContainer.version(_26_1, FULL_HA);
 
     @BeforeAll
     static void setupModel() throws Exception {

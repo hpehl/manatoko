@@ -43,7 +43,7 @@ import static org.jboss.hal.dmr.ModelDescriptionConstants.NAME;
 import static org.jboss.hal.dmr.ModelDescriptionConstants.OUTBOUND_SOCKET_BINDING_REF;
 import static org.jboss.hal.dmr.ModelDescriptionConstants.PATTERN_FORMATTER;
 import static org.jboss.hal.testsuite.container.WildFlyConfiguration.STANDALONE;
-import static org.jboss.hal.testsuite.container.WildFlyVersion._26;
+import static org.jboss.hal.testsuite.container.WildFlyVersion._26_1;
 import static org.jboss.hal.testsuite.fixtures.LoggingFixtures.LOGGING_PROFILE_HANDLER_ITEM;
 import static org.jboss.hal.testsuite.fixtures.LoggingFixtures.NAMED_FORMATTER;
 import static org.jboss.hal.testsuite.fixtures.LoggingFixtures.PatternFormatter;
@@ -54,7 +54,7 @@ import static org.jboss.hal.testsuite.fixtures.LoggingFixtures.SocketHandler;
 @Disabled // TODO Fix failing tests
 class SocketHandlerTest extends AbstractSocketHandlerTest {
 
-    @Container static WildFlyContainer wildFly = WildFlyContainer.version(_26, STANDALONE);
+    @Container static WildFlyContainer wildFly = WildFlyContainer.version(_26_1, STANDALONE);
     static final String LOGGING_PROFILE = "logging-profile-" + Random.name();
 
     @BeforeAll

@@ -43,7 +43,7 @@ import static org.jboss.hal.dmr.ModelDescriptionConstants.RELAY;
 import static org.jboss.hal.dmr.ModelDescriptionConstants.SOCKET_BINDING;
 import static org.jboss.hal.dmr.ModelDescriptionConstants.STATISTICS_ENABLED;
 import static org.jboss.hal.testsuite.container.WildFlyConfiguration.HA;
-import static org.jboss.hal.testsuite.container.WildFlyVersion._26;
+import static org.jboss.hal.testsuite.container.WildFlyVersion._26_1;
 import static org.jboss.hal.testsuite.fixtures.JGroupsFixtures.JGROUPS_TCP;
 import static org.jboss.hal.testsuite.fixtures.JGroupsFixtures.SITE;
 import static org.jboss.hal.testsuite.fixtures.JGroupsFixtures.STACK_CREATE;
@@ -57,7 +57,7 @@ import static org.jboss.hal.testsuite.fixtures.JGroupsFixtures.transportAddress;
 @TestMethodOrder(MethodOrderer.MethodName.class)
 class StackRelayTest {
 
-    @Container static WildFlyContainer wildFly = WildFlyContainer.version(_26, HA);
+    @Container static WildFlyContainer wildFly = WildFlyContainer.version(_26_1, HA);
 
     @BeforeAll
     static void setupModel() throws Exception {

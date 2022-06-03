@@ -39,7 +39,7 @@ import static org.jboss.hal.dmr.ModelDescriptionConstants.NAME;
 import static org.jboss.hal.dmr.ModelDescriptionConstants.PATH;
 import static org.jboss.hal.dmr.ModelDescriptionConstants.RELATIVE_TO;
 import static org.jboss.hal.testsuite.container.WildFlyConfiguration.STANDALONE;
-import static org.jboss.hal.testsuite.container.WildFlyVersion._26;
+import static org.jboss.hal.testsuite.container.WildFlyVersion._26_1;
 import static org.jboss.hal.testsuite.fixtures.DeploymentScannerFixtures.DS_CREATE;
 import static org.jboss.hal.testsuite.fixtures.DeploymentScannerFixtures.DS_DELETE;
 import static org.jboss.hal.testsuite.fixtures.DeploymentScannerFixtures.DS_READ;
@@ -54,7 +54,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 @Testcontainers
 class DeploymentScannerTest {
 
-    @Container static WildFlyContainer wildFly = WildFlyContainer.version(_26, STANDALONE);
+    @Container static WildFlyContainer wildFly = WildFlyContainer.version(_26_1, STANDALONE);
     private static OnlineManagementClient client;
 
     @BeforeAll

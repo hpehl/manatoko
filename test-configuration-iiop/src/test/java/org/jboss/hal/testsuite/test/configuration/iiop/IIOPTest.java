@@ -46,7 +46,7 @@ import static org.jboss.hal.dmr.ModelDescriptionConstants.SERVER_SSL_CONTEXT;
 import static org.jboss.hal.dmr.ModelDescriptionConstants.SOCKET_BINDING;
 import static org.jboss.hal.dmr.ModelDescriptionConstants.TRANSACTIONS;
 import static org.jboss.hal.testsuite.container.WildFlyConfiguration.FULL;
-import static org.jboss.hal.testsuite.container.WildFlyVersion._26;
+import static org.jboss.hal.testsuite.container.WildFlyVersion._26_1;
 import static org.jboss.hal.testsuite.fixtures.IIOPFixtures.AUTH_METHOD;
 import static org.jboss.hal.testsuite.fixtures.IIOPFixtures.CALLER_PROPAGATION;
 import static org.jboss.hal.testsuite.fixtures.IIOPFixtures.DEFAULT_ROOT_CONTEXT;
@@ -68,7 +68,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 @Testcontainers
 class IIOPTest {
 
-    @Container static WildFlyContainer wildFly = WildFlyContainer.version(_26, FULL);
+    @Container static WildFlyContainer wildFly = WildFlyContainer.version(_26_1, FULL);
 
     @BeforeAll
     static void setupModel() throws Exception {

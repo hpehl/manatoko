@@ -7,7 +7,7 @@
      you may not use this file except in compliance with the License.
      You may obtain a copy of the License at
 
-         http://www.apache.org/licenses/LICENSE-2.0
+         https://www.apache.org/licenses/LICENSE-2.0
 
      Unless required by applicable law or agreed to in writing, software
      distributed under the License is distributed on an "AS IS" BASIS,
@@ -26,8 +26,22 @@
         <relativePath>../pom.xml</relativePath>
     </parent>
 
-    <artifactId>manatoko-config</artifactId>
-    <name>Manatoko :: Configuration</name>
-    <description>Configuration for checkstyle, eclipse formatter and license check</description>
+    <artifactId>manatoko-build-config</artifactId>
+    <name>Manatoko :: Build :: Config</name>
+    <description>Build configuration for checkstyle, eclipse formatter and license check</description>
     <packaging>jar</packaging>
+
+    <build>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>com.mycila</groupId>
+                    <artifactId>license-maven-plugin</artifactId>
+                    <configuration>
+                        <header>src/main/resources/etc/license.txt</header>
+                    </configuration>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+    </build>
 </project>

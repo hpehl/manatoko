@@ -51,7 +51,7 @@ import static org.jboss.hal.dmr.ModelDescriptionConstants.READ_ALIASES_OPERATION
 import static org.jboss.hal.dmr.ModelDescriptionConstants.RELATIVE_TO;
 import static org.jboss.hal.dmr.ModelDescriptionConstants.STORE;
 import static org.jboss.hal.testsuite.container.WildFlyConfiguration.STANDALONE;
-import static org.jboss.hal.testsuite.container.WildFlyVersion._26;
+import static org.jboss.hal.testsuite.container.WildFlyVersion._26_1;
 import static org.jboss.hal.testsuite.fixtures.DataSourceFixtures.DATA_SOURCE_CREATE_H2_UNIQUE;
 import static org.jboss.hal.testsuite.fixtures.DataSourceFixtures.H2_PASSWORD;
 import static org.jboss.hal.testsuite.fixtures.DataSourceFixtures.dataSourceAddress;
@@ -68,7 +68,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 @Testcontainers
 class DataSourceCreateCredRefTest {
 
-    @Container static WildFlyContainer wildFly = WildFlyContainer.version(_26, STANDALONE);
+    @Container static WildFlyContainer wildFly = WildFlyContainer.version(_26_1, STANDALONE);
     static final String H2_CSS_SELECTOR = "input[type=radio][name=template][value=h2]";
     static OnlineManagementClient client;
 

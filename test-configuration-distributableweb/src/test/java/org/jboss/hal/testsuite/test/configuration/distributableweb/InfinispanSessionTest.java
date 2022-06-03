@@ -40,7 +40,7 @@ import static org.jboss.hal.dmr.ModelDescriptionConstants.CACHE_CONTAINER;
 import static org.jboss.hal.dmr.ModelDescriptionConstants.NAME;
 import static org.jboss.hal.dmr.ModelDescriptionConstants.RANKED;
 import static org.jboss.hal.testsuite.container.WildFlyConfiguration.FULL;
-import static org.jboss.hal.testsuite.container.WildFlyVersion._26;
+import static org.jboss.hal.testsuite.container.WildFlyVersion._26_1;
 import static org.jboss.hal.testsuite.fixtures.DistributableWebFixtures.ATTRIBUTE;
 import static org.jboss.hal.testsuite.fixtures.DistributableWebFixtures.GRANULARITY;
 import static org.jboss.hal.testsuite.fixtures.DistributableWebFixtures.INFINISPAN_SESSION_AFFINITY;
@@ -57,7 +57,7 @@ import static org.junit.jupiter.api.Assertions.fail;
 @Testcontainers
 class InfinispanSessionTest {
 
-    @Container static WildFlyContainer wildFly = WildFlyContainer.version(_26, FULL);
+    @Container static WildFlyContainer wildFly = WildFlyContainer.version(_26_1, FULL);
     private static OnlineManagementClient client;
 
     @BeforeAll

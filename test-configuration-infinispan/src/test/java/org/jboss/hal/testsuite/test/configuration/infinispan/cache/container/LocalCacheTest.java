@@ -49,7 +49,7 @@ import static org.jboss.hal.dmr.ModelDescriptionConstants.NAME;
 import static org.jboss.hal.dmr.ModelDescriptionConstants.STATISTICS_ENABLED;
 import static org.jboss.hal.dmr.ModelDescriptionConstants.TRANSACTION;
 import static org.jboss.hal.testsuite.container.WildFlyConfiguration.FULL_HA;
-import static org.jboss.hal.testsuite.container.WildFlyVersion._26;
+import static org.jboss.hal.testsuite.container.WildFlyVersion._26_1;
 import static org.jboss.hal.testsuite.fixtures.InfinispanFixtures.ACQUIRE_TIMEOUT;
 import static org.jboss.hal.testsuite.fixtures.InfinispanFixtures.CC_UPDATE;
 import static org.jboss.hal.testsuite.fixtures.InfinispanFixtures.CONCURRENCY_LEVEL;
@@ -69,7 +69,7 @@ import static org.jboss.hal.testsuite.fixtures.InfinispanFixtures.localCacheAddr
 @Disabled // TODO Fix failing tests
 class LocalCacheTest {
 
-    @Container static WildFlyContainer wildFly = WildFlyContainer.version(_26, FULL_HA);
+    @Container static WildFlyContainer wildFly = WildFlyContainer.version(_26_1, FULL_HA);
 
     @BeforeAll
     static void setupModel() throws Exception {

@@ -199,178 +199,67 @@
     <build>
         <pluginManagement>
             <plugins>
+                <!-- Ordered by artifactID -->
                 <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-checkstyle-plugin</artifactId>
+                    <groupId>net.revelc.code.formatter</groupId>
+                    <artifactId>formatter-maven-plugin</artifactId>
                     <configuration>
-                        <configLocation>wildfly-checkstyle/checkstyle.xml</configLocation>
-                        <consoleOutput>true</consoleOutput>
-                        <failsOnError>true</failsOnError>
-                        <includeTestSourceDirectory>true</includeTestSourceDirectory>
-                        <excludes>**/*$logger.java,**/*$bundle.java</excludes>
-                        <suppressionsLocation>manatoko/checkstyle-suppressions.xml</suppressionsLocation>
-                        <useFile/>
+                        <configFile>etc/eclipse-formatter-config.xml</configFile>
                     </configuration>
                     <dependencies>
                         <dependency>
                             <groupId>${project.groupId}</groupId>
-                            <artifactId>manatoko-config</artifactId>
+                            <artifactId>manatoko-build-config</artifactId>
                             <version>${project.version}</version>
                         </dependency>
-                        <dependency>
-                            <groupId>org.wildfly.checkstyle</groupId>
-                            <artifactId>wildfly-checkstyle-config</artifactId>
-                            <version>${version.checkstyle.config}</version>
-                        </dependency>
                     </dependencies>
-                </plugin>
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-enforcer-plugin</artifactId>
-                    <configuration>
-                        <rules>
-                            <bannedRepositories>
-                                <message>To build this project, don't use maven repositories over HTTP. Please use HTTPS
-                                    in your settings.xml or run the build with property insecure.repositories=WARN
-                                </message>
-                                <level>ERROR</level>
-                                <bannedRepositories>
-                                    <bannedRepository>http://*</bannedRepository>
-                                </bannedRepositories>
-                                <bannedPluginRepositories>
-                                    <bannedPluginRepository>http://*</bannedPluginRepository>
-                                </bannedPluginRepositories>
-                            </bannedRepositories>
-                            <requireMavenVersion>
-                                <message>To build this project Maven ${maven.min.version} (or greater) is required.
-                                    Please install it.
-                                </message>
-                                <version>${maven.min.version}</version>
-                            </requireMavenVersion>
-                            <requireJavaVersion>
-                                <message>To build this project JDK ${maven.compiler.source} (or greater) is required.
-                                    Please install it.
-                                </message>
-                                <version>${maven.compiler.source}</version>
-                            </requireJavaVersion>
-                        </rules>
-                    </configuration>
                 </plugin>
                 <plugin>
                     <groupId>com.mycila</groupId>
                     <artifactId>license-maven-plugin</artifactId>
-                    <version>${version.license.plugin}</version>
                     <configuration>
-                        <header>manatoko/license.txt</header>
-                        <strictCheck>true</strictCheck>
-                        <aggregate>true</aggregate>
-                        <useDefaultExcludes>true</useDefaultExcludes>
-                        <mapping>
-                            <proto>JAVADOC_STYLE</proto>
-                        </mapping>
-                        <excludes>
-                            <exclude>.sdkmanrc</exclude>
-                            <exclude>LICENSE</exclude>
-                            <exclude>*.fish</exclude>
-                            <exclude>**/*license*.txt</exclude>
-                        </excludes>
+                        <header>etc/license.txt</header>
                     </configuration>
                     <dependencies>
                         <dependency>
                             <groupId>${project.groupId}</groupId>
-                            <artifactId>manatoko-config</artifactId>
+                            <artifactId>manatoko-build-config</artifactId>
                             <version>${project.version}</version>
                         </dependency>
                     </dependencies>
                 </plugin>
                 <plugin>
-                    <groupId>net.revelc.code.formatter</groupId>
-                    <artifactId>formatter-maven-plugin</artifactId>
-                    <version>${version.formatter.plugin}</version>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-checkstyle-plugin</artifactId>
                     <configuration>
-                        <configFile>manatoko/eclipse-formatter-config.xml</configFile>
+                        <suppressionsLocation>etc/checkstyle-suppressions.xml</suppressionsLocation>
                     </configuration>
                     <dependencies>
                         <dependency>
                             <groupId>${project.groupId}</groupId>
-                            <artifactId>manatoko-config</artifactId>
+                            <artifactId>manatoko-build-config</artifactId>
                             <version>${project.version}</version>
                         </dependency>
                     </dependencies>
-                </plugin>
-                <plugin>
-                    <groupId>net.revelc.code</groupId>
-                    <artifactId>impsort-maven-plugin</artifactId>
-                    <version>${version.impsort.plugin}</version>
-                    <configuration>
-                        <groups>java.,javax.,org.,io.,com.</groups>
-                        <removeUnused>true</removeUnused>
-                        <staticAfter>true</staticAfter>
-                    </configuration>
                 </plugin>
             </plugins>
         </pluginManagement>
 
         <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-enforcer-plugin</artifactId>
-                <executions>
-                    <execution>
-                        <id>manatoko-enforce</id>
-                        <phase>initialize</phase>
-                        <goals>
-                            <goal>enforce</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-checkstyle-plugin</artifactId>
-                <executions>
-                    <execution>
-                        <id>manatoko-checkstyle</id>
-                        <phase>verify</phase>
-                        <goals>
-                            <goal>check</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-            <plugin>
-                <groupId>com.mycila</groupId>
-                <artifactId>license-maven-plugin</artifactId>
-                <executions>
-                    <execution>
-                        <id>manatoko-license-format</id>
-                        <phase>process-sources</phase>
-                        <goals>
-                            <goal>format</goal>
-                        </goals>
-                    </execution>
-                    <execution>
-                        <id>manatoko-license-check</id>
-                        <phase>verify</phase>
-                        <goals>
-                            <goal>check</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
+            <!-- Ordered by artifactID -->
             <plugin>
                 <groupId>net.revelc.code.formatter</groupId>
                 <artifactId>formatter-maven-plugin</artifactId>
                 <executions>
                     <execution>
-                        <id>manatoko-formatter-format</id>
+                        <id>formatter-format</id>
                         <phase>process-sources</phase>
                         <goals>
                             <goal>format</goal>
                         </goals>
                     </execution>
                     <execution>
-                        <id>manatoko-formatter-check</id>
+                        <id>formatter-check</id>
                         <phase>verify</phase>
                         <goals>
                             <goal>validate</goal>
@@ -383,14 +272,27 @@
                 <artifactId>impsort-maven-plugin</artifactId>
                 <executions>
                     <execution>
-                        <id>manatoko-impsort-sort</id>
+                        <id>impsort-sort</id>
                         <phase>process-sources</phase>
                         <goals>
                             <goal>sort</goal>
                         </goals>
                     </execution>
                     <execution>
-                        <id>manatoko-impsort-check</id>
+                        <id>impsort-check</id>
+                        <phase>verify</phase>
+                        <goals>
+                            <goal>check</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-checkstyle-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>checkstyle-check</id>
                         <phase>verify</phase>
                         <goals>
                             <goal>check</goal>

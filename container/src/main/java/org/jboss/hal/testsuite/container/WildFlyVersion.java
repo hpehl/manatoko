@@ -19,15 +19,17 @@ public enum WildFlyVersion {
 
     // Must match the available tags at
     // https://quay.io/repository/halconsole/wildfly?tab=tags
-    _26(26);
+    _26_1(26, 1);
 
     private final int major;
+    private final int minor;
 
-    WildFlyVersion(int major) {
+    WildFlyVersion(int major, int minor) {
         this.major = major;
+        this.minor = minor;
     }
 
     public String version() {
-        return major + ".0.0.Final";
+        return major + "." + minor + ".0.Final";
     }
 }

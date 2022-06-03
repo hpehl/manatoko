@@ -39,7 +39,7 @@ import com.gwtplatform.mvp.shared.proxy.PlaceRequest;
 import static org.jboss.hal.dmr.ModelDescriptionConstants.INFINISPAN;
 import static org.jboss.hal.dmr.ModelDescriptionConstants.NAME;
 import static org.jboss.hal.testsuite.container.WildFlyConfiguration.FULL_HA;
-import static org.jboss.hal.testsuite.container.WildFlyVersion._26;
+import static org.jboss.hal.testsuite.container.WildFlyVersion._26_1;
 import static org.jboss.hal.testsuite.fixtures.InfinispanFixtures.REMOTE_CC_CREATE;
 import static org.jboss.hal.testsuite.fixtures.InfinispanFixtures.REMOTE_CC_DELETE;
 import static org.jboss.hal.testsuite.fixtures.InfinispanFixtures.REMOTE_CC_READ;
@@ -56,7 +56,7 @@ class RemoteCacheContainerFinderTest extends AbstractRemoteCacheContainerTest {
     private static final String REMOTE_SOCKET_BINDING_CREATE = "remote-socket-binding-create-" + Random.name();
     private static final String REMOTE_SOCKET_BINDING_READ = "remote-socket-binding-read-" + Random.name();
     private static final String REMOTE_SOCKET_BINDING_DELETE = "remote-socket-binding-delete-" + Random.name();
-    @Container static WildFlyContainer wildFly = WildFlyContainer.version(_26, FULL_HA);
+    @Container static WildFlyContainer wildFly = WildFlyContainer.version(_26_1, FULL_HA);
     private static OnlineManagementClient client;
     private static Administration administration;
 

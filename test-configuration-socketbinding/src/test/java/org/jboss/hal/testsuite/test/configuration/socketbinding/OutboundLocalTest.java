@@ -38,7 +38,7 @@ import static org.jboss.hal.dmr.ModelDescriptionConstants.NAME;
 import static org.jboss.hal.dmr.ModelDescriptionConstants.SOCKET_BINDING_REF;
 import static org.jboss.hal.testsuite.command.SocketBindingCommand.refName;
 import static org.jboss.hal.testsuite.container.WildFlyConfiguration.STANDALONE;
-import static org.jboss.hal.testsuite.container.WildFlyVersion._26;
+import static org.jboss.hal.testsuite.container.WildFlyVersion._26_1;
 import static org.jboss.hal.testsuite.fixtures.SocketBindingFixtures.OUTBOUND_LOCAL_CREATE;
 import static org.jboss.hal.testsuite.fixtures.SocketBindingFixtures.OUTBOUND_LOCAL_DELETE;
 import static org.jboss.hal.testsuite.fixtures.SocketBindingFixtures.OUTBOUND_LOCAL_UPDATE;
@@ -50,7 +50,7 @@ import static org.jboss.hal.testsuite.fixtures.SocketBindingFixtures.outboundLoc
 @Testcontainers
 class OutboundLocalTest {
 
-    @Container static WildFlyContainer wildFly = WildFlyContainer.version(_26, STANDALONE);
+    @Container static WildFlyContainer wildFly = WildFlyContainer.version(_26_1, STANDALONE);
 
     @BeforeAll
     static void setupModel() throws Exception {
