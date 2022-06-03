@@ -42,5 +42,7 @@ jobs:
           java-version: '11'
           distribution: 'temurin'
           cache: maven
+      - name: Install
+        run: mvn --batch-mode install
       - name: Run Tests
         run: mvn --batch-mode --projects ${{ matrix.module }} --also-make -P all-tests test
