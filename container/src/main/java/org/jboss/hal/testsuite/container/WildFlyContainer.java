@@ -95,8 +95,7 @@ public class WildFlyContainer extends GenericContainer<WildFlyContainer> {
             Operations operations = new Operations(client);
             Address address = Address.coreService("management").and("management-interface", "http-interface");
             try {
-                operations.invoke(LIST_ADD_OPERATION, address,
-                        Values.of(NAME, ALLOWED_ORIGINS).and(VALUE, url));
+                operations.invoke(LIST_ADD_OPERATION, address, Values.of(NAME, ALLOWED_ORIGINS).and(VALUE, url));
                 administration.reload();
                 logger.info("Added {} as allowed origin to {}", url, this);
             } catch (Exception e) {
@@ -107,9 +106,10 @@ public class WildFlyContainer extends GenericContainer<WildFlyContainer> {
 
     @Override
     public void stop() {
+        String toString = toString(); // get the right URL before stopping the container
         super.stop();
         started = false;
-        logger.info("WildFly stopped: {}", this);
+        logger.info("WildFly stopped: {}", toString);
     }
 
     public OnlineManagementClient managementClient() {

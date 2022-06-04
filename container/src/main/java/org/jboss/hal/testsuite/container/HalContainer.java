@@ -61,9 +61,10 @@ public class HalContainer extends GenericContainer<HalContainer> {
 
     @Override
     public void stop() {
+        String toString = toString(); // get the right URL before stopping the container
         super.stop();
         started = false;
-        logger.info("HAL stopped: {}", this);
+        logger.info("HAL stopped: {}", toString);
     }
 
     public String url() {
