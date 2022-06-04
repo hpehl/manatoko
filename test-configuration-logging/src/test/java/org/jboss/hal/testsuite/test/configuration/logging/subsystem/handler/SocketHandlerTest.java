@@ -21,7 +21,6 @@ import org.jboss.hal.testsuite.Console;
 import org.jboss.hal.testsuite.Random;
 import org.jboss.hal.testsuite.command.AddRemoteSocketBinding;
 import org.jboss.hal.testsuite.container.WildFlyContainer;
-import org.jboss.hal.testsuite.fixtures.ElytronFixtures;
 import org.jboss.hal.testsuite.fixtures.LoggingFixtures;
 import org.jboss.hal.testsuite.fragment.FormFragment;
 import org.jboss.hal.testsuite.fragment.TableFragment;
@@ -46,6 +45,7 @@ import static org.jboss.hal.testsuite.container.WildFlyVersion._26_1;
 import static org.jboss.hal.testsuite.fixtures.LoggingFixtures.LOGGING_HANDLER_ITEM;
 import static org.jboss.hal.testsuite.fixtures.LoggingFixtures.NAMED_FORMATTER;
 import static org.jboss.hal.testsuite.fixtures.LoggingFixtures.SocketHandler;
+import static org.jboss.hal.testsuite.fixtures.SecurityFixtures.clientSslContextAddress;
 
 @Manatoko
 @Testcontainers
@@ -63,7 +63,7 @@ class SocketHandlerTest extends AbstractSocketHandlerTest {
         AddRemoteSocketBinding addRemoteSocketBinding = new AddRemoteSocketBinding(OUTBOUND_SOCKET_BINDING_REF,
                 ConfigUtils.getDefaultHost(), AvailablePortFinder.getNextAvailableTCPPort());
         client.apply(addRemoteSocketBinding);
-        ops.add(ElytronFixtures.clientSslContextAddress(SSL_CONTEXT)).assertSuccess();
+        ops.add(clientSslContextAddress(SSL_CONTEXT)).assertSuccess();
         Values params = Values.of(NAMED_FORMATTER, "PATTERN").and(OUTBOUND_SOCKET_BINDING_REF, "mail-smtp");
         ops.add(LoggingFixtures.SocketHandler.socketHandlerAddress(SocketHandler.SOCKET_HANDLER_UPDATE), params)
                 .assertSuccess();

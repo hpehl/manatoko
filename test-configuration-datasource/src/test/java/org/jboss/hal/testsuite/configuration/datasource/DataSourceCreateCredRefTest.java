@@ -55,8 +55,8 @@ import static org.jboss.hal.testsuite.container.WildFlyVersion._26_1;
 import static org.jboss.hal.testsuite.fixtures.DataSourceFixtures.DATA_SOURCE_CREATE_H2_UNIQUE;
 import static org.jboss.hal.testsuite.fixtures.DataSourceFixtures.H2_PASSWORD;
 import static org.jboss.hal.testsuite.fixtures.DataSourceFixtures.dataSourceAddress;
-import static org.jboss.hal.testsuite.fixtures.ElytronFixtures.CRED_ST_CREATE;
-import static org.jboss.hal.testsuite.fixtures.ElytronFixtures.credentialStoreAddress;
+import static org.jboss.hal.testsuite.fixtures.SecurityFixtures.CREDENTIAL_STORE_CREATE;
+import static org.jboss.hal.testsuite.fixtures.SecurityFixtures.credentialStoreAddress;
 import static org.jboss.hal.testsuite.fragment.finder.FinderFragment.configurationSubsystemPath;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -77,11 +77,11 @@ class DataSourceCreateCredRefTest {
         client = wildFly.managementClient();
         Operations operations = new Operations(client);
         Values credParams = Values
-                .of(PATH, CRED_ST_CREATE)
+                .of(PATH, CREDENTIAL_STORE_CREATE)
                 .and(RELATIVE_TO, "jboss.server.config.dir")
                 .and(CREATE, true)
                 .and(CREDENTIAL_REFERENCE, CredentialReference.clearText("secret"));
-        operations.add(credentialStoreAddress(CRED_ST_CREATE), credParams);
+        operations.add(credentialStoreAddress(CREDENTIAL_STORE_CREATE), credParams);
     }
 
     @Inject Console console;
@@ -112,7 +112,7 @@ class DataSourceCreateCredRefTest {
         String alias = Random.name();
         FormFragment connectionForm = wizard.getForm(Ids.DATA_SOURCE_CONNECTION_FORM);
         connectionForm.clear(PASSWORD);
-        connectionForm.text(STORE, CRED_ST_CREATE);
+        connectionForm.text(STORE, CREDENTIAL_STORE_CREATE);
         connectionForm.text(ALIAS, alias);
         connectionForm.text(CLEAR_TEXT, H2_PASSWORD);
 
@@ -127,11 +127,11 @@ class DataSourceCreateCredRefTest {
         assertTrue(column.isSelected(itemId));
         Operations operations = new Operations(client);
         new ResourceVerifier(dataSourceAddress(DATA_SOURCE_CREATE_H2_UNIQUE), client).verifyExists();
-        new ResourceVerifier(credentialStoreAddress(CRED_ST_CREATE), client).verifyTrue(
+        new ResourceVerifier(credentialStoreAddress(CREDENTIAL_STORE_CREATE), client).verifyTrue(
                 "Alias not present in credential store",
                 () -> {
                     ModelNodeResult result = operations.invoke(READ_ALIASES_OPERATION,
-                            credentialStoreAddress(CRED_ST_CREATE));
+                            credentialStoreAddress(CREDENTIAL_STORE_CREATE));
                     if (result.isSuccess() && !result.value().asList().isEmpty()) {
                         String actualAlias = result.value().asList().get(0).asString();
                         return alias.equals(actualAlias);

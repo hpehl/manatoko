@@ -29,8 +29,8 @@ import org.testcontainers.junit.jupiter.Testcontainers;
 
 import static org.jboss.hal.testsuite.container.WildFlyConfiguration.STANDALONE;
 import static org.jboss.hal.testsuite.container.WildFlyVersion._26_1;
-import static org.jboss.hal.testsuite.fixtures.ElytronFixtures.INITIAL_PROVIDERS;
-import static org.jboss.hal.testsuite.fixtures.ElytronFixtures.SUBSYSTEM_ADDRESS;
+import static org.jboss.hal.testsuite.fixtures.SecurityFixtures.INITIAL_PROVIDERS;
+import static org.jboss.hal.testsuite.fixtures.SecurityFixtures.SUBSYSTEM_ADDRESS;
 
 @Manatoko
 @Testcontainers

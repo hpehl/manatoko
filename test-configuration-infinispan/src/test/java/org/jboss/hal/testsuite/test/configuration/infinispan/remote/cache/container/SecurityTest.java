@@ -17,7 +17,6 @@ package org.jboss.hal.testsuite.test.configuration.infinispan.remote.cache.conta
 
 import org.jboss.hal.testsuite.Random;
 import org.jboss.hal.testsuite.container.WildFlyContainer;
-import org.jboss.hal.testsuite.fixtures.ElytronFixtures;
 import org.jboss.hal.testsuite.model.ModelNodeGenerator;
 import org.jboss.hal.testsuite.test.Manatoko;
 import org.junit.jupiter.api.BeforeAll;
@@ -36,6 +35,7 @@ import static org.jboss.hal.testsuite.container.WildFlyVersion._26_1;
 import static org.jboss.hal.testsuite.fixtures.InfinispanFixtures.SOCKET_BINDINGS;
 import static org.jboss.hal.testsuite.fixtures.InfinispanFixtures.remoteClusterAddress;
 import static org.jboss.hal.testsuite.fixtures.InfinispanFixtures.securityAddress;
+import static org.jboss.hal.testsuite.fixtures.SecurityFixtures.clientSslContextAddress;
 
 @Manatoko
 @Testcontainers
@@ -60,7 +60,7 @@ class SecurityTest extends AbstractRemoteCacheContainerTest {
         operations.add(remoteClusterAddress(REMOTE_CACHE_CONTAINER_TO_BE_TESTED, REMOTE_CLUSTER),
                 Values.of(SOCKET_BINDINGS,
                         new ModelNodeGenerator.ModelNodeListBuilder().addAll(REMOTE_SOCKET_BINDING_CLUSTER).build()));
-        operations.add(ElytronFixtures.clientSslContextAddress(SSL_CONTEXT));
+        operations.add(clientSslContextAddress(SSL_CONTEXT));
         new Administration(client).reloadIfRequired();
     }
 
