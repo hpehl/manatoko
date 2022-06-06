@@ -133,11 +133,15 @@ The goals use the plugin configuration in [code-parent/pom.xml](code-parent/pom.
 
 Runs all tests in all test modules. This script triggers the workflow defined in [`test-all.yml`](.github/workflows/test-all.yml). The tests are run in parallel, but please note that this might take some time.
 
+The script uses the latest stable HAL release by default. If you want to use the latest snapshot, please specify `--development`.
+
 The script requires [GitHub CLI](https://cli.github.com/) to be present and configured on your machine. 
 
 ### `gh-test-single.sh`
 
 Runs the tests of a single test module given as an argument. This script triggers the workflow defined in [`test-single.yml`](.github/workflows/test-single.yml).
+
+The script uses the latest stable HAL release by default. If you want to use the latest snapshot, please specify `--development`.
 
 The script requires [GitHub CLI](https://cli.github.com/) to be present and configured on your machine.
 

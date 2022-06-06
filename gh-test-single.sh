@@ -42,6 +42,7 @@ FLAGS:
     -h, --help          Prints help information
     -v, --version       Prints version information
     --no-color          Uses plain text output
+    --development       Uses the latest HAL snapshot
 
 ARGS:
     <module>            The module (directory-name) to test
@@ -79,11 +80,13 @@ version() {
 }
 
 parse_params() {
+  HAL_IMAGE=quay.io/halconsole/hal
   while :; do
     case "${1-}" in
     -h | --help) usage ;;
     -v | --version) version ;;
     --no-color) NO_COLOR=1 ;;
+    --development) HAL_IMAGE=quay.io/halconsole/hal-development ;;
     -?*) die "Unknown option: $1" ;;
     *) break ;;
     esac
@@ -101,4 +104,4 @@ parse_params "$@"
 setup_colors
 
 [ -x gh ] && die "gh not installed. See https://cli.github.com/"
-gh workflow run test-single.yml -f module="${MODULE}"
+gh workflow run test-single.yml -f hal-image="${HAL_IMAGE}" -f module="${MODULE}"
