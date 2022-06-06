@@ -88,6 +88,7 @@
 
         <!-- Build related -->
         <encoding>UTF-8</encoding>
+        <hal.image>quay.io/halconsole/hal</hal.image>
         <java.version>11</java.version>
         <maven.compiler.source>${java.version}</maven.compiler.source>
         <maven.compiler.target>${java.version}</maven.compiler.target>
@@ -315,6 +316,12 @@
                 <module>test-configuration-transaction</module>
                 <module>test-configuration-webservice</module>
             </modules>
+        </profile>
+        <profile>
+            <id>development</id>
+            <properties>
+                <hal.image>quay.io/halconsole/hal-development</hal.image>
+            </properties>
         </profile>
         <profile>
             <id>noop</id>

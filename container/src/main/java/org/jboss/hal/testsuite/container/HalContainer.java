@@ -15,6 +15,10 @@
  */
 package org.jboss.hal.testsuite.container;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.Properties;
+
 import org.jboss.hal.testsuite.environment.Environment;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,7 +29,9 @@ import org.testcontainers.utility.DockerImageName;
 public class HalContainer extends GenericContainer<HalContainer> {
 
     private static final int PORT = 9090;
-    private static final String IMAGE = "quay.io/halconsole/hal";
+    private static final String CONTAINER_PROPERTIES = "container.properties";
+    private static final String IMAGE_NAME_KEY = "hal.image";
+    private static final String IMAGE_NAME_DEFAULT = "quay.io/halconsole/hal";
     private static final Logger logger = LoggerFactory.getLogger(HalContainer.class);
     private static HalContainer instance = null;
 
@@ -36,10 +42,28 @@ public class HalContainer extends GenericContainer<HalContainer> {
         return instance;
     }
 
+    private static String imageName() {
+        ClassLoader loader = Thread.currentThread().getContextClassLoader();
+        Properties properties = new Properties();
+        try (InputStream resourceStream = loader.getResourceAsStream(CONTAINER_PROPERTIES)) {
+            properties.load(resourceStream);
+            if (!properties.containsKey(IMAGE_NAME_KEY)) {
+                logger.warn("Unable to read {} from {}. Fall back to {}", IMAGE_NAME_KEY, CONTAINER_PROPERTIES,
+                        IMAGE_NAME_DEFAULT);
+                return IMAGE_NAME_DEFAULT;
+            }
+            return properties.getProperty(IMAGE_NAME_KEY);
+        } catch (IOException e) {
+            logger.error("Unable to read {} from {}. Fallback to {}: {}", IMAGE_NAME_KEY, CONTAINER_PROPERTIES,
+                    IMAGE_NAME_DEFAULT, e.getMessage());
+            return IMAGE_NAME_DEFAULT;
+        }
+    }
+
     private boolean started;
 
     private HalContainer() {
-        super(DockerImageName.parse(IMAGE));
+        super(DockerImageName.parse(imageName()));
         withNetwork(Network.INSTANCE)
                 .withNetworkAliases(Network.HAL)
                 .withExposedPorts(PORT)
