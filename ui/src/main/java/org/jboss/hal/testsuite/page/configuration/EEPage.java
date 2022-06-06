@@ -17,6 +17,7 @@ package org.jboss.hal.testsuite.page.configuration;
 
 import org.jboss.hal.meta.token.NameTokens;
 import org.jboss.hal.resources.Ids;
+import org.jboss.hal.testsuite.fragment.EmptyState;
 import org.jboss.hal.testsuite.fragment.FormFragment;
 import org.jboss.hal.testsuite.fragment.TableFragment;
 import org.jboss.hal.testsuite.page.BasePage;
@@ -39,6 +40,8 @@ public class EEPage extends BasePage {
     @FindBy(id = Ids.EE_MANAGED_EXECUTOR_SCHEDULED + "-" + Ids.FORM) private FormFragment executorScheduledForm;
     @FindBy(id = Ids.EE_MANAGED_THREAD_FACTORY + "-" + Ids.TABLE + WRAPPER) private TableFragment threadFactoryTable;
     @FindBy(id = Ids.EE_MANAGED_THREAD_FACTORY + "-" + Ids.FORM) private FormFragment threadFactoryForm;
+    @FindBy(id = "ee-global-directory-form-empty") private EmptyState globalDirectoryEmpty;
+    @FindBy(id = "ee-global-directory-form") private FormFragment globalDirectoryForm;
 
     public FormFragment getAttributesForm() {
         return attributesForm;
@@ -82,5 +85,13 @@ public class EEPage extends BasePage {
 
     public FormFragment getThreadFactoryForm() {
         return threadFactoryForm;
+    }
+
+    public EmptyState getGlobalDirectoryEmpty() {
+        return globalDirectoryEmpty;
+    }
+
+    public FormFragment getGlobalDirectoryForm() {
+        return globalDirectoryForm;
     }
 }
