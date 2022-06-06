@@ -126,6 +126,7 @@ public class ElytronOtherSettingsPage extends BasePage {
     @FindBy(id = ELYTRON_TRUST_MANAGER + "-" + FORM) private FormFragment trustManagerForm;
     @FindBy(id = ELYTRON_TRUST_MANAGER + "-certificate-revocation-list-"
             + FORM) private FormFragment trustManagerCertificateRevocationListForm;
+    @FindBy(id = ELYTRON_TRUST_MANAGER + "-ocsp-" + FORM) private FormFragment trustManagerOCSPForm;
     @FindBy(id = ELYTRON_TRUST_MANAGER + "-" + TAB_CONTAINER) private TabsFragment trustManagerTab;
 
     // Authentication Configuration
@@ -346,6 +347,10 @@ public class ElytronOtherSettingsPage extends BasePage {
 
     public FormFragment getTrustManagerCertificateRevocationListForm() {
         return trustManagerCertificateRevocationListForm;
+    }
+
+    public FormFragment getTrustManagerOCSPForm() {
+        return trustManagerOCSPForm;
     }
 
     public TabsFragment getTrustManagerTab() {
