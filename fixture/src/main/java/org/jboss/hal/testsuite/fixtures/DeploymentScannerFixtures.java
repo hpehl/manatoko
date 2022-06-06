@@ -32,7 +32,6 @@ public final class DeploymentScannerFixtures {
     public static final String DS_CREATE = Ids.build(DEPLOYMENT_SCANNER_PREFIX, CrudConstants.CREATE, Random.name());
     public static final String DS_READ = Ids.build(DEPLOYMENT_SCANNER_PREFIX, CrudConstants.READ, Random.name());
     public static final String DS_UPDATE = Ids.build(DEPLOYMENT_SCANNER_PREFIX, CrudConstants.UPDATE, Random.name());
-    public static final String DS_UPDATE_INVALID = Ids.build(DEPLOYMENT_SCANNER_PREFIX, "update-invalid", Random.name());
     public static final String DS_UPDATE_RESET = Ids.build(DEPLOYMENT_SCANNER_PREFIX, "update-reset", Random.name());
     public static final String DS_DELETE = Ids.build(DEPLOYMENT_SCANNER_PREFIX, CrudConstants.DELETE, Random.name());
 
