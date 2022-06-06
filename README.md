@@ -75,20 +75,33 @@ To run the tests with a local browser, use
 ./mvnw test -P all-tests,local 
 ```
 
-If you just want to execute specific tests, `cd` into the directory containing the tests and run 
+### Specific Tests
+
+If you just want to execute test of one module e.g. `test-configuration-systemproperty`, run 
 
 ```shell
-./mvnw test
+./mvnw test -P all-tests --projects test-configuration-systemproperty --also-make
 ```
 
 If you want to execute one specific test or test method, use one of the following commands:
 
 ```shell
-./mvnw test -Dtest=org.jboss.hal.testsuite.configuration.systemproperty.SystemPropertyTest
-./mvnw test -Dtest=org.jboss.hal.testsuite.configuration.systemproperty.SystemPropertyTest#create
+./mvnw test -P all-tests --projects test-configuration-systemproperty --also-make \
+    -Dtest=org.jboss.hal.testsuite.configuration.systemproperty.SystemPropertyTest
+  
+./mvnw test -P all-tests --projects test-configuration-systemproperty --also-make \
+    -Dtest=org.jboss.hal.testsuite.configuration.systemproperty.SystemPropertyTest#create
 ```
 
-If you want to debug a test, append `-Dmaven.surefire.debug` and attach a debugger to port 5005. 
+If you want to debug a test, append `-Dmaven.surefire.debug` and attach a debugger to port 5005.
+
+### Use HAL Development
+
+By default, the tests use the latest image from `quay.io/halconsole/hal`. This repository contains stable and released HAL versions only. If you want to use the latest snapshot version of HAL, use the Maven profile `development`
+
+```shell
+./mvnw test -P all-tests,development --projects test-configuration-systemproperty --also-make
+```
 
 ## Scripts
 

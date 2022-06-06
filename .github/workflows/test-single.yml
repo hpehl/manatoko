@@ -3,6 +3,14 @@ name: HAL UI Test Single Module
 on:
   workflow_dispatch:
     inputs:
+      hal-image:
+        type: choice
+        required: true
+        default: quay.io/halconsole/hal
+        description: 'The HAL image name'
+        options:
+          - quay.io/halconsole/hal
+          - quay.io/halconsole/hal-development
       module:
         description: 'The module (directory name) to test'
         required: true
@@ -22,4 +30,4 @@ jobs:
       - name: Install
         run: mvn --batch-mode install
       - name: Run Tests
-        run: mvn --batch-mode --projects ${{ github.event.inputs.module }} --also-make -P all-tests test
+        run: mvn --batch-mode --projects ${{ github.event.inputs.module }} --also-make -P all-tests test -Dhal.image=${{ github.event.inputs.hal-image }}
