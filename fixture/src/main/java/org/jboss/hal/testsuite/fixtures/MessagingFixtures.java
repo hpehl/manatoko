@@ -106,8 +106,9 @@ public final class MessagingFixtures {
     public static final String FORWARDING_ADDRESS = "forwarding-address";
     public static final String GLOBAL_MAX_SIZE = "global-client-scheduled-thread-pool-max-size";
     public static final String GROUPING_HANDLER_ADDRESS = "grouping-handler-address";
+    public static final String JGROUPS_BROADCAST_GROUP_ITEM = "msg-jgroups-broadcast-group-item";
+    public static final String JGROUPS_DISCOVERY_GROUP_ITEM = "msg-jgroups-discovery-group-item";
     public static final String JGROUPS_CHANNEL = "jgroups-channel";
-    public static final String JGROUPS_CLUSTER = "jgroups-cluster";
     public static final String JMX_DOMAIN = "jmx-domain";
     public static final String JOURNAL_BINDING_TABLE = "journal-bindings-table";
     public static final String JOURNAL_DIRECTORY = "journal-directory";
@@ -127,6 +128,8 @@ public final class MessagingFixtures {
     public static final String REMOTE_CONNECTION_FACTORY = "jms/RemoteConnectionFactory";
     public static final String SERVER_ID = "server-id";
     public static final String SERVER_NAME = "server-name";
+    public static final String SOCKET_BROADCAST_GROUP_ITEM = "msg-socket-broadcast-group-item";
+    public static final String SOCKET_DISCOVERY_GROUP_ITEM = "msg-socket-discovery-group-item";
     public static final String SOURCE_CONNECTION_FACTORY = "source-connection-factory";
     public static final String SOURCE_DESTINATION = "source-destination";
     public static final String TARGET_CONNECTION_FACTORY = "target-connection-factory";

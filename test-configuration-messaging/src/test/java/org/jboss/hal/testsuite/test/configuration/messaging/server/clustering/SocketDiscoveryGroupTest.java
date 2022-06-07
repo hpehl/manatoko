@@ -15,37 +15,38 @@
  */
 package org.jboss.hal.testsuite.test.configuration.messaging.server.clustering;
 
-import org.jboss.hal.resources.Ids;
+import org.jboss.hal.testsuite.Random;
 import org.jboss.hal.testsuite.command.AddMessagingServer;
 import org.jboss.hal.testsuite.container.WildFlyContainer;
 import org.jboss.hal.testsuite.fragment.FormFragment;
 import org.jboss.hal.testsuite.fragment.TableFragment;
+import org.jboss.hal.testsuite.model.ResourceVerifier;
 import org.jboss.hal.testsuite.test.Manatoko;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
 import org.wildfly.extras.creaper.core.online.OnlineManagementClient;
 import org.wildfly.extras.creaper.core.online.operations.Operations;
+import org.wildfly.extras.creaper.core.online.operations.Values;
 
+import static org.jboss.hal.dmr.ModelDescriptionConstants.NAME;
 import static org.jboss.hal.dmr.ModelDescriptionConstants.SERVER;
-import static org.jboss.hal.resources.Ids.ITEM;
-import static org.jboss.hal.resources.Ids.MESSAGING_SOCKET_DISCOVERY_GROUP;
+import static org.jboss.hal.dmr.ModelDescriptionConstants.SOCKET_BINDING;
 import static org.jboss.hal.testsuite.container.WildFlyConfiguration.FULL_HA;
 import static org.jboss.hal.testsuite.container.WildFlyVersion._26_1;
-import static org.jboss.hal.testsuite.fixtures.MessagingFixtures.BROADCAST_GROUP_ITEM;
+import static org.jboss.hal.testsuite.fixtures.MessagingFixtures.DISCOVERY_GROUP_ITEM;
 import static org.jboss.hal.testsuite.fixtures.MessagingFixtures.REFRESH_TIMEOUT;
 import static org.jboss.hal.testsuite.fixtures.MessagingFixtures.SOCKET_DG_CREATE;
 import static org.jboss.hal.testsuite.fixtures.MessagingFixtures.SOCKET_DG_DELETE;
 import static org.jboss.hal.testsuite.fixtures.MessagingFixtures.SOCKET_DG_UPDATE;
+import static org.jboss.hal.testsuite.fixtures.MessagingFixtures.SOCKET_DISCOVERY_GROUP_ITEM;
 import static org.jboss.hal.testsuite.fixtures.MessagingFixtures.SRV_UPDATE;
 import static org.jboss.hal.testsuite.fixtures.MessagingFixtures.socketDiscoveryGroupAddress;
 
 @Manatoko
 @Testcontainers
-@Disabled // TODO Fix failing tests
 class SocketDiscoveryGroupTest extends AbstractClusteringTest {
 
     @Container static WildFlyContainer wildFly = WildFlyContainer.version(_26_1, FULL_HA);
@@ -54,44 +55,42 @@ class SocketDiscoveryGroupTest extends AbstractClusteringTest {
     static void setupModel() throws Exception {
         OnlineManagementClient client = wildFly.managementClient();
         client.apply(new AddMessagingServer(SRV_UPDATE));
+
         Operations operations = new Operations(client);
-        operations.add(socketDiscoveryGroupAddress(SRV_UPDATE, SOCKET_DG_UPDATE)).assertSuccess();
-        operations.add(socketDiscoveryGroupAddress(SRV_UPDATE, SOCKET_DG_DELETE)).assertSuccess();
+        operations.add(socketDiscoveryGroupAddress(SRV_UPDATE, SOCKET_DG_UPDATE),
+                Values.of(SOCKET_BINDING, Random.name()));
+        operations.add(socketDiscoveryGroupAddress(SRV_UPDATE, SOCKET_DG_DELETE),
+                Values.of(SOCKET_BINDING, Random.name()));
     }
+
+    TableFragment table;
+    FormFragment form;
 
     @BeforeEach
     void setUp() {
         page.navigate(SERVER, SRV_UPDATE);
+        console.verticalNavigation().selectSecondary(DISCOVERY_GROUP_ITEM, SOCKET_DISCOVERY_GROUP_ITEM);
+        table = page.getSocketDiscoveryGroupTable();
+        form = page.getSocketDiscoveryGroupForm();
+        table.bind(form);
     }
 
     @Test
     void create() throws Exception {
-        console.verticalNavigation().selectSecondary(BROADCAST_GROUP_ITEM, Ids.build(MESSAGING_SOCKET_DISCOVERY_GROUP, ITEM));
-        TableFragment table = page.getSocketDiscoveryGroupTable();
-        FormFragment form = page.getSocketDiscoveryGroupForm();
-        table.bind(form);
-
-        crudOperations.create(socketDiscoveryGroupAddress(SRV_UPDATE, SOCKET_DG_CREATE), table, SOCKET_DG_CREATE);
+        crudOperations.create(socketDiscoveryGroupAddress(SRV_UPDATE, SOCKET_DG_CREATE), table, f -> {
+            f.text(NAME, SOCKET_DG_CREATE);
+            f.text(SOCKET_BINDING, Random.name());
+        }, ResourceVerifier::verifyExists);
     }
 
     @Test
     void update() throws Exception {
-        console.verticalNavigation().selectSecondary(BROADCAST_GROUP_ITEM, Ids.build(MESSAGING_SOCKET_DISCOVERY_GROUP, ITEM));
-        TableFragment table = page.getSocketDiscoveryGroupTable();
-        FormFragment form = page.getSocketDiscoveryGroupForm();
-        table.bind(form);
         table.select(SOCKET_DG_UPDATE);
         crudOperations.update(socketDiscoveryGroupAddress(SRV_UPDATE, SOCKET_DG_UPDATE), form, REFRESH_TIMEOUT, 123L);
     }
 
     @Test
     void delete() throws Exception {
-        console.verticalNavigation().selectSecondary(BROADCAST_GROUP_ITEM, Ids.build(MESSAGING_SOCKET_DISCOVERY_GROUP, ITEM));
-        TableFragment table = page.getSocketDiscoveryGroupTable();
-        FormFragment form = page.getSocketDiscoveryGroupForm();
-        table.bind(form);
-
         crudOperations.delete(socketDiscoveryGroupAddress(SRV_UPDATE, SOCKET_DG_DELETE), table, SOCKET_DG_DELETE);
     }
-
 }
