@@ -24,8 +24,10 @@ import static org.jboss.hal.dmr.ModelDescriptionConstants.CERTIFICATE_AUTHORITY;
 import static org.jboss.hal.dmr.ModelDescriptionConstants.CLIENT_SSL_CONTEXT;
 import static org.jboss.hal.dmr.ModelDescriptionConstants.CREDENTIAL_STORE;
 import static org.jboss.hal.dmr.ModelDescriptionConstants.ELYTRON;
+import static org.jboss.hal.dmr.ModelDescriptionConstants.KEY_MANAGER;
 import static org.jboss.hal.dmr.ModelDescriptionConstants.KEY_STORE;
 import static org.jboss.hal.dmr.ModelDescriptionConstants.SECRET_KEY_CREDENTIAL_STORE;
+import static org.jboss.hal.dmr.ModelDescriptionConstants.SERVER_SSL_CONTEXT;
 import static org.jboss.hal.dmr.ModelDescriptionConstants.TRUST_MANAGER;
 import static org.jboss.hal.dmr.ModelDescriptionConstants.X500_SUBJECT_EVIDENCE_DECODER;
 import static org.jboss.hal.dmr.ModelDescriptionConstants.X509_SUBJECT_ALT_NAME_EVIDENCE_DECODER;
@@ -40,23 +42,27 @@ public final class SecurityFixtures {
     private static final String CREDENTIAL_STORE_PREFIX = "cred-store";
     private static final String EXPRESSION_RESOLVER_PREFIX = "er";
     private static final String EVIDENCE_DECODER_PREFIX = "ed";
+    private static final String KEY_MANAGER_PREFIX = "ks";
+    private static final String KEY_STORE_PREFIX = "km";
     private static final String SECRET_KEY_CREDENTIAL_STORE_PREFIX = "skcs";
+    private static final String SERVER_SSL_CONTEXT_PREFIX = "cli-ssl";
     private static final String TRUST_MANAGER_PREFIX = "tm";
 
     public static final String ALT_NAME_TYPE = "alt-name-type";
     public static final String ALT_NAME_TYPE_DIRECTORY_NAME = "directoryName";
     public static final String ALT_NAME_TYPE_RFC822_NAME = "rfc822Name";
     public static final String CERTIFICATE_AUTHORITY_URL = "https://acme.org";
+    public static final String CIPHER_SUITE_NAMES = "cipher-suite-names";
     public static final String DEFAULT_ALIAS = "default-alias";
     public static final String DEFAULT_RESOLVER = "default-resolver";
     public static final String EVIDENCE_DECODER_ITEM = "mappers-decoders-evidence-decoder-item";
     public static final String EVIDENCE_DECODERS = "evidence-decoders";
     public static final String INITIAL_PROVIDERS = "initial-providers";
     public static final String OCSP = "ocsp";
-    public static final String OTHER_ITEM = "other-item";
     public static final String RESPONDER = "responder";
     public static final String SECRET_KEY = "secret-key";
     public static final String SEGMENT = "segment";
+    public static final String SSL_CONTEXT_CIPHER_SUITE_NAMES = "TLS_AES_128_CCM_8_SHA256:TLS_AES_256_GCM_SHA384:TLS_CHACHA20_POLY1305_SHA256:TLS_AES_128_GCM_SHA256";
 
     public static final Address SUBSYSTEM_ADDRESS = Address.subsystem(ELYTRON);
 
@@ -119,7 +125,19 @@ public final class SecurityFixtures {
         return SUBSYSTEM_ADDRESS.and("expression", "encryption");
     }
 
+    // ------------------------------------------------------ key manager
+
+    public static final String KEY_MANAGER_CREATE = Ids.build(KEY_MANAGER_PREFIX, CREATE, Random.name());
+    public static final String KEY_MANAGER_UPDATE = Ids.build(KEY_MANAGER_PREFIX, UPDATE, Random.name());
+    public static final String KEY_MANAGER_DELETE = Ids.build(KEY_MANAGER_PREFIX, DELETE, Random.name());
+
+    public static Address keyManagerAddress(String name) {
+        return SUBSYSTEM_ADDRESS.and(KEY_MANAGER, name);
+    }
+
     // ------------------------------------------------------ key store
+
+    public static final String KEY_STORE_CREATE = Ids.build(KEY_STORE_PREFIX, CREATE, Random.name());
 
     public static Address keyStoreAddress(String name) {
         return SUBSYSTEM_ADDRESS.and(KEY_STORE, name);
@@ -138,6 +156,16 @@ public final class SecurityFixtures {
 
     public static Address secretKeyCredentialStoreAddress(String name) {
         return SUBSYSTEM_ADDRESS.and(SECRET_KEY_CREDENTIAL_STORE, name);
+    }
+
+    // ------------------------------------------------------ client-ssl-context
+
+    public static final String SERVER_SSL_CREATE = Ids.build(SERVER_SSL_CONTEXT_PREFIX, CREATE, Random.name());
+    public static final String SERVER_SSL_UPDATE = Ids.build(SERVER_SSL_CONTEXT_PREFIX, UPDATE, Random.name());
+    public static final String SERVER_SSL_DELETE = Ids.build(SERVER_SSL_CONTEXT_PREFIX, DELETE, Random.name());
+
+    public static Address serverSslContextAddress(String name) {
+        return SUBSYSTEM_ADDRESS.and(SERVER_SSL_CONTEXT, name);
     }
 
     // ------------------------------------------------------ trust manager

@@ -40,6 +40,7 @@ import org.wildfly.extras.creaper.core.online.operations.Values;
 import static org.jboss.hal.dmr.ModelDescriptionConstants.CREDENTIAL_STORE;
 import static org.jboss.hal.dmr.ModelDescriptionConstants.NAME;
 import static org.jboss.hal.dmr.ModelDescriptionConstants.RESOLVERS;
+import static org.jboss.hal.resources.Ids.ELYTRON_OTHER_ITEM;
 import static org.jboss.hal.testsuite.container.WildFlyConfiguration.STANDALONE;
 import static org.jboss.hal.testsuite.container.WildFlyVersion._26_1;
 import static org.jboss.hal.testsuite.fixtures.SecurityFixtures.CREDENTIAL_STORE_CREATE;
@@ -47,7 +48,6 @@ import static org.jboss.hal.testsuite.fixtures.SecurityFixtures.EXPRESSION_RESOL
 import static org.jboss.hal.testsuite.fixtures.SecurityFixtures.EXPRESSION_RESOLVER_DELETE;
 import static org.jboss.hal.testsuite.fixtures.SecurityFixtures.EXPRESSION_RESOLVER_READ;
 import static org.jboss.hal.testsuite.fixtures.SecurityFixtures.EXPRESSION_RESOLVER_UPDATE;
-import static org.jboss.hal.testsuite.fixtures.SecurityFixtures.OTHER_ITEM;
 import static org.jboss.hal.testsuite.fixtures.SecurityFixtures.SECRET_KEY;
 import static org.jboss.hal.testsuite.fixtures.SecurityFixtures.expressionEncryptionAddress;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -89,7 +89,7 @@ class ExpressionEncryptionResolverTest {
     @BeforeEach
     void prepare() {
         page.navigate();
-        console.verticalNavigation().selectSecondary(OTHER_ITEM, Ids.ELYTRON_EXPRESSION);
+        console.verticalNavigation().selectSecondary(ELYTRON_OTHER_ITEM, Ids.ELYTRON_EXPRESSION);
         table = page.getExpressionResolverTable();
         form = page.getExpressionResolverForm();
         table.bind(form);

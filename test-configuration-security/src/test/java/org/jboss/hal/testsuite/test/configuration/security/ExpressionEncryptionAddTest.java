@@ -36,11 +36,11 @@ import org.wildfly.extras.creaper.core.online.OnlineManagementClient;
 
 import static org.jboss.hal.dmr.ModelDescriptionConstants.CREDENTIAL_STORE;
 import static org.jboss.hal.dmr.ModelDescriptionConstants.NAME;
+import static org.jboss.hal.resources.Ids.ELYTRON_OTHER_ITEM;
 import static org.jboss.hal.testsuite.container.WildFlyConfiguration.STANDALONE;
 import static org.jboss.hal.testsuite.container.WildFlyVersion._26_1;
 import static org.jboss.hal.testsuite.fixtures.SecurityFixtures.CREDENTIAL_STORE_CREATE;
 import static org.jboss.hal.testsuite.fixtures.SecurityFixtures.DEFAULT_RESOLVER;
-import static org.jboss.hal.testsuite.fixtures.SecurityFixtures.OTHER_ITEM;
 import static org.jboss.hal.testsuite.fixtures.SecurityFixtures.SECRET_KEY;
 import static org.jboss.hal.testsuite.fixtures.SecurityFixtures.expressionEncryptionAddress;
 
@@ -63,7 +63,7 @@ class ExpressionEncryptionAddTest {
     @BeforeEach
     void prepare() {
         page.navigate();
-        console.verticalNavigation().selectSecondary(OTHER_ITEM, Ids.ELYTRON_EXPRESSION);
+        console.verticalNavigation().selectSecondary(ELYTRON_OTHER_ITEM, Ids.ELYTRON_EXPRESSION);
     }
 
     @Test

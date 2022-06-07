@@ -34,6 +34,7 @@ import org.wildfly.extras.creaper.core.online.operations.Values;
 
 import static org.jboss.hal.dmr.ModelDescriptionConstants.NAME;
 import static org.jboss.hal.dmr.ModelDescriptionConstants.URL;
+import static org.jboss.hal.resources.Ids.ELYTRON_OTHER_ITEM;
 import static org.jboss.hal.testsuite.container.WildFlyConfiguration.STANDALONE;
 import static org.jboss.hal.testsuite.container.WildFlyVersion._26_1;
 import static org.jboss.hal.testsuite.fixtures.SecurityFixtures.CERTIFICATE_AUTHORITY_CREATE;
@@ -41,7 +42,6 @@ import static org.jboss.hal.testsuite.fixtures.SecurityFixtures.CERTIFICATE_AUTH
 import static org.jboss.hal.testsuite.fixtures.SecurityFixtures.CERTIFICATE_AUTHORITY_READ;
 import static org.jboss.hal.testsuite.fixtures.SecurityFixtures.CERTIFICATE_AUTHORITY_UPDATE;
 import static org.jboss.hal.testsuite.fixtures.SecurityFixtures.CERTIFICATE_AUTHORITY_URL;
-import static org.jboss.hal.testsuite.fixtures.SecurityFixtures.OTHER_ITEM;
 import static org.jboss.hal.testsuite.fixtures.SecurityFixtures.certificateAuthorityAddress;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -71,7 +71,7 @@ class CertificateAuthorityTest {
     @BeforeEach
     void prepare() {
         page.navigate();
-        console.verticalNavigation().selectSecondary(OTHER_ITEM, "elytron-certificate-authority-item");
+        console.verticalNavigation().selectSecondary(ELYTRON_OTHER_ITEM, "elytron-certificate-authority-item");
         table = page.getCertificateAuthorityTable();
         form = page.getCertificateAuthorityForm();
         table.bind(form);
