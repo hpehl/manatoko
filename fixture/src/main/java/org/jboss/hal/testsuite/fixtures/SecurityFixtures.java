@@ -45,7 +45,7 @@ public final class SecurityFixtures {
     private static final String KEY_MANAGER_PREFIX = "ks";
     private static final String KEY_STORE_PREFIX = "km";
     private static final String SECRET_KEY_CREDENTIAL_STORE_PREFIX = "skcs";
-    private static final String SERVER_SSL_CONTEXT_PREFIX = "cli-ssl";
+    private static final String SERVER_SSL_CONTEXT_PREFIX = "srv-ssl";
     private static final String TRUST_MANAGER_PREFIX = "tm";
 
     public static final String ALT_NAME_TYPE = "alt-name-type";
@@ -128,8 +128,6 @@ public final class SecurityFixtures {
     // ------------------------------------------------------ key manager
 
     public static final String KEY_MANAGER_CREATE = Ids.build(KEY_MANAGER_PREFIX, CREATE, Random.name());
-    public static final String KEY_MANAGER_UPDATE = Ids.build(KEY_MANAGER_PREFIX, UPDATE, Random.name());
-    public static final String KEY_MANAGER_DELETE = Ids.build(KEY_MANAGER_PREFIX, DELETE, Random.name());
 
     public static Address keyManagerAddress(String name) {
         return SUBSYSTEM_ADDRESS.and(KEY_MANAGER, name);
@@ -158,7 +156,7 @@ public final class SecurityFixtures {
         return SUBSYSTEM_ADDRESS.and(SECRET_KEY_CREDENTIAL_STORE, name);
     }
 
-    // ------------------------------------------------------ client-ssl-context
+    // ------------------------------------------------------ server-ssl-context
 
     public static final String SERVER_SSL_CREATE = Ids.build(SERVER_SSL_CONTEXT_PREFIX, CREATE, Random.name());
     public static final String SERVER_SSL_UPDATE = Ids.build(SERVER_SSL_CONTEXT_PREFIX, UPDATE, Random.name());
