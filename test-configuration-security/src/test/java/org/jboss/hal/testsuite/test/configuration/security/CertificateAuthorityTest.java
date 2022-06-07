@@ -47,7 +47,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @Manatoko
 @Testcontainers
-public class CertificateAuthorityTest {
+class CertificateAuthorityTest {
 
     @Container static WildFlyContainer wildFly = WildFlyContainer.version(_26_1, STANDALONE);
 

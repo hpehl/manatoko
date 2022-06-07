@@ -55,7 +55,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @Manatoko
 @Testcontainers
-public class AggregateEvidenceDecoderTest {
+class AggregateEvidenceDecoderTest {
 
     @Container static WildFlyContainer wildFly = WildFlyContainer.version(_26_1, STANDALONE);
 

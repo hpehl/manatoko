@@ -49,7 +49,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @Manatoko
 @Testcontainers
-public class X509EvidenceDecoderTest {
+class X509EvidenceDecoderTest {
 
     @Container static WildFlyContainer wildFly = WildFlyContainer.version(_26_1, STANDALONE);
 

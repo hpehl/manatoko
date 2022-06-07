@@ -57,8 +57,8 @@ import static org.jboss.hal.resources.Ids.TAB;
 import static org.jboss.hal.testsuite.container.WildFlyConfiguration.FULL_HA;
 import static org.jboss.hal.testsuite.container.WildFlyVersion._26_1;
 import static org.jboss.hal.testsuite.fixtures.MessagingFixtures.CALL_TIMEOUT;
-import static org.jboss.hal.testsuite.fixtures.MessagingFixtures.JGROUPS_DG_UPDATE;
 import static org.jboss.hal.testsuite.fixtures.MessagingFixtures.JGROUPS_CHANNEL;
+import static org.jboss.hal.testsuite.fixtures.MessagingFixtures.JGROUPS_DG_UPDATE;
 import static org.jboss.hal.testsuite.fixtures.MessagingFixtures.POOL_CONN_CREATE;
 import static org.jboss.hal.testsuite.fixtures.MessagingFixtures.POOL_CONN_CREATE_ENTRY;
 import static org.jboss.hal.testsuite.fixtures.MessagingFixtures.POOL_CONN_DELETE;
@@ -83,7 +83,8 @@ class PooledConnectionFactoryTest extends AbstractServerConnectionsTest {
         client = wildFly.managementClient();
         client.apply(new AddMessagingServer(SRV_UPDATE));
         operations = new Operations(client);
-        operations.add(jgroupsDiscoveryGroupAddress(SRV_UPDATE, JGROUPS_DG_UPDATE), Values.of(JGROUPS_CHANNEL, EE)).assertSuccess();
+        operations.add(jgroupsDiscoveryGroupAddress(SRV_UPDATE, JGROUPS_DG_UPDATE), Values.of(JGROUPS_CHANNEL, EE))
+                .assertSuccess();
         new Administration(client).reloadIfRequired();
         operations.add(pooledConnectionFactoryAddress(SRV_UPDATE, POOL_CONN_UPDATE),
                 Values.ofList(ENTRIES, Random.name()).and(DISCOVERY_GROUP, JGROUPS_DG_UPDATE)).assertSuccess();

@@ -41,7 +41,7 @@ import static org.jboss.hal.testsuite.fixtures.SecurityFixtures.x500EvidenceDeco
 
 @Manatoko
 @Testcontainers
-public class X500EvidenceDecoderTest {
+class X500EvidenceDecoderTest {
 
     @Container static WildFlyContainer wildFly = WildFlyContainer.version(_26_1, STANDALONE);
 

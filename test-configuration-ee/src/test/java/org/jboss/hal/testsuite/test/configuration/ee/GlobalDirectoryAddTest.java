@@ -36,8 +36,8 @@ import static org.jboss.hal.dmr.ModelDescriptionConstants.RELATIVE_TO;
 import static org.jboss.hal.testsuite.container.WildFlyConfiguration.STANDALONE;
 import static org.jboss.hal.testsuite.container.WildFlyVersion._26_1;
 import static org.jboss.hal.testsuite.fixtures.EEFixtures.GLOBAL_DIRECTORY_CREATE;
-import static org.jboss.hal.testsuite.fixtures.EEFixtures.JBOSS_DATA_DIR;
 import static org.jboss.hal.testsuite.fixtures.EEFixtures.globalDirectoryAddress;
+import static org.jboss.hal.testsuite.fixtures.PathsFixtures.JBOSS_SERVER_DATA_DIR;
 
 @Manatoko
 @Testcontainers
@@ -62,7 +62,7 @@ class GlobalDirectoryAddTest {
         crud.createSingleton(globalDirectoryAddress(GLOBAL_DIRECTORY_CREATE), form, f -> {
             f.text(NAME, GLOBAL_DIRECTORY_CREATE);
             f.text(PATH, Random.name());
-            f.text(RELATIVE_TO, JBOSS_DATA_DIR);
+            f.text(RELATIVE_TO, JBOSS_SERVER_DATA_DIR);
         });
     }
 }

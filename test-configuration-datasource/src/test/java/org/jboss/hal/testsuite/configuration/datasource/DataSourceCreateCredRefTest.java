@@ -21,11 +21,11 @@ import org.jboss.hal.resources.Ids;
 import org.jboss.hal.resources.Names;
 import org.jboss.hal.testsuite.Console;
 import org.jboss.hal.testsuite.Random;
+import org.jboss.hal.testsuite.command.AddCredentialStore;
 import org.jboss.hal.testsuite.container.WildFlyContainer;
 import org.jboss.hal.testsuite.fragment.FormFragment;
 import org.jboss.hal.testsuite.fragment.WizardFragment;
 import org.jboss.hal.testsuite.fragment.finder.ColumnFragment;
-import org.jboss.hal.testsuite.model.CredentialReference;
 import org.jboss.hal.testsuite.model.ResourceVerifier;
 import org.jboss.hal.testsuite.test.Manatoko;
 import org.junit.jupiter.api.BeforeAll;
@@ -37,18 +37,13 @@ import org.testcontainers.junit.jupiter.Testcontainers;
 import org.wildfly.extras.creaper.core.online.ModelNodeResult;
 import org.wildfly.extras.creaper.core.online.OnlineManagementClient;
 import org.wildfly.extras.creaper.core.online.operations.Operations;
-import org.wildfly.extras.creaper.core.online.operations.Values;
 
 import static org.jboss.hal.dmr.ModelDescriptionConstants.ALIAS;
 import static org.jboss.hal.dmr.ModelDescriptionConstants.CLEAR_TEXT;
-import static org.jboss.hal.dmr.ModelDescriptionConstants.CREATE;
-import static org.jboss.hal.dmr.ModelDescriptionConstants.CREDENTIAL_REFERENCE;
 import static org.jboss.hal.dmr.ModelDescriptionConstants.DATASOURCES;
 import static org.jboss.hal.dmr.ModelDescriptionConstants.NAME;
 import static org.jboss.hal.dmr.ModelDescriptionConstants.PASSWORD;
-import static org.jboss.hal.dmr.ModelDescriptionConstants.PATH;
 import static org.jboss.hal.dmr.ModelDescriptionConstants.READ_ALIASES_OPERATION;
-import static org.jboss.hal.dmr.ModelDescriptionConstants.RELATIVE_TO;
 import static org.jboss.hal.dmr.ModelDescriptionConstants.STORE;
 import static org.jboss.hal.testsuite.container.WildFlyConfiguration.STANDALONE;
 import static org.jboss.hal.testsuite.container.WildFlyVersion._26_1;
@@ -75,13 +70,7 @@ class DataSourceCreateCredRefTest {
     @BeforeAll
     static void setupModel() throws Exception {
         client = wildFly.managementClient();
-        Operations operations = new Operations(client);
-        Values credParams = Values
-                .of(PATH, CREDENTIAL_STORE_CREATE)
-                .and(RELATIVE_TO, "jboss.server.config.dir")
-                .and(CREATE, true)
-                .and(CREDENTIAL_REFERENCE, CredentialReference.clearText("secret"));
-        operations.add(credentialStoreAddress(CREDENTIAL_STORE_CREATE), credParams);
+        client.apply(new AddCredentialStore(CREDENTIAL_STORE_CREATE));
     }
 
     @Inject Console console;

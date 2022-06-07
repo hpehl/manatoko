@@ -40,8 +40,8 @@ import static org.jboss.hal.dmr.ModelDescriptionConstants.RELATIVE_TO;
 import static org.jboss.hal.testsuite.container.WildFlyConfiguration.STANDALONE;
 import static org.jboss.hal.testsuite.container.WildFlyVersion._26_1;
 import static org.jboss.hal.testsuite.fixtures.EEFixtures.GLOBAL_DIRECTORY_DELETE;
-import static org.jboss.hal.testsuite.fixtures.EEFixtures.JBOSS_DATA_DIR;
 import static org.jboss.hal.testsuite.fixtures.EEFixtures.globalDirectoryAddress;
+import static org.jboss.hal.testsuite.fixtures.PathsFixtures.JBOSS_SERVER_DATA_DIR;
 
 @Manatoko
 @Testcontainers
@@ -55,7 +55,7 @@ class GlobalDirectoryDeleteTest {
         Operations operations = new Operations(client);
         operations.add(globalDirectoryAddress(GLOBAL_DIRECTORY_DELETE), Values.of(NAME, GLOBAL_DIRECTORY_DELETE)
                 .and(PATH, Random.name())
-                .and(RELATIVE_TO, JBOSS_DATA_DIR));
+                .and(RELATIVE_TO, JBOSS_SERVER_DATA_DIR));
     }
 
     @Inject Console console;

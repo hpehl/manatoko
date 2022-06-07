@@ -16,6 +16,7 @@
 package org.jboss.hal.testsuite.page.configuration;
 
 import org.jboss.hal.meta.token.NameTokens;
+import org.jboss.hal.resources.Ids;
 import org.jboss.hal.testsuite.fragment.EmptyState;
 import org.jboss.hal.testsuite.fragment.FormFragment;
 import org.jboss.hal.testsuite.fragment.PagesFragment;
@@ -212,6 +213,16 @@ public class ElytronOtherSettingsPage extends BasePage {
     // server SSL SNI context
     @FindBy(id = "elytron-server-ssl-sni-context-" + TABLE + WRAPPER) private TableFragment serverSSLSNIContextTable;
     @FindBy(id = "elytron-server-ssl-sni-context-" + FORM) private FormFragment serverSSLSNIContextForm;
+
+    // secret key credential store
+    @FindBy(id = Ids.ELYTRON_SECRET_KEY_CREDENTIAL_STORE + "-" + TABLE
+            + WRAPPER) private TableFragment secretKeyCredentialStoreTable;
+    @FindBy(id = Ids.ELYTRON_SECRET_KEY_CREDENTIAL_STORE + "-" + FORM) private FormFragment secretKeyCredentialStoreForm;
+
+    // expression
+    private @FindBy(id = Ids.ELYTRON_EXPRESSION + "-form-empty") EmptyState expressionEmptyState;
+    private @FindBy(id = Ids.ELYTRON_EXPRESSION + "-resolvers-table_wrapper") TableFragment expressionResolverTable;
+    private @FindBy(id = Ids.ELYTRON_EXPRESSION + "-resolvers-form") FormFragment expressionResolverForm;
 
     public TableFragment getCredentialStoreTable() {
         return credentialStoreTable;
@@ -513,5 +524,25 @@ public class ElytronOtherSettingsPage extends BasePage {
 
     public FormFragment getCertificateAuthorityForm() {
         return certificateAuthorityForm;
+    }
+
+    public TableFragment getSecretKeyCredentialStoreTable() {
+        return secretKeyCredentialStoreTable;
+    }
+
+    public FormFragment getSecretKeyCredentialStoreForm() {
+        return secretKeyCredentialStoreForm;
+    }
+
+    public EmptyState getExpressionEmptyState() {
+        return expressionEmptyState;
+    }
+
+    public TableFragment getExpressionResolverTable() {
+        return expressionResolverTable;
+    }
+
+    public FormFragment getExpressionResolverForm() {
+        return expressionResolverForm;
     }
 }

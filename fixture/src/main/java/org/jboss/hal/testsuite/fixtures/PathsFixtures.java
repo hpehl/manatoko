@@ -20,6 +20,12 @@ import org.wildfly.extras.creaper.core.online.operations.Address;
 
 public class PathsFixtures {
 
+    public final static String JBOSS_SERVER_BASE_DIR = "jboss.server.base.dir";
+    public final static String JBOSS_SERVER_CONFIG_DIR = "jboss.server.config.dir";
+    public final static String JBOSS_SERVER_DATA_DIR = "jboss.server.data.dir";
+    public final static String JBOSS_SERVER_LOG_DIR = "jboss.server.log.dir";
+    public final static String JBOSS_SERVER_TEMP_DIR = "jboss.server.temp.dir";
+
     private PathsFixtures() {
 
     }

@@ -41,7 +41,6 @@ public final class EEFixtures {
     private static final String SCHEDULED_EXECUTOR_PREFIX = "se";
     private static final String THREAD_FACTORY_PREFIX = "tf";
 
-    public static final String JBOSS_DATA_DIR = "jboss.server.data.dir";
     public static final Address SUBSYSTEM_ADDRESS = Address.subsystem(EE);
     public static final Address DEFAULT_BINDINGS_ADDRESS = SUBSYSTEM_ADDRESS.and(SERVICE, DEFAULT_BINDINGS);
 

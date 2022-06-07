@@ -13,16 +13,19 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package org.jboss.hal.testsuite.test.configuration.ee;
+package org.jboss.hal.testsuite.test.configuration.security;
 
 import org.jboss.arquillian.core.api.annotation.Inject;
 import org.jboss.arquillian.graphene.page.Page;
 import org.jboss.hal.resources.Ids;
 import org.jboss.hal.testsuite.Console;
 import org.jboss.hal.testsuite.Random;
+import org.jboss.hal.testsuite.command.AddCredentialStore;
 import org.jboss.hal.testsuite.container.WildFlyContainer;
 import org.jboss.hal.testsuite.fragment.FormFragment;
-import org.jboss.hal.testsuite.page.configuration.EEPage;
+import org.jboss.hal.testsuite.fragment.WizardFragment;
+import org.jboss.hal.testsuite.model.ResourceVerifier;
+import org.jboss.hal.testsuite.page.configuration.ElytronOtherSettingsPage;
 import org.jboss.hal.testsuite.test.Manatoko;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
@@ -30,47 +33,51 @@ import org.junit.jupiter.api.Test;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
 import org.wildfly.extras.creaper.core.online.OnlineManagementClient;
-import org.wildfly.extras.creaper.core.online.operations.Operations;
-import org.wildfly.extras.creaper.core.online.operations.Values;
 
+import static org.jboss.hal.dmr.ModelDescriptionConstants.CREDENTIAL_STORE;
 import static org.jboss.hal.dmr.ModelDescriptionConstants.NAME;
-import static org.jboss.hal.dmr.ModelDescriptionConstants.PATH;
-import static org.jboss.hal.dmr.ModelDescriptionConstants.RELATIVE_TO;
 import static org.jboss.hal.testsuite.container.WildFlyConfiguration.STANDALONE;
 import static org.jboss.hal.testsuite.container.WildFlyVersion._26_1;
-import static org.jboss.hal.testsuite.fixtures.EEFixtures.GLOBAL_DIRECTORY_READ;
-import static org.jboss.hal.testsuite.fixtures.EEFixtures.globalDirectoryAddress;
-import static org.jboss.hal.testsuite.fixtures.PathsFixtures.JBOSS_SERVER_DATA_DIR;
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.jboss.hal.testsuite.fixtures.SecurityFixtures.CREDENTIAL_STORE_CREATE;
+import static org.jboss.hal.testsuite.fixtures.SecurityFixtures.DEFAULT_RESOLVER;
+import static org.jboss.hal.testsuite.fixtures.SecurityFixtures.OTHER_ITEM;
+import static org.jboss.hal.testsuite.fixtures.SecurityFixtures.SECRET_KEY;
+import static org.jboss.hal.testsuite.fixtures.SecurityFixtures.expressionEncryptionAddress;
 
 @Manatoko
 @Testcontainers
-class GlobalDirectoryReadTest {
+class ExpressionEncryptionAddTest {
 
     @Container static WildFlyContainer wildFly = WildFlyContainer.version(_26_1, STANDALONE);
+    static OnlineManagementClient client;
 
     @BeforeAll
     static void setupModel() throws Exception {
-        OnlineManagementClient client = wildFly.managementClient();
-        Operations operations = new Operations(client);
-        operations.add(globalDirectoryAddress(GLOBAL_DIRECTORY_READ), Values.of(NAME, GLOBAL_DIRECTORY_READ)
-                .and(PATH, Random.name())
-                .and(RELATIVE_TO, JBOSS_SERVER_DATA_DIR));
+        client = wildFly.managementClient();
+        client.apply(new AddCredentialStore(CREDENTIAL_STORE_CREATE));
     }
 
     @Inject Console console;
-    @Page EEPage page;
-    FormFragment form;
+    @Page ElytronOtherSettingsPage page;
 
     @BeforeEach
     void prepare() {
         page.navigate();
-        console.verticalNavigation().selectPrimary(Ids.EE_GLOBAL_MODULES_ITEM);
-        form = page.getGlobalDirectoryForm();
+        console.verticalNavigation().selectSecondary(OTHER_ITEM, Ids.ELYTRON_EXPRESSION);
     }
 
     @Test
-    void read() {
-        assertEquals(GLOBAL_DIRECTORY_READ, form.value(NAME));
+    void add() throws Exception {
+        page.getExpressionEmptyState().mainAction();
+        WizardFragment wizard = console.wizard();
+        FormFragment form = wizard.getForm(Ids.ELYTRON_EXPRESSION + "-add-form");
+        form.text(DEFAULT_RESOLVER, Random.name());
+        wizard.next();
+        form = wizard.getForm(Ids.ELYTRON_EXPRESSION + "-resolvers-add-form");
+        form.text(CREDENTIAL_STORE, CREDENTIAL_STORE_CREATE);
+        form.text(NAME, Random.name());
+        form.text(SECRET_KEY, Random.name());
+        wizard.finish();
+        new ResourceVerifier(expressionEncryptionAddress(), client).verifyExists();
     }
 }

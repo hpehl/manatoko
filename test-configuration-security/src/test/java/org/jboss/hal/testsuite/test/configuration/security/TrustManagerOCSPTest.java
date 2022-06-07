@@ -22,6 +22,7 @@ import org.jboss.hal.resources.Ids;
 import org.jboss.hal.testsuite.Console;
 import org.jboss.hal.testsuite.CrudOperations;
 import org.jboss.hal.testsuite.Random;
+import org.jboss.hal.testsuite.command.AddKeyStore;
 import org.jboss.hal.testsuite.container.WildFlyContainer;
 import org.jboss.hal.testsuite.fragment.FormFragment;
 import org.jboss.hal.testsuite.fragment.TableFragment;
@@ -32,6 +33,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
+import org.wildfly.extras.creaper.core.online.OnlineManagementClient;
 import org.wildfly.extras.creaper.core.online.operations.Operations;
 import org.wildfly.extras.creaper.core.online.operations.Values;
 
@@ -43,7 +45,6 @@ import static org.jboss.hal.testsuite.fixtures.SecurityFixtures.RESPONDER;
 import static org.jboss.hal.testsuite.fixtures.SecurityFixtures.TRUST_MANAGER_CREATE;
 import static org.jboss.hal.testsuite.fixtures.SecurityFixtures.TRUST_MANAGER_DELETE;
 import static org.jboss.hal.testsuite.fixtures.SecurityFixtures.TRUST_MANAGER_UPDATE;
-import static org.jboss.hal.testsuite.fixtures.SecurityFixtures.addRandomKeyStore;
 import static org.jboss.hal.testsuite.fixtures.SecurityFixtures.trustManagerAddress;
 
 @Manatoko
@@ -57,11 +58,15 @@ class TrustManagerOCSPTest {
         ModelNode ocspModel = new ModelNode();
         ocspModel.get(RESPONDER).set("responder");
 
+        OnlineManagementClient client = wildFly.managementClient();
+        String keyStore = Random.name();
+        client.apply(new AddKeyStore(keyStore));
+
         Operations operations = new Operations(wildFly.managementClient());
-        operations.add(trustManagerAddress(TRUST_MANAGER_CREATE), Values.of(KEY_STORE, addRandomKeyStore(operations)));
-        operations.add(trustManagerAddress(TRUST_MANAGER_UPDATE), Values.of(KEY_STORE, addRandomKeyStore(operations)));
+        operations.add(trustManagerAddress(TRUST_MANAGER_CREATE), Values.of(KEY_STORE, keyStore));
+        operations.add(trustManagerAddress(TRUST_MANAGER_UPDATE), Values.of(KEY_STORE, keyStore));
         operations.writeAttribute(trustManagerAddress(TRUST_MANAGER_UPDATE), OCSP, ocspModel);
-        operations.add(trustManagerAddress(TRUST_MANAGER_DELETE), Values.of(KEY_STORE, addRandomKeyStore(operations)));
+        operations.add(trustManagerAddress(TRUST_MANAGER_DELETE), Values.of(KEY_STORE, keyStore));
         operations.writeAttribute(trustManagerAddress(TRUST_MANAGER_DELETE), OCSP, ocspModel);
     }
 

@@ -22,27 +22,29 @@ import org.wildfly.extras.creaper.core.online.OnlineCommandContext;
 import org.wildfly.extras.creaper.core.online.operations.Operations;
 import org.wildfly.extras.creaper.core.online.operations.Values;
 
+import static org.jboss.hal.dmr.ModelDescriptionConstants.CREATE;
 import static org.jboss.hal.dmr.ModelDescriptionConstants.CREDENTIAL_REFERENCE;
 import static org.jboss.hal.dmr.ModelDescriptionConstants.PATH;
 import static org.jboss.hal.dmr.ModelDescriptionConstants.RELATIVE_TO;
-import static org.jboss.hal.dmr.ModelDescriptionConstants.TYPE;
 import static org.jboss.hal.testsuite.fixtures.PathsFixtures.JBOSS_SERVER_DATA_DIR;
-import static org.jboss.hal.testsuite.fixtures.SecurityFixtures.keyStoreAddress;
+import static org.jboss.hal.testsuite.fixtures.SecurityFixtures.CREDENTIAL_STORE_CREATE;
+import static org.jboss.hal.testsuite.fixtures.SecurityFixtures.credentialStoreAddress;
 
-public class AddKeyStore implements OnlineCommand {
+public class AddCredentialStore implements OnlineCommand {
 
     private final String name;
 
-    public AddKeyStore(final String name) {
+    public AddCredentialStore(final String name) {
         this.name = name;
     }
 
     @Override
     public void apply(final OnlineCommandContext context) throws Exception {
         Operations operations = new Operations(context.client);
-        operations.add(keyStoreAddress(name), Values.of(TYPE, "JKS")
-                .and(PATH, Random.name())
+        operations.add(credentialStoreAddress(CREDENTIAL_STORE_CREATE), Values
+                .of(PATH, Random.name())
                 .and(RELATIVE_TO, JBOSS_SERVER_DATA_DIR)
+                .and(CREATE, true)
                 .and(CREDENTIAL_REFERENCE, CredentialReference.clearText("secret")));
     }
 }
