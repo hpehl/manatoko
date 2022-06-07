@@ -23,7 +23,6 @@ import org.wildfly.extras.creaper.core.online.operations.Address;
 import static org.jboss.hal.dmr.ModelDescriptionConstants.ACCEPTOR;
 import static org.jboss.hal.dmr.ModelDescriptionConstants.ADDRESS_SETTING;
 import static org.jboss.hal.dmr.ModelDescriptionConstants.BRIDGE;
-import static org.jboss.hal.dmr.ModelDescriptionConstants.BROADCAST_GROUP;
 import static org.jboss.hal.dmr.ModelDescriptionConstants.CLUSTER_CONNECTION;
 import static org.jboss.hal.dmr.ModelDescriptionConstants.CONNECTION_FACTORY;
 import static org.jboss.hal.dmr.ModelDescriptionConstants.CONNECTOR;
@@ -37,6 +36,9 @@ import static org.jboss.hal.dmr.ModelDescriptionConstants.HTTP_ACCEPTOR;
 import static org.jboss.hal.dmr.ModelDescriptionConstants.HTTP_CONNECTOR;
 import static org.jboss.hal.dmr.ModelDescriptionConstants.IN_VM_ACCEPTOR;
 import static org.jboss.hal.dmr.ModelDescriptionConstants.IN_VM_CONNECTOR;
+import static org.jboss.hal.dmr.ModelDescriptionConstants.JGROUPS;
+import static org.jboss.hal.dmr.ModelDescriptionConstants.JGROUPS_BROADCAST_GROUP;
+import static org.jboss.hal.dmr.ModelDescriptionConstants.JGROUPS_DISCOVERY_GROUP;
 import static org.jboss.hal.dmr.ModelDescriptionConstants.JMS_BRIDGE;
 import static org.jboss.hal.dmr.ModelDescriptionConstants.JMS_QUEUE;
 import static org.jboss.hal.dmr.ModelDescriptionConstants.JMS_TOPIC;
@@ -48,6 +50,11 @@ import static org.jboss.hal.dmr.ModelDescriptionConstants.REMOTE_CONNECTOR;
 import static org.jboss.hal.dmr.ModelDescriptionConstants.ROLE;
 import static org.jboss.hal.dmr.ModelDescriptionConstants.SECURITY_SETTING;
 import static org.jboss.hal.dmr.ModelDescriptionConstants.SERVER;
+import static org.jboss.hal.dmr.ModelDescriptionConstants.SOCKET_BROADCAST_GROUP;
+import static org.jboss.hal.dmr.ModelDescriptionConstants.SOCKET_DISCOVERY_GROUP;
+import static org.jboss.hal.testsuite.model.CrudConstants.CREATE;
+import static org.jboss.hal.testsuite.model.CrudConstants.DELETE;
+import static org.jboss.hal.testsuite.model.CrudConstants.UPDATE;
 
 public final class MessagingFixtures {
 
@@ -80,6 +87,7 @@ public final class MessagingFixtures {
     public static final String APPLICATION_DOMAIN = "ApplicationDomain";
     public static final String AT_MOST_ONCE = "AT_MOST_ONCE";
     public static final String BINDINGS_DIRECTORY = "bindings-directory";
+    public static final String BROADCAST_GROUP_ITEM = "messaging-broadcast-group-item";
     public static final String BROADCAST_PERIOD = "broadcast-period";
     public static final String CALL_TIMEOUT = "call-timeout";
     public static final String CHECK_PERIOD = "check-period";
@@ -90,6 +98,7 @@ public final class MessagingFixtures {
     public static final String CONNECTOR_FACTORY_CLASS = "org.apache.activemq.artemis.utils.ClassloadingUtil";
     public static final String CONSUME = "consume";
     public static final String DESTINATION_QUEUE = "jms/queue/DLQ";
+    public static final String DISCOVERY_GROUP_ITEM = "messaging-discovery-group-item";
     public static final String DIVERT_ADDRESS = "divert-address";
     public static final String ELYTRON_DOMAIN = "elytron-domain";
     public static final String FACTORY_CLASS = "factory-class";
@@ -129,11 +138,11 @@ public final class MessagingFixtures {
 
     // ------------------------------------------------------ server
 
-    public static final String SRV_CREATE = Ids.build(SERVER_PREFIX, CrudConstants.CREATE, Random.name());
+    public static final String SRV_CREATE = Ids.build(SERVER_PREFIX, CREATE, Random.name());
     public static final String SRV_CREATE2 = Ids.build(SERVER_PREFIX, "create2", Random.name());
     public static final String SRV_READ = Ids.build(SERVER_PREFIX, CrudConstants.READ, Random.name());
-    public static final String SRV_UPDATE = Ids.build(SERVER_PREFIX, CrudConstants.UPDATE, Random.name());
-    public static final String SRV_DELETE = Ids.build(SERVER_PREFIX, CrudConstants.DELETE, Random.name());
+    public static final String SRV_UPDATE = Ids.build(SERVER_PREFIX, UPDATE, Random.name());
+    public static final String SRV_DELETE = Ids.build(SERVER_PREFIX, DELETE, Random.name());
 
     public static Address serverAddress(String name) {
         return SUBSYSTEM_ADDRESS.and(SERVER, name);
@@ -147,8 +156,8 @@ public final class MessagingFixtures {
 
     // ------------------------------------------------------ server / destinations / core-queue
 
-    public static final String COREQUEUE_CREATE = Ids.build(CORE_PREFIX, CrudConstants.CREATE, Random.name());
-    public static final String COREQUEUE_DELETE = Ids.build(CORE_PREFIX, CrudConstants.DELETE, Random.name());
+    public static final String COREQUEUE_CREATE = Ids.build(CORE_PREFIX, CREATE, Random.name());
+    public static final String COREQUEUE_DELETE = Ids.build(CORE_PREFIX, DELETE, Random.name());
 
     public static Address coreQueueAddress(String server, String queue) {
         return serverAddress(server).and(QUEUE, queue);
@@ -156,9 +165,9 @@ public final class MessagingFixtures {
 
     // ------------------------------------------------------ server / destinations / jms-queue
 
-    public static final String JMSQUEUE_CREATE = Ids.build(JMS_QUEUE_PREFIX, CrudConstants.CREATE, Random.name());
-    public static final String JMSQUEUE_UPDATE = Ids.build(JMS_QUEUE_PREFIX, CrudConstants.UPDATE, Random.name());
-    public static final String JMSQUEUE_DELETE = Ids.build(JMS_QUEUE_PREFIX, CrudConstants.DELETE, Random.name());
+    public static final String JMSQUEUE_CREATE = Ids.build(JMS_QUEUE_PREFIX, CREATE, Random.name());
+    public static final String JMSQUEUE_UPDATE = Ids.build(JMS_QUEUE_PREFIX, UPDATE, Random.name());
+    public static final String JMSQUEUE_DELETE = Ids.build(JMS_QUEUE_PREFIX, DELETE, Random.name());
 
     public static Address jmsQueueAddress(String server, String queue) {
         return serverAddress(server).and(JMS_QUEUE, queue);
@@ -166,9 +175,9 @@ public final class MessagingFixtures {
 
     // ------------------------------------------------------ server / destinations / jms-topic
 
-    public static final String JMSTOPIC_CREATE = Ids.build(JMS_TOPIC_PREFIX, CrudConstants.CREATE, Random.name());
-    public static final String JMSTOPIC_UPDATE = Ids.build(JMS_TOPIC_PREFIX, CrudConstants.UPDATE, Random.name());
-    public static final String JMSTOPIC_DELETE = Ids.build(JMS_TOPIC_PREFIX, CrudConstants.DELETE, Random.name());
+    public static final String JMSTOPIC_CREATE = Ids.build(JMS_TOPIC_PREFIX, CREATE, Random.name());
+    public static final String JMSTOPIC_UPDATE = Ids.build(JMS_TOPIC_PREFIX, UPDATE, Random.name());
+    public static final String JMSTOPIC_DELETE = Ids.build(JMS_TOPIC_PREFIX, DELETE, Random.name());
 
     public static Address jmsTopicAddress(String server, String topic) {
         return serverAddress(server).and(JMS_TOPIC, topic);
@@ -176,15 +185,15 @@ public final class MessagingFixtures {
 
     // ------------------------------------------------------ server / destinations / security setting
 
-    public static final String SECSET_CREATE = Ids.build(SECURITY_SETTINGS_PREFIX, CrudConstants.CREATE, Random.name());
-    public static final String SECSET_UPDATE = Ids.build(SECURITY_SETTINGS_PREFIX, CrudConstants.UPDATE, Random.name());
-    public static final String SECSET_DELETE = Ids.build(SECURITY_SETTINGS_PREFIX, CrudConstants.DELETE, Random.name());
+    public static final String SECSET_CREATE = Ids.build(SECURITY_SETTINGS_PREFIX, CREATE, Random.name());
+    public static final String SECSET_UPDATE = Ids.build(SECURITY_SETTINGS_PREFIX, UPDATE, Random.name());
+    public static final String SECSET_DELETE = Ids.build(SECURITY_SETTINGS_PREFIX, DELETE, Random.name());
 
     public static Address securitySettingAddress(String server, String secsetting) {
         return serverAddress(server).and(SECURITY_SETTING, secsetting);
     }
 
-    public static final String ROLE_CREATE = Ids.build("role", CrudConstants.CREATE, Random.name());
+    public static final String ROLE_CREATE = Ids.build("role", CREATE, Random.name());
 
     public static Address securitySettingRoleAddress(String server, String secsetting, String role) {
         return securitySettingAddress(server, secsetting).and(ROLE, role);
@@ -192,9 +201,9 @@ public final class MessagingFixtures {
 
     // ------------------------------------------------------ server / destinations / address setting
 
-    public static final String AS_CREATE = Ids.build(ADDRESS_SETTINGS_PREFIX, CrudConstants.CREATE, Random.name());
-    public static final String AS_UPDATE = Ids.build(ADDRESS_SETTINGS_PREFIX, CrudConstants.UPDATE, Random.name());
-    public static final String AS_DELETE = Ids.build(ADDRESS_SETTINGS_PREFIX, CrudConstants.DELETE, Random.name());
+    public static final String AS_CREATE = Ids.build(ADDRESS_SETTINGS_PREFIX, CREATE, Random.name());
+    public static final String AS_UPDATE = Ids.build(ADDRESS_SETTINGS_PREFIX, UPDATE, Random.name());
+    public static final String AS_DELETE = Ids.build(ADDRESS_SETTINGS_PREFIX, DELETE, Random.name());
 
     public static Address addressSettingAddress(String server, String name) {
         return serverAddress(server).and(ADDRESS_SETTING, name);
@@ -202,9 +211,9 @@ public final class MessagingFixtures {
 
     // ------------------------------------------------------ server / destinations / divert
 
-    public static final String DIVERT_CREATE = Ids.build(DIVERT_PREFIX, CrudConstants.CREATE, Random.name());
-    public static final String DIVERT_UPDATE = Ids.build(DIVERT_PREFIX, CrudConstants.UPDATE, Random.name());
-    public static final String DIVERT_DELETE = Ids.build(DIVERT_PREFIX, CrudConstants.DELETE, Random.name());
+    public static final String DIVERT_CREATE = Ids.build(DIVERT_PREFIX, CREATE, Random.name());
+    public static final String DIVERT_UPDATE = Ids.build(DIVERT_PREFIX, UPDATE, Random.name());
+    public static final String DIVERT_DELETE = Ids.build(DIVERT_PREFIX, DELETE, Random.name());
 
     public static Address divertAddress(String server, String name) {
         return serverAddress(server).and(DIVERT, name);
@@ -212,12 +221,12 @@ public final class MessagingFixtures {
 
     // ------------------------------------------------------ server / connections / acceptor - generic
 
-    public static final String ACCP_GEN_CREATE = Ids.build(ACCEPTOR_GENERIC_PREFIX, CrudConstants.CREATE,
+    public static final String ACCP_GEN_CREATE = Ids.build(ACCEPTOR_GENERIC_PREFIX, CREATE,
             Random.name());
-    public static final String ACCP_GEN_UPDATE = Ids.build(ACCEPTOR_GENERIC_PREFIX, CrudConstants.UPDATE,
+    public static final String ACCP_GEN_UPDATE = Ids.build(ACCEPTOR_GENERIC_PREFIX, UPDATE,
             Random.name());
     public static final String ACCP_GEN_TRY_UPDATE = Ids.build(ACCEPTOR_GENERIC_PREFIX, TRY_UPDATE, Random.name());
-    public static final String ACCP_GEN_DELETE = Ids.build(ACCEPTOR_GENERIC_PREFIX, CrudConstants.DELETE,
+    public static final String ACCP_GEN_DELETE = Ids.build(ACCEPTOR_GENERIC_PREFIX, DELETE,
             Random.name());
 
     public static Address acceptorGenericAddress(String server, String name) {
@@ -226,10 +235,10 @@ public final class MessagingFixtures {
 
     // ------------------------------------------------------ server / connections / acceptor - in-vm
 
-    public static final String ACCP_INVM_CREATE = Ids.build(ACCEPTOR_IN_VM_PREFIX, CrudConstants.CREATE, Random.name());
-    public static final String ACCP_INVM_UPDATE = Ids.build(ACCEPTOR_IN_VM_PREFIX, CrudConstants.UPDATE, Random.name());
+    public static final String ACCP_INVM_CREATE = Ids.build(ACCEPTOR_IN_VM_PREFIX, CREATE, Random.name());
+    public static final String ACCP_INVM_UPDATE = Ids.build(ACCEPTOR_IN_VM_PREFIX, UPDATE, Random.name());
     public static final String ACCP_INVM_TRY_UPDATE = Ids.build(ACCEPTOR_IN_VM_PREFIX, TRY_UPDATE, Random.name());
-    public static final String ACCP_INVM_DELETE = Ids.build(ACCEPTOR_IN_VM_PREFIX, CrudConstants.DELETE, Random.name());
+    public static final String ACCP_INVM_DELETE = Ids.build(ACCEPTOR_IN_VM_PREFIX, DELETE, Random.name());
 
     public static Address acceptorInVMAddress(String server, String name) {
         return serverAddress(server).and(IN_VM_ACCEPTOR, name);
@@ -237,9 +246,9 @@ public final class MessagingFixtures {
 
     // ------------------------------------------------------ server / connections / acceptor - http
 
-    public static final String ACCP_HTTP_CREATE = Ids.build(ACCEPTOR_HTTP_PREFIX, CrudConstants.CREATE, Random.name());
-    public static final String ACCP_HTTP_UPDATE = Ids.build(ACCEPTOR_HTTP_PREFIX, CrudConstants.UPDATE, Random.name());
-    public static final String ACCP_HTTP_DELETE = Ids.build(ACCEPTOR_HTTP_PREFIX, CrudConstants.DELETE, Random.name());
+    public static final String ACCP_HTTP_CREATE = Ids.build(ACCEPTOR_HTTP_PREFIX, CREATE, Random.name());
+    public static final String ACCP_HTTP_UPDATE = Ids.build(ACCEPTOR_HTTP_PREFIX, UPDATE, Random.name());
+    public static final String ACCP_HTTP_DELETE = Ids.build(ACCEPTOR_HTTP_PREFIX, DELETE, Random.name());
 
     public static Address acceptorHttpAddress(String server, String name) {
         return serverAddress(server).and(HTTP_ACCEPTOR, name);
@@ -247,10 +256,10 @@ public final class MessagingFixtures {
 
     // ------------------------------------------------------ server / connections / acceptor - remote
 
-    public static final String ACCP_REM_CREATE = Ids.build(ACCEPTOR_REMOTE_PREFIX, CrudConstants.CREATE, Random.name());
-    public static final String ACCP_REM_UPDATE = Ids.build(ACCEPTOR_REMOTE_PREFIX, CrudConstants.UPDATE, Random.name());
+    public static final String ACCP_REM_CREATE = Ids.build(ACCEPTOR_REMOTE_PREFIX, CREATE, Random.name());
+    public static final String ACCP_REM_UPDATE = Ids.build(ACCEPTOR_REMOTE_PREFIX, UPDATE, Random.name());
     public static final String ACCP_REM_TRY_UPDATE = Ids.build(ACCEPTOR_REMOTE_PREFIX, TRY_UPDATE, Random.name());
-    public static final String ACCP_REM_DELETE = Ids.build(ACCEPTOR_REMOTE_PREFIX, CrudConstants.DELETE, Random.name());
+    public static final String ACCP_REM_DELETE = Ids.build(ACCEPTOR_REMOTE_PREFIX, DELETE, Random.name());
 
     public static Address acceptorRemoteAddress(String server, String name) {
         return serverAddress(server).and(REMOTE_ACCEPTOR, name);
@@ -258,11 +267,11 @@ public final class MessagingFixtures {
 
     // ------------------------------------------------------ server / connections / connector - generic
 
-    public static final String CONN_GEN_CREATE = Ids.build(CONNECTOR_GENERIC_PREFIX, CrudConstants.CREATE,
+    public static final String CONN_GEN_CREATE = Ids.build(CONNECTOR_GENERIC_PREFIX, CREATE,
             Random.name());
-    public static final String CONN_GEN_UPDATE = Ids.build(CONNECTOR_GENERIC_PREFIX, CrudConstants.UPDATE,
+    public static final String CONN_GEN_UPDATE = Ids.build(CONNECTOR_GENERIC_PREFIX, UPDATE,
             Random.name());
-    public static final String CONN_GEN_DELETE = Ids.build(CONNECTOR_GENERIC_PREFIX, CrudConstants.DELETE,
+    public static final String CONN_GEN_DELETE = Ids.build(CONNECTOR_GENERIC_PREFIX, DELETE,
             Random.name());
 
     public static Address connectorGenericAddress(String server, String name) {
@@ -271,10 +280,10 @@ public final class MessagingFixtures {
 
     // ------------------------------------------------------ server / connections / connector - in-vm
 
-    public static final String CONN_INVM_CREATE = Ids.build(CONNECTOR_INVM_PREFIX, CrudConstants.CREATE, Random.name());
-    public static final String CONN_INVM_UPDATE = Ids.build(CONNECTOR_INVM_PREFIX, CrudConstants.UPDATE, Random.name());
+    public static final String CONN_INVM_CREATE = Ids.build(CONNECTOR_INVM_PREFIX, CREATE, Random.name());
+    public static final String CONN_INVM_UPDATE = Ids.build(CONNECTOR_INVM_PREFIX, UPDATE, Random.name());
     public static final String CONN_INVM_TRY_UPDATE = Ids.build(CONNECTOR_INVM_PREFIX, TRY_UPDATE, Random.name());
-    public static final String CONN_INVM_DELETE = Ids.build(CONNECTOR_INVM_PREFIX, CrudConstants.DELETE, Random.name());
+    public static final String CONN_INVM_DELETE = Ids.build(CONNECTOR_INVM_PREFIX, DELETE, Random.name());
 
     public static Address connectorInVMAddress(String server, String name) {
         return serverAddress(server).and(IN_VM_CONNECTOR, name);
@@ -282,10 +291,10 @@ public final class MessagingFixtures {
 
     // ------------------------------------------------------ server / connections / connector - http
 
-    public static final String CONN_HTTP_CREATE = Ids.build(CONNECTOR_HTTP_PREFIX, CrudConstants.CREATE, Random.name());
-    public static final String CONN_HTTP_UPDATE = Ids.build(CONNECTOR_HTTP_PREFIX, CrudConstants.UPDATE, Random.name());
+    public static final String CONN_HTTP_CREATE = Ids.build(CONNECTOR_HTTP_PREFIX, CREATE, Random.name());
+    public static final String CONN_HTTP_UPDATE = Ids.build(CONNECTOR_HTTP_PREFIX, UPDATE, Random.name());
     public static final String CONN_HTTP_TRY_UPDATE = Ids.build(CONNECTOR_HTTP_PREFIX, TRY_UPDATE, Random.name());
-    public static final String CONN_HTTP_DELETE = Ids.build(CONNECTOR_HTTP_PREFIX, CrudConstants.DELETE, Random.name());
+    public static final String CONN_HTTP_DELETE = Ids.build(CONNECTOR_HTTP_PREFIX, DELETE, Random.name());
 
     public static Address connectorHttpAddress(String server, String name) {
         return serverAddress(server).and(HTTP_CONNECTOR, name);
@@ -293,11 +302,11 @@ public final class MessagingFixtures {
 
     // ------------------------------------------------------ server / connections / connector - remote
 
-    public static final String CONN_REM_CREATE = Ids.build(CONNECTOR_REMOTE_PREFIX, CrudConstants.CREATE,
+    public static final String CONN_REM_CREATE = Ids.build(CONNECTOR_REMOTE_PREFIX, CREATE,
             Random.name());
-    public static final String CONN_REM_UPDATE = Ids.build(CONNECTOR_REMOTE_PREFIX, CrudConstants.UPDATE,
+    public static final String CONN_REM_UPDATE = Ids.build(CONNECTOR_REMOTE_PREFIX, UPDATE,
             Random.name());
-    public static final String CONN_REM_DELETE = Ids.build(CONNECTOR_REMOTE_PREFIX, CrudConstants.DELETE,
+    public static final String CONN_REM_DELETE = Ids.build(CONNECTOR_REMOTE_PREFIX, DELETE,
             Random.name());
 
     public static Address connectorRemoteAddress(String server, String name) {
@@ -306,11 +315,11 @@ public final class MessagingFixtures {
 
     // ------------------------------------------------------ server / connections / connector service
 
-    public static final String CONN_SVC_CREATE = Ids.build(CONNECTOR_SERVICE_PREFIX, CrudConstants.CREATE,
+    public static final String CONN_SVC_CREATE = Ids.build(CONNECTOR_SERVICE_PREFIX, CREATE,
             Random.name());
-    public static final String CONN_SVC_UPDATE = Ids.build(CONNECTOR_SERVICE_PREFIX, CrudConstants.UPDATE,
+    public static final String CONN_SVC_UPDATE = Ids.build(CONNECTOR_SERVICE_PREFIX, UPDATE,
             Random.name());
-    public static final String CONN_SVC_DELETE = Ids.build(CONNECTOR_SERVICE_PREFIX, CrudConstants.DELETE,
+    public static final String CONN_SVC_DELETE = Ids.build(CONNECTOR_SERVICE_PREFIX, DELETE,
             Random.name());
 
     public static Address connectorServiceAddress(String server, String name) {
@@ -319,14 +328,14 @@ public final class MessagingFixtures {
 
     // ------------------------------------------------------ server / connections / connector factory
 
-    public static final String CONN_FAC_CREATE = Ids.build(CONNECTOR_FACTORY_PREFIX, CrudConstants.CREATE,
+    public static final String CONN_FAC_CREATE = Ids.build(CONNECTOR_FACTORY_PREFIX, CREATE,
             Random.name());
     public static final String CONN_FAC_CREATE_ENTRY = Ids.build(CONNECTOR_FACTORY_PREFIX, "create-entry",
             Random.name());
-    public static final String CONN_FAC_UPDATE = Ids.build(CONNECTOR_FACTORY_PREFIX, CrudConstants.UPDATE,
+    public static final String CONN_FAC_UPDATE = Ids.build(CONNECTOR_FACTORY_PREFIX, UPDATE,
             Random.name());
     public static final String CONN_FAC_TRY_UPDATE = Ids.build(CONNECTOR_FACTORY_PREFIX, TRY_UPDATE, Random.name());
-    public static final String CONN_FAC_DELETE = Ids.build(CONNECTOR_FACTORY_PREFIX, CrudConstants.DELETE,
+    public static final String CONN_FAC_DELETE = Ids.build(CONNECTOR_FACTORY_PREFIX, DELETE,
             Random.name());
 
     public static Address connectionFactoryAddress(String server, String name) {
@@ -335,12 +344,12 @@ public final class MessagingFixtures {
 
     // ------------------------------------------------------ server / connections / pooled connection factory
 
-    public static final String POOL_CONN_CREATE = Ids.build(POOLED_CONNECTION_FACTORY, CrudConstants.CREATE,
+    public static final String POOL_CONN_CREATE = Ids.build(POOLED_CONNECTION_FACTORY, CREATE,
             Random.name());
     public static final String POOL_CONN_CREATE_ENTRY = Ids.build(POOLED_CONNECTION_FACTORY, "-entry", Random.name());
-    public static final String POOL_CONN_UPDATE = Ids.build(POOLED_CONNECTION_FACTORY, CrudConstants.UPDATE, Random.name());
+    public static final String POOL_CONN_UPDATE = Ids.build(POOLED_CONNECTION_FACTORY, UPDATE, Random.name());
     public static final String POOL_CONN_TRY_UPDATE = Ids.build(POOLED_CONNECTION_FACTORY, TRY_UPDATE, Random.name());
-    public static final String POOL_CONN_DELETE = Ids.build(POOLED_CONNECTION_FACTORY, CrudConstants.DELETE, Random.name());
+    public static final String POOL_CONN_DELETE = Ids.build(POOLED_CONNECTION_FACTORY, DELETE, Random.name());
 
     public static Address pooledConnectionFactoryAddress(String server, String name) {
         return serverAddress(server).and(POOLED_CONNECTION_FACTORY, name);
@@ -348,32 +357,47 @@ public final class MessagingFixtures {
 
     // ------------------------------------------------------ server / broadcast-group
 
-    public static final String BG_CREATE = Ids.build(BROADCAST_GROUP_PREFIX, CrudConstants.CREATE, Random.name());
-    public static final String BG_UPDATE = Ids.build(BROADCAST_GROUP_PREFIX, CrudConstants.UPDATE, Random.name());
-    public static final String BG_DELETE = Ids.build(BROADCAST_GROUP_PREFIX, CrudConstants.DELETE, Random.name());
+    public static final String JGROUPS_BG_CREATE = Ids.build(JGROUPS, BROADCAST_GROUP_PREFIX, CREATE, Random.name());
+    public static final String JGROUPS_BG_UPDATE = Ids.build(JGROUPS, BROADCAST_GROUP_PREFIX, UPDATE, Random.name());
+    public static final String JGROUPS_BG_DELETE = Ids.build(JGROUPS, BROADCAST_GROUP_PREFIX, DELETE, Random.name());
 
-    public static Address broadcastGroupAddress(String server, String name) {
-        return serverAddress(server).and(BROADCAST_GROUP, name);
+    public static final String SOCKET_BG_CREATE = Ids.build("socket", BROADCAST_GROUP_PREFIX, CREATE, Random.name());
+    public static final String SOCKET_BG_UPDATE = Ids.build("socket", BROADCAST_GROUP_PREFIX, UPDATE, Random.name());
+    public static final String SOCKET_BG_DELETE = Ids.build("socket", BROADCAST_GROUP_PREFIX, DELETE, Random.name());
+
+    public static Address jgroupsBroadcastGroupAddress(String server, String name) {
+        return serverAddress(server).and(JGROUPS_BROADCAST_GROUP, name);
+    }
+
+    public static Address socketBroadcastGroupAddress(String server, String name) {
+        return serverAddress(server).and(SOCKET_BROADCAST_GROUP, name);
     }
 
     // ------------------------------------------------------ server / discovery-group
 
-    public static final String DG_CREATE = Ids.build(DISCOVERY_GROUP_PREFIX, CrudConstants.CREATE, Random.name());
-    public static final String DG_UPDATE = Ids.build(DISCOVERY_GROUP_PREFIX, CrudConstants.UPDATE, Random.name());
-    public static final String DG_UPDATE_ALTERNATIVES = Ids.build(DISCOVERY_GROUP_PREFIX, "update-alternatives", Random.name());
-    public static final String DG_DELETE = Ids.build(DISCOVERY_GROUP_PREFIX, CrudConstants.DELETE, Random.name());
+    public static final String JGROUPS_DG_CREATE = Ids.build(JGROUPS, DISCOVERY_GROUP_PREFIX, CREATE, Random.name());
+    public static final String JGROUPS_DG_UPDATE = Ids.build(JGROUPS, DISCOVERY_GROUP_PREFIX, UPDATE, Random.name());
+    public static final String JGROUPS_DG_DELETE = Ids.build(JGROUPS, DISCOVERY_GROUP_PREFIX, DELETE, Random.name());
 
-    public static Address discoveryGroupAddress(String server, String name) {
-        return serverAddress(server).and(DISCOVERY_GROUP, name);
+    public static final String SOCKET_DG_CREATE = Ids.build("socket", DISCOVERY_GROUP_PREFIX, CREATE, Random.name());
+    public static final String SOCKET_DG_UPDATE = Ids.build("socket", DISCOVERY_GROUP_PREFIX, UPDATE, Random.name());
+    public static final String SOCKET_DG_DELETE = Ids.build("socket", DISCOVERY_GROUP_PREFIX, DELETE, Random.name());
+
+    public static Address jgroupsDiscoveryGroupAddress(String server, String name) {
+        return serverAddress(server).and(JGROUPS_DISCOVERY_GROUP, name);
+    }
+
+    public static Address socketDiscoveryGroupAddress(String server, String name) {
+        return serverAddress(server).and(SOCKET_DISCOVERY_GROUP, name);
     }
 
     // ------------------------------------------------------ server / cluster-connection
 
-    public static final String CC_CREATE = Ids.build(CLUSTER_CONNECTION_PREFIX, CrudConstants.CREATE, Random.name());
-    public static final String CC_UPDATE = Ids.build(CLUSTER_CONNECTION_PREFIX, CrudConstants.UPDATE, Random.name());
+    public static final String CC_CREATE = Ids.build(CLUSTER_CONNECTION_PREFIX, CREATE, Random.name());
+    public static final String CC_UPDATE = Ids.build(CLUSTER_CONNECTION_PREFIX, UPDATE, Random.name());
     public static final String CC_UPDATE_ALTERNATIVES = Ids.build(CLUSTER_CONNECTION_PREFIX, "update-alternatives",
             Random.name());
-    public static final String CC_DELETE = Ids.build(CLUSTER_CONNECTION_PREFIX, CrudConstants.DELETE, Random.name());
+    public static final String CC_DELETE = Ids.build(CLUSTER_CONNECTION_PREFIX, DELETE, Random.name());
 
     public static Address clusterConnectionAddress(String server, String name) {
         return serverAddress(server).and(CLUSTER_CONNECTION, name);
@@ -381,9 +405,9 @@ public final class MessagingFixtures {
 
     // ------------------------------------------------------ server / grouping-handler
 
-    public static final String GH_CREATE = Ids.build(GROUPING_HANDLER, CrudConstants.CREATE, Random.name());
-    public static final String GH_UPDATE = Ids.build(GROUPING_HANDLER, CrudConstants.UPDATE, Random.name());
-    public static final String GH_DELETE = Ids.build(GROUPING_HANDLER, CrudConstants.DELETE, Random.name());
+    public static final String GH_CREATE = Ids.build(GROUPING_HANDLER, CREATE, Random.name());
+    public static final String GH_UPDATE = Ids.build(GROUPING_HANDLER, UPDATE, Random.name());
+    public static final String GH_DELETE = Ids.build(GROUPING_HANDLER, DELETE, Random.name());
 
     public static Address groupingHandlerAddress(String server, String name) {
         return serverAddress(server).and(GROUPING_HANDLER, name);
@@ -391,9 +415,9 @@ public final class MessagingFixtures {
 
     // ------------------------------------------------------ server / bridge
 
-    public static final String BRIDGE_CREATE = Ids.build(BRIDGE_PREFIX, CrudConstants.CREATE, Random.name());
-    public static final String BRIDGE_UPDATE = Ids.build(BRIDGE_PREFIX, CrudConstants.UPDATE, Random.name());
-    public static final String BRIDGE_DELETE = Ids.build(BRIDGE_PREFIX, CrudConstants.DELETE, Random.name());
+    public static final String BRIDGE_CREATE = Ids.build(BRIDGE_PREFIX, CREATE, Random.name());
+    public static final String BRIDGE_UPDATE = Ids.build(BRIDGE_PREFIX, UPDATE, Random.name());
+    public static final String BRIDGE_DELETE = Ids.build(BRIDGE_PREFIX, DELETE, Random.name());
 
     public static Address bridgeAddress(String server, String name) {
         return serverAddress(server).and(BRIDGE, name);
@@ -407,17 +431,17 @@ public final class MessagingFixtures {
 
     // ------------------------------------------------------ jms-bridge
 
-    public static final String JMSBRIDGE_CREATE = Ids.build(JMSBRIDGE_PREFIX, CrudConstants.CREATE, Random.name());
+    public static final String JMSBRIDGE_CREATE = Ids.build(JMSBRIDGE_PREFIX, CREATE, Random.name());
     public static final String JMSBRIDGE_CREATE2 = Ids.build(JMSBRIDGE_PREFIX, "create2", Random.name());
-    public static final String JMSBRIDGE_UPDATE = Ids.build(JMSBRIDGE_PREFIX, CrudConstants.UPDATE, Random.name());
-    public static final String JMSBRIDGE_DELETE = Ids.build(JMSBRIDGE_PREFIX, CrudConstants.DELETE, Random.name());
+    public static final String JMSBRIDGE_UPDATE = Ids.build(JMSBRIDGE_PREFIX, UPDATE, Random.name());
+    public static final String JMSBRIDGE_DELETE = Ids.build(JMSBRIDGE_PREFIX, DELETE, Random.name());
 
     public static Address jmsBridgeAddress(String name) {
         return SUBSYSTEM_ADDRESS.and(JMS_BRIDGE, name);
     }
 
-    public static final String SRV_RESET = Ids.build(SERVER_PREFIX, CrudConstants.UPDATE, Random.name());
-    public static final String SRV_FAILOVER = Ids.build(SERVER_PREFIX, CrudConstants.UPDATE, Random.name());
+    public static final String SRV_RESET = Ids.build(SERVER_PREFIX, UPDATE, Random.name());
+    public static final String SRV_FAILOVER = Ids.build(SERVER_PREFIX, UPDATE, Random.name());
 
     public static class RemoteActiveMQServer {
 

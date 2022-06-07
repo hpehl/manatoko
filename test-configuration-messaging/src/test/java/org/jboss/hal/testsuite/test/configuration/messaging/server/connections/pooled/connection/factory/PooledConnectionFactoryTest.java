@@ -57,7 +57,7 @@ import static org.jboss.hal.resources.Ids.TAB;
 import static org.jboss.hal.testsuite.container.WildFlyConfiguration.FULL_HA;
 import static org.jboss.hal.testsuite.container.WildFlyVersion._26_1;
 import static org.jboss.hal.testsuite.fixtures.MessagingFixtures.CALL_TIMEOUT;
-import static org.jboss.hal.testsuite.fixtures.MessagingFixtures.DG_UPDATE;
+import static org.jboss.hal.testsuite.fixtures.MessagingFixtures.JGROUPS_DG_UPDATE;
 import static org.jboss.hal.testsuite.fixtures.MessagingFixtures.JGROUPS_CHANNEL;
 import static org.jboss.hal.testsuite.fixtures.MessagingFixtures.POOL_CONN_CREATE;
 import static org.jboss.hal.testsuite.fixtures.MessagingFixtures.POOL_CONN_CREATE_ENTRY;
@@ -66,7 +66,7 @@ import static org.jboss.hal.testsuite.fixtures.MessagingFixtures.POOL_CONN_TRY_U
 import static org.jboss.hal.testsuite.fixtures.MessagingFixtures.POOL_CONN_UPDATE;
 import static org.jboss.hal.testsuite.fixtures.MessagingFixtures.SRV_UPDATE;
 import static org.jboss.hal.testsuite.fixtures.MessagingFixtures.connectionFactoryAddress;
-import static org.jboss.hal.testsuite.fixtures.MessagingFixtures.discoveryGroupAddress;
+import static org.jboss.hal.testsuite.fixtures.MessagingFixtures.jgroupsDiscoveryGroupAddress;
 import static org.jboss.hal.testsuite.fixtures.MessagingFixtures.pooledConnectionFactoryAddress;
 
 @Manatoko
@@ -83,14 +83,14 @@ class PooledConnectionFactoryTest extends AbstractServerConnectionsTest {
         client = wildFly.managementClient();
         client.apply(new AddMessagingServer(SRV_UPDATE));
         operations = new Operations(client);
-        operations.add(discoveryGroupAddress(SRV_UPDATE, DG_UPDATE), Values.of(JGROUPS_CHANNEL, EE)).assertSuccess();
+        operations.add(jgroupsDiscoveryGroupAddress(SRV_UPDATE, JGROUPS_DG_UPDATE), Values.of(JGROUPS_CHANNEL, EE)).assertSuccess();
         new Administration(client).reloadIfRequired();
         operations.add(pooledConnectionFactoryAddress(SRV_UPDATE, POOL_CONN_UPDATE),
-                Values.ofList(ENTRIES, Random.name()).and(DISCOVERY_GROUP, DG_UPDATE)).assertSuccess();
+                Values.ofList(ENTRIES, Random.name()).and(DISCOVERY_GROUP, JGROUPS_DG_UPDATE)).assertSuccess();
         operations.add(pooledConnectionFactoryAddress(SRV_UPDATE, POOL_CONN_TRY_UPDATE),
-                Values.ofList(ENTRIES, Random.name()).and(DISCOVERY_GROUP, DG_UPDATE)).assertSuccess();
+                Values.ofList(ENTRIES, Random.name()).and(DISCOVERY_GROUP, JGROUPS_DG_UPDATE)).assertSuccess();
         operations.add(pooledConnectionFactoryAddress(SRV_UPDATE, POOL_CONN_DELETE),
-                Values.ofList(ENTRIES, Random.name()).and(DISCOVERY_GROUP, DG_UPDATE)).assertSuccess();
+                Values.ofList(ENTRIES, Random.name()).and(DISCOVERY_GROUP, JGROUPS_DG_UPDATE)).assertSuccess();
     }
 
     @BeforeEach
@@ -107,7 +107,7 @@ class PooledConnectionFactoryTest extends AbstractServerConnectionsTest {
         crudOperations.create(pooledConnectionFactoryAddress(SRV_UPDATE, POOL_CONN_CREATE), table,
                 formFragment -> {
                     formFragment.text(NAME, POOL_CONN_CREATE);
-                    formFragment.text(DISCOVERY_GROUP, DG_UPDATE);
+                    formFragment.text(DISCOVERY_GROUP, JGROUPS_DG_UPDATE);
                     formFragment.list(ENTRIES).add(POOL_CONN_CREATE_ENTRY);
                 });
     }
