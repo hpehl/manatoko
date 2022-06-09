@@ -17,14 +17,10 @@ package org.jboss.hal.testsuite.fragment.finder;
 
 import java.util.Map;
 
-import org.jboss.arquillian.core.api.annotation.Inject;
-import org.jboss.arquillian.drone.api.annotation.Drone;
 import org.jboss.arquillian.graphene.findby.ByJQuery;
 import org.jboss.arquillian.graphene.fragment.Root;
-import org.jboss.hal.testsuite.Console;
 import org.jboss.hal.testsuite.fragment.AlertFragment;
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
 import static java.util.stream.Collectors.toMap;
@@ -38,9 +34,7 @@ import static org.jboss.hal.resources.CSS.value;
 /** Fragment for the finder preview. Use {@link FinderFragment#preview()} to get an instance. */
 public class FinderPreviewFragment {
 
-    @Drone private WebDriver browser;
-    @Root private WebElement root;
-    @Inject private Console console;
+    @Root protected WebElement root;
 
     public AlertFragment getAlert() {
         return createPageFragment(AlertFragment.class, root.findElement(By.className(alert)));
@@ -56,8 +50,8 @@ public class FinderPreviewFragment {
         By attributeSelector = ByJQuery
                 .selector("h2:contains('" + heading + "'):visible ~ ul." + listGroup + ":eq(0) > li:visible");
         waitGui().until().element(root, attributeSelector).is().present();
-        return root.findElements(attributeSelector).stream().collect(toMap(attributeElement -> {
-            return attributeElement.findElement(By.className(key)).getText();
-        }, attributeElement -> attributeElement.findElement(By.className(value))));
+        return root.findElements(attributeSelector).stream()
+                .collect(toMap(attributeElement -> attributeElement.findElement(By.className(key)).getText(),
+                        attributeElement -> attributeElement.findElement(By.className(value))));
     }
 }

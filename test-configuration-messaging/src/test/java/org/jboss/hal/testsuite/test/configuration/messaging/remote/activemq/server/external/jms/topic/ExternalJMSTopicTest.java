@@ -52,7 +52,7 @@ class ExternalJMSTopicTest {
     private static final String EXTERNAL_JMS_TOPIC_UPDATE = "external-jms-topic-to-be-updated-" + Random.name();
     private static final String EXTERNAL_JMS_TOPIC_DELETE = "external-jms-topic-to-be-deleted-" + Random.name();
 
-    @Container static WildFlyContainer wildFly = WildFlyContainer.version(_26_1, FULL_HA);
+    @Container static WildFlyContainer wildFly = WildFlyContainer.standalone(_26_1, FULL_HA);
     private static Operations operations;
 
     @BeforeAll

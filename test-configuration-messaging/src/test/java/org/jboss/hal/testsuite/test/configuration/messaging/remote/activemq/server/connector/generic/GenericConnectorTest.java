@@ -51,7 +51,7 @@ class GenericConnectorTest {
     private static final String GENERIC_CONNECTOR_UPDATE = "generic-connector-to-update-" + Random.name();
     private static final String GENERIC_CONNECTOR_DELETE = "generic-connector-to-delete-" + Random.name();
     private static final String LOCAL_SOCKET_BINDING = "local-socket-binding-" + Random.name();
-    @Container static WildFlyContainer wildFly = WildFlyContainer.version(_26_1, FULL_HA);
+    @Container static WildFlyContainer wildFly = WildFlyContainer.standalone(_26_1, FULL_HA);
 
     @BeforeAll
     static void setupModel() throws Exception {

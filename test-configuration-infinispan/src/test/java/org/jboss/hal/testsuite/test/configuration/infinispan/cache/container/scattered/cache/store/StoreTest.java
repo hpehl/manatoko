@@ -74,7 +74,7 @@ class StoreTest {
     private static final String REMOTE_SOCKET_BINDING_HOTROD = "remote-socket-binding-for-hotrod-store-" + Random.name();
     private static final String REMOTE_CLUSTER_HOTROD = Random.name();
 
-    @Container static WildFlyContainer wildFly = WildFlyContainer.version(_26_1, FULL_HA);
+    @Container static WildFlyContainer wildFly = WildFlyContainer.standalone(_26_1, FULL_HA);
     private static OnlineManagementClient client;
 
     @BeforeAll

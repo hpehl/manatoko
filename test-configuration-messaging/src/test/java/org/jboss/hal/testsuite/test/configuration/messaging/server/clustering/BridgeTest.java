@@ -69,7 +69,7 @@ class BridgeTest extends AbstractClusteringTest {
     private static final Values BRIDGE_PARAMS = Values.of(QUEUE_NAME, Random.name())
             .andList(STATIC_CONNECTORS, HTTP_CONNECTOR);
 
-    @Container static WildFlyContainer wildFly = WildFlyContainer.version(_26_1, FULL_HA);
+    @Container static WildFlyContainer wildFly = WildFlyContainer.standalone(_26_1, FULL_HA);
     private static OnlineManagementClient client;
     private static Operations operations;
 

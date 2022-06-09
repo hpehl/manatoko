@@ -54,7 +54,7 @@ class AttributesTest {
     private static final String SCATTERED_CACHE = "scattered-cache-" + Random.name();
     private static final String DATA_SOURCE_CREATE = "data-source-to-be-created-" + Random.name();
     private static final String DATA_SOURCE_EDIT = "data-source-to-be-edited-" + Random.name();
-    @Container static WildFlyContainer wildFly = WildFlyContainer.version(_26_1, FULL_HA);
+    @Container static WildFlyContainer wildFly = WildFlyContainer.standalone(_26_1, FULL_HA);
     private static Operations operations;
 
     @BeforeAll

@@ -35,7 +35,7 @@ import static org.jboss.hal.testsuite.fixtures.LoggingFixtures.SUBSYSTEM_ADDRESS
 @Testcontainers
 class ConfigurationTest {
 
-    @Container static WildFlyContainer wildFly = WildFlyContainer.version(_26_1, STANDALONE);
+    @Container static WildFlyContainer wildFly = WildFlyContainer.standalone(_26_1, STANDALONE);
 
     @Inject Console console;
     @Inject CrudOperations crud;

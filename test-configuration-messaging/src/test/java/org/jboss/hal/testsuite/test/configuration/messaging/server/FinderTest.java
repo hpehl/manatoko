@@ -71,7 +71,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 @Disabled // TODO Fix failing tests
 class FinderTest {
 
-    @Container static WildFlyContainer wildFly = WildFlyContainer.version(_26_1, FULL_HA);
+    @Container static WildFlyContainer wildFly = WildFlyContainer.standalone(_26_1, FULL_HA);
     private static OnlineManagementClient client;
     private static Operations operations;
 

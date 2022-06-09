@@ -55,7 +55,7 @@ class ClientConfigurationTest {
     private static final String CLIENT_CONFIGURATION_REMOVE = "client-configuration-to-be-removed-"
             + RandomStringUtils.randomAlphanumeric(7);
 
-    @Container static WildFlyContainer wildFly = WildFlyContainer.version(_26_1, STANDALONE);
+    @Container static WildFlyContainer wildFly = WildFlyContainer.standalone(_26_1, STANDALONE);
     private static OnlineManagementClient client;
 
     @BeforeAll

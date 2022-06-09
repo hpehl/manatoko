@@ -46,7 +46,7 @@ class AttributesTest extends AbstractRemoteCacheContainerTest {
     private static final String REMOTE_SOCKET_BINDING_CLUSTER = "remote-socket-binding-cluster-" + Random.name();
     private static final String REMOTE_CLUSTER = "remote-cluster-" + Random.name();
 
-    @Container static WildFlyContainer wildFly = WildFlyContainer.version(_26_1, FULL_HA);
+    @Container static WildFlyContainer wildFly = WildFlyContainer.standalone(_26_1, FULL_HA);
     private static Operations operations;
 
     @BeforeAll
@@ -105,8 +105,8 @@ class AttributesTest extends AbstractRemoteCacheContainerTest {
         String protocolVersion = protocolVersions[Random.number(0, protocolVersions.length)];
         crudOperations.update(remoteCacheContainerAddress(REMOTE_CACHE_CONTAINER_TO_BE_TESTED),
                 page.getConfigurationForm(), formFragment -> {
-                    formFragment.select("protocol-version", protocolVersion);
-                }, resourceVerifier -> resourceVerifier.verifyAttribute("protocol-version", protocolVersion));
+                    formFragment.select("protocol-standalone", protocolVersion);
+                }, resourceVerifier -> resourceVerifier.verifyAttribute("protocol-standalone", protocolVersion));
     }
 
     @Test

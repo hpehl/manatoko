@@ -40,8 +40,8 @@ import static org.jboss.hal.testsuite.container.WildFlyVersion._26_1;
 @Testcontainers
 class ConfigurationTest {
 
-    @Container static WildFlyContainer wildFly = WildFlyContainer.version(_26_1, STANDALONE);
-    private static Operations operations;
+    @Container static WildFlyContainer wildFly = WildFlyContainer.standalone(_26_1, STANDALONE);
+    static Operations operations;
 
     @BeforeAll
     static void setupModel() {

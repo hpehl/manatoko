@@ -36,7 +36,7 @@ import static org.jboss.hal.testsuite.fixtures.SecurityFixtures.SUBSYSTEM_ADDRES
 @Testcontainers
 class GlobalSettingsTest {
 
-    @Container static WildFlyContainer wildFly = WildFlyContainer.version(_26_1, STANDALONE);
+    @Container static WildFlyContainer wildFly = WildFlyContainer.standalone(_26_1, STANDALONE);
 
     @Page private ElytronPage page;
     @Inject private CrudOperations crudOperations;

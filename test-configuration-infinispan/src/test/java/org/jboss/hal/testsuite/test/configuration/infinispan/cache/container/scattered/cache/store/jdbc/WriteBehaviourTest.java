@@ -61,7 +61,7 @@ class WriteBehaviourTest {
     private static final String CACHE_CONTAINER = "cache-container-" + Random.name();
     private static final String SCATTERED_CACHE = "scattered-cache-" + Random.name();
     private static final String DS = "data-source-for-scattered-cache-" + Random.name();
-    @Container static WildFlyContainer wildFly = WildFlyContainer.version(_26_1, FULL_HA);
+    @Container static WildFlyContainer wildFly = WildFlyContainer.standalone(_26_1, FULL_HA);
     private static OnlineManagementClient client;
 
     @BeforeAll

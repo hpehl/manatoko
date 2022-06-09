@@ -53,7 +53,7 @@ class DiscoveryGroupTest {
     private static final String JGROUPS_CLUSTER = "jgroups-cluster";
     private static final String SOCKET_BINDING = "socket-binding";
 
-    @Container static WildFlyContainer wildFly = WildFlyContainer.version(_26_1, FULL_HA);
+    @Container static WildFlyContainer wildFly = WildFlyContainer.standalone(_26_1, FULL_HA);
 
     @BeforeAll
     static void setupModel() throws Exception {

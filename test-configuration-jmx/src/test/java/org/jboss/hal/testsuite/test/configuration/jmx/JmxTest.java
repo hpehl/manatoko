@@ -45,7 +45,7 @@ import static org.jboss.hal.testsuite.fixtures.JmxFixtures.USE_MANAGEMENT_ENDPOI
 @Testcontainers
 class JmxTest {
 
-    @Container static WildFlyContainer wildFly = WildFlyContainer.version(_26_1, STANDALONE);
+    @Container static WildFlyContainer wildFly = WildFlyContainer.standalone(_26_1, STANDALONE);
     private static Operations operations;
 
     @BeforeAll

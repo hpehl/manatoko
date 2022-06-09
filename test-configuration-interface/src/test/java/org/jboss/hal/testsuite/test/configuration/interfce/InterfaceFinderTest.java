@@ -54,7 +54,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 @Testcontainers
 class InterfaceFinderTest {
 
-    @Container static WildFlyContainer wildFly = WildFlyContainer.version(_26_1, STANDALONE);
+    @Container static WildFlyContainer wildFly = WildFlyContainer.standalone(_26_1, STANDALONE);
     static OnlineManagementClient client;
 
     @BeforeAll

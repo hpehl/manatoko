@@ -37,7 +37,7 @@ import static org.jboss.hal.testsuite.fixtures.JpaFixtures.SUBSYSTEM_ADDRESS;
 @Testcontainers
 class JpaTest {
 
-    @Container static WildFlyContainer wildFly = WildFlyContainer.version(_26_1, STANDALONE);
+    @Container static WildFlyContainer wildFly = WildFlyContainer.standalone(_26_1, STANDALONE);
 
     @Inject CrudOperations crud;
     @Page JpaPage page;

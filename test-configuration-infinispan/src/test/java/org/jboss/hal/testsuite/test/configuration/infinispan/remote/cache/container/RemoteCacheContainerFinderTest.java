@@ -56,7 +56,7 @@ class RemoteCacheContainerFinderTest extends AbstractRemoteCacheContainerTest {
     private static final String REMOTE_SOCKET_BINDING_CREATE = "remote-socket-binding-create-" + Random.name();
     private static final String REMOTE_SOCKET_BINDING_READ = "remote-socket-binding-read-" + Random.name();
     private static final String REMOTE_SOCKET_BINDING_DELETE = "remote-socket-binding-delete-" + Random.name();
-    @Container static WildFlyContainer wildFly = WildFlyContainer.version(_26_1, FULL_HA);
+    @Container static WildFlyContainer wildFly = WildFlyContainer.standalone(_26_1, FULL_HA);
     private static OnlineManagementClient client;
     private static Administration administration;
 

@@ -39,7 +39,7 @@ import static org.jboss.hal.testsuite.fixtures.BatchFixtures.SUBSYSTEM_ADDRESS;
 @Testcontainers
 class BatchConfigurationTest {
 
-    @Container static WildFlyContainer wildFly = WildFlyContainer.version(_26_1, STANDALONE);
+    @Container static WildFlyContainer wildFly = WildFlyContainer.standalone(_26_1, STANDALONE);
     static boolean restart;
 
     @BeforeAll

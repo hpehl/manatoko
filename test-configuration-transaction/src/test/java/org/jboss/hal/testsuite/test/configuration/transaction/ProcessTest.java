@@ -45,7 +45,7 @@ import static org.junit.jupiter.api.Assertions.fail;
 @Testcontainers
 class ProcessTest {
 
-    @Container static WildFlyContainer wildFly = WildFlyContainer.version(_26_1, STANDALONE);
+    @Container static WildFlyContainer wildFly = WildFlyContainer.standalone(_26_1, STANDALONE);
     private static Operations operations;
 
     @BeforeAll

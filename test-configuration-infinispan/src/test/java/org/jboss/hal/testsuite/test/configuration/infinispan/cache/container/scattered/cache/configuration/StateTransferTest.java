@@ -49,7 +49,7 @@ class StateTransferTest {
 
     private static final String CACHE_CONTAINER = "cache-container-" + Random.name();
     private static final String SCATTERED_CACHE_STATE_TRANSFER = "scattered-cache-" + Random.name();
-    @Container static WildFlyContainer wildFly = WildFlyContainer.version(_26_1, FULL_HA);
+    @Container static WildFlyContainer wildFly = WildFlyContainer.standalone(_26_1, FULL_HA);
 
     @BeforeAll
     static void setupModel() throws Exception {

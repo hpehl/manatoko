@@ -55,7 +55,7 @@ class GroupingHandlerTest extends AbstractClusteringTest {
     private static final Values GH_PARAMS = Values.of(GROUPING_HANDLER_ADDRESS, Random.name())
             .and(TYPE, REMOTE);
 
-    @Container static WildFlyContainer wildFly = WildFlyContainer.version(_26_1, FULL_HA);
+    @Container static WildFlyContainer wildFly = WildFlyContainer.standalone(_26_1, FULL_HA);
 
     @BeforeAll
     static void setupModel() throws Exception {

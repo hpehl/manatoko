@@ -63,7 +63,7 @@ class NearCacheTest extends AbstractRemoteCacheContainerTest {
     private static final String REMOTE_SOCKET_BINDING_NEAR_CACHE_DELETE = "remote-socket-binding-near-cache-delete-"
             + Random.name();
 
-    @Container static WildFlyContainer wildFly = WildFlyContainer.version(_26_1, FULL_HA);
+    @Container static WildFlyContainer wildFly = WildFlyContainer.standalone(_26_1, FULL_HA);
     private static OnlineManagementClient client;
 
     @BeforeAll

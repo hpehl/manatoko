@@ -38,7 +38,7 @@ import static org.jboss.hal.testsuite.fixtures.EEFixtures.DEFAULT_BINDINGS_ADDRE
 @Testcontainers
 class DefaultBindingsTest {
 
-    @Container static WildFlyContainer wildFly = WildFlyContainer.version(_26_1, STANDALONE);
+    @Container static WildFlyContainer wildFly = WildFlyContainer.standalone(_26_1, STANDALONE);
 
     @Inject Console console;
     @Inject CrudOperations crud;

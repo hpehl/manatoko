@@ -52,7 +52,7 @@ class StringTableTest {
     private static final String DATA_SOURCE = "data-source-to-be-created-" + Random.name();
     private static final Address STRING_TABLE_ADDRESS = jdbcStoreAddress(CACHE_CONTAINER, SCATTERED_CACHE).and("table",
             "string");
-    @Container static WildFlyContainer wildFly = WildFlyContainer.version(_26_1, FULL_HA);
+    @Container static WildFlyContainer wildFly = WildFlyContainer.standalone(_26_1, FULL_HA);
 
     @BeforeAll
     static void setupModel() throws Exception {

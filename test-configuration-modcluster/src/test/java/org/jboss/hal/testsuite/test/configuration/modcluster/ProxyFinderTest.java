@@ -58,7 +58,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 @Testcontainers
 class ProxyFinderTest {
 
-    @Container static WildFlyContainer wildFly = WildFlyContainer.version(_26_1, HA);
+    @Container static WildFlyContainer wildFly = WildFlyContainer.standalone(_26_1, HA);
     private static OnlineManagementClient client;
     private static Operations operations;
 

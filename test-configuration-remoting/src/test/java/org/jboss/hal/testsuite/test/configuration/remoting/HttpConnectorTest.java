@@ -64,7 +64,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 @Disabled // TODO Fix failing tests
 class HttpConnectorTest {
 
-    @Container static WildFlyContainer wildFly = WildFlyContainer.version(_26_1, STANDALONE);
+    @Container static WildFlyContainer wildFly = WildFlyContainer.standalone(_26_1, STANDALONE);
 
     @BeforeAll
     static void setupModel() throws Exception {

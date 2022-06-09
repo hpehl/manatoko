@@ -47,7 +47,7 @@ import static org.jboss.hal.testsuite.fixtures.PathsFixtures.JBOSS_SERVER_DATA_D
 @Testcontainers
 class GlobalDirectoryDeleteTest {
 
-    @Container static WildFlyContainer wildFly = WildFlyContainer.version(_26_1, STANDALONE);
+    @Container static WildFlyContainer wildFly = WildFlyContainer.standalone(_26_1, STANDALONE);
 
     @BeforeAll
     static void setupModel() throws Exception {

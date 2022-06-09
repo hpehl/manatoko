@@ -55,7 +55,7 @@ class HttpConnectorTest {
     private static final String LOCAL_SOCKET_BINDING = "local-socket-binding-" + Random.name();
     private static final String LOCAL_SOCKET_BINDING_UPDATE = "local-socket-binding-update-" + Random.name();
 
-    @Container static WildFlyContainer wildFly = WildFlyContainer.version(_26_1, FULL_HA);
+    @Container static WildFlyContainer wildFly = WildFlyContainer.standalone(_26_1, FULL_HA);
     private static Operations operations;
 
     @BeforeAll

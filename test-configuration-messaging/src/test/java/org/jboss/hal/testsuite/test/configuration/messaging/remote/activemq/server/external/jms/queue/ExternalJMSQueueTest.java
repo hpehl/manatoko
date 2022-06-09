@@ -52,7 +52,7 @@ class ExternalJMSQueueTest {
     private static final String EXTERNAL_JMS_QUEUE_UPDATE = "external-jms-queue-to-be-updated-" + Random.name();
     private static final String EXTERNAL_JMS_QUEUE_DELETE = "external-jms-queue-to-be-deleted-" + Random.name();
 
-    @Container static WildFlyContainer wildFly = WildFlyContainer.version(_26_1, FULL_HA);
+    @Container static WildFlyContainer wildFly = WildFlyContainer.standalone(_26_1, FULL_HA);
     private static Operations operations;
 
     @BeforeAll

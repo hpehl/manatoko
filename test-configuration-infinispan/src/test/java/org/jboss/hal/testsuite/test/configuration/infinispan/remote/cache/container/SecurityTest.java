@@ -48,7 +48,7 @@ class SecurityTest extends AbstractRemoteCacheContainerTest {
     private static final String REMOTE_CLUSTER = "remote-cluster-" + Random.name();
     private static final String SSL_CONTEXT = "client-ssl-context-" + Random.name();
 
-    @Container static WildFlyContainer wildFly = WildFlyContainer.version(_26_1, FULL_HA);
+    @Container static WildFlyContainer wildFly = WildFlyContainer.standalone(_26_1, FULL_HA);
 
     @BeforeAll
     static void setupModel() throws Exception {

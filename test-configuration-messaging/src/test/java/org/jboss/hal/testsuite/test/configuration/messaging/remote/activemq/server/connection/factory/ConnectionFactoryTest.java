@@ -61,7 +61,7 @@ class ConnectionFactoryTest {
 
     private static final String JGROUPS_CHANNEL = "jgroups-channel-" + Random.name();
 
-    @Container static WildFlyContainer wildFly = WildFlyContainer.version(_26_1, FULL_HA);
+    @Container static WildFlyContainer wildFly = WildFlyContainer.standalone(_26_1, FULL_HA);
     private static Operations operations;
 
     @BeforeAll

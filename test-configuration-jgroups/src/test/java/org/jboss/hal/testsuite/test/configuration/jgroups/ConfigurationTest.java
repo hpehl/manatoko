@@ -45,7 +45,7 @@ import static org.jboss.hal.testsuite.fixtures.JGroupsFixtures.TCP;
 @Disabled // TODO Fix failing tests
 class ConfigurationTest {
 
-    @Container static WildFlyContainer wildFly = WildFlyContainer.version(_26_1, HA);
+    @Container static WildFlyContainer wildFly = WildFlyContainer.standalone(_26_1, HA);
 
     @BeforeAll
     static void setupModel() throws Exception {

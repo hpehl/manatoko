@@ -51,7 +51,7 @@ class CredentialReferenceTest extends AbstractPooledConnectionFactoryTest {
     private static final String DISCOVERY_GROUP = "discovery-group-" + Random.name();
     private static final String JGROUPS_CHANNEL = "jgroups-channel-" + Random.name();
 
-    @Container static WildFlyContainer wildFly = WildFlyContainer.version(_26_1, FULL_HA);
+    @Container static WildFlyContainer wildFly = WildFlyContainer.standalone(_26_1, FULL_HA);
 
     @BeforeAll
     static void setupModel() throws Exception {

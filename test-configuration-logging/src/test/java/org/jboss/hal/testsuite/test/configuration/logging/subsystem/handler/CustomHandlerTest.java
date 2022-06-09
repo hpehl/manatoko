@@ -51,7 +51,7 @@ import static org.jboss.hal.testsuite.fixtures.LoggingFixtures.CustomHandler.CUS
 @Disabled // TODO Fix failing tests
 class CustomHandlerTest extends AbstractCustomHandlerTest {
 
-    @Container static WildFlyContainer wildFly = WildFlyContainer.version(_26_1, STANDALONE);
+    @Container static WildFlyContainer wildFly = WildFlyContainer.standalone(_26_1, STANDALONE);
 
     @BeforeAll
     static void setupModel() throws Exception {

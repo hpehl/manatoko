@@ -67,7 +67,7 @@ import static org.jboss.hal.testsuite.fixtures.DataSourceFixtures.h2ConnectionUr
 @Testcontainers
 class DataSourceConfigurationTest {
 
-    @Container static WildFlyContainer wildFly = WildFlyContainer.version(_26_1, STANDALONE);
+    @Container static WildFlyContainer wildFly = WildFlyContainer.standalone(_26_1, STANDALONE);
     static OnlineManagementClient client;
 
     @BeforeAll

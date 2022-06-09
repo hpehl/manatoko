@@ -65,7 +65,7 @@ import static org.jboss.hal.testsuite.fixtures.InfinispanFixtures.storeAddress;
 @TestMethodOrder(MethodOrderer.MethodName.class)
 class LocalCacheStoreTest {
 
-    @Container static WildFlyContainer wildFly = WildFlyContainer.version(_26_1, FULL_HA);
+    @Container static WildFlyContainer wildFly = WildFlyContainer.standalone(_26_1, FULL_HA);
     private static OnlineManagementClient client;
 
     @BeforeAll

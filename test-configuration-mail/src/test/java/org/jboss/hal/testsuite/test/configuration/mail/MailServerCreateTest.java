@@ -54,7 +54,7 @@ import static org.jboss.hal.testsuite.fixtures.MailFixtures.sessionAddress;
 @TestMethodOrder(MethodOrderer.MethodName.class)
 class MailServerCreateTest {
 
-    @Container static WildFlyContainer wildFly = WildFlyContainer.version(_26_1, STANDALONE);
+    @Container static WildFlyContainer wildFly = WildFlyContainer.standalone(_26_1, STANDALONE);
 
     @BeforeAll
     static void setupModel() throws Exception {

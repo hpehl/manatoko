@@ -22,6 +22,8 @@
         </encoder>
     </appender>
 
+    <logger name="org.jboss.hal.testsuite" level="info"/>
+
     <root level="info">
         <appender-ref ref="STDOUT"/>
     </root>

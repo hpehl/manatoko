@@ -55,7 +55,7 @@ class ScatteredCacheFinderTest {
     private static final String SCATTERED_CACHE_CREATE = "scattered-cache-create-" + Random.name();
     private static final String SCATTERED_CACHE_DELETE = "scattered-cache-delete-" + Random.name();
     private static final String SCATTERED_CACHE_VIEW = "scattered-cache-view-" + Random.name();
-    @Container static WildFlyContainer wildFly = WildFlyContainer.version(_26_1, FULL_HA);
+    @Container static WildFlyContainer wildFly = WildFlyContainer.standalone(_26_1, FULL_HA);
     private static OnlineManagementClient client;
 
     @BeforeAll

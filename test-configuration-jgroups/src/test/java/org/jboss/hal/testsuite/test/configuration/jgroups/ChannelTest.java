@@ -49,7 +49,7 @@ import static org.jboss.hal.testsuite.fixtures.JGroupsFixtures.channelAddress;
 @Testcontainers
 class ChannelTest {
 
-    @Container static WildFlyContainer wildFly = WildFlyContainer.version(_26_1, HA);
+    @Container static WildFlyContainer wildFly = WildFlyContainer.standalone(_26_1, HA);
 
     @BeforeAll
     static void setupModel() throws Exception {

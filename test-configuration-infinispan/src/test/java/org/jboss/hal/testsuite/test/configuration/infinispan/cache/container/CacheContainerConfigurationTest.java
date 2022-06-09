@@ -46,7 +46,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 class CacheContainerConfigurationTest {
 
     static final String ALIASES = "aliases";
-    @Container static WildFlyContainer wildFly = WildFlyContainer.version(_26_1, FULL_HA);
+    @Container static WildFlyContainer wildFly = WildFlyContainer.standalone(_26_1, FULL_HA);
 
     @BeforeAll
     static void setupModel() throws Exception {

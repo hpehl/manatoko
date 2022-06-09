@@ -59,7 +59,7 @@ class ClusterConnectionTest extends AbstractClusteringTest {
             .and(CONNECTOR_NAME, HTTP_CONNECTOR)
             .and(DISCOVERY_GROUP, Random.name());
 
-    @Container static WildFlyContainer wildFly = WildFlyContainer.version(_26_1, FULL_HA);
+    @Container static WildFlyContainer wildFly = WildFlyContainer.standalone(_26_1, FULL_HA);
 
     @BeforeAll
     static void setupModel() throws Exception {

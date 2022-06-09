@@ -51,7 +51,7 @@ class RemoteClusterTest extends AbstractRemoteCacheContainerTest {
     private static final String REMOTE_CLUSTER_CREATE = "remote-cluster-to-be-created-" + Random.name();
     private static final String REMOTE_CLUSTER_DELETE = "remote-cluster-to-be-deleted-" + Random.name();
 
-    @Container static WildFlyContainer wildFly = WildFlyContainer.version(_26_1, FULL_HA);
+    @Container static WildFlyContainer wildFly = WildFlyContainer.standalone(_26_1, FULL_HA);
 
     @BeforeAll
     static void setupModel() throws Exception {

@@ -43,7 +43,7 @@ class ThreadPoolTest extends AbstractRemoteCacheContainerTest {
     private static final String REMOTE_SOCKET_BINDING = "remote-socket-binding-" + Random.name();
     private static final String REMOTE_SOCKET_BINDING_CLUSTER = "remote-socket-binding-cluster-" + Random.name();
     private static final String REMOTE_CLUSTER = "remote-cluster-" + Random.name();
-    @Container static WildFlyContainer wildFly = WildFlyContainer.version(_26_1, FULL_HA);
+    @Container static WildFlyContainer wildFly = WildFlyContainer.standalone(_26_1, FULL_HA);
 
     @BeforeAll
     static void setupModel() throws Exception {

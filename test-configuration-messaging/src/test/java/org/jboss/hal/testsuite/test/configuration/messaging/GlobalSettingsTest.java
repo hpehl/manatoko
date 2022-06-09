@@ -38,7 +38,7 @@ import static org.jboss.hal.testsuite.fixtures.MessagingFixtures.SUBSYSTEM_ADDRE
 @Disabled // TODO Fix failing tests
 class GlobalSettingsTest {
 
-    @Container static WildFlyContainer wildFly = WildFlyContainer.version(_26_1, FULL_HA);
+    @Container static WildFlyContainer wildFly = WildFlyContainer.standalone(_26_1, FULL_HA);
 
     @Page MessagingPage page;
     @Inject CrudOperations crudOperations;

@@ -31,7 +31,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 @Testcontainers
 class NoopWildFlyTest {
 
-    @Container static WildFlyContainer wildFly = WildFlyContainer.version(_26_1, STANDALONE);
+    @Container static WildFlyContainer wildFly = WildFlyContainer.standalone(_26_1, STANDALONE);
     private static final Logger logger = LoggerFactory.getLogger(NoopWildFlyTest.class);
 
     @Test

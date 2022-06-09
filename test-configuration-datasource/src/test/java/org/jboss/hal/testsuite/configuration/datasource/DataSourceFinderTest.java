@@ -58,7 +58,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 @Testcontainers
 class DataSourceFinderTest {
 
-    @Container static WildFlyContainer wildFly = WildFlyContainer.version(_26_1, STANDALONE);
+    @Container static WildFlyContainer wildFly = WildFlyContainer.standalone(_26_1, STANDALONE);
     static final String H2_DRIVER_NAME = "h2";
     static OnlineManagementClient client;
 

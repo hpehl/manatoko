@@ -291,6 +291,7 @@
                 <module>test-configuration-transaction</module>
                 <module>test-configuration-webservice</module>
                 <module>test-noop</module>
+                <module>test-runtime-server</module>
             </modules>
         </profile>
         <profile>
@@ -334,6 +335,12 @@
             <id>noop</id>
             <modules>
                 <module>test-noop</module>
+            </modules>
+        </profile>
+        <profile>
+            <id>runtime-tests</id>
+            <modules>
+                <module>test-runtime-server</module>
             </modules>
         </profile>
     </profiles>

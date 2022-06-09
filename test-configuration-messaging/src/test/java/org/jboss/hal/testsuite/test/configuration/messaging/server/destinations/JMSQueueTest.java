@@ -47,7 +47,7 @@ import static org.jboss.hal.testsuite.fixtures.MessagingFixtures.jmsQueueAddress
 @Testcontainers
 class JMSQueueTest extends AbstractServerDestinationsTest {
 
-    @Container static WildFlyContainer wildFly = WildFlyContainer.version(_26_1, FULL_HA);
+    @Container static WildFlyContainer wildFly = WildFlyContainer.standalone(_26_1, FULL_HA);
 
     @BeforeAll
     static void setupModel() throws Exception {

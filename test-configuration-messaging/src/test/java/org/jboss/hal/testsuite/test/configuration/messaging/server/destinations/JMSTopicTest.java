@@ -58,7 +58,7 @@ import static org.jboss.hal.testsuite.fragment.finder.FinderFragment.runtimeSubs
 @Disabled // TODO Fix failing tests
 class JMSTopicTest extends AbstractServerDestinationsTest {
 
-    @Container static WildFlyContainer wildFly = WildFlyContainer.version(_26_1, FULL_HA);
+    @Container static WildFlyContainer wildFly = WildFlyContainer.standalone(_26_1, FULL_HA);
     static OnlineManagementClient client;
     static ServerEnvironmentUtils serverEnvironmentUtils;
 

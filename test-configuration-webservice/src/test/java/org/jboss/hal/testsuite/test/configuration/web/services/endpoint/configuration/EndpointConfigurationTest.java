@@ -55,7 +55,7 @@ class EndpointConfigurationTest {
     private static final String END_POINT_CONFIGURATION_REMOVE = "endpoint-configuration-to-be-removed-"
             + RandomStringUtils.randomAlphanumeric(7);
 
-    @Container static WildFlyContainer wildFly = WildFlyContainer.version(_26_1, STANDALONE);
+    @Container static WildFlyContainer wildFly = WildFlyContainer.standalone(_26_1, STANDALONE);
     private static OnlineManagementClient client;
 
     @BeforeAll

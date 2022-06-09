@@ -49,7 +49,7 @@ import static org.jboss.hal.testsuite.fixtures.LoggingFixtures.FileHandler.FILE_
 @Testcontainers
 class FileHandlerTest extends AbstractFileHandlerTest {
 
-    @Container static WildFlyContainer wildFly = WildFlyContainer.version(_26_1, STANDALONE);
+    @Container static WildFlyContainer wildFly = WildFlyContainer.standalone(_26_1, STANDALONE);
 
     @BeforeAll
     static void setupModel() throws Exception {

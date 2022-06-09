@@ -58,7 +58,7 @@ class AttributesTest {
     private static final String REMOTE_SOCKET_BINDING_EDIT = "remote-socket-binding-edit-" + Random.name();
     private static final String REMOTE_CLUSTER_EDIT = "remote-cluster-edit-" + Random.name();
     private static final String REMOTE_CACHE_CONTAINER_EDIT = "remote-cache-container-edit-" + Random.name();
-    @Container static WildFlyContainer wildFly = WildFlyContainer.version(_26_1, FULL_HA);
+    @Container static WildFlyContainer wildFly = WildFlyContainer.standalone(_26_1, FULL_HA);
     private static Operations operations;
 
     @BeforeAll

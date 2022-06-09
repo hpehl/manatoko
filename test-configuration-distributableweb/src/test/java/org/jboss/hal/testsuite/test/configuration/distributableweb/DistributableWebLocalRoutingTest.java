@@ -50,7 +50,7 @@ import static org.junit.jupiter.api.Assertions.fail;
 @Testcontainers
 class DistributableWebLocalRoutingTest {
 
-    @Container static WildFlyContainer wildFly = WildFlyContainer.version(_26_1, FULL);
+    @Container static WildFlyContainer wildFly = WildFlyContainer.standalone(_26_1, FULL);
 
     @BeforeAll
     static void setupModel() throws Exception {

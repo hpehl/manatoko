@@ -90,7 +90,7 @@ class ViewTest {
     private static final String ID_DELIMITER = "-";
     private static final String JOURNAL = "journal";
 
-    @Container static WildFlyContainer wildFly = WildFlyContainer.version(_26_1, FULL_HA);
+    @Container static WildFlyContainer wildFly = WildFlyContainer.standalone(_26_1, FULL_HA);
     private static OnlineManagementClient client;
 
     @BeforeAll

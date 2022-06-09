@@ -58,7 +58,7 @@ import static org.jboss.hal.testsuite.fragment.finder.FinderFragment.configurati
 @Testcontainers
 class FinderTest extends AbstractHaPolicyTest {
 
-    @Container static WildFlyContainer wildFly = WildFlyContainer.version(_26_1, FULL_HA);
+    @Container static WildFlyContainer wildFly = WildFlyContainer.standalone(_26_1, FULL_HA);
     private static OnlineManagementClient client;
     private static Operations operations;
 

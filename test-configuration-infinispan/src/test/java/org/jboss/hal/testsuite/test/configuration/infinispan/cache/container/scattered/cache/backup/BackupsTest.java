@@ -57,7 +57,7 @@ class BackupsTest {
     private static final String BACKUP_DELETE = "scattered-cache-with-backup-to-be-deleted-" + Random.name();
     private static final String BACKUP_EDIT = "scattered-cache-with-backup-to-be-edited-" + Random.name();
 
-    @Container static WildFlyContainer wildFly = WildFlyContainer.version(_26_1, FULL_HA);
+    @Container static WildFlyContainer wildFly = WildFlyContainer.standalone(_26_1, FULL_HA);
     private static Operations operations;
 
     @BeforeAll

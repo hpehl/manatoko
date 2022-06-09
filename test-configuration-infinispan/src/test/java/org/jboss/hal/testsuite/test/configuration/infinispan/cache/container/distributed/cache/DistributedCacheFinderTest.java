@@ -48,7 +48,7 @@ class DistributedCacheFinderTest {
 
     static final String CACHE_CONTAINER = "cache-container-" + Random.name();
     static final String DISTRIBUTED_CACHE_CREATE = "distributed-cache-create-" + Random.name();
-    @Container static WildFlyContainer wildFly = WildFlyContainer.version(_26_1, FULL_HA);
+    @Container static WildFlyContainer wildFly = WildFlyContainer.standalone(_26_1, FULL_HA);
     private static OnlineManagementClient client;
 
     @BeforeAll

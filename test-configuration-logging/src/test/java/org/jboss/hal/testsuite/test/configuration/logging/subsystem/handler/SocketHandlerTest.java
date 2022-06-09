@@ -52,7 +52,7 @@ import static org.jboss.hal.testsuite.fixtures.SecurityFixtures.clientSslContext
 @Disabled // TODO Fix failing tests
 class SocketHandlerTest extends AbstractSocketHandlerTest {
 
-    @Container static WildFlyContainer wildFly = WildFlyContainer.version(_26_1, STANDALONE);
+    @Container static WildFlyContainer wildFly = WildFlyContainer.standalone(_26_1, STANDALONE);
     static final String SSL_CONTEXT = "client-ssl-context-" + Random.name();
 
     @BeforeAll

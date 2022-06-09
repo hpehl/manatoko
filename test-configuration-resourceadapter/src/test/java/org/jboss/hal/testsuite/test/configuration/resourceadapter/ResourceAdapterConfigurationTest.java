@@ -62,7 +62,7 @@ import static org.jboss.hal.testsuite.fixtures.ResourceAdapterFixtures.resourceA
 @Testcontainers
 class ResourceAdapterConfigurationTest {
 
-    @Container static WildFlyContainer wildFly = WildFlyContainer.version(_26_1, STANDALONE);
+    @Container static WildFlyContainer wildFly = WildFlyContainer.standalone(_26_1, STANDALONE);
     private static OnlineManagementClient client;
 
     @BeforeAll

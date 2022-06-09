@@ -51,7 +51,7 @@ class InVMConnectorTest {
     private static final String IN_VM_CONNECTOR_UPDATE = "in-vm-connector-to-update-" + Random.name();
     private static final String IN_VM_CONNECTOR_DELETE = "in-vm-connector-to-delete-" + Random.name();
 
-    @Container static WildFlyContainer wildFly = WildFlyContainer.version(_26_1, FULL_HA);
+    @Container static WildFlyContainer wildFly = WildFlyContainer.standalone(_26_1, FULL_HA);
     private static Operations operations;
 
     @BeforeAll
