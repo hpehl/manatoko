@@ -105,7 +105,7 @@ By default, the tests will use the following images:
 - WildFly standalone: [quay.io/halconsole/wildfly:latest](https://quay.io/repository/halconsole/wildfly)
 - WildFly domain: [quay.io/halconsole/wildfly-domain:latest](https://quay.io/repository/halconsole/wildfly-domain)
 
-You can customize these images by changing the properties in [`container.properties`](container/src/main/resources/container.properties) or by overriding the properties using `-D<key>=<value>`. So if you want to use the latest HAL console instead of the latest stable release, use
+The image names are defined by the properties `hal.image`, `wildfly.standalone.image` and `wildfly.domain.image`. You can customize these images by overriding the properties using `-D<key>=<value>`. Say you want to use the latest development version of HAL instead of the latest stable release, then use
 
 ```shell
 ./mvnw test -P all-tests -Dhal.image=quay.io/halconsole/hal-development:latest
