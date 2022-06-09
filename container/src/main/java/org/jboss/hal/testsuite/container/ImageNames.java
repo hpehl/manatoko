@@ -34,9 +34,9 @@ class ImageNames {
     }
 
     private static final String CONTAINER_PROPERTIES = "container.properties";
-    private static final String HAL_IMAGE_NAME_KEY = "hal.image";
-    private static final String WILDFLY_DOMAIN_IMAGE_NAME_KEY = "wildfly.domain.image";
-    private static final String WILDFLY_STANDALONE_IMAGE_NAME_KEY = "wildfly.standalone.image";
+    private static final String HAL_IMAGE = "hal.image";
+    private static final String WILDFLY_DOMAIN_IMAGE = "wildfly.domain.image";
+    private static final String WILDFLY_STANDALONE_IMAGE = "wildfly.standalone.image";
     private static final Logger logger = LoggerFactory.getLogger(ImageNames.class);
 
     private final Properties properties;
@@ -52,15 +52,15 @@ class ImageNames {
     }
 
     String hal() {
-        return getProperty(HAL_IMAGE_NAME_KEY);
+        return getProperty(HAL_IMAGE);
     }
 
     String wildFlyDomain() {
-        return getProperty(WILDFLY_DOMAIN_IMAGE_NAME_KEY);
+        return getProperty(WILDFLY_DOMAIN_IMAGE);
     }
 
     String wildFlyStandalone() {
-        return getProperty(WILDFLY_STANDALONE_IMAGE_NAME_KEY);
+        return getProperty(WILDFLY_STANDALONE_IMAGE);
     }
 
     private String getProperty(String key) {
