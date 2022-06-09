@@ -34,8 +34,8 @@ import org.testcontainers.junit.jupiter.Testcontainers;
 import org.wildfly.extras.creaper.core.online.OnlineManagementClient;
 import org.wildfly.extras.creaper.core.online.operations.Operations;
 import org.wildfly.extras.creaper.core.online.operations.Values;
-import org.wildfly.extras.creaper.core.online.operations.admin.Administration;
 
+import static org.jboss.hal.dmr.ModelDescriptionConstants.DEFAULT;
 import static org.jboss.hal.dmr.ModelDescriptionConstants.NAME;
 import static org.jboss.hal.dmr.ModelDescriptionConstants.WORKMANAGER;
 import static org.jboss.hal.testsuite.fixtures.JcaFixtures.BC_CREATE;
@@ -56,7 +56,6 @@ class BootstrapContextTest {
         Operations operations = new Operations(client);
         operations.add(bootstrapContextAddress(BC_READ), Values.of(NAME, BC_READ).and(WORKMANAGER, DEFAULT));
         operations.add(bootstrapContextAddress(BC_DELETE), Values.of(NAME, BC_DELETE).and(WORKMANAGER, DEFAULT));
-        Administration administration = new Administration(client);
     }
 
     @Inject Console console;
