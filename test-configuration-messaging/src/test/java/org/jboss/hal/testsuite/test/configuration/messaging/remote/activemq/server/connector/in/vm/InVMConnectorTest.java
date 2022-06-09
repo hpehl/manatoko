@@ -39,7 +39,6 @@ import org.wildfly.extras.creaper.core.online.operations.Operations;
 import org.wildfly.extras.creaper.core.online.operations.Values;
 
 import static org.jboss.hal.testsuite.container.WildFlyConfiguration.FULL_HA;
-import static org.jboss.hal.testsuite.container.WildFlyVersion._26_1;
 import static org.jboss.hal.testsuite.fixtures.MessagingFixtures.RemoteActiveMQServer;
 
 @Manatoko
@@ -51,7 +50,7 @@ class InVMConnectorTest {
     private static final String IN_VM_CONNECTOR_UPDATE = "in-vm-connector-to-update-" + Random.name();
     private static final String IN_VM_CONNECTOR_DELETE = "in-vm-connector-to-delete-" + Random.name();
 
-    @Container static WildFlyContainer wildFly = WildFlyContainer.standalone(_26_1, FULL_HA);
+    @Container static WildFlyContainer wildFly = WildFlyContainer.standalone(FULL_HA);
     private static Operations operations;
 
     @BeforeAll

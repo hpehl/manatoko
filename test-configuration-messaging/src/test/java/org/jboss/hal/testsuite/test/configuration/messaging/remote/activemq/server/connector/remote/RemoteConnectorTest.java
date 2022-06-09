@@ -40,7 +40,6 @@ import org.wildfly.extras.creaper.core.online.operations.Operations;
 import org.wildfly.extras.creaper.core.online.operations.Values;
 
 import static org.jboss.hal.testsuite.container.WildFlyConfiguration.FULL_HA;
-import static org.jboss.hal.testsuite.container.WildFlyVersion._26_1;
 import static org.jboss.hal.testsuite.fixtures.MessagingFixtures.RemoteActiveMQServer;
 
 @Manatoko
@@ -55,7 +54,7 @@ class RemoteConnectorTest {
     private static final String LOCAL_SOCKET_BINDING = "local-socket-binding-" + Random.name();
     private static final String LOCAL_SOCKET_BINDING_UPDATE = "local-socket-binding-update-" + Random.name();
 
-    @Container static WildFlyContainer wildFly = WildFlyContainer.standalone(_26_1, FULL_HA);
+    @Container static WildFlyContainer wildFly = WildFlyContainer.standalone(FULL_HA);
     private static Operations operations;
 
     @BeforeAll

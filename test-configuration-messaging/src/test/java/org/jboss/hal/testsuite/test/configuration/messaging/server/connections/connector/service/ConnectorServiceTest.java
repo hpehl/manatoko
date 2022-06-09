@@ -36,7 +36,6 @@ import static org.jboss.hal.dmr.ModelDescriptionConstants.SERVER;
 import static org.jboss.hal.resources.Ids.ITEM;
 import static org.jboss.hal.resources.Ids.MESSAGING_CONNECTOR_SERVICE;
 import static org.jboss.hal.testsuite.container.WildFlyConfiguration.FULL_HA;
-import static org.jboss.hal.testsuite.container.WildFlyVersion._26_1;
 import static org.jboss.hal.testsuite.fixtures.MessagingFixtures.CONNECTOR_FACTORY_CLASS;
 import static org.jboss.hal.testsuite.fixtures.MessagingFixtures.CONN_SVC_CREATE;
 import static org.jboss.hal.testsuite.fixtures.MessagingFixtures.CONN_SVC_DELETE;
@@ -49,7 +48,7 @@ import static org.jboss.hal.testsuite.fixtures.MessagingFixtures.connectorServic
 @Testcontainers
 class ConnectorServiceTest extends AbstractServerConnectionsTest {
 
-    @Container static WildFlyContainer wildFly = WildFlyContainer.standalone(_26_1, FULL_HA);
+    @Container static WildFlyContainer wildFly = WildFlyContainer.standalone(FULL_HA);
 
     @BeforeAll
     static void setupModel() throws Exception {

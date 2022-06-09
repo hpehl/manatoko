@@ -42,7 +42,6 @@ import org.wildfly.extras.creaper.core.online.operations.Values;
 import static org.jboss.hal.dmr.ModelDescriptionConstants.JGROUPS;
 import static org.jboss.hal.dmr.ModelDescriptionConstants.TRANSPORT;
 import static org.jboss.hal.testsuite.container.WildFlyConfiguration.FULL_HA;
-import static org.jboss.hal.testsuite.container.WildFlyVersion._26_1;
 import static org.jboss.hal.testsuite.fixtures.InfinispanFixtures.SOCKET_BINDINGS;
 import static org.jboss.hal.testsuite.fixtures.InfinispanFixtures.binaryJDBCStoreAddress;
 import static org.jboss.hal.testsuite.fixtures.InfinispanFixtures.cacheContainerAddress;
@@ -74,7 +73,7 @@ class StoreTest {
     private static final String REMOTE_SOCKET_BINDING_HOTROD = "remote-socket-binding-for-hotrod-store-" + Random.name();
     private static final String REMOTE_CLUSTER_HOTROD = Random.name();
 
-    @Container static WildFlyContainer wildFly = WildFlyContainer.standalone(_26_1, FULL_HA);
+    @Container static WildFlyContainer wildFly = WildFlyContainer.standalone(FULL_HA);
     private static OnlineManagementClient client;
 
     @BeforeAll

@@ -35,8 +35,7 @@ import org.wildfly.extras.creaper.core.online.operations.Values;
 
 import static org.jboss.hal.dmr.ModelDescriptionConstants.NAME;
 import static org.jboss.hal.dmr.ModelDescriptionConstants.PATH;
-import static org.jboss.hal.testsuite.container.WildFlyConfiguration.STANDALONE;
-import static org.jboss.hal.testsuite.container.WildFlyVersion._26_1;
+import static org.jboss.hal.testsuite.container.WildFlyConfiguration.DEFAULT;
 import static org.jboss.hal.testsuite.fixtures.DeploymentScannerFixtures.DS_CREATE;
 import static org.jboss.hal.testsuite.fixtures.DeploymentScannerFixtures.DS_DELETE;
 import static org.jboss.hal.testsuite.fixtures.DeploymentScannerFixtures.DS_READ;
@@ -50,7 +49,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 @Testcontainers
 class DeploymentScannerTest {
 
-    @Container static WildFlyContainer wildFly = WildFlyContainer.standalone(_26_1, STANDALONE);
+    @Container static WildFlyContainer wildFly = WildFlyContainer.standalone(DEFAULT);
 
     @BeforeAll
     static void setupModel() throws Exception {

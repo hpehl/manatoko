@@ -33,7 +33,6 @@ import org.wildfly.extras.creaper.core.online.OnlineManagementClient;
 import org.wildfly.extras.creaper.core.online.operations.Operations;
 
 import static org.jboss.hal.testsuite.container.WildFlyConfiguration.FULL_HA;
-import static org.jboss.hal.testsuite.container.WildFlyVersion._26_1;
 import static org.jboss.hal.testsuite.fixtures.InfinispanFixtures.cacheContainerAddress;
 import static org.jboss.hal.testsuite.fixtures.InfinispanFixtures.objectMemoryAddress;
 import static org.jboss.hal.testsuite.fixtures.InfinispanFixtures.scatteredCacheAddress;
@@ -45,7 +44,7 @@ class ObjectMemoryTest {
 
     private static final String CACHE_CONTAINER = "cache-container-" + Random.name();
     private static final String SCATTERED_CACHE = "scattered-cache-" + Random.name();
-    @Container static WildFlyContainer wildFly = WildFlyContainer.standalone(_26_1, FULL_HA);
+    @Container static WildFlyContainer wildFly = WildFlyContainer.standalone(FULL_HA);
 
     @BeforeAll
     static void setupModel() throws Exception {

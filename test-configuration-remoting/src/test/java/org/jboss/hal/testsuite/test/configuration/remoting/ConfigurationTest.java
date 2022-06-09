@@ -29,8 +29,7 @@ import org.junit.jupiter.api.Test;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
 
-import static org.jboss.hal.testsuite.container.WildFlyConfiguration.STANDALONE;
-import static org.jboss.hal.testsuite.container.WildFlyVersion._26_1;
+import static org.jboss.hal.testsuite.container.WildFlyConfiguration.DEFAULT;
 import static org.jboss.hal.testsuite.fixtures.RemotingFixtures.AUTH_REALM;
 import static org.jboss.hal.testsuite.fixtures.RemotingFixtures.BUFFER_REGION_SIZE;
 import static org.jboss.hal.testsuite.fixtures.RemotingFixtures.MAX_INBOUND_CHANNELS;
@@ -40,7 +39,7 @@ import static org.jboss.hal.testsuite.fixtures.RemotingFixtures.SUBSYSTEM_ADDRES
 @Testcontainers
 class ConfigurationTest {
 
-    @Container static WildFlyContainer wildFly = WildFlyContainer.standalone(_26_1, STANDALONE);
+    @Container static WildFlyContainer wildFly = WildFlyContainer.standalone(DEFAULT);
 
     @Inject Console console;
     @Inject CrudOperations crud;

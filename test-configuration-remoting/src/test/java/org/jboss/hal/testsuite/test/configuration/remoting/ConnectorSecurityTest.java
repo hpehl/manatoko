@@ -38,8 +38,7 @@ import org.wildfly.extras.creaper.core.online.operations.Values;
 
 import static java.util.Arrays.asList;
 import static org.jboss.hal.dmr.ModelDescriptionConstants.SOCKET_BINDING;
-import static org.jboss.hal.testsuite.container.WildFlyConfiguration.STANDALONE;
-import static org.jboss.hal.testsuite.container.WildFlyVersion._26_1;
+import static org.jboss.hal.testsuite.container.WildFlyConfiguration.DEFAULT;
 import static org.jboss.hal.testsuite.fixtures.RemotingFixtures.CONNECTOR_SECURITY;
 import static org.jboss.hal.testsuite.fixtures.RemotingFixtures.INCLUDE_MECHANISMS;
 import static org.jboss.hal.testsuite.fixtures.RemotingFixtures.connectorAddress;
@@ -53,7 +52,7 @@ import static org.jboss.hal.testsuite.fixtures.SocketBindingFixtures.inboundAddr
 @TestMethodOrder(MethodOrderer.MethodName.class)
 class ConnectorSecurityTest {
 
-    @Container static WildFlyContainer wildFly = WildFlyContainer.standalone(_26_1, STANDALONE);
+    @Container static WildFlyContainer wildFly = WildFlyContainer.standalone(DEFAULT);
 
     @BeforeAll
     static void setupModel() throws Exception {

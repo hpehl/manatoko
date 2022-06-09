@@ -27,8 +27,8 @@ import org.wildfly.extras.creaper.core.online.operations.Address;
 
 import static org.jboss.hal.dmr.ModelDescriptionConstants.LEVEL;
 import static org.jboss.hal.testsuite.fixtures.LoggingFixtures.NAMED_FORMATTER;
-import static org.jboss.hal.testsuite.fixtures.LoggingFixtures.SyslogHandler;
 import static org.jboss.hal.testsuite.fixtures.LoggingFixtures.PatternFormatter.PATTERN_FORMATTER_REF;
+import static org.jboss.hal.testsuite.fixtures.LoggingFixtures.SyslogHandler;
 
 public abstract class AbstractSyslogHandlerTest {
 

@@ -40,7 +40,6 @@ import org.wildfly.extras.creaper.core.online.operations.Operations;
 import org.wildfly.extras.creaper.core.online.operations.Values;
 
 import static org.jboss.hal.testsuite.container.WildFlyConfiguration.FULL_HA;
-import static org.jboss.hal.testsuite.container.WildFlyVersion._26_1;
 import static org.jboss.hal.testsuite.fixtures.InfinispanFixtures.cacheContainerAddress;
 import static org.jboss.hal.testsuite.fixtures.InfinispanFixtures.jdbcStoreAddress;
 import static org.jboss.hal.testsuite.fixtures.InfinispanFixtures.scatteredCacheAddress;
@@ -54,7 +53,7 @@ class AttributesTest {
     private static final String SCATTERED_CACHE = "scattered-cache-" + Random.name();
     private static final String DATA_SOURCE_CREATE = "data-source-to-be-created-" + Random.name();
     private static final String DATA_SOURCE_EDIT = "data-source-to-be-edited-" + Random.name();
-    @Container static WildFlyContainer wildFly = WildFlyContainer.standalone(_26_1, FULL_HA);
+    @Container static WildFlyContainer wildFly = WildFlyContainer.standalone(FULL_HA);
     private static Operations operations;
 
     @BeforeAll

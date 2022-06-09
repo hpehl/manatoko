@@ -37,15 +37,14 @@ import org.testcontainers.junit.jupiter.Testcontainers;
 import org.wildfly.extras.creaper.core.online.operations.Batch;
 import org.wildfly.extras.creaper.core.online.operations.Operations;
 
-import static org.jboss.hal.testsuite.container.WildFlyConfiguration.STANDALONE;
-import static org.jboss.hal.testsuite.container.WildFlyVersion._26_1;
+import static org.jboss.hal.testsuite.container.WildFlyConfiguration.DEFAULT;
 import static org.junit.jupiter.api.Assertions.fail;
 
 @Manatoko
 @Testcontainers
 class ProcessTest {
 
-    @Container static WildFlyContainer wildFly = WildFlyContainer.standalone(_26_1, STANDALONE);
+    @Container static WildFlyContainer wildFly = WildFlyContainer.standalone(DEFAULT);
     private static Operations operations;
 
     @BeforeAll

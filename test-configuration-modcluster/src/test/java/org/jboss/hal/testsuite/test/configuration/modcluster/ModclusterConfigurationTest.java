@@ -37,7 +37,6 @@ import static org.jboss.hal.dmr.ModelDescriptionConstants.HTTPS;
 import static org.jboss.hal.dmr.ModelDescriptionConstants.LISTENER;
 import static org.jboss.hal.dmr.ModelDescriptionConstants.NAME;
 import static org.jboss.hal.testsuite.container.WildFlyConfiguration.HA;
-import static org.jboss.hal.testsuite.container.WildFlyVersion._26_1;
 import static org.jboss.hal.testsuite.fixtures.ModclusterFixtures.EXCLUDED_CONTEXTS;
 import static org.jboss.hal.testsuite.fixtures.ModclusterFixtures.NODE_TIMEOUT;
 import static org.jboss.hal.testsuite.fixtures.ModclusterFixtures.PROXY_UPDATE;
@@ -49,7 +48,7 @@ import static org.jboss.hal.testsuite.fixtures.ModclusterFixtures.proxyAddress;
 @Testcontainers
 class ModclusterConfigurationTest {
 
-    @Container static WildFlyContainer wildFly = WildFlyContainer.standalone(_26_1, HA);
+    @Container static WildFlyContainer wildFly = WildFlyContainer.standalone(HA);
 
     @BeforeAll
     static void setupModel() throws Exception {

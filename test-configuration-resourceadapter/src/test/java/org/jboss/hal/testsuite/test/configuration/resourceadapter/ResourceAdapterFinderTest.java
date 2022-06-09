@@ -40,8 +40,7 @@ import com.gwtplatform.mvp.shared.proxy.PlaceRequest;
 import static org.jboss.hal.dmr.ModelDescriptionConstants.ARCHIVE;
 import static org.jboss.hal.dmr.ModelDescriptionConstants.NAME;
 import static org.jboss.hal.dmr.ModelDescriptionConstants.RESOURCE_ADAPTERS;
-import static org.jboss.hal.testsuite.container.WildFlyConfiguration.STANDALONE;
-import static org.jboss.hal.testsuite.container.WildFlyVersion._26_1;
+import static org.jboss.hal.testsuite.container.WildFlyConfiguration.DEFAULT;
 import static org.jboss.hal.testsuite.fixtures.ResourceAdapterFixtures.RESOURCE_ADAPTER_CREATE;
 import static org.jboss.hal.testsuite.fixtures.ResourceAdapterFixtures.RESOURCE_ADAPTER_DELETE;
 import static org.jboss.hal.testsuite.fixtures.ResourceAdapterFixtures.RESOURCE_ADAPTER_READ;
@@ -53,7 +52,7 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 @Testcontainers
 class ResourceAdapterFinderTest {
 
-    @Container static WildFlyContainer wildFly = WildFlyContainer.standalone(_26_1, STANDALONE);
+    @Container static WildFlyContainer wildFly = WildFlyContainer.standalone(DEFAULT);
     private static OnlineManagementClient client;
 
     @BeforeAll

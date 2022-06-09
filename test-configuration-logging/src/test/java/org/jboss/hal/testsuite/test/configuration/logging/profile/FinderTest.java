@@ -38,8 +38,7 @@ import com.gwtplatform.mvp.shared.proxy.PlaceRequest;
 
 import static org.jboss.hal.dmr.ModelDescriptionConstants.LOGGING;
 import static org.jboss.hal.dmr.ModelDescriptionConstants.NAME;
-import static org.jboss.hal.testsuite.container.WildFlyConfiguration.STANDALONE;
-import static org.jboss.hal.testsuite.container.WildFlyVersion._26_1;
+import static org.jboss.hal.testsuite.container.WildFlyConfiguration.DEFAULT;
 import static org.jboss.hal.testsuite.fixtures.LoggingFixtures.LoggingProfile.PROFILE_CREATE;
 import static org.jboss.hal.testsuite.fixtures.LoggingFixtures.LoggingProfile.PROFILE_DELETE;
 import static org.jboss.hal.testsuite.fixtures.LoggingFixtures.LoggingProfile.PROFILE_READ;
@@ -51,7 +50,7 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 @Testcontainers
 class FinderTest {
 
-    @Container static WildFlyContainer wildFly = WildFlyContainer.standalone(_26_1, STANDALONE);
+    @Container static WildFlyContainer wildFly = WildFlyContainer.standalone(DEFAULT);
     private static OnlineManagementClient client;
 
     @BeforeAll

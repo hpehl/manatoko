@@ -26,7 +26,22 @@ import org.openqa.selenium.support.FindBy;
 
 import static org.jboss.hal.dmr.ModelDescriptionConstants.CREDENTIAL_REFERENCE;
 import static org.jboss.hal.dmr.ModelDescriptionConstants.POOLED_CONNECTION_FACTORY;
-import static org.jboss.hal.resources.Ids.*;
+import static org.jboss.hal.resources.Ids.EMPTY;
+import static org.jboss.hal.resources.Ids.FORM;
+import static org.jboss.hal.resources.Ids.MESSAGING_ACCEPTOR;
+import static org.jboss.hal.resources.Ids.MESSAGING_CONNECTION_FACTORY;
+import static org.jboss.hal.resources.Ids.MESSAGING_CONNECTOR;
+import static org.jboss.hal.resources.Ids.MESSAGING_CONNECTOR_SERVICE;
+import static org.jboss.hal.resources.Ids.MESSAGING_HTTP_ACCEPTOR;
+import static org.jboss.hal.resources.Ids.MESSAGING_HTTP_CONNECTOR;
+import static org.jboss.hal.resources.Ids.MESSAGING_IN_VM_ACCEPTOR;
+import static org.jboss.hal.resources.Ids.MESSAGING_IN_VM_CONNECTOR;
+import static org.jboss.hal.resources.Ids.MESSAGING_POOLED_CONNECTION_FACTORY;
+import static org.jboss.hal.resources.Ids.MESSAGING_REMOTE_ACCEPTOR;
+import static org.jboss.hal.resources.Ids.MESSAGING_REMOTE_CONNECTOR;
+import static org.jboss.hal.resources.Ids.MESSAGING_SERVER;
+import static org.jboss.hal.resources.Ids.TABLE;
+import static org.jboss.hal.resources.Ids.TAB_CONTAINER;
 import static org.jboss.hal.testsuite.Selectors.WRAPPER;
 
 @Place(NameTokens.MESSAGING_SERVER_CONNECTION)

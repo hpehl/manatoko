@@ -39,7 +39,6 @@ import static org.jboss.arquillian.graphene.Graphene.waitGui;
 import static org.jboss.hal.dmr.ModelDescriptionConstants.PROPERTIES;
 import static org.jboss.hal.dmr.ModelDescriptionConstants.STACK;
 import static org.jboss.hal.testsuite.container.WildFlyConfiguration.HA;
-import static org.jboss.hal.testsuite.container.WildFlyVersion._26_1;
 import static org.jboss.hal.testsuite.fixtures.JGroupsFixtures.CHANNEL_CREATE;
 import static org.jboss.hal.testsuite.fixtures.JGroupsFixtures.FORK_CREATE;
 import static org.jboss.hal.testsuite.fixtures.JGroupsFixtures.FORK_PROTOCOL_CREATE;
@@ -54,7 +53,7 @@ import static org.jboss.hal.testsuite.fixtures.JGroupsFixtures.forkProtocolAddre
 @Testcontainers
 class ChannelForkProtocolTest {
 
-    @Container static WildFlyContainer wildFly = WildFlyContainer.standalone(_26_1, HA);
+    @Container static WildFlyContainer wildFly = WildFlyContainer.standalone(HA);
 
     @BeforeAll
     static void setupModel() throws Exception {

@@ -44,7 +44,6 @@ import static org.jboss.hal.dmr.ModelDescriptionConstants.DATA_SOURCE;
 import static org.jboss.hal.dmr.ModelDescriptionConstants.JGROUPS;
 import static org.jboss.hal.dmr.ModelDescriptionConstants.TRANSPORT;
 import static org.jboss.hal.testsuite.container.WildFlyConfiguration.FULL_HA;
-import static org.jboss.hal.testsuite.container.WildFlyVersion._26_1;
 import static org.jboss.hal.testsuite.fixtures.InfinispanFixtures.BEHIND;
 import static org.jboss.hal.testsuite.fixtures.InfinispanFixtures.THROUGH;
 import static org.jboss.hal.testsuite.fixtures.InfinispanFixtures.WRITE;
@@ -61,7 +60,7 @@ class WriteBehaviourTest {
     private static final String CACHE_CONTAINER = "cache-container-" + Random.name();
     private static final String SCATTERED_CACHE = "scattered-cache-" + Random.name();
     private static final String DS = "data-source-for-scattered-cache-" + Random.name();
-    @Container static WildFlyContainer wildFly = WildFlyContainer.standalone(_26_1, FULL_HA);
+    @Container static WildFlyContainer wildFly = WildFlyContainer.standalone(FULL_HA);
     private static OnlineManagementClient client;
 
     @BeforeAll

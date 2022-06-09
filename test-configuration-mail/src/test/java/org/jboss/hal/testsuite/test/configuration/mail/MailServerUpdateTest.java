@@ -43,8 +43,7 @@ import static org.jboss.hal.dmr.ModelDescriptionConstants.OUTBOUND_SOCKET_BINDIN
 import static org.jboss.hal.dmr.ModelDescriptionConstants.PASSWORD;
 import static org.jboss.hal.dmr.ModelDescriptionConstants.SMTP;
 import static org.jboss.hal.dmr.ModelDescriptionConstants.USERNAME;
-import static org.jboss.hal.testsuite.container.WildFlyConfiguration.STANDALONE;
-import static org.jboss.hal.testsuite.container.WildFlyVersion._26_1;
+import static org.jboss.hal.testsuite.container.WildFlyConfiguration.DEFAULT;
 import static org.jboss.hal.testsuite.fixtures.MailFixtures.MAIL_SMTP;
 import static org.jboss.hal.testsuite.fixtures.MailFixtures.SECRET;
 import static org.jboss.hal.testsuite.fixtures.MailFixtures.SESSION_UPDATE;
@@ -55,7 +54,7 @@ import static org.jboss.hal.testsuite.fixtures.MailFixtures.sessionAddress;
 @Testcontainers
 class MailServerUpdateTest {
 
-    @Container static WildFlyContainer wildFly = WildFlyContainer.standalone(_26_1, STANDALONE);
+    @Container static WildFlyContainer wildFly = WildFlyContainer.standalone(DEFAULT);
 
     @BeforeAll
     static void setupModel() throws Exception {

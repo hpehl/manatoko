@@ -88,7 +88,7 @@
 
         <!-- Build related -->
         <encoding>UTF-8</encoding>
-        <hal.image>quay.io/halconsole/hal</hal.image>
+        <hal.image>quay.io/halconsole/hal:latest</hal.image>
         <java.version>11</java.version>
         <maven.compiler.source>${java.version}</maven.compiler.source>
         <maven.compiler.target>${java.version}</maven.compiler.target>
@@ -96,6 +96,8 @@
         <project.build.sourceEncoding>${encoding}</project.build.sourceEncoding>
         <project.reporting.outputEncoding>${encoding}</project.reporting.outputEncoding>
         <test.environment>remote</test.environment>
+        <wildfly.domain.image>quay.io/halconsole/wildfly-domain:latest</wildfly.domain.image>
+        <wildfly.standalone.image>quay.io/halconsole/wildfly:latest</wildfly.standalone.image>
     </properties>
 
     <modules>

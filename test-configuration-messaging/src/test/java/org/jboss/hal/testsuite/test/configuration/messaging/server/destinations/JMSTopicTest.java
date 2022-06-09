@@ -45,7 +45,6 @@ import static org.jboss.hal.dmr.ModelDescriptionConstants.SERVER;
 import static org.jboss.hal.resources.Ids.ITEM;
 import static org.jboss.hal.resources.Ids.MESSAGING_JMS_TOPIC;
 import static org.jboss.hal.testsuite.container.WildFlyConfiguration.FULL_HA;
-import static org.jboss.hal.testsuite.container.WildFlyVersion._26_1;
 import static org.jboss.hal.testsuite.fixtures.MessagingFixtures.JMSTOPIC_CREATE;
 import static org.jboss.hal.testsuite.fixtures.MessagingFixtures.JMSTOPIC_DELETE;
 import static org.jboss.hal.testsuite.fixtures.MessagingFixtures.JMSTOPIC_UPDATE;
@@ -58,7 +57,7 @@ import static org.jboss.hal.testsuite.fragment.finder.FinderFragment.runtimeSubs
 @Disabled // TODO Fix failing tests
 class JMSTopicTest extends AbstractServerDestinationsTest {
 
-    @Container static WildFlyContainer wildFly = WildFlyContainer.standalone(_26_1, FULL_HA);
+    @Container static WildFlyContainer wildFly = WildFlyContainer.standalone(FULL_HA);
     static OnlineManagementClient client;
     static ServerEnvironmentUtils serverEnvironmentUtils;
 

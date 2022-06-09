@@ -35,7 +35,6 @@ import org.wildfly.extras.creaper.core.online.operations.admin.Administration;
 
 import static org.jboss.hal.dmr.ModelDescriptionConstants.TRANSACTION;
 import static org.jboss.hal.testsuite.container.WildFlyConfiguration.FULL_HA;
-import static org.jboss.hal.testsuite.container.WildFlyVersion._26_1;
 import static org.jboss.hal.testsuite.fixtures.MessagingFixtures.RemoteActiveMQServer;
 
 @Manatoko
@@ -49,7 +48,7 @@ class AttributesTest extends AbstractPooledConnectionFactoryTest {
     private static final String GENERIC_CONNECTOR_UPDATE = "generic-connector-" + Random.name();
     private static final String JGROUPS_CHANNEL = "jgroups-channel-" + Random.name();
 
-    @Container static WildFlyContainer wildFly = WildFlyContainer.standalone(_26_1, FULL_HA);
+    @Container static WildFlyContainer wildFly = WildFlyContainer.standalone(FULL_HA);
     private static Operations operations;
 
     @BeforeAll

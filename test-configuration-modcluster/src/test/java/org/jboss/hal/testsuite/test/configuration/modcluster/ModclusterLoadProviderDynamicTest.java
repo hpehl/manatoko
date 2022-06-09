@@ -38,7 +38,6 @@ import static org.jboss.hal.dmr.ModelDescriptionConstants.DEFAULT;
 import static org.jboss.hal.dmr.ModelDescriptionConstants.LISTENER;
 import static org.jboss.hal.dmr.ModelDescriptionConstants.NAME;
 import static org.jboss.hal.testsuite.container.WildFlyConfiguration.HA;
-import static org.jboss.hal.testsuite.container.WildFlyVersion._26_1;
 import static org.jboss.hal.testsuite.fixtures.ModclusterFixtures.HISTORY;
 import static org.jboss.hal.testsuite.fixtures.ModclusterFixtures.PROXY_DYNAMIC_LP;
 import static org.jboss.hal.testsuite.fixtures.ModclusterFixtures.loadProviderDynamicAddress;
@@ -49,7 +48,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 @Testcontainers
 class ModclusterLoadProviderDynamicTest {
 
-    @Container static WildFlyContainer wildFly = WildFlyContainer.standalone(_26_1, HA);
+    @Container static WildFlyContainer wildFly = WildFlyContainer.standalone(HA);
 
     @BeforeAll
     static void setupModel() throws Exception {

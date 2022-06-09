@@ -39,7 +39,6 @@ import com.gwtplatform.mvp.shared.proxy.PlaceRequest;
 
 import static org.jboss.hal.dmr.ModelDescriptionConstants.INFINISPAN;
 import static org.jboss.hal.testsuite.container.WildFlyConfiguration.FULL_HA;
-import static org.jboss.hal.testsuite.container.WildFlyVersion._26_1;
 import static org.jboss.hal.testsuite.fixtures.InfinispanFixtures.cacheContainerAddress;
 import static org.jboss.hal.testsuite.fixtures.InfinispanFixtures.scatteredCacheAddress;
 import static org.jboss.hal.testsuite.fragment.finder.FinderFragment.configurationSubsystemPath;
@@ -55,7 +54,7 @@ class ScatteredCacheFinderTest {
     private static final String SCATTERED_CACHE_CREATE = "scattered-cache-create-" + Random.name();
     private static final String SCATTERED_CACHE_DELETE = "scattered-cache-delete-" + Random.name();
     private static final String SCATTERED_CACHE_VIEW = "scattered-cache-view-" + Random.name();
-    @Container static WildFlyContainer wildFly = WildFlyContainer.standalone(_26_1, FULL_HA);
+    @Container static WildFlyContainer wildFly = WildFlyContainer.standalone(FULL_HA);
     private static OnlineManagementClient client;
 
     @BeforeAll

@@ -40,7 +40,6 @@ import static org.jboss.hal.dmr.ModelDescriptionConstants.SOCKET_BINDING;
 import static org.jboss.hal.dmr.ModelDescriptionConstants.STATISTICS_ENABLED;
 import static org.jboss.hal.dmr.ModelDescriptionConstants.TRANSPORT;
 import static org.jboss.hal.testsuite.container.WildFlyConfiguration.HA;
-import static org.jboss.hal.testsuite.container.WildFlyVersion._26_1;
 import static org.jboss.hal.testsuite.fixtures.JGroupsFixtures.JGROUPS_TCP;
 import static org.jboss.hal.testsuite.fixtures.JGroupsFixtures.STACK_CREATE;
 import static org.jboss.hal.testsuite.fixtures.JGroupsFixtures.STACK_DELETE;
@@ -53,7 +52,7 @@ import static org.jboss.hal.testsuite.fixtures.JGroupsFixtures.transportAddress;
 @Testcontainers
 class StackTest {
 
-    @Container static WildFlyContainer wildFly = WildFlyContainer.standalone(_26_1, HA);
+    @Container static WildFlyContainer wildFly = WildFlyContainer.standalone(HA);
 
     @BeforeAll
     static void setupModel() throws Exception {

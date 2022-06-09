@@ -45,7 +45,6 @@ import static org.jboss.hal.dmr.ModelDescriptionConstants.ALLOW_RESOURCE_SERVICE
 import static org.jboss.hal.dmr.ModelDescriptionConstants.JGROUPS;
 import static org.jboss.hal.dmr.ModelDescriptionConstants.TRANSPORT;
 import static org.jboss.hal.testsuite.container.WildFlyConfiguration.FULL_HA;
-import static org.jboss.hal.testsuite.container.WildFlyVersion._26_1;
 import static org.jboss.hal.testsuite.fixtures.InfinispanFixtures.BEHIND;
 import static org.jboss.hal.testsuite.fixtures.InfinispanFixtures.SOCKET_BINDINGS;
 import static org.jboss.hal.testsuite.fixtures.InfinispanFixtures.THROUGH;
@@ -65,7 +64,7 @@ class WriteBehaviourTest {
     private static final String SCATTERED_CACHE = "scattered-cache-" + Random.name();
     private static final String REMOTE_CC = "rcc-" + Random.name();
     private static final String REMOTE_SOCKET_BINDING = "rem-socket-binding-" + Random.name();
-    @Container static WildFlyContainer wildFly = WildFlyContainer.standalone(_26_1, FULL_HA);
+    @Container static WildFlyContainer wildFly = WildFlyContainer.standalone(FULL_HA);
     private static OnlineManagementClient client;
 
     @BeforeAll

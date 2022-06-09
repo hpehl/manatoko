@@ -36,7 +36,6 @@ import org.wildfly.extras.creaper.core.online.operations.Values;
 import static org.jboss.arquillian.graphene.Graphene.waitGui;
 import static org.jboss.hal.dmr.ModelDescriptionConstants.STACK;
 import static org.jboss.hal.testsuite.container.WildFlyConfiguration.HA;
-import static org.jboss.hal.testsuite.container.WildFlyVersion._26_1;
 import static org.jboss.hal.testsuite.fixtures.JGroupsFixtures.CHANNEL_CREATE;
 import static org.jboss.hal.testsuite.fixtures.JGroupsFixtures.FORK_CREATE;
 import static org.jboss.hal.testsuite.fixtures.JGroupsFixtures.FORK_DELETE;
@@ -48,7 +47,7 @@ import static org.jboss.hal.testsuite.fixtures.JGroupsFixtures.forkAddress;
 @Testcontainers
 class ChannelForkTest {
 
-    @Container static WildFlyContainer wildFly = WildFlyContainer.standalone(_26_1, HA);
+    @Container static WildFlyContainer wildFly = WildFlyContainer.standalone(HA);
 
     @BeforeAll
     static void setupModel() throws Exception {

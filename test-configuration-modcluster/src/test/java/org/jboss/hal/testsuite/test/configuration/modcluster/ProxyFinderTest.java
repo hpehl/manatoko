@@ -43,7 +43,6 @@ import static org.jboss.hal.dmr.ModelDescriptionConstants.LISTENER;
 import static org.jboss.hal.dmr.ModelDescriptionConstants.MODCLUSTER;
 import static org.jboss.hal.dmr.ModelDescriptionConstants.NAME;
 import static org.jboss.hal.testsuite.container.WildFlyConfiguration.HA;
-import static org.jboss.hal.testsuite.container.WildFlyVersion._26_1;
 import static org.jboss.hal.testsuite.fixtures.ModclusterFixtures.PROXY_CREATE;
 import static org.jboss.hal.testsuite.fixtures.ModclusterFixtures.PROXY_CREATE2;
 import static org.jboss.hal.testsuite.fixtures.ModclusterFixtures.PROXY_DELETE;
@@ -58,7 +57,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 @Testcontainers
 class ProxyFinderTest {
 
-    @Container static WildFlyContainer wildFly = WildFlyContainer.standalone(_26_1, HA);
+    @Container static WildFlyContainer wildFly = WildFlyContainer.standalone(HA);
     private static OnlineManagementClient client;
     private static Operations operations;
 

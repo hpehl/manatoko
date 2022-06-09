@@ -41,8 +41,7 @@ import static org.jboss.hal.dmr.ModelDescriptionConstants.NAME;
 import static org.jboss.hal.dmr.ModelDescriptionConstants.PROVIDER_NAME;
 import static org.jboss.hal.resources.Ids.ELYTRON_SERVER_SSL_CONTEXT;
 import static org.jboss.hal.resources.Ids.ELYTRON_SSL_ITEM;
-import static org.jboss.hal.testsuite.container.WildFlyConfiguration.STANDALONE;
-import static org.jboss.hal.testsuite.container.WildFlyVersion._26_1;
+import static org.jboss.hal.testsuite.container.WildFlyConfiguration.DEFAULT;
 import static org.jboss.hal.testsuite.fixtures.SecurityFixtures.CIPHER_SUITE_NAMES;
 import static org.jboss.hal.testsuite.fixtures.SecurityFixtures.KEY_MANAGER_CREATE;
 import static org.jboss.hal.testsuite.fixtures.SecurityFixtures.SERVER_SSL_CREATE;
@@ -55,7 +54,7 @@ import static org.jboss.hal.testsuite.fixtures.SecurityFixtures.serverSslContext
 @Testcontainers
 class ServerSSLContextTest {
 
-    @Container static WildFlyContainer wildFly = WildFlyContainer.standalone(_26_1, STANDALONE);
+    @Container static WildFlyContainer wildFly = WildFlyContainer.standalone(DEFAULT);
 
     @BeforeAll
     static void setupModel() throws Exception {

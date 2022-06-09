@@ -34,7 +34,6 @@ import org.wildfly.extras.creaper.core.online.operations.Values;
 
 import static org.jboss.hal.dmr.ModelDescriptionConstants.CACHE_CONTAINER;
 import static org.jboss.hal.testsuite.container.WildFlyConfiguration.FULL;
-import static org.jboss.hal.testsuite.container.WildFlyVersion._26_1;
 import static org.jboss.hal.testsuite.fixtures.DistributableWebFixtures.DEFAULT_SESSION_MANAGEMENT;
 import static org.jboss.hal.testsuite.fixtures.DistributableWebFixtures.DEFAULT_SSO_MANAGEMENT;
 import static org.jboss.hal.testsuite.fixtures.DistributableWebFixtures.GRANULARITY;
@@ -51,7 +50,7 @@ import static org.jboss.hal.testsuite.test.configuration.distributableweb.Distri
 @Testcontainers
 class DistributableWebConfigurationTest {
 
-    @Container static WildFlyContainer wildFly = WildFlyContainer.standalone(_26_1, FULL);
+    @Container static WildFlyContainer wildFly = WildFlyContainer.standalone(FULL);
 
     @BeforeAll
     static void setupModel() throws Exception {

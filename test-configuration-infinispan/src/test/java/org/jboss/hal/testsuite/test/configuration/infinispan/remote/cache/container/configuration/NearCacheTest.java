@@ -39,7 +39,6 @@ import org.wildfly.extras.creaper.core.online.operations.admin.Administration;
 import static org.jboss.hal.dmr.ModelDescriptionConstants.NAME;
 import static org.jboss.hal.resources.CSS.btnDefault;
 import static org.jboss.hal.testsuite.container.WildFlyConfiguration.FULL_HA;
-import static org.jboss.hal.testsuite.container.WildFlyVersion._26_1;
 import static org.jboss.hal.testsuite.fixtures.InfinispanFixtures.nearCacheAddress;
 import static org.jboss.hal.testsuite.fixtures.InfinispanFixtures.remoteCacheContainerAddress;
 import static org.jboss.hal.testsuite.fixtures.InfinispanFixtures.remoteClusterAddress;
@@ -63,7 +62,7 @@ class NearCacheTest extends AbstractRemoteCacheContainerTest {
     private static final String REMOTE_SOCKET_BINDING_NEAR_CACHE_DELETE = "remote-socket-binding-near-cache-delete-"
             + Random.name();
 
-    @Container static WildFlyContainer wildFly = WildFlyContainer.standalone(_26_1, FULL_HA);
+    @Container static WildFlyContainer wildFly = WildFlyContainer.standalone(FULL_HA);
     private static OnlineManagementClient client;
 
     @BeforeAll

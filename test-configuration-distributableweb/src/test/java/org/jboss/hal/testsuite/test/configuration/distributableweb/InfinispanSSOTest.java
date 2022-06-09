@@ -36,7 +36,6 @@ import org.wildfly.extras.creaper.core.online.operations.Values;
 import static org.jboss.hal.dmr.ModelDescriptionConstants.CACHE_CONTAINER;
 import static org.jboss.hal.dmr.ModelDescriptionConstants.NAME;
 import static org.jboss.hal.testsuite.container.WildFlyConfiguration.FULL;
-import static org.jboss.hal.testsuite.container.WildFlyVersion._26_1;
 import static org.jboss.hal.testsuite.fixtures.DistributableWebFixtures.INFINISPAN_SSO_CREATE;
 import static org.jboss.hal.testsuite.fixtures.DistributableWebFixtures.INFINISPAN_SSO_DELETE;
 import static org.jboss.hal.testsuite.fixtures.DistributableWebFixtures.INFINISPAN_SSO_UPDATE;
@@ -48,7 +47,7 @@ import static org.jboss.hal.testsuite.test.configuration.distributableweb.Distri
 @Testcontainers
 class InfinispanSSOTest {
 
-    @Container static WildFlyContainer wildFly = WildFlyContainer.standalone(_26_1, FULL);
+    @Container static WildFlyContainer wildFly = WildFlyContainer.standalone(FULL);
 
     @BeforeAll
     static void setupModel() throws Exception {

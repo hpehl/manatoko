@@ -28,14 +28,13 @@ import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
 
 import static org.jboss.hal.resources.Ids.DOMAIN_BROWSE_BY;
-import static org.jboss.hal.testsuite.container.WildFlyVersion._26_1;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @Manatoko
 @Testcontainers
 class TopologyTest {
 
-    @Container static WildFlyContainer wildFly = WildFlyContainer.domain(_26_1);
+    @Container static WildFlyContainer wildFly = WildFlyContainer.domain();
 
     @Inject Console console;
     TopologyPreview preview;

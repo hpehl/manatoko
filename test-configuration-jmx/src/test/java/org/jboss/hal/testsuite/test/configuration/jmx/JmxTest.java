@@ -33,8 +33,7 @@ import org.testcontainers.junit.jupiter.Testcontainers;
 import org.wildfly.extras.creaper.core.online.operations.Operations;
 
 import static org.jboss.hal.dmr.ModelDescriptionConstants.ENABLED;
-import static org.jboss.hal.testsuite.container.WildFlyConfiguration.STANDALONE;
-import static org.jboss.hal.testsuite.container.WildFlyVersion._26_1;
+import static org.jboss.hal.testsuite.container.WildFlyConfiguration.DEFAULT;
 import static org.jboss.hal.testsuite.fixtures.JmxFixtures.AUDIT_LOG_ADDRESS;
 import static org.jboss.hal.testsuite.fixtures.JmxFixtures.NON_CORE_MBEAN_SENSITIVITY;
 import static org.jboss.hal.testsuite.fixtures.JmxFixtures.REMOTING_CONNECTOR_ADDRESS;
@@ -45,7 +44,7 @@ import static org.jboss.hal.testsuite.fixtures.JmxFixtures.USE_MANAGEMENT_ENDPOI
 @Testcontainers
 class JmxTest {
 
-    @Container static WildFlyContainer wildFly = WildFlyContainer.standalone(_26_1, STANDALONE);
+    @Container static WildFlyContainer wildFly = WildFlyContainer.standalone(DEFAULT);
     private static Operations operations;
 
     @BeforeAll

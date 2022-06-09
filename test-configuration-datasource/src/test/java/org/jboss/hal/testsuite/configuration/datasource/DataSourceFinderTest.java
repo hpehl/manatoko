@@ -41,8 +41,7 @@ import static org.jboss.hal.dmr.ModelDescriptionConstants.DATASOURCES;
 import static org.jboss.hal.dmr.ModelDescriptionConstants.ENABLED;
 import static org.jboss.hal.dmr.ModelDescriptionConstants.NAME;
 import static org.jboss.hal.resources.UIConstants.MEDIUM_TIMEOUT;
-import static org.jboss.hal.testsuite.container.WildFlyConfiguration.STANDALONE;
-import static org.jboss.hal.testsuite.container.WildFlyVersion._26_1;
+import static org.jboss.hal.testsuite.container.WildFlyConfiguration.DEFAULT;
 import static org.jboss.hal.testsuite.fixtures.DataSourceFixtures.DATA_SOURCE_DELETE;
 import static org.jboss.hal.testsuite.fixtures.DataSourceFixtures.DATA_SOURCE_DISABLE;
 import static org.jboss.hal.testsuite.fixtures.DataSourceFixtures.DATA_SOURCE_ENABLE;
@@ -58,7 +57,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 @Testcontainers
 class DataSourceFinderTest {
 
-    @Container static WildFlyContainer wildFly = WildFlyContainer.standalone(_26_1, STANDALONE);
+    @Container static WildFlyContainer wildFly = WildFlyContainer.standalone(DEFAULT);
     static final String H2_DRIVER_NAME = "h2";
     static OnlineManagementClient client;
 

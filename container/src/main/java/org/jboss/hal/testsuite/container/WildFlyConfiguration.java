@@ -29,7 +29,7 @@ public enum WildFlyConfiguration {
 
     MICROPROFILE_HA("standalone-microprofile-ha"),
 
-    STANDALONE("standalone");
+    DEFAULT("standalone");
 
     private final String name;
 

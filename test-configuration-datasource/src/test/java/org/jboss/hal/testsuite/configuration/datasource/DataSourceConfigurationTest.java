@@ -49,8 +49,7 @@ import static org.jboss.hal.dmr.ModelDescriptionConstants.NAME;
 import static org.jboss.hal.dmr.ModelDescriptionConstants.USER_NAME;
 import static org.jboss.hal.dmr.ModelDescriptionConstants.VALID_CONNECTION_CHECKER_CLASS_NAME;
 import static org.jboss.hal.dmr.ModelDescriptionConstants.VALUE;
-import static org.jboss.hal.testsuite.container.WildFlyConfiguration.STANDALONE;
-import static org.jboss.hal.testsuite.container.WildFlyVersion._26_1;
+import static org.jboss.hal.testsuite.container.WildFlyConfiguration.DEFAULT;
 import static org.jboss.hal.testsuite.fixtures.DataSourceFixtures.BACKGROUND_VALIDATION_MILLIS;
 import static org.jboss.hal.testsuite.fixtures.DataSourceFixtures.BLOCKING_TIMEOUT_WAIT_MILLIS;
 import static org.jboss.hal.testsuite.fixtures.DataSourceFixtures.CONNECTION;
@@ -67,7 +66,7 @@ import static org.jboss.hal.testsuite.fixtures.DataSourceFixtures.h2ConnectionUr
 @Testcontainers
 class DataSourceConfigurationTest {
 
-    @Container static WildFlyContainer wildFly = WildFlyContainer.standalone(_26_1, STANDALONE);
+    @Container static WildFlyContainer wildFly = WildFlyContainer.standalone(DEFAULT);
     static OnlineManagementClient client;
 
     @BeforeAll

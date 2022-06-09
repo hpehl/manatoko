@@ -22,7 +22,15 @@ import org.jboss.hal.testsuite.page.BasePage;
 import org.jboss.hal.testsuite.page.Place;
 import org.openqa.selenium.support.FindBy;
 
-import static org.jboss.hal.resources.Ids.*;
+import static org.jboss.hal.resources.Ids.FORM;
+import static org.jboss.hal.resources.Ids.MESSAGING_HA_POLICY_EMPTY;
+import static org.jboss.hal.resources.Ids.MESSAGING_HA_REPLICATION_COLOCATED;
+import static org.jboss.hal.resources.Ids.MESSAGING_HA_REPLICATION_LIVE_ONLY;
+import static org.jboss.hal.resources.Ids.MESSAGING_HA_REPLICATION_MASTER;
+import static org.jboss.hal.resources.Ids.MESSAGING_HA_REPLICATION_SLAVE;
+import static org.jboss.hal.resources.Ids.MESSAGING_HA_SHARED_STORE_COLOCATED;
+import static org.jboss.hal.resources.Ids.MESSAGING_HA_SHARED_STORE_MASTER;
+import static org.jboss.hal.resources.Ids.MESSAGING_HA_SHARED_STORE_SLAVE;
 
 @Place(NameTokens.MESSAGING_SERVER_HA_POLICY)
 public class MessagingServerHaPolicyPage extends BasePage {

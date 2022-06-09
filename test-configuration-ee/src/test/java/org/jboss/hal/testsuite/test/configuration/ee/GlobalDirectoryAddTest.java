@@ -33,8 +33,7 @@ import org.testcontainers.junit.jupiter.Testcontainers;
 import static org.jboss.hal.dmr.ModelDescriptionConstants.NAME;
 import static org.jboss.hal.dmr.ModelDescriptionConstants.PATH;
 import static org.jboss.hal.dmr.ModelDescriptionConstants.RELATIVE_TO;
-import static org.jboss.hal.testsuite.container.WildFlyConfiguration.STANDALONE;
-import static org.jboss.hal.testsuite.container.WildFlyVersion._26_1;
+import static org.jboss.hal.testsuite.container.WildFlyConfiguration.DEFAULT;
 import static org.jboss.hal.testsuite.fixtures.EEFixtures.GLOBAL_DIRECTORY_CREATE;
 import static org.jboss.hal.testsuite.fixtures.EEFixtures.globalDirectoryAddress;
 import static org.jboss.hal.testsuite.fixtures.PathsFixtures.JBOSS_SERVER_DATA_DIR;
@@ -43,7 +42,7 @@ import static org.jboss.hal.testsuite.fixtures.PathsFixtures.JBOSS_SERVER_DATA_D
 @Testcontainers
 class GlobalDirectoryAddTest {
 
-    @Container static WildFlyContainer wildFly = WildFlyContainer.standalone(_26_1, STANDALONE);
+    @Container static WildFlyContainer wildFly = WildFlyContainer.standalone(DEFAULT);
 
     @Inject Console console;
     @Inject CrudOperations crud;

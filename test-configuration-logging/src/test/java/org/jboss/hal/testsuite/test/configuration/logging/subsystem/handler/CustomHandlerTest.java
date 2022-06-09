@@ -37,21 +37,20 @@ import org.wildfly.extras.creaper.core.online.operations.Values;
 
 import static org.jboss.hal.dmr.ModelDescriptionConstants.CLASS;
 import static org.jboss.hal.dmr.ModelDescriptionConstants.MODULE;
-import static org.jboss.hal.testsuite.container.WildFlyConfiguration.STANDALONE;
-import static org.jboss.hal.testsuite.container.WildFlyVersion._26_1;
+import static org.jboss.hal.testsuite.container.WildFlyConfiguration.DEFAULT;
 import static org.jboss.hal.testsuite.fixtures.LoggingFixtures.CLASS_VALUE;
-import static org.jboss.hal.testsuite.fixtures.LoggingFixtures.LOGGING_HANDLER_ITEM;
-import static org.jboss.hal.testsuite.fixtures.LoggingFixtures.MODULE_VALUE;
 import static org.jboss.hal.testsuite.fixtures.LoggingFixtures.CustomHandler.CUSTOM_HANDLER_DELETE;
 import static org.jboss.hal.testsuite.fixtures.LoggingFixtures.CustomHandler.CUSTOM_HANDLER_READ;
 import static org.jboss.hal.testsuite.fixtures.LoggingFixtures.CustomHandler.CUSTOM_HANDLER_UPDATE;
+import static org.jboss.hal.testsuite.fixtures.LoggingFixtures.LOGGING_HANDLER_ITEM;
+import static org.jboss.hal.testsuite.fixtures.LoggingFixtures.MODULE_VALUE;
 
 @Manatoko
 @Testcontainers
 @Disabled // TODO Fix failing tests
 class CustomHandlerTest extends AbstractCustomHandlerTest {
 
-    @Container static WildFlyContainer wildFly = WildFlyContainer.standalone(_26_1, STANDALONE);
+    @Container static WildFlyContainer wildFly = WildFlyContainer.standalone(DEFAULT);
 
     @BeforeAll
     static void setupModel() throws Exception {

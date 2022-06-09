@@ -25,11 +25,11 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.wildfly.extras.creaper.core.online.operations.Address;
 
-import static org.jboss.hal.testsuite.fixtures.LoggingFixtures.RECORD_DELIMITER;
 import static org.jboss.hal.testsuite.fixtures.LoggingFixtures.JsonFormatter.JSON_FORMATTER_CREATE;
 import static org.jboss.hal.testsuite.fixtures.LoggingFixtures.JsonFormatter.JSON_FORMATTER_DELETE;
 import static org.jboss.hal.testsuite.fixtures.LoggingFixtures.JsonFormatter.JSON_FORMATTER_RESET;
 import static org.jboss.hal.testsuite.fixtures.LoggingFixtures.JsonFormatter.JSON_FORMATTER_UPDATE;
+import static org.jboss.hal.testsuite.fixtures.LoggingFixtures.RECORD_DELIMITER;
 
 public abstract class AbstractJsonFormatterTest {
 

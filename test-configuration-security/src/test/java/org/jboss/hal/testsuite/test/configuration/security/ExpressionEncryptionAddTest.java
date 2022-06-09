@@ -37,8 +37,7 @@ import org.wildfly.extras.creaper.core.online.OnlineManagementClient;
 import static org.jboss.hal.dmr.ModelDescriptionConstants.CREDENTIAL_STORE;
 import static org.jboss.hal.dmr.ModelDescriptionConstants.NAME;
 import static org.jboss.hal.resources.Ids.ELYTRON_OTHER_ITEM;
-import static org.jboss.hal.testsuite.container.WildFlyConfiguration.STANDALONE;
-import static org.jboss.hal.testsuite.container.WildFlyVersion._26_1;
+import static org.jboss.hal.testsuite.container.WildFlyConfiguration.DEFAULT;
 import static org.jboss.hal.testsuite.fixtures.SecurityFixtures.CREDENTIAL_STORE_CREATE;
 import static org.jboss.hal.testsuite.fixtures.SecurityFixtures.DEFAULT_RESOLVER;
 import static org.jboss.hal.testsuite.fixtures.SecurityFixtures.SECRET_KEY;
@@ -48,7 +47,7 @@ import static org.jboss.hal.testsuite.fixtures.SecurityFixtures.expressionEncryp
 @Testcontainers
 class ExpressionEncryptionAddTest {
 
-    @Container static WildFlyContainer wildFly = WildFlyContainer.standalone(_26_1, STANDALONE);
+    @Container static WildFlyContainer wildFly = WildFlyContainer.standalone(DEFAULT);
     static OnlineManagementClient client;
 
     @BeforeAll

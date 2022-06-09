@@ -37,7 +37,6 @@ import static org.jboss.hal.dmr.ModelDescriptionConstants.INFINISPAN;
 import static org.jboss.hal.dmr.ModelDescriptionConstants.LOCAL;
 import static org.jboss.hal.dmr.ModelDescriptionConstants.ROUTING;
 import static org.jboss.hal.testsuite.container.WildFlyConfiguration.FULL;
-import static org.jboss.hal.testsuite.container.WildFlyVersion._26_1;
 import static org.jboss.hal.testsuite.fixtures.DistributableWebFixtures.SUBSYSTEM_ADDRESS;
 import static org.jboss.hal.testsuite.fixtures.InfinispanFixtures.CC_READ;
 import static org.jboss.hal.testsuite.test.configuration.distributableweb.DistributableWebOperations.addCacheContainer;
@@ -50,7 +49,7 @@ import static org.junit.jupiter.api.Assertions.fail;
 @Testcontainers
 class DistributableWebLocalRoutingTest {
 
-    @Container static WildFlyContainer wildFly = WildFlyContainer.standalone(_26_1, FULL);
+    @Container static WildFlyContainer wildFly = WildFlyContainer.standalone(FULL);
 
     @BeforeAll
     static void setupModel() throws Exception {

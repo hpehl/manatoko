@@ -27,8 +27,7 @@ import org.junit.jupiter.api.Test;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
 
-import static org.jboss.hal.testsuite.container.WildFlyConfiguration.STANDALONE;
-import static org.jboss.hal.testsuite.container.WildFlyVersion._26_1;
+import static org.jboss.hal.testsuite.container.WildFlyConfiguration.DEFAULT;
 import static org.jboss.hal.testsuite.fixtures.SecurityFixtures.INITIAL_PROVIDERS;
 import static org.jboss.hal.testsuite.fixtures.SecurityFixtures.SUBSYSTEM_ADDRESS;
 
@@ -36,7 +35,7 @@ import static org.jboss.hal.testsuite.fixtures.SecurityFixtures.SUBSYSTEM_ADDRES
 @Testcontainers
 class GlobalSettingsTest {
 
-    @Container static WildFlyContainer wildFly = WildFlyContainer.standalone(_26_1, STANDALONE);
+    @Container static WildFlyContainer wildFly = WildFlyContainer.standalone(DEFAULT);
 
     @Page private ElytronPage page;
     @Inject private CrudOperations crudOperations;

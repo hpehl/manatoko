@@ -30,15 +30,14 @@ import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
 
 import static org.jboss.hal.dmr.ModelDescriptionConstants.CONTEXT_SERVICE;
-import static org.jboss.hal.testsuite.container.WildFlyConfiguration.STANDALONE;
-import static org.jboss.hal.testsuite.container.WildFlyVersion._26_1;
+import static org.jboss.hal.testsuite.container.WildFlyConfiguration.DEFAULT;
 import static org.jboss.hal.testsuite.fixtures.EEFixtures.DEFAULT_BINDINGS_ADDRESS;
 
 @Manatoko
 @Testcontainers
 class DefaultBindingsTest {
 
-    @Container static WildFlyContainer wildFly = WildFlyContainer.standalone(_26_1, STANDALONE);
+    @Container static WildFlyContainer wildFly = WildFlyContainer.standalone(DEFAULT);
 
     @Inject Console console;
     @Inject CrudOperations crud;

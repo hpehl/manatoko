@@ -22,7 +22,13 @@ import org.jboss.hal.testsuite.page.BasePage;
 import org.jboss.hal.testsuite.page.Place;
 import org.openqa.selenium.support.FindBy;
 
-import static org.jboss.hal.resources.Ids.*;
+import static org.jboss.hal.resources.Ids.FORM;
+import static org.jboss.hal.resources.Ids.MESSAGING_ADDRESS_SETTING;
+import static org.jboss.hal.resources.Ids.MESSAGING_CORE_QUEUE;
+import static org.jboss.hal.resources.Ids.MESSAGING_DIVERT;
+import static org.jboss.hal.resources.Ids.MESSAGING_JMS_QUEUE;
+import static org.jboss.hal.resources.Ids.MESSAGING_JMS_TOPIC;
+import static org.jboss.hal.resources.Ids.TABLE;
 import static org.jboss.hal.testsuite.Selectors.WRAPPER;
 
 @Place(NameTokens.MESSAGING_SERVER_DESTINATION)

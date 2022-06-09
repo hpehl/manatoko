@@ -35,7 +35,6 @@ import org.testcontainers.junit.jupiter.Testcontainers;
 import static org.jboss.arquillian.graphene.Graphene.waitGui;
 import static org.jboss.hal.dmr.ModelDescriptionConstants.INFINISPAN;
 import static org.jboss.hal.testsuite.container.WildFlyConfiguration.FULL_HA;
-import static org.jboss.hal.testsuite.container.WildFlyVersion._26_1;
 import static org.jboss.hal.testsuite.fragment.finder.FinderFragment.configurationSubsystemPath;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -44,7 +43,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 @Disabled // TODO Fix failing tests
 class CacheViewTest {
 
-    @Container static WildFlyContainer wildFly = WildFlyContainer.standalone(_26_1, FULL_HA);
+    @Container static WildFlyContainer wildFly = WildFlyContainer.standalone(FULL_HA);
 
     @Inject Console console;
     ColumnFragment cacheColumn;

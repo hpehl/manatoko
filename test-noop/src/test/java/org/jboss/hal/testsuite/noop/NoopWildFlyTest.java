@@ -23,15 +23,14 @@ import org.slf4j.LoggerFactory;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
 
-import static org.jboss.hal.testsuite.container.WildFlyConfiguration.STANDALONE;
-import static org.jboss.hal.testsuite.container.WildFlyVersion._26_1;
+import static org.jboss.hal.testsuite.container.WildFlyConfiguration.DEFAULT;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 @Manatoko
 @Testcontainers
 class NoopWildFlyTest {
 
-    @Container static WildFlyContainer wildFly = WildFlyContainer.standalone(_26_1, STANDALONE);
+    @Container static WildFlyContainer wildFly = WildFlyContainer.standalone(DEFAULT);
     private static final Logger logger = LoggerFactory.getLogger(NoopWildFlyTest.class);
 
     @Test

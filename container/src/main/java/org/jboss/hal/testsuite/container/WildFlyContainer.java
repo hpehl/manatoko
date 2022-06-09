@@ -40,24 +40,22 @@ import static org.jboss.hal.dmr.ModelDescriptionConstants.VALUE;
 public class WildFlyContainer extends GenericContainer<WildFlyContainer> {
 
     private static final int PORT = 9990;
-    private static final String STANDALONE_IMAGE = "quay.io/halconsole/wildfly";
-    private static final String DOMAIN_IMAGE = "quay.io/halconsole/wildfly-domain";
     private static final Logger logger = LoggerFactory.getLogger(WildFlyContainer.class);
     private static WildFlyContainer instance = null;
 
-    public static WildFlyContainer domain(WildFlyVersion version) {
+    public static WildFlyContainer domain() {
         if (instance != null && instance.isRunning()) {
             instance.stop();
         }
-        instance = new WildFlyContainer(false, DOMAIN_IMAGE, version.version(), "--host-config", "host-insecure.xml");
+        instance = new WildFlyContainer(false, ImageNames.instance().wildFlyDomain(), "--host-config", "host-insecure.xml");
         return instance;
     }
 
-    public static WildFlyContainer standalone(WildFlyVersion version, WildFlyConfiguration configuration) {
+    public static WildFlyContainer standalone(WildFlyConfiguration configuration) {
         if (instance != null && instance.isRunning()) {
             instance.stop();
         }
-        instance = new WildFlyContainer(true, STANDALONE_IMAGE, version.version(), "-c", configuration.configuration());
+        instance = new WildFlyContainer(true, ImageNames.instance().wildFlyStandalone(), "-c", configuration.configuration());
         return instance;
     }
 
@@ -70,31 +68,29 @@ public class WildFlyContainer extends GenericContainer<WildFlyContainer> {
 
     private final boolean standalone;
     private final String image;
-    private final String version;
-    private final String[] commands;
+    private final String[] command;
     private boolean started;
 
-    private WildFlyContainer(boolean standalone, String image, String version, String... commands) {
-        super(DockerImageName.parse(image + ":" + version));
+    private WildFlyContainer(boolean standalone, String image, String... command) {
+        super(DockerImageName.parse(image));
         withNetwork(Network.INSTANCE)
                 .withNetworkAliases(Network.WILDFLY)
-                .withCommand(commands)
+                .withCommand(command)
                 .withExposedPorts(PORT)
                 .waitingFor(Wait.forLogMessage(".*WildFly Full.*started in.*", 1))
                 .withStartupTimeout(Timeouts.WILDFLY_STARTUP_TIMEOUT);
 
         this.standalone = standalone;
         this.image = image;
-        this.version = version;
-        this.commands = commands;
+        this.command = command;
         this.started = false;
     }
 
     @Override
     public String toString() {
         return "WildFlyContainer{" +
-                "image=" + image + ':' + version +
-                ", commands=" + Arrays.toString(commands) +
+                "image=" + image +
+                ", command=" + Arrays.toString(command) +
                 ", managementEndpoint='" + managementEndpoint() + '\'' +
                 '}';
     }

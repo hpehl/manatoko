@@ -28,14 +28,13 @@ import org.wildfly.extras.creaper.core.online.operations.Operations;
 
 import static org.jboss.hal.dmr.ModelDescriptionConstants.SERVER;
 import static org.jboss.hal.testsuite.container.WildFlyConfiguration.FULL_HA;
-import static org.jboss.hal.testsuite.container.WildFlyVersion._26_1;
 import static org.jboss.hal.testsuite.fixtures.MessagingFixtures.SRV_UPDATE;
 
 @Manatoko
 @Testcontainers
 class ReplicationMasterTest extends AbstractHaPolicyTest {
 
-    @Container static WildFlyContainer wildFly = WildFlyContainer.standalone(_26_1, FULL_HA);
+    @Container static WildFlyContainer wildFly = WildFlyContainer.standalone(FULL_HA);
 
     @BeforeAll
     static void setupModel() throws Exception {

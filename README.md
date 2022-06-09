@@ -51,7 +51,7 @@ class SystemPropertyTest {
 }
 ```
 
-## Run Tests
+## Tests
 
 Tests can be run in two modes, controlled by the system property `test.environment`. Valid values are either `local` or `remote`.
 
@@ -62,6 +62,8 @@ This is the default mode. In this mode a [web driver container](https://www.test
 ### Local
 
 This mode is activated by the maven profile `local`. In this mode a browser is started locally and Arquillian Graphene takes care of providing the web driver.
+
+### Run All Tests
 
 To run all tests, simply execute
 
@@ -75,7 +77,7 @@ To run the tests with a local browser, use
 ./mvnw test -P all-tests,local 
 ```
 
-### Specific Tests
+### Run Specific Tests
 
 If you just want to execute test of one module e.g. `test-configuration-systemproperty`, run 
 
@@ -95,12 +97,18 @@ If you want to execute one specific test or test method, use one of the followin
 
 If you want to debug a test, append `-Dmaven.surefire.debug` and attach a debugger to port 5005.
 
-### Use HAL Development
+### Images
 
-By default, the tests use the latest image from `quay.io/halconsole/hal`. This repository contains stable and released HAL versions only. If you want to use the latest snapshot version of HAL, use the Maven profile `development`
+By default, the tests will use the following images:
+
+- HAL: [quay.io/halconsole/hal:latest](https://quay.io/repository/halconsole/hal)
+- WildFly standalone: [quay.io/halconsole/wildfly:latest](https://quay.io/repository/halconsole/wildfly)
+- WildFly domain: [quay.io/halconsole/wildfly-domain:latest](https://quay.io/repository/halconsole/wildfly-domain)
+
+You can customize these images by changing the properties in [`container.properties`](blob/main/container/src/main/resources/container.properties) or by overriding the properties using `-D<key>=<value>`. So if you want to use the latest HAL console instead of the latest stable release, use
 
 ```shell
-./mvnw test -P all-tests,development --projects test-configuration-systemproperty --also-make
+./mvnw test -P all-tests -Dhal.image=quay.io/halconsole/hal-development:latest
 ```
 
 ## Scripts

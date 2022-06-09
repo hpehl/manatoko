@@ -29,14 +29,13 @@ import org.testcontainers.junit.jupiter.Testcontainers;
 
 import com.gwtplatform.mvp.shared.proxy.PlaceRequest;
 
-import static org.jboss.hal.testsuite.container.WildFlyConfiguration.STANDALONE;
-import static org.jboss.hal.testsuite.container.WildFlyVersion._26_1;
+import static org.jboss.hal.testsuite.container.WildFlyConfiguration.DEFAULT;
 
 @Manatoko
 @Testcontainers
 class WebServicesFinderTest {
 
-    @Container static WildFlyContainer wildFly = WildFlyContainer.standalone(_26_1, STANDALONE);
+    @Container static WildFlyContainer wildFly = WildFlyContainer.standalone(DEFAULT);
 
     @Inject Console console;
 

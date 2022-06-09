@@ -46,8 +46,7 @@ import static org.jboss.hal.dmr.ModelDescriptionConstants.TRANSACTION_SUPPORT;
 import static org.jboss.hal.dmr.ModelDescriptionConstants.VALUE;
 import static org.jboss.hal.dmr.ModelDescriptionConstants.WM_SECURITY_MAPPING_GROUPS;
 import static org.jboss.hal.dmr.ModelDescriptionConstants.WM_SECURITY_MAPPING_USERS;
-import static org.jboss.hal.testsuite.container.WildFlyConfiguration.STANDALONE;
-import static org.jboss.hal.testsuite.container.WildFlyVersion._26_1;
+import static org.jboss.hal.testsuite.container.WildFlyConfiguration.DEFAULT;
 import static org.jboss.hal.testsuite.fixtures.ResourceAdapterFixtures.BEANVALIDATIONGROUPS;
 import static org.jboss.hal.testsuite.fixtures.ResourceAdapterFixtures.BOOTSTRAP_CONTEXT;
 import static org.jboss.hal.testsuite.fixtures.ResourceAdapterFixtures.LOCAL_TRANSACTION;
@@ -62,7 +61,7 @@ import static org.jboss.hal.testsuite.fixtures.ResourceAdapterFixtures.resourceA
 @Testcontainers
 class ResourceAdapterConfigurationTest {
 
-    @Container static WildFlyContainer wildFly = WildFlyContainer.standalone(_26_1, STANDALONE);
+    @Container static WildFlyContainer wildFly = WildFlyContainer.standalone(DEFAULT);
     private static OnlineManagementClient client;
 
     @BeforeAll

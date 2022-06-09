@@ -20,6 +20,7 @@ import org.jboss.arquillian.graphene.page.Page;
 import org.jboss.hal.resources.Ids;
 import org.jboss.hal.testsuite.Console;
 import org.jboss.hal.testsuite.CrudOperations;
+import org.jboss.hal.testsuite.container.WildFlyConfiguration;
 import org.jboss.hal.testsuite.container.WildFlyContainer;
 import org.jboss.hal.testsuite.fragment.FormFragment;
 import org.jboss.hal.testsuite.fragment.TableFragment;
@@ -35,11 +36,8 @@ import org.wildfly.extras.creaper.core.online.operations.Operations;
 import org.wildfly.extras.creaper.core.online.operations.Values;
 import org.wildfly.extras.creaper.core.online.operations.admin.Administration;
 
-import static org.jboss.hal.dmr.ModelDescriptionConstants.DEFAULT;
 import static org.jboss.hal.dmr.ModelDescriptionConstants.NAME;
 import static org.jboss.hal.dmr.ModelDescriptionConstants.WORKMANAGER;
-import static org.jboss.hal.testsuite.container.WildFlyConfiguration.STANDALONE;
-import static org.jboss.hal.testsuite.container.WildFlyVersion._26_1;
 import static org.jboss.hal.testsuite.fixtures.JcaFixtures.BC_CREATE;
 import static org.jboss.hal.testsuite.fixtures.JcaFixtures.BC_DELETE;
 import static org.jboss.hal.testsuite.fixtures.JcaFixtures.BC_READ;
@@ -50,7 +48,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 @Testcontainers
 class BootstrapContextTest {
 
-    @Container static WildFlyContainer wildFly = WildFlyContainer.standalone(_26_1, STANDALONE);
+    @Container static WildFlyContainer wildFly = WildFlyContainer.standalone(WildFlyConfiguration.DEFAULT);
 
     @BeforeAll
     static void setupModel() throws Exception {

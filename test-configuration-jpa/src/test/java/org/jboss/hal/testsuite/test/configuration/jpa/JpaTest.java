@@ -27,8 +27,7 @@ import org.junit.jupiter.api.Test;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
 
-import static org.jboss.hal.testsuite.container.WildFlyConfiguration.STANDALONE;
-import static org.jboss.hal.testsuite.container.WildFlyVersion._26_1;
+import static org.jboss.hal.testsuite.container.WildFlyConfiguration.DEFAULT;
 import static org.jboss.hal.testsuite.fixtures.JpaFixtures.DEFAULT_EXTENDED_PERSISTENCE_INHERITANCE;
 import static org.jboss.hal.testsuite.fixtures.JpaFixtures.SHALLOW;
 import static org.jboss.hal.testsuite.fixtures.JpaFixtures.SUBSYSTEM_ADDRESS;
@@ -37,7 +36,7 @@ import static org.jboss.hal.testsuite.fixtures.JpaFixtures.SUBSYSTEM_ADDRESS;
 @Testcontainers
 class JpaTest {
 
-    @Container static WildFlyContainer wildFly = WildFlyContainer.standalone(_26_1, STANDALONE);
+    @Container static WildFlyContainer wildFly = WildFlyContainer.standalone(DEFAULT);
 
     @Inject CrudOperations crud;
     @Page JpaPage page;
