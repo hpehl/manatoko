@@ -15,7 +15,9 @@
  */
 package org.jboss.hal.testsuite.fragment;
 
+import org.jboss.arquillian.core.api.annotation.Inject;
 import org.jboss.arquillian.graphene.fragment.Root;
+import org.jboss.hal.testsuite.Console;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
@@ -25,11 +27,13 @@ import static org.jboss.hal.resources.CSS.btnPrimary;
 /** Fragment for an empty state element. */
 public class EmptyState {
 
+    @Inject private Console console;
     @Root private WebElement root;
     @FindBy(css = "." + blankSlatePfMainAction + " button." + btnPrimary) private WebElement primaryButton;
 
     /** Clicks on the main action */
     public void mainAction() {
+        console.scrollIntoView(primaryButton);
         primaryButton.click();
     }
 

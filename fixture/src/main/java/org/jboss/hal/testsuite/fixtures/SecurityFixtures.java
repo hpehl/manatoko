@@ -28,6 +28,7 @@ import static org.jboss.hal.dmr.ModelDescriptionConstants.KEY_MANAGER;
 import static org.jboss.hal.dmr.ModelDescriptionConstants.KEY_STORE;
 import static org.jboss.hal.dmr.ModelDescriptionConstants.SECRET_KEY_CREDENTIAL_STORE;
 import static org.jboss.hal.dmr.ModelDescriptionConstants.SERVER_SSL_CONTEXT;
+import static org.jboss.hal.dmr.ModelDescriptionConstants.TOKEN_REALM;
 import static org.jboss.hal.dmr.ModelDescriptionConstants.TRUST_MANAGER;
 import static org.jboss.hal.dmr.ModelDescriptionConstants.X500_SUBJECT_EVIDENCE_DECODER;
 import static org.jboss.hal.dmr.ModelDescriptionConstants.X509_SUBJECT_ALT_NAME_EVIDENCE_DECODER;
@@ -46,19 +47,33 @@ public final class SecurityFixtures {
     private static final String KEY_STORE_PREFIX = "km";
     private static final String SECRET_KEY_CREDENTIAL_STORE_PREFIX = "skcs";
     private static final String SERVER_SSL_CONTEXT_PREFIX = "srv-ssl";
+    private static final String TOKEN_REALM_PREFIX = "tr";
     private static final String TRUST_MANAGER_PREFIX = "tm";
 
     public static final String ALT_NAME_TYPE = "alt-name-type";
     public static final String ALT_NAME_TYPE_DIRECTORY_NAME = "directoryName";
     public static final String ALT_NAME_TYPE_RFC822_NAME = "rfc822Name";
+    public static final String AUDIENCE = "audience";
+    public static final String CERTIFICATE = "certificate";
     public static final String CERTIFICATE_AUTHORITY_URL = "https://acme.org";
     public static final String CIPHER_SUITE_NAMES = "cipher-suite-names";
+    public static final String CLIENT_ID = "client-id";
+    public static final String CLIENT_SECRET = "client-secret";
     public static final String DEFAULT_ALIAS = "default-alias";
     public static final String DEFAULT_RESOLVER = "default-resolver";
     public static final String EVIDENCE_DECODER_ITEM = "mappers-decoders-evidence-decoder-item";
     public static final String EVIDENCE_DECODERS = "evidence-decoders";
     public static final String INITIAL_PROVIDERS = "initial-providers";
+    public static final String INTROSPECTION_URL = "introspection-url";
+    public static final String INTROSPECTION_URL_VALUE = "https://acme.org";
+    public static final String ISSUER = "issuer";
+    public static final String JWT = "jwt";
+    public static final String JWT_TAB = "elytron-token-realm-jwt-tab";
+    public static final String OAUTH2_INTROSPECTION = "oauth2-introspection";
+    public static final String OAUTH2_INTROSPECTION_TAB = "elytron-token-realm-oauth2-introspection-tab";
     public static final String OCSP = "ocsp";
+    public static final String PRINCIPAL_CLAIM = "principal-claim";
+    public static final String PUBLIC_KEY = "public-key";
     public static final String RESPONDER = "responder";
     public static final String SECRET_KEY = "secret-key";
     public static final String SEGMENT = "segment";
@@ -95,6 +110,7 @@ public final class SecurityFixtures {
     // ------------------------------------------------------ client-ssl-context
 
     public static final String CLIENT_SSL_CREATE = Ids.build(CLIENT_SSL_CONTEXT_PREFIX, CREATE, Random.name());
+    public static final String CLIENT_SSL_READ = Ids.build(CLIENT_SSL_CONTEXT_PREFIX, READ, Random.name());
     public static final String CLIENT_SSL_UPDATE = Ids.build(CLIENT_SSL_CONTEXT_PREFIX, UPDATE, Random.name());
     public static final String CLIENT_SSL_DELETE = Ids.build(CLIENT_SSL_CONTEXT_PREFIX, DELETE, Random.name());
 
@@ -136,6 +152,7 @@ public final class SecurityFixtures {
     // ------------------------------------------------------ key store
 
     public static final String KEY_STORE_CREATE = Ids.build(KEY_STORE_PREFIX, CREATE, Random.name());
+    public static final String KEY_STORE_READ = Ids.build(KEY_STORE_PREFIX, READ, Random.name());
 
     public static Address keyStoreAddress(String name) {
         return SUBSYSTEM_ADDRESS.and(KEY_STORE, name);
@@ -164,6 +181,25 @@ public final class SecurityFixtures {
 
     public static Address serverSslContextAddress(String name) {
         return SUBSYSTEM_ADDRESS.and(SERVER_SSL_CONTEXT, name);
+    }
+
+    // ------------------------------------------------------ token realm
+
+    public static final String TOKEN_REALM_CREATE = Ids.build(TOKEN_REALM_PREFIX, CREATE, Random.name());
+    public static final String TOKEN_REALM_UPDATE = Ids.build(TOKEN_REALM_PREFIX, UPDATE, Random.name());
+    public static final String TOKEN_REALM_DELETE = Ids.build(TOKEN_REALM_PREFIX, DELETE, Random.name());
+    public static final String TOKEN_REALM_JWT_CREATE = Ids.build(TOKEN_REALM_PREFIX, JWT, CREATE, Random.name());
+    public static final String TOKEN_REALM_JWT_UPDATE = Ids.build(TOKEN_REALM_PREFIX, JWT, UPDATE, Random.name());
+    public static final String TOKEN_REALM_JWT_DELETE = Ids.build(TOKEN_REALM_PREFIX, JWT, DELETE, Random.name());
+    public static final String TOKEN_REALM_OAUTH2_INTROSPECTION_CREATE = Ids.build(TOKEN_REALM_PREFIX, OAUTH2_INTROSPECTION,
+            CREATE, Random.name());
+    public static final String TOKEN_REALM_OAUTH2_INTROSPECTION_UPDATE = Ids.build(TOKEN_REALM_PREFIX, OAUTH2_INTROSPECTION,
+            UPDATE, Random.name());
+    public static final String TOKEN_REALM_OAUTH2_INTROSPECTION_DELETE = Ids.build(TOKEN_REALM_PREFIX, OAUTH2_INTROSPECTION,
+            DELETE, Random.name());
+
+    public static Address tokenRealmAddress(String name) {
+        return SUBSYSTEM_ADDRESS.and(TOKEN_REALM, name);
     }
 
     // ------------------------------------------------------ trust manager

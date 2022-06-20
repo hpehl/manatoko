@@ -17,6 +17,7 @@ package org.jboss.hal.testsuite.model;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.function.Consumer;
 
 import org.jboss.dmr.ModelNode;
 import org.jboss.dmr.ModelType;
@@ -120,26 +121,17 @@ public class ResourceVerifier {
      */
     public ResourceVerifier verifyAttribute(String attributeName, ModelNode expectedValue, String errorMessageSuffix)
             throws Exception {
-        boolean nested = attributeName.contains(".");
-        String baseAttributeName = nested ? attributeName.substring(0, attributeName.indexOf('.')) : attributeName;
-        waitFor(() -> {
-            ModelNodeResult actualResult = ops.readAttribute(address, baseAttributeName);
-            return actualResult.isSuccess() && actualResult.hasDefinedValue()
-                    && expectedValue.equals(actualResult.value());
-        });
+        ModelNode attributeValue = readAttribute(attributeName, errorMessageSuffix);
+        assertEquals(expectedValue, attributeValue, "Attribute value is different in model! " + errorMessageSuffix);
+        return this;
+    }
 
-        ModelNodeResult actualResult = ops.readAttribute(address, baseAttributeName);
-        actualResult.assertDefinedValue(errorMessageSuffix);
-        ModelNode actualNode = actualResult.value();
-
-        if (nested) {
-            String path = attributeName.substring(attributeName.indexOf('.') + 1);
-            for (String name : Splitter.on('.').omitEmptyStrings().split(path)) {
-                assertTrue(actualNode.hasDefined(name));
-                actualNode = actualNode.get(name);
-            }
-        }
-        assertEquals(expectedValue, actualNode, "Attribute value is different in model! " + errorMessageSuffix);
+    /**
+     * Verifies the value of attribute in model.
+     */
+    public ResourceVerifier verifyAttribute(String attributeName, Consumer<ModelNode> consumer) throws Exception {
+        ModelNode attributeValue = readAttribute(attributeName, "");
+        consumer.accept(attributeValue);
         return this;
     }
 
@@ -254,6 +246,28 @@ public class ResourceVerifier {
      */
     public ResourceVerifier verifyAttributeIsUndefined(String attributeName) throws Exception {
         return verifyAttributeIsUndefined(attributeName, null);
+    }
+
+    private ModelNode readAttribute(String attributeName, String errorMessageSuffix) throws Exception {
+        boolean nested = attributeName.contains(".");
+        String baseAttributeName = nested ? attributeName.substring(0, attributeName.indexOf('.')) : attributeName;
+        waitFor(() -> {
+            ModelNodeResult actualResult = ops.readAttribute(address, baseAttributeName);
+            return actualResult.isSuccess() && actualResult.hasDefinedValue();
+        });
+
+        ModelNodeResult actualResult = ops.readAttribute(address, baseAttributeName);
+        actualResult.assertDefinedValue(errorMessageSuffix);
+        ModelNode actualNode = actualResult.value();
+
+        if (nested) {
+            String path = attributeName.substring(attributeName.indexOf('.') + 1);
+            for (String name : Splitter.on('.').omitEmptyStrings().split(path)) {
+                assertTrue(actualNode.hasDefined(name));
+                actualNode = actualNode.get(name);
+            }
+        }
+        return actualNode;
     }
 
     private boolean attributeEquals(String attributeName, ModelNode expectedValue) throws IOException {
