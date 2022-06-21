@@ -113,6 +113,14 @@ The image names are defined by the properties `hal.image`, `wildfly.standalone.i
 ./mvnw test -P all-tests -Dhal.image=quay.io/halconsole/hal-development:latest
 ```
 
+If you want to use a specific WildFly version for the tests, use
+
+```shell
+./mvnw test -P all-tests \
+  -Dwildfly.standalone.image=quay.io/halconsole/wildfly:23.0.0.Final \
+  -Dwildfly.domain.image=quay.io/halconsole/wildfly-domain:23.0.0.Final
+```
+
 ## Scripts
 
 This repository contains various scripts to automate tasks.
