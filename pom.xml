@@ -77,6 +77,7 @@
 
         <!-- Plugin versions -->
         <version.checkstyle.plugin>3.1.1</version.checkstyle.plugin>
+        <version.degraph.plugin>4.0.1</version.degraph.plugin>
         <version.enforcer.plugin>3.0.0-M3</version.enforcer.plugin>
         <version.formatter.plugin>2.19.0</version.formatter.plugin>
         <version.impsort.plugin>1.7.0</version.impsort.plugin>
@@ -126,6 +127,11 @@
         <pluginManagement>
             <plugins>
                 <!-- Ordered by artifactID -->
+                <plugin>
+                    <groupId>com.github.ferstl</groupId>
+                    <artifactId>depgraph-maven-plugin</artifactId>
+                    <version>${version.degraph.plugin}</version>
+                </plugin>
                 <plugin>
                     <groupId>net.revelc.code.formatter</groupId>
                     <artifactId>formatter-maven-plugin</artifactId>
@@ -213,6 +219,30 @@
 
         <plugins>
             <!-- Ordered by artifactID -->
+            <plugin>
+                <groupId>com.github.ferstl</groupId>
+                <artifactId>depgraph-maven-plugin</artifactId>
+                <configuration>
+                    <createImage>true</createImage>
+                    <customStyleConfiguration>degraph-style.json</customStyleConfiguration>
+                    <includes>
+                        <include>org.jboss.hal:manatoko-arquillian</include>
+                        <include>org.jboss.hal:manatoko-command</include>
+                        <include>org.jboss.hal:manatoko-container</include>
+                        <include>org.jboss.hal:manatoko-environment</include>
+                        <include>org.jboss.hal:manatoko-fixture</include>
+                        <include>org.jboss.hal:manatoko-management-model</include>
+                        <include>org.jboss.hal:manatoko-test-common</include>
+                        <include>org.jboss.hal:manatoko-test-noop</include>
+                        <include>org.jboss.hal:manatoko-ui</include>
+                    </includes>
+                    <mergeTypes>true</mergeTypes>
+                    <classpathScope>test</classpathScope>
+                    <mergeScopes>true</mergeScopes>
+                    <showGroupIds>true</showGroupIds>
+                    <outputDirectory>${project.basedir}</outputDirectory>
+                </configuration>
+            </plugin>
             <plugin>
                 <groupId>com.mycila</groupId>
                 <artifactId>license-maven-plugin</artifactId>

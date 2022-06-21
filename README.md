@@ -121,6 +121,25 @@ If you want to use a specific WildFly version for the tests, use
   -Dwildfly.domain.image=quay.io/halconsole/wildfly-domain:23.0.0.Final
 ```
 
+## Modules
+
+Manatoko consists of many modules. Each module has a distinct responsibility. Here's an overview of the modules and its dependencies:
+
+![Manatoko dependencies](dependency-graph.png "Manatoko dependencies")
+
+- `manatoko-environment`: Singleton to get the [test environment](#tests) (local or remote) 
+- `manatoko-container`: Classes to start / stop the different container images 
+- `manatoko-management-model`: Classes for working with the management model and JBoss DMR
+- `manatoko-test-common`: Classes and annotations for writing the unit tests 
+- `manatoko-ui`: Arquillian fragments and pages
+- `manatoko-fixture`: Constants and test fixtures used by the unit tests
+- `manatoko-arquillian`: Arquillian extension for Testcontainers integration
+- `manatoko-command`: Creaper commands to create various management resources
+- `manatoko-test-noop`: Sample test to verify the Arquillian and Testcontainer wiring
+- `manatoko-test-configuration-*`: Configuration tests
+- `manatoko-test-runtime-*`: Runtime tests
+- `manatoko-test-deployment-*`: Deployment tests
+
 ## Scripts
 
 This repository contains various scripts to automate tasks.

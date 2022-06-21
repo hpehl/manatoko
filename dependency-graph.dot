@@ -1,0 +1,33 @@
+digraph "manatoko-parent" {
+  graph [rankdir="TB"]
+  node [shape="box",style="rounded",fontname="Helvetica",fontsize="14"]
+  edge [fontsize="10",fontname="Helvetica"]
+
+  // Node Definitions:
+  "org.jboss.hal:manatoko-container"[label=<<font point-size="10">org.jboss.hal</font><br/>manatoko-container<font point-size="10"><br/>(compile/test)</font>>]
+  "org.jboss.hal:manatoko-environment"[label=<<font point-size="10">org.jboss.hal</font><br/>manatoko-environment<font point-size="10"><br/>(compile/test)</font>>]
+  "org.jboss.hal:manatoko-ui"[label=<<font point-size="10">org.jboss.hal</font><br/>manatoko-ui<font point-size="10"><br/>(compile/test)</font>>]
+  "org.jboss.hal:manatoko-management-model"[label=<<font point-size="10">org.jboss.hal</font><br/>manatoko-management-model<font point-size="10"><br/>(compile/test)</font>>]
+  "org.jboss.hal:manatoko-arquillian"[label=<<font point-size="10">org.jboss.hal</font><br/>manatoko-arquillian<font point-size="10"><br/>(test)</font>>]
+  "org.jboss.hal:manatoko-fixture"[label=<<font point-size="10">org.jboss.hal</font><br/>manatoko-fixture<font point-size="10"><br/>(compile/test)</font>>]
+  "org.jboss.hal:manatoko-command"[label=<<font point-size="10">org.jboss.hal</font><br/>manatoko-command<font point-size="10"><br/>(test)</font>>]
+  "org.jboss.hal:manatoko-test-common"[label=<<font point-size="10">org.jboss.hal</font><br/>manatoko-test-common<font point-size="10"><br/>(test)</font>>]
+  "org.jboss.hal:manatoko-test-noop"[label=<<font point-size="10">org.jboss.hal</font><br/>manatoko-test-noop>]
+
+  // Edge Definitions:
+  "org.jboss.hal:manatoko-container" -> "org.jboss.hal:manatoko-environment"
+  "org.jboss.hal:manatoko-ui" -> "org.jboss.hal:manatoko-container"
+  "org.jboss.hal:manatoko-ui" -> "org.jboss.hal:manatoko-management-model"
+  "org.jboss.hal:manatoko-arquillian" -> "org.jboss.hal:manatoko-ui"
+  "org.jboss.hal:manatoko-fixture" -> "org.jboss.hal:manatoko-management-model"
+  "org.jboss.hal:manatoko-command" -> "org.jboss.hal:manatoko-fixture"
+  "org.jboss.hal:manatoko-test-common" -> "org.jboss.hal:manatoko-container"
+  "org.jboss.hal:manatoko-test-noop" -> "org.jboss.hal:manatoko-arquillian"
+  "org.jboss.hal:manatoko-test-noop" -> "org.jboss.hal:manatoko-command"
+  "org.jboss.hal:manatoko-test-noop" -> "org.jboss.hal:manatoko-container"
+  "org.jboss.hal:manatoko-test-noop" -> "org.jboss.hal:manatoko-environment"
+  "org.jboss.hal:manatoko-test-noop" -> "org.jboss.hal:manatoko-fixture"
+  "org.jboss.hal:manatoko-test-noop" -> "org.jboss.hal:manatoko-management-model"
+  "org.jboss.hal:manatoko-test-noop" -> "org.jboss.hal:manatoko-test-common"
+  "org.jboss.hal:manatoko-test-noop" -> "org.jboss.hal:manatoko-ui"
+}
