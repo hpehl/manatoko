@@ -1,7 +1,5 @@
 [![Verify Codebase](https://github.com/hpehl/manatoko/actions/workflows/verify.yml/badge.svg)](https://github.com/hpehl/manatoko/actions/workflows/verify.yml)
 
-# Manatoko
-
 Manatoko ([Maori](https://maoridictionary.co.nz/search?keywords=manatoko) for verify, test) is a new approach to test the [HAL](https://hal.github.io) management console. It builds on top of
 
 - [Testcontainers](https://www.testcontainers.org/)
@@ -10,7 +8,19 @@ Manatoko ([Maori](https://maoridictionary.co.nz/search?keywords=manatoko) for ve
 
 The goal is that tests should be self-contained. Containers are started and stopped when necessary and tests can focus on testing the UI and verifying management model changes. The biggest advantage of this approach is that it is very easy to run UI tests in a CI environment.
 
-## Write Tests
+**TOC**
+* [Write Tests](#write-tests)
+* [Test Environment](#test-environment)
+  * [Remote](#remote)
+   * [Local](#local)
+* [Run Tests](#run-tests)
+  * [Run All Tests](#run-all-tests)
+  * [Run Specific Tests](#run-specific-tests)
+* [Images](#images)
+* [Modules](#modules)
+* [Scripts](#scripts)
+
+# Write Tests
 
 Tests need to be annotated with two annotations (in this order!):
 
@@ -42,7 +52,7 @@ class SystemPropertyTest {
    }
 
    @Test
-   void create() throws Exception {
+   void create() {
       crud.create(systemPropertyAddress(CREATE_NAME), table, form -> {
          form.text(NAME, CREATE_NAME);
          form.text(VALUE, CREATE_VALUE);
@@ -53,19 +63,21 @@ class SystemPropertyTest {
 
 See [`SystemPropertyTest`](test-configuration-systemproperty/src/test/java/org/jboss/hal/testsuite/configuration/systemproperty/SystemPropertyTest.java) for more details. 
 
-## Tests
+# Test Environment
 
 Tests can be run in two modes, controlled by the system property `test.environment`. Valid values are either `local` or `remote`.
 
-### Remote
+## Remote
 
 This is the default mode. In this mode a [web driver container](https://www.testcontainers.org/modules/webdriver_containers/) (with support of screen recording) is started before all tests. An Arquillian extension is registered which provides a remote web driver connected to the browser running in this container.
 
-### Local
+## Local
 
 This mode is activated by the maven profile `local`. In this mode a browser is started locally and Arquillian Graphene takes care of providing the web driver.
 
-### Run All Tests
+# Run Tests
+
+## Run All Tests
 
 To run all tests, simply execute
 
@@ -79,7 +91,7 @@ To run the tests with a local browser, use
 ./mvnw test -P all-tests,local 
 ```
 
-### Run Specific Tests
+## Run Specific Tests
 
 If you just want to execute tests of one specific module e.g. `test-configuration-systemproperty`, run 
 
@@ -99,7 +111,7 @@ If you want to execute one specific test or test method, use one of the followin
 
 If you want to debug a test, append `-Dmaven.surefire.debug` and attach a debugger to port 5005.
 
-### Images
+# Images
 
 By default, the tests will use the following images:
 
@@ -121,30 +133,34 @@ If you want to use a specific WildFly version for the tests, use
   -Dwildfly.domain.image=quay.io/halconsole/wildfly-domain:23.0.0.Final
 ```
 
-## Modules
+# Modules
 
 Manatoko consists of many modules. Each module has a distinct responsibility. Here's an overview of the modules and its dependencies:
 
 ![Manatoko dependencies](dependency-graph.png "Manatoko dependencies")
 
-- `manatoko-environment`: Singleton to get the [test environment](#tests) (local or remote) 
-- `manatoko-container`: Classes to start / stop the different container images 
+- `manatoko-environment`: Singleton to manage the [test environment](#test-environment) (local or remote) 
+- `manatoko-container`: Classes to start / stop the test containers 
 - `manatoko-management-model`: Classes for working with the management model and JBoss DMR
-- `manatoko-test-common`: Classes and annotations for writing the unit tests 
+- `manatoko-test-common`: Annotations and Junit extensions for writing and running the unit tests 
 - `manatoko-ui`: Arquillian fragments and pages
 - `manatoko-fixture`: Constants and test fixtures used by the unit tests
-- `manatoko-arquillian`: Arquillian extension for Testcontainers integration
+- `manatoko-arquillian`: Arquillian extension for the integration with Testcontainers
 - `manatoko-command`: Creaper commands to create various management resources
-- `manatoko-test-noop`: Sample test to verify the Arquillian and Testcontainer wiring
+- `manatoko-test-noop`: Sample test module to verify the Arquillian and Testcontainers wiring
 - `manatoko-test-configuration-*`: Configuration tests
 - `manatoko-test-runtime-*`: Runtime tests
 - `manatoko-test-deployment-*`: Deployment tests
 
-## Scripts
+# Scripts
 
 This repository contains various scripts to automate tasks.
 
-### `format.sh`
+## `depgraph.sh`
+
+Creates the [dependency graph](#modules) for the modules.
+
+## `format.sh`
 
 Formats the codebase by applying the following maven goals:
 
@@ -152,9 +168,9 @@ Formats the codebase by applying the following maven goals:
 - [`formatter-maven-plugin:format`](https://code.revelc.net/formatter-maven-plugin/format-mojo.html)
 - [`impsort-maven-plugin:sort`](https://code.revelc.net/impsort-maven-plugin/sort-mojo.html)
 
-The goals use the plugin configuration in [code-parent/pom.xml](code-parent/pom.xml#L201) and the resources in [config/src/main/resources/manatoko](config/src/main/resources/manatoko).  
+The goals use the plugin configuration in [code-parent/pom.xml](code-parent/pom.xml) and the resources in [build-config/src/main/resources/manatoko](build-config/src/main/resources/manatoko).  
 
-### `validate.sh`
+## `validate.sh`
 
 Validates the codebase by applying the following maven goals:
 
@@ -164,9 +180,9 @@ Validates the codebase by applying the following maven goals:
 - [`formatter-maven-plugin:validate`](https://code.revelc.net/formatter-maven-plugin/validate-mojo.html)
 - [`impsort-maven-plugin:check`](https://code.revelc.net/impsort-maven-plugin/check-mojo.html)
 
-The goals use the plugin configuration in [code-parent/pom.xml](code-parent/pom.xml#L201) and the resources in [config/src/main/resources/manatoko](config/src/main/resources/manatoko).
+The goals use the plugin configuration in [code-parent/pom.xml](code-parent/pom.xml) and the resources in [build-config/src/main/resources/manatoko](build-config/src/main/resources/manatoko).
   
-### `gh-test-all.sh`
+## `gh-test-all.sh`
 
 Runs all tests in all test modules. This script triggers the workflow defined in [`test-all.yml`](.github/workflows/test-all.yml). The tests are run in parallel, but please note that this might take some time.
 
@@ -174,7 +190,7 @@ The script uses the latest stable HAL release by default. If you want to use the
 
 The script requires [GitHub CLI](https://cli.github.com/) to be present and configured on your machine. 
 
-### `gh-test-single.sh`
+## `gh-test-single.sh`
 
 Runs the tests of a single test module given as an argument. This script triggers the workflow defined in [`test-single.yml`](.github/workflows/test-single.yml).
 
@@ -182,7 +198,7 @@ The script uses the latest stable HAL release by default. If you want to use the
 
 The script requires [GitHub CLI](https://cli.github.com/) to be present and configured on your machine.
 
-### `tcpm.sh`
+## `tcpm.sh`
 
 If you're using testcontainers with Podman 3.x on macOS, please start `./tcpm.sh` and make sure to set the following environment variables **before** running the tests.
 

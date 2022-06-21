@@ -25,7 +25,8 @@ import static org.junit.jupiter.api.extension.ExtensionContext.Namespace.GLOBAL;
 
 /**
  * Custom Extension which executes code only once before all tests are started and after all tests finished. This is temporary
- * solution until https://github.com/junit-team/junit5/issues/456 will not be released
+ * solution until <a href="https://github.com/junit-team/junit5/issues/456">https://github.com/junit-team/junit5/issues/456</a>
+ * is resolved.
  */
 public class SystemSetupExtension implements BeforeAllCallback, ExtensionContext.Store.CloseableResource {
 
