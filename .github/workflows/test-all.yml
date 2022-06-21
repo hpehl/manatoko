@@ -11,6 +11,8 @@ on:
         options:
           - quay.io/halconsole/hal
           - quay.io/halconsole/hal-development
+  schedule:
+    - cron: '0 0 * * *'
 
 jobs:
   test:
