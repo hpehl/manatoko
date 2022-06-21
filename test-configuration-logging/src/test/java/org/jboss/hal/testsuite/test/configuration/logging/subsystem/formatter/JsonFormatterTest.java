@@ -34,11 +34,11 @@ import org.wildfly.extras.creaper.core.online.operations.Operations;
 import org.wildfly.extras.creaper.core.online.operations.Values;
 
 import static org.jboss.hal.testsuite.container.WildFlyConfiguration.DEFAULT;
+import static org.jboss.hal.testsuite.fixtures.LoggingFixtures.LOGGING_FORMATTER_ITEM;
+import static org.jboss.hal.testsuite.fixtures.LoggingFixtures.RECORD_DELIMITER;
 import static org.jboss.hal.testsuite.fixtures.LoggingFixtures.JsonFormatter.JSON_FORMATTER_DELETE;
 import static org.jboss.hal.testsuite.fixtures.LoggingFixtures.JsonFormatter.JSON_FORMATTER_RESET;
 import static org.jboss.hal.testsuite.fixtures.LoggingFixtures.JsonFormatter.JSON_FORMATTER_UPDATE;
-import static org.jboss.hal.testsuite.fixtures.LoggingFixtures.LOGGING_FORMATTER_ITEM;
-import static org.jboss.hal.testsuite.fixtures.LoggingFixtures.RECORD_DELIMITER;
 
 @Manatoko
 @Testcontainers

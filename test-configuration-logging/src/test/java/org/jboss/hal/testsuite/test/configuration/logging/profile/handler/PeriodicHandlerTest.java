@@ -42,11 +42,11 @@ import static org.jboss.hal.testsuite.container.WildFlyConfiguration.DEFAULT;
 import static org.jboss.hal.testsuite.fixtures.LoggingFixtures.LOGGING_PROFILE_HANDLER_ITEM;
 import static org.jboss.hal.testsuite.fixtures.LoggingFixtures.NAME;
 import static org.jboss.hal.testsuite.fixtures.LoggingFixtures.PATH_VALUE;
+import static org.jboss.hal.testsuite.fixtures.LoggingFixtures.SUFFIX;
+import static org.jboss.hal.testsuite.fixtures.LoggingFixtures.SUFFIX_VALUE;
 import static org.jboss.hal.testsuite.fixtures.LoggingFixtures.PeriodicHandler.PERIODIC_HANDLER_DELETE;
 import static org.jboss.hal.testsuite.fixtures.LoggingFixtures.PeriodicHandler.PERIODIC_HANDLER_READ;
 import static org.jboss.hal.testsuite.fixtures.LoggingFixtures.PeriodicHandler.PERIODIC_HANDLER_UPDATE;
-import static org.jboss.hal.testsuite.fixtures.LoggingFixtures.SUFFIX;
-import static org.jboss.hal.testsuite.fixtures.LoggingFixtures.SUFFIX_VALUE;
 
 @Manatoko
 @Testcontainers

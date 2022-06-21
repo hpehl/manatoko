@@ -36,9 +36,9 @@ import org.wildfly.extras.creaper.core.online.operations.Values;
 
 import static org.jboss.hal.dmr.ModelDescriptionConstants.QUEUE_LENGTH;
 import static org.jboss.hal.testsuite.container.WildFlyConfiguration.DEFAULT;
+import static org.jboss.hal.testsuite.fixtures.LoggingFixtures.LOGGING_HANDLER_ITEM;
 import static org.jboss.hal.testsuite.fixtures.LoggingFixtures.AsyncHandler.ASYNC_HANDLER_DELETE;
 import static org.jboss.hal.testsuite.fixtures.LoggingFixtures.AsyncHandler.ASYNC_HANDLER_UPDATE;
-import static org.jboss.hal.testsuite.fixtures.LoggingFixtures.LOGGING_HANDLER_ITEM;
 
 @Manatoko
 @Testcontainers

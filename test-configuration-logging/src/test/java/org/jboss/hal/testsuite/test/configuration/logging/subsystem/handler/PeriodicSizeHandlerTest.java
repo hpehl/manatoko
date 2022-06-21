@@ -40,11 +40,11 @@ import static org.jboss.hal.dmr.ModelDescriptionConstants.PATH;
 import static org.jboss.hal.testsuite.container.WildFlyConfiguration.DEFAULT;
 import static org.jboss.hal.testsuite.fixtures.LoggingFixtures.LOGGING_HANDLER_ITEM;
 import static org.jboss.hal.testsuite.fixtures.LoggingFixtures.PATH_VALUE;
+import static org.jboss.hal.testsuite.fixtures.LoggingFixtures.SUFFIX;
+import static org.jboss.hal.testsuite.fixtures.LoggingFixtures.SUFFIX_VALUE;
 import static org.jboss.hal.testsuite.fixtures.LoggingFixtures.PeriodicSizeHandler.PERIODIC_SIZE_HANDLER_DELETE;
 import static org.jboss.hal.testsuite.fixtures.LoggingFixtures.PeriodicSizeHandler.PERIODIC_SIZE_HANDLER_READ;
 import static org.jboss.hal.testsuite.fixtures.LoggingFixtures.PeriodicSizeHandler.PERIODIC_SIZE_HANDLER_UPDATE;
-import static org.jboss.hal.testsuite.fixtures.LoggingFixtures.SUFFIX;
-import static org.jboss.hal.testsuite.fixtures.LoggingFixtures.SUFFIX_VALUE;
 
 @Manatoko
 @Testcontainers

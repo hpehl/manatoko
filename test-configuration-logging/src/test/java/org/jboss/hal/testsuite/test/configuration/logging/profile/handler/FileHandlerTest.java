@@ -39,12 +39,12 @@ import org.wildfly.extras.creaper.core.online.operations.Values;
 import static org.jboss.hal.dmr.ModelDescriptionConstants.FILE;
 import static org.jboss.hal.dmr.ModelDescriptionConstants.PATH;
 import static org.jboss.hal.testsuite.container.WildFlyConfiguration.DEFAULT;
-import static org.jboss.hal.testsuite.fixtures.LoggingFixtures.FileHandler.FILE_HANDLER_DELETE;
-import static org.jboss.hal.testsuite.fixtures.LoggingFixtures.FileHandler.FILE_HANDLER_READ;
-import static org.jboss.hal.testsuite.fixtures.LoggingFixtures.FileHandler.FILE_HANDLER_UPDATE;
 import static org.jboss.hal.testsuite.fixtures.LoggingFixtures.LOGGING_PROFILE_HANDLER_ITEM;
 import static org.jboss.hal.testsuite.fixtures.LoggingFixtures.NAME;
 import static org.jboss.hal.testsuite.fixtures.LoggingFixtures.PATH_VALUE;
+import static org.jboss.hal.testsuite.fixtures.LoggingFixtures.FileHandler.FILE_HANDLER_DELETE;
+import static org.jboss.hal.testsuite.fixtures.LoggingFixtures.FileHandler.FILE_HANDLER_READ;
+import static org.jboss.hal.testsuite.fixtures.LoggingFixtures.FileHandler.FILE_HANDLER_UPDATE;
 
 @Manatoko
 @Testcontainers

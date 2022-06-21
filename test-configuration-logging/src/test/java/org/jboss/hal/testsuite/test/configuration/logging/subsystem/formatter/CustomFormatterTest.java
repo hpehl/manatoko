@@ -40,11 +40,11 @@ import static org.jboss.hal.dmr.ModelDescriptionConstants.PROPERTIES;
 import static org.jboss.hal.testsuite.container.WildFlyConfiguration.DEFAULT;
 import static org.jboss.hal.testsuite.fixtures.LoggingFixtures.CUSTOM_FORMATTER_CLASS_1_VALUE;
 import static org.jboss.hal.testsuite.fixtures.LoggingFixtures.CUSTOM_FORMATTER_MODULE_VALUE;
+import static org.jboss.hal.testsuite.fixtures.LoggingFixtures.LOGGING_FORMATTER_ITEM;
+import static org.jboss.hal.testsuite.fixtures.LoggingFixtures.RECORD_DELIMITER_PROPERTY_NAME;
 import static org.jboss.hal.testsuite.fixtures.LoggingFixtures.CustomFormatter.CUSTOM_FORMATTER_DELETE;
 import static org.jboss.hal.testsuite.fixtures.LoggingFixtures.CustomFormatter.CUSTOM_FORMATTER_RESET;
 import static org.jboss.hal.testsuite.fixtures.LoggingFixtures.CustomFormatter.CUSTOM_FORMATTER_UPDATE;
-import static org.jboss.hal.testsuite.fixtures.LoggingFixtures.LOGGING_FORMATTER_ITEM;
-import static org.jboss.hal.testsuite.fixtures.LoggingFixtures.RECORD_DELIMITER_PROPERTY_NAME;
 
 @Manatoko
 @Testcontainers

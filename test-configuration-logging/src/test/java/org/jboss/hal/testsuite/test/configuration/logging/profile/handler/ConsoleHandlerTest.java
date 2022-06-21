@@ -35,10 +35,10 @@ import org.wildfly.extras.creaper.core.online.operations.Address;
 import org.wildfly.extras.creaper.core.online.operations.Operations;
 
 import static org.jboss.hal.testsuite.container.WildFlyConfiguration.DEFAULT;
-import static org.jboss.hal.testsuite.fixtures.LoggingFixtures.ConsoleHandler.CONSOLE_HANDLER_DELETE;
-import static org.jboss.hal.testsuite.fixtures.LoggingFixtures.ConsoleHandler.CONSOLE_HANDLER_UPDATE;
 import static org.jboss.hal.testsuite.fixtures.LoggingFixtures.LOGGING_PROFILE_HANDLER_ITEM;
 import static org.jboss.hal.testsuite.fixtures.LoggingFixtures.NAME;
+import static org.jboss.hal.testsuite.fixtures.LoggingFixtures.ConsoleHandler.CONSOLE_HANDLER_DELETE;
+import static org.jboss.hal.testsuite.fixtures.LoggingFixtures.ConsoleHandler.CONSOLE_HANDLER_UPDATE;
 
 @Manatoko
 @Testcontainers

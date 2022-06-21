@@ -35,10 +35,10 @@ import org.wildfly.extras.creaper.core.online.operations.Address;
 import org.wildfly.extras.creaper.core.online.operations.Operations;
 
 import static org.jboss.hal.testsuite.container.WildFlyConfiguration.DEFAULT;
+import static org.jboss.hal.testsuite.fixtures.LoggingFixtures.NAME;
 import static org.jboss.hal.testsuite.fixtures.LoggingFixtures.Category.CATEGORY_DELETE;
 import static org.jboss.hal.testsuite.fixtures.LoggingFixtures.Category.CATEGORY_READ;
 import static org.jboss.hal.testsuite.fixtures.LoggingFixtures.Category.CATEGORY_UPDATE;
-import static org.jboss.hal.testsuite.fixtures.LoggingFixtures.NAME;
 
 @Manatoko
 @Testcontainers
