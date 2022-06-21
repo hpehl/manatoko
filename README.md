@@ -29,7 +29,7 @@ Tests need to be annotated with two annotations (in this order!):
    - `ArquillianExtension`: Takes care about the Arquillian integration
 2. `@Testcontainers`: Takes care of starting containers marked with `@Container`.
 
-A simple test which tests adding a new system property looks like this:
+A simple test that tests adding a new system property looks like this:
 
 ```java
 @Manatoko
