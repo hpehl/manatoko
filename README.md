@@ -81,7 +81,7 @@ To run the tests with a local browser, use
 
 ### Run Specific Tests
 
-If you just want to execute test of one module e.g. `test-configuration-systemproperty`, run 
+If you just want to execute tests of one specific module e.g. `test-configuration-systemproperty`, run 
 
 ```shell
 ./mvnw test -P all-tests --projects test-configuration-systemproperty --also-make
@@ -107,7 +107,7 @@ By default, the tests will use the following images:
 - WildFly standalone: [quay.io/halconsole/wildfly:latest](https://quay.io/repository/halconsole/wildfly)
 - WildFly domain: [quay.io/halconsole/wildfly-domain:latest](https://quay.io/repository/halconsole/wildfly-domain)
 
-The image names are defined by the properties `hal.image`, `wildfly.standalone.image` and `wildfly.domain.image`. You can customize these images by overriding the properties using `-D<key>=<value>`. Say you want to use the latest development version of HAL instead of the latest stable release, then use
+The image names are defined by the properties `hal.image`, `wildfly.standalone.image` and `wildfly.domain.image` defined in [`container.properties`](container/src/main/resources/container.properties). You can customize these images by overriding the properties using `-D<key>=<value>`. Say you want to use the latest development version of HAL instead of the latest stable release, then use
 
 ```shell
 ./mvnw test -P all-tests -Dhal.image=quay.io/halconsole/hal-development:latest
