@@ -26,7 +26,7 @@ A simple test which tests adding a new system property looks like this:
 @Testcontainers
 class SystemPropertyTest {
 
-   @Container static WildFlyContainer wildFly = WildFlyContainer.version(_26, STANDALONE);
+   @Container static WildFlyContainer wildFly = WildFlyContainer.standalone(DEFAULT);
 
    @Page SystemPropertyPage page;
    @Inject CrudOperations crud;
@@ -50,6 +50,8 @@ class SystemPropertyTest {
    }
 }
 ```
+
+See [`SystemPropertyTest`](test-configuration-systemproperty/src/test/java/org/jboss/hal/testsuite/configuration/systemproperty/SystemPropertyTest.java) for more details. 
 
 ## Tests
 
