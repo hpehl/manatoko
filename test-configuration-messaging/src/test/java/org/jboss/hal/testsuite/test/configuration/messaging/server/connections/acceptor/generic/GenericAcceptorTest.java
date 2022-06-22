@@ -38,10 +38,10 @@ import static org.jboss.hal.dmr.ModelDescriptionConstants.SERVER;
 import static org.jboss.hal.resources.Ids.ITEM;
 import static org.jboss.hal.resources.Ids.MESSAGING_ACCEPTOR;
 import static org.jboss.hal.testsuite.container.WildFlyConfiguration.FULL_HA;
-import static org.jboss.hal.testsuite.fixtures.MessagingFixtures.ACCP_GEN_CREATE;
-import static org.jboss.hal.testsuite.fixtures.MessagingFixtures.ACCP_GEN_DELETE;
-import static org.jboss.hal.testsuite.fixtures.MessagingFixtures.ACCP_GEN_TRY_UPDATE;
-import static org.jboss.hal.testsuite.fixtures.MessagingFixtures.ACCP_GEN_UPDATE;
+import static org.jboss.hal.testsuite.fixtures.MessagingFixtures.ACCEPTOR_GENERIC_CREATE;
+import static org.jboss.hal.testsuite.fixtures.MessagingFixtures.ACCEPTOR_GENERIC_DELETE;
+import static org.jboss.hal.testsuite.fixtures.MessagingFixtures.ACCEPTOR_GENERIC_TRY_UPDATE;
+import static org.jboss.hal.testsuite.fixtures.MessagingFixtures.ACCEPTOR_GENERIC_UPDATE;
 import static org.jboss.hal.testsuite.fixtures.MessagingFixtures.FACTORY_CLASS;
 import static org.jboss.hal.testsuite.fixtures.MessagingFixtures.SRV_UPDATE;
 import static org.jboss.hal.testsuite.fixtures.MessagingFixtures.acceptorGenericAddress;
@@ -57,11 +57,11 @@ class GenericAcceptorTest extends AbstractServerConnectionsTest {
         OnlineManagementClient client = wildFly.managementClient();
         client.apply(new AddMessagingServer(SRV_UPDATE));
         Operations operations = new Operations(client);
-        operations.add(acceptorGenericAddress(SRV_UPDATE, ACCP_GEN_UPDATE), Values.of(FACTORY_CLASS, Random.name()))
+        operations.add(acceptorGenericAddress(SRV_UPDATE, ACCEPTOR_GENERIC_UPDATE), Values.of(FACTORY_CLASS, Random.name()))
                 .assertSuccess();
-        operations.add(acceptorGenericAddress(SRV_UPDATE, ACCP_GEN_TRY_UPDATE), Values.of(FACTORY_CLASS, Random.name()))
+        operations.add(acceptorGenericAddress(SRV_UPDATE, ACCEPTOR_GENERIC_TRY_UPDATE), Values.of(FACTORY_CLASS, Random.name()))
                 .assertSuccess();
-        operations.add(acceptorGenericAddress(SRV_UPDATE, ACCP_GEN_DELETE), Values.of(FACTORY_CLASS, Random.name()))
+        operations.add(acceptorGenericAddress(SRV_UPDATE, ACCEPTOR_GENERIC_DELETE), Values.of(FACTORY_CLASS, Random.name()))
                 .assertSuccess();
     }
 
@@ -78,9 +78,9 @@ class GenericAcceptorTest extends AbstractServerConnectionsTest {
         FormFragment form = page.getAcceptorGenericForm();
         table.bind(form);
 
-        crudOperations.create(acceptorGenericAddress(SRV_UPDATE, ACCP_GEN_CREATE), table,
+        crudOperations.create(acceptorGenericAddress(SRV_UPDATE, ACCEPTOR_GENERIC_CREATE), table,
                 formFragment -> {
-                    formFragment.text(NAME, ACCP_GEN_CREATE);
+                    formFragment.text(NAME, ACCEPTOR_GENERIC_CREATE);
                     formFragment.text(FACTORY_CLASS, Random.name());
                 });
     }
@@ -93,7 +93,7 @@ class GenericAcceptorTest extends AbstractServerConnectionsTest {
         FormFragment form = page.getAcceptorGenericForm();
         table.bind(form);
 
-        crudOperations.createWithErrorAndCancelDialog(table, ACCP_GEN_CREATE, FACTORY_CLASS);
+        crudOperations.createWithErrorAndCancelDialog(table, ACCEPTOR_GENERIC_CREATE, FACTORY_CLASS);
     }
 
     @Test
@@ -103,8 +103,8 @@ class GenericAcceptorTest extends AbstractServerConnectionsTest {
         TableFragment table = page.getAcceptorGenericTable();
         FormFragment form = page.getAcceptorGenericForm();
         table.bind(form);
-        table.select(ACCP_GEN_UPDATE);
-        crudOperations.update(acceptorGenericAddress(SRV_UPDATE, ACCP_GEN_UPDATE), form, FACTORY_CLASS);
+        table.select(ACCEPTOR_GENERIC_UPDATE);
+        crudOperations.update(acceptorGenericAddress(SRV_UPDATE, ACCEPTOR_GENERIC_UPDATE), form, FACTORY_CLASS);
     }
 
     @Test
@@ -114,7 +114,7 @@ class GenericAcceptorTest extends AbstractServerConnectionsTest {
         TableFragment table = page.getAcceptorGenericTable();
         FormFragment form = page.getAcceptorGenericForm();
         table.bind(form);
-        table.select(ACCP_GEN_TRY_UPDATE);
+        table.select(ACCEPTOR_GENERIC_TRY_UPDATE);
         crudOperations.updateWithError(form, f -> f.clear(FACTORY_CLASS), FACTORY_CLASS);
     }
 
@@ -126,6 +126,7 @@ class GenericAcceptorTest extends AbstractServerConnectionsTest {
         FormFragment form = page.getAcceptorGenericForm();
         table.bind(form);
 
-        crudOperations.delete(acceptorGenericAddress(SRV_UPDATE, ACCP_GEN_DELETE), table, ACCP_GEN_DELETE);
+        crudOperations.delete(acceptorGenericAddress(SRV_UPDATE, ACCEPTOR_GENERIC_DELETE), table,
+                ACCEPTOR_GENERIC_DELETE);
     }
 }

@@ -41,10 +41,10 @@ import static org.jboss.hal.resources.Ids.ITEM;
 import static org.jboss.hal.resources.Ids.MESSAGING_ACCEPTOR;
 import static org.jboss.hal.resources.Ids.MESSAGING_REMOTE_ACCEPTOR;
 import static org.jboss.hal.testsuite.container.WildFlyConfiguration.FULL_HA;
-import static org.jboss.hal.testsuite.fixtures.MessagingFixtures.ACCP_REM_CREATE;
-import static org.jboss.hal.testsuite.fixtures.MessagingFixtures.ACCP_REM_DELETE;
-import static org.jboss.hal.testsuite.fixtures.MessagingFixtures.ACCP_REM_TRY_UPDATE;
-import static org.jboss.hal.testsuite.fixtures.MessagingFixtures.ACCP_REM_UPDATE;
+import static org.jboss.hal.testsuite.fixtures.MessagingFixtures.ACCEPTOR_REMOTE_CREATE;
+import static org.jboss.hal.testsuite.fixtures.MessagingFixtures.ACCEPTOR_REMOTE_DELETE;
+import static org.jboss.hal.testsuite.fixtures.MessagingFixtures.ACCEPTOR_REMOTE_TRY_UPDATE;
+import static org.jboss.hal.testsuite.fixtures.MessagingFixtures.ACCEPTOR_REMOTE_UPDATE;
 import static org.jboss.hal.testsuite.fixtures.MessagingFixtures.SRV_UPDATE;
 import static org.jboss.hal.testsuite.fixtures.MessagingFixtures.acceptorRemoteAddress;
 
@@ -59,11 +59,11 @@ class RemoteAcceptorTest extends AbstractServerConnectionsTest {
         OnlineManagementClient client = wildFly.managementClient();
         client.apply(new AddMessagingServer(SRV_UPDATE));
         Operations operations = new Operations(client);
-        operations.add(acceptorRemoteAddress(SRV_UPDATE, ACCP_REM_UPDATE), Values.of(SOCKET_BINDING, HTTP))
+        operations.add(acceptorRemoteAddress(SRV_UPDATE, ACCEPTOR_REMOTE_UPDATE), Values.of(SOCKET_BINDING, HTTP))
                 .assertSuccess();
-        operations.add(acceptorRemoteAddress(SRV_UPDATE, ACCP_REM_TRY_UPDATE), Values.of(SOCKET_BINDING, HTTP))
+        operations.add(acceptorRemoteAddress(SRV_UPDATE, ACCEPTOR_REMOTE_TRY_UPDATE), Values.of(SOCKET_BINDING, HTTP))
                 .assertSuccess();
-        operations.add(acceptorRemoteAddress(SRV_UPDATE, ACCP_REM_DELETE), Values.of(SOCKET_BINDING, HTTP))
+        operations.add(acceptorRemoteAddress(SRV_UPDATE, ACCEPTOR_REMOTE_DELETE), Values.of(SOCKET_BINDING, HTTP))
                 .assertSuccess();
     }
 
@@ -81,9 +81,9 @@ class RemoteAcceptorTest extends AbstractServerConnectionsTest {
         FormFragment form = page.getAcceptorRemoteForm();
         table.bind(form);
 
-        crudOperations.create(acceptorRemoteAddress(SRV_UPDATE, ACCP_REM_CREATE), table,
+        crudOperations.create(acceptorRemoteAddress(SRV_UPDATE, ACCEPTOR_REMOTE_CREATE), table,
                 formFragment -> {
-                    formFragment.text(NAME, ACCP_REM_CREATE);
+                    formFragment.text(NAME, ACCEPTOR_REMOTE_CREATE);
                     formFragment.text(SOCKET_BINDING, HTTP);
                 });
     }
@@ -97,7 +97,7 @@ class RemoteAcceptorTest extends AbstractServerConnectionsTest {
         FormFragment form = page.getAcceptorRemoteForm();
         table.bind(form);
 
-        crudOperations.createWithErrorAndCancelDialog(table, ACCP_REM_CREATE, SOCKET_BINDING);
+        crudOperations.createWithErrorAndCancelDialog(table, ACCEPTOR_REMOTE_CREATE, SOCKET_BINDING);
     }
 
     @Test
@@ -108,8 +108,8 @@ class RemoteAcceptorTest extends AbstractServerConnectionsTest {
         TableFragment table = page.getAcceptorRemoteTable();
         FormFragment form = page.getAcceptorRemoteForm();
         table.bind(form);
-        table.select(ACCP_REM_UPDATE);
-        crudOperations.update(acceptorRemoteAddress(SRV_UPDATE, ACCP_REM_UPDATE), form, SOCKET_BINDING, HTTPS);
+        table.select(ACCEPTOR_REMOTE_UPDATE);
+        crudOperations.update(acceptorRemoteAddress(SRV_UPDATE, ACCEPTOR_REMOTE_UPDATE), form, SOCKET_BINDING, HTTPS);
     }
 
     @Test
@@ -120,7 +120,7 @@ class RemoteAcceptorTest extends AbstractServerConnectionsTest {
         TableFragment table = page.getAcceptorRemoteTable();
         FormFragment form = page.getAcceptorRemoteForm();
         table.bind(form);
-        table.select(ACCP_REM_TRY_UPDATE);
+        table.select(ACCEPTOR_REMOTE_TRY_UPDATE);
         crudOperations.updateWithError(form, f -> f.clear(SOCKET_BINDING), SOCKET_BINDING);
     }
 
@@ -133,7 +133,7 @@ class RemoteAcceptorTest extends AbstractServerConnectionsTest {
         FormFragment form = page.getAcceptorRemoteForm();
         table.bind(form);
 
-        crudOperations.delete(acceptorRemoteAddress(SRV_UPDATE, ACCP_REM_DELETE), table, ACCP_REM_DELETE);
+        crudOperations.delete(acceptorRemoteAddress(SRV_UPDATE, ACCEPTOR_REMOTE_DELETE), table, ACCEPTOR_REMOTE_DELETE);
     }
 
 }

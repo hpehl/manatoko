@@ -36,8 +36,8 @@ import static org.jboss.hal.dmr.ModelDescriptionConstants.SERVER;
 import static org.jboss.hal.resources.Ids.ITEM;
 import static org.jboss.hal.resources.Ids.MESSAGING_CORE_QUEUE;
 import static org.jboss.hal.testsuite.container.WildFlyConfiguration.FULL_HA;
-import static org.jboss.hal.testsuite.fixtures.MessagingFixtures.COREQUEUE_CREATE;
-import static org.jboss.hal.testsuite.fixtures.MessagingFixtures.COREQUEUE_DELETE;
+import static org.jboss.hal.testsuite.fixtures.MessagingFixtures.CORE_QUEUE_CREATE;
+import static org.jboss.hal.testsuite.fixtures.MessagingFixtures.CORE_QUEUE_DELETE;
 import static org.jboss.hal.testsuite.fixtures.MessagingFixtures.SRV_UPDATE;
 import static org.jboss.hal.testsuite.fixtures.MessagingFixtures.coreQueueAddress;
 
@@ -52,7 +52,7 @@ class CoreQueueTest extends AbstractServerDestinationsTest {
         OnlineManagementClient client = wildFly.managementClient();
         client.apply(new AddMessagingServer(SRV_UPDATE));
         Operations operations = new Operations(client);
-        operations.add(coreQueueAddress(SRV_UPDATE, COREQUEUE_DELETE), Values.of(QUEUE_ADDRESS, Random.name()))
+        operations.add(coreQueueAddress(SRV_UPDATE, CORE_QUEUE_DELETE), Values.of(QUEUE_ADDRESS, Random.name()))
                 .assertSuccess();
     }
 
@@ -68,9 +68,9 @@ class CoreQueueTest extends AbstractServerDestinationsTest {
         FormFragment form = page.getCoreQueueForm();
         table.bind(form);
 
-        crudOperations.create(coreQueueAddress(SRV_UPDATE, COREQUEUE_CREATE), table,
+        crudOperations.create(coreQueueAddress(SRV_UPDATE, CORE_QUEUE_CREATE), table,
                 formFragment -> {
-                    formFragment.text(NAME, COREQUEUE_CREATE);
+                    formFragment.text(NAME, CORE_QUEUE_CREATE);
                     formFragment.text(QUEUE_ADDRESS, Random.name());
                 });
     }
@@ -82,6 +82,6 @@ class CoreQueueTest extends AbstractServerDestinationsTest {
         FormFragment form = page.getCoreQueueForm();
         table.bind(form);
 
-        crudOperations.delete(coreQueueAddress(SRV_UPDATE, COREQUEUE_DELETE), table, COREQUEUE_DELETE);
+        crudOperations.delete(coreQueueAddress(SRV_UPDATE, CORE_QUEUE_DELETE), table, CORE_QUEUE_DELETE);
     }
 }

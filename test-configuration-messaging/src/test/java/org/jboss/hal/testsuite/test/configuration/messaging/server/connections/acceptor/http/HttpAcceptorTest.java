@@ -40,9 +40,9 @@ import static org.jboss.hal.resources.Ids.ITEM;
 import static org.jboss.hal.resources.Ids.MESSAGING_ACCEPTOR;
 import static org.jboss.hal.resources.Ids.MESSAGING_HTTP_ACCEPTOR;
 import static org.jboss.hal.testsuite.container.WildFlyConfiguration.FULL_HA;
-import static org.jboss.hal.testsuite.fixtures.MessagingFixtures.ACCP_HTTP_CREATE;
-import static org.jboss.hal.testsuite.fixtures.MessagingFixtures.ACCP_HTTP_DELETE;
-import static org.jboss.hal.testsuite.fixtures.MessagingFixtures.ACCP_HTTP_UPDATE;
+import static org.jboss.hal.testsuite.fixtures.MessagingFixtures.ACCEPTOR_HTTP_CREATE;
+import static org.jboss.hal.testsuite.fixtures.MessagingFixtures.ACCEPTOR_HTTP_DELETE;
+import static org.jboss.hal.testsuite.fixtures.MessagingFixtures.ACCEPTOR_HTTP_UPDATE;
 import static org.jboss.hal.testsuite.fixtures.MessagingFixtures.SRV_UPDATE;
 import static org.jboss.hal.testsuite.fixtures.MessagingFixtures.UPGRADE_LEGACY;
 import static org.jboss.hal.testsuite.fixtures.MessagingFixtures.acceptorHttpAddress;
@@ -58,9 +58,9 @@ class HttpAcceptorTest extends AbstractServerConnectionsTest {
         OnlineManagementClient client = wildFly.managementClient();
         client.apply(new AddMessagingServer(SRV_UPDATE));
         Operations operations = new Operations(client);
-        operations.add(acceptorHttpAddress(SRV_UPDATE, ACCP_HTTP_UPDATE), Values.of(HTTP_LISTENER, DEFAULT))
+        operations.add(acceptorHttpAddress(SRV_UPDATE, ACCEPTOR_HTTP_UPDATE), Values.of(HTTP_LISTENER, DEFAULT))
                 .assertSuccess();
-        operations.add(acceptorHttpAddress(SRV_UPDATE, ACCP_HTTP_DELETE), Values.of(HTTP_LISTENER, DEFAULT))
+        operations.add(acceptorHttpAddress(SRV_UPDATE, ACCEPTOR_HTTP_DELETE), Values.of(HTTP_LISTENER, DEFAULT))
                 .assertSuccess();
     }
 
@@ -78,9 +78,9 @@ class HttpAcceptorTest extends AbstractServerConnectionsTest {
         FormFragment form = page.getAcceptorHttpForm();
         table.bind(form);
 
-        crudOperations.create(acceptorHttpAddress(SRV_UPDATE, ACCP_HTTP_CREATE), table,
+        crudOperations.create(acceptorHttpAddress(SRV_UPDATE, ACCEPTOR_HTTP_CREATE), table,
                 formFragment -> {
-                    formFragment.text(NAME, ACCP_HTTP_CREATE);
+                    formFragment.text(NAME, ACCEPTOR_HTTP_CREATE);
                     formFragment.text(HTTP_LISTENER, DEFAULT);
                 });
     }
@@ -94,7 +94,7 @@ class HttpAcceptorTest extends AbstractServerConnectionsTest {
         FormFragment form = page.getAcceptorHttpForm();
         table.bind(form);
 
-        crudOperations.createWithErrorAndCancelDialog(table, ACCP_HTTP_CREATE, HTTP_LISTENER);
+        crudOperations.createWithErrorAndCancelDialog(table, ACCEPTOR_HTTP_CREATE, HTTP_LISTENER);
     }
 
     @Test
@@ -105,8 +105,8 @@ class HttpAcceptorTest extends AbstractServerConnectionsTest {
         TableFragment table = page.getAcceptorHttpTable();
         FormFragment form = page.getAcceptorHttpForm();
         table.bind(form);
-        table.select(ACCP_HTTP_UPDATE);
-        crudOperations.update(acceptorHttpAddress(SRV_UPDATE, ACCP_HTTP_UPDATE), form, UPGRADE_LEGACY, false);
+        table.select(ACCEPTOR_HTTP_UPDATE);
+        crudOperations.update(acceptorHttpAddress(SRV_UPDATE, ACCEPTOR_HTTP_UPDATE), form, UPGRADE_LEGACY, false);
     }
 
     @Test
@@ -117,7 +117,7 @@ class HttpAcceptorTest extends AbstractServerConnectionsTest {
         TableFragment table = page.getAcceptorHttpTable();
         FormFragment form = page.getAcceptorHttpForm();
         table.bind(form);
-        table.select(ACCP_HTTP_UPDATE);
+        table.select(ACCEPTOR_HTTP_UPDATE);
         crudOperations.updateWithError(form, f -> f.clear(HTTP_LISTENER), HTTP_LISTENER);
     }
 
@@ -130,7 +130,7 @@ class HttpAcceptorTest extends AbstractServerConnectionsTest {
         FormFragment form = page.getAcceptorHttpForm();
         table.bind(form);
 
-        crudOperations.delete(acceptorHttpAddress(SRV_UPDATE, ACCP_HTTP_DELETE), table, ACCP_HTTP_DELETE);
+        crudOperations.delete(acceptorHttpAddress(SRV_UPDATE, ACCEPTOR_HTTP_DELETE), table, ACCEPTOR_HTTP_DELETE);
     }
 
 }

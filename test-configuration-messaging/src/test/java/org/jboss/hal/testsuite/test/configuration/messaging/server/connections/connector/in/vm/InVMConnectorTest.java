@@ -38,10 +38,10 @@ import static org.jboss.hal.resources.Ids.ITEM;
 import static org.jboss.hal.resources.Ids.MESSAGING_CONNECTOR;
 import static org.jboss.hal.resources.Ids.MESSAGING_IN_VM_CONNECTOR;
 import static org.jboss.hal.testsuite.container.WildFlyConfiguration.FULL_HA;
-import static org.jboss.hal.testsuite.fixtures.MessagingFixtures.CONN_INVM_CREATE;
-import static org.jboss.hal.testsuite.fixtures.MessagingFixtures.CONN_INVM_DELETE;
-import static org.jboss.hal.testsuite.fixtures.MessagingFixtures.CONN_INVM_TRY_UPDATE;
-import static org.jboss.hal.testsuite.fixtures.MessagingFixtures.CONN_INVM_UPDATE;
+import static org.jboss.hal.testsuite.fixtures.MessagingFixtures.CONNECTOR_IN_VM_CREATE;
+import static org.jboss.hal.testsuite.fixtures.MessagingFixtures.CONNECTOR_IN_VM_DELETE;
+import static org.jboss.hal.testsuite.fixtures.MessagingFixtures.CONNECTOR_IN_VM_TRY_UPDATE;
+import static org.jboss.hal.testsuite.fixtures.MessagingFixtures.CONNECTOR_IN_VM_UPDATE;
 import static org.jboss.hal.testsuite.fixtures.MessagingFixtures.SERVER_ID;
 import static org.jboss.hal.testsuite.fixtures.MessagingFixtures.SRV_UPDATE;
 import static org.jboss.hal.testsuite.fixtures.MessagingFixtures.connectorInVMAddress;
@@ -57,10 +57,10 @@ class InVMConnectorTest extends AbstractServerConnectionsTest {
         OnlineManagementClient client = wildFly.managementClient();
         client.apply(new AddMessagingServer(SRV_UPDATE));
         Operations operations = new Operations(client);
-        operations.add(connectorInVMAddress(SRV_UPDATE, CONN_INVM_UPDATE), Values.of(SERVER_ID, 11)).assertSuccess();
-        operations.add(connectorInVMAddress(SRV_UPDATE, CONN_INVM_TRY_UPDATE), Values.of(SERVER_ID, 12))
+        operations.add(connectorInVMAddress(SRV_UPDATE, CONNECTOR_IN_VM_UPDATE), Values.of(SERVER_ID, 11)).assertSuccess();
+        operations.add(connectorInVMAddress(SRV_UPDATE, CONNECTOR_IN_VM_TRY_UPDATE), Values.of(SERVER_ID, 12))
                 .assertSuccess();
-        operations.add(connectorInVMAddress(SRV_UPDATE, CONN_INVM_DELETE), Values.of(SERVER_ID, 22)).assertSuccess();
+        operations.add(connectorInVMAddress(SRV_UPDATE, CONNECTOR_IN_VM_DELETE), Values.of(SERVER_ID, 22)).assertSuccess();
     }
 
     @BeforeEach
@@ -77,9 +77,9 @@ class InVMConnectorTest extends AbstractServerConnectionsTest {
         FormFragment form = page.getConnectorInVMForm();
         table.bind(form);
 
-        crudOperations.create(connectorInVMAddress(SRV_UPDATE, CONN_INVM_CREATE), table,
+        crudOperations.create(connectorInVMAddress(SRV_UPDATE, CONNECTOR_IN_VM_CREATE), table,
                 formFragment -> {
-                    formFragment.text(NAME, CONN_INVM_CREATE);
+                    formFragment.text(NAME, CONNECTOR_IN_VM_CREATE);
                     formFragment.number(SERVER_ID, 123);
                 });
     }
@@ -93,7 +93,7 @@ class InVMConnectorTest extends AbstractServerConnectionsTest {
         FormFragment form = page.getConnectorInVMForm();
         table.bind(form);
 
-        crudOperations.createWithErrorAndCancelDialog(table, CONN_INVM_CREATE, SERVER_ID);
+        crudOperations.createWithErrorAndCancelDialog(table, CONNECTOR_IN_VM_CREATE, SERVER_ID);
     }
 
     @Test
@@ -104,8 +104,8 @@ class InVMConnectorTest extends AbstractServerConnectionsTest {
         TableFragment table = page.getConnectorInVMTable();
         FormFragment form = page.getConnectorInVMForm();
         table.bind(form);
-        table.select(CONN_INVM_UPDATE);
-        crudOperations.update(connectorInVMAddress(SRV_UPDATE, CONN_INVM_UPDATE), form, SERVER_ID, 89);
+        table.select(CONNECTOR_IN_VM_UPDATE);
+        crudOperations.update(connectorInVMAddress(SRV_UPDATE, CONNECTOR_IN_VM_UPDATE), form, SERVER_ID, 89);
     }
 
     @Test
@@ -116,7 +116,7 @@ class InVMConnectorTest extends AbstractServerConnectionsTest {
         TableFragment table = page.getConnectorInVMTable();
         FormFragment form = page.getConnectorInVMForm();
         table.bind(form);
-        table.select(CONN_INVM_TRY_UPDATE);
+        table.select(CONNECTOR_IN_VM_TRY_UPDATE);
         crudOperations.updateWithError(form, f -> f.clear(SERVER_ID), SERVER_ID);
     }
 
@@ -129,6 +129,6 @@ class InVMConnectorTest extends AbstractServerConnectionsTest {
         FormFragment form = page.getConnectorInVMForm();
         table.bind(form);
 
-        crudOperations.delete(connectorInVMAddress(SRV_UPDATE, CONN_INVM_DELETE), table, CONN_INVM_DELETE);
+        crudOperations.delete(connectorInVMAddress(SRV_UPDATE, CONNECTOR_IN_VM_DELETE), table, CONNECTOR_IN_VM_DELETE);
     }
 }

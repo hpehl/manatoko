@@ -44,10 +44,10 @@ import static org.jboss.hal.resources.Ids.ITEM;
 import static org.jboss.hal.resources.Ids.MESSAGING_CONNECTOR;
 import static org.jboss.hal.resources.Ids.MESSAGING_HTTP_CONNECTOR;
 import static org.jboss.hal.testsuite.container.WildFlyConfiguration.FULL_HA;
-import static org.jboss.hal.testsuite.fixtures.MessagingFixtures.CONN_HTTP_CREATE;
-import static org.jboss.hal.testsuite.fixtures.MessagingFixtures.CONN_HTTP_DELETE;
-import static org.jboss.hal.testsuite.fixtures.MessagingFixtures.CONN_HTTP_TRY_UPDATE;
-import static org.jboss.hal.testsuite.fixtures.MessagingFixtures.CONN_HTTP_UPDATE;
+import static org.jboss.hal.testsuite.fixtures.MessagingFixtures.CONNECTOR_HTTP_CREATE;
+import static org.jboss.hal.testsuite.fixtures.MessagingFixtures.CONNECTOR_HTTP_DELETE;
+import static org.jboss.hal.testsuite.fixtures.MessagingFixtures.CONNECTOR_HTTP_TRY_UPDATE;
+import static org.jboss.hal.testsuite.fixtures.MessagingFixtures.CONNECTOR_HTTP_UPDATE;
 import static org.jboss.hal.testsuite.fixtures.MessagingFixtures.SERVER_NAME;
 import static org.jboss.hal.testsuite.fixtures.MessagingFixtures.SRV_UPDATE;
 import static org.jboss.hal.testsuite.fixtures.MessagingFixtures.connectorHttpAddress;
@@ -64,11 +64,11 @@ class HttpConnectorTest extends AbstractServerConnectionsTest {
         OnlineManagementClient client = wildFly.managementClient();
         client.apply(new AddMessagingServer(SRV_UPDATE));
         Operations operations = new Operations(client);
-        operations.add(connectorHttpAddress(SRV_UPDATE, CONN_HTTP_UPDATE),
+        operations.add(connectorHttpAddress(SRV_UPDATE, CONNECTOR_HTTP_UPDATE),
                 Values.of(ENDPOINT, HTTP_ACCEPTOR).and(SOCKET_BINDING, HTTP)).assertSuccess();
-        operations.add(connectorHttpAddress(SRV_UPDATE, CONN_HTTP_TRY_UPDATE),
+        operations.add(connectorHttpAddress(SRV_UPDATE, CONNECTOR_HTTP_TRY_UPDATE),
                 Values.of(ENDPOINT, HTTP_ACCEPTOR).and(SOCKET_BINDING, HTTP)).assertSuccess();
-        operations.add(connectorHttpAddress(SRV_UPDATE, CONN_HTTP_DELETE),
+        operations.add(connectorHttpAddress(SRV_UPDATE, CONNECTOR_HTTP_DELETE),
                 Values.of(ENDPOINT, DEFAULT).and(SOCKET_BINDING, HTTP)).assertSuccess();
     }
 
@@ -86,9 +86,9 @@ class HttpConnectorTest extends AbstractServerConnectionsTest {
         FormFragment form = page.getConnectorHttpForm();
         table.bind(form);
 
-        crudOperations.create(connectorHttpAddress(SRV_UPDATE, CONN_HTTP_CREATE), table,
+        crudOperations.create(connectorHttpAddress(SRV_UPDATE, CONNECTOR_HTTP_CREATE), table,
                 formFragment -> {
-                    formFragment.text(NAME, CONN_HTTP_CREATE);
+                    formFragment.text(NAME, CONNECTOR_HTTP_CREATE);
                     formFragment.text(ENDPOINT, HTTP_ACCEPTOR);
                     formFragment.text(SOCKET_BINDING, HTTP);
                 });
@@ -103,7 +103,7 @@ class HttpConnectorTest extends AbstractServerConnectionsTest {
         FormFragment form = page.getConnectorHttpForm();
         table.bind(form);
 
-        crudOperations.createWithErrorAndCancelDialog(table, CONN_HTTP_CREATE, ENDPOINT);
+        crudOperations.createWithErrorAndCancelDialog(table, CONNECTOR_HTTP_CREATE, ENDPOINT);
     }
 
     @Test
@@ -114,8 +114,8 @@ class HttpConnectorTest extends AbstractServerConnectionsTest {
         TableFragment table = page.getConnectorHttpTable();
         FormFragment form = page.getConnectorHttpForm();
         table.bind(form);
-        table.select(CONN_HTTP_UPDATE);
-        crudOperations.update(connectorHttpAddress(SRV_UPDATE, CONN_HTTP_UPDATE), form, SERVER_NAME);
+        table.select(CONNECTOR_HTTP_UPDATE);
+        crudOperations.update(connectorHttpAddress(SRV_UPDATE, CONNECTOR_HTTP_UPDATE), form, SERVER_NAME);
     }
 
     @Test
@@ -126,7 +126,7 @@ class HttpConnectorTest extends AbstractServerConnectionsTest {
         TableFragment table = page.getConnectorHttpTable();
         FormFragment form = page.getConnectorHttpForm();
         table.bind(form);
-        table.select(CONN_HTTP_TRY_UPDATE);
+        table.select(CONNECTOR_HTTP_TRY_UPDATE);
         crudOperations.updateWithError(form, f -> f.clear(ENDPOINT), ENDPOINT);
     }
 
@@ -139,7 +139,7 @@ class HttpConnectorTest extends AbstractServerConnectionsTest {
         FormFragment form = page.getConnectorHttpForm();
         table.bind(form);
 
-        crudOperations.delete(connectorHttpAddress(SRV_UPDATE, CONN_HTTP_DELETE), table, CONN_HTTP_DELETE);
+        crudOperations.delete(connectorHttpAddress(SRV_UPDATE, CONNECTOR_HTTP_DELETE), table, CONNECTOR_HTTP_DELETE);
     }
 
 }

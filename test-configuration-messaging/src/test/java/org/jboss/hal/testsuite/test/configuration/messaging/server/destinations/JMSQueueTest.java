@@ -36,9 +36,9 @@ import static org.jboss.hal.dmr.ModelDescriptionConstants.SERVER;
 import static org.jboss.hal.resources.Ids.ITEM;
 import static org.jboss.hal.resources.Ids.MESSAGING_JMS_QUEUE;
 import static org.jboss.hal.testsuite.container.WildFlyConfiguration.FULL_HA;
-import static org.jboss.hal.testsuite.fixtures.MessagingFixtures.JMSQUEUE_CREATE;
-import static org.jboss.hal.testsuite.fixtures.MessagingFixtures.JMSQUEUE_DELETE;
-import static org.jboss.hal.testsuite.fixtures.MessagingFixtures.JMSQUEUE_UPDATE;
+import static org.jboss.hal.testsuite.fixtures.MessagingFixtures.JMS_QUEUE_CREATE;
+import static org.jboss.hal.testsuite.fixtures.MessagingFixtures.JMS_QUEUE_DELETE;
+import static org.jboss.hal.testsuite.fixtures.MessagingFixtures.JMS_QUEUE_UPDATE;
 import static org.jboss.hal.testsuite.fixtures.MessagingFixtures.SRV_UPDATE;
 import static org.jboss.hal.testsuite.fixtures.MessagingFixtures.jmsQueueAddress;
 
@@ -53,9 +53,9 @@ class JMSQueueTest extends AbstractServerDestinationsTest {
         OnlineManagementClient client = wildFly.managementClient();
         client.apply(new AddMessagingServer(SRV_UPDATE));
         Operations operations = new Operations(client);
-        operations.add(jmsQueueAddress(SRV_UPDATE, JMSQUEUE_UPDATE), Values.ofList(ENTRIES, Random.name()))
+        operations.add(jmsQueueAddress(SRV_UPDATE, JMS_QUEUE_UPDATE), Values.ofList(ENTRIES, Random.name()))
                 .assertSuccess();
-        operations.add(jmsQueueAddress(SRV_UPDATE, JMSQUEUE_DELETE), Values.ofList(ENTRIES, Random.name()))
+        operations.add(jmsQueueAddress(SRV_UPDATE, JMS_QUEUE_DELETE), Values.ofList(ENTRIES, Random.name()))
                 .assertSuccess();
     }
 
@@ -71,9 +71,9 @@ class JMSQueueTest extends AbstractServerDestinationsTest {
         FormFragment form = page.getJmsQueueForm();
         table.bind(form);
 
-        crudOperations.create(jmsQueueAddress(SRV_UPDATE, JMSQUEUE_CREATE), table,
+        crudOperations.create(jmsQueueAddress(SRV_UPDATE, JMS_QUEUE_CREATE), table,
                 formFragment -> {
-                    formFragment.text(NAME, JMSQUEUE_CREATE);
+                    formFragment.text(NAME, JMS_QUEUE_CREATE);
                     formFragment.properties(ENTRIES).add(Random.name());
                 });
     }
@@ -86,8 +86,8 @@ class JMSQueueTest extends AbstractServerDestinationsTest {
         table.bind(form);
         String val = Random.name();
 
-        table.select(JMSQUEUE_UPDATE);
-        crudOperations.update(jmsQueueAddress(SRV_UPDATE, JMSQUEUE_UPDATE), form,
+        table.select(JMS_QUEUE_UPDATE);
+        crudOperations.update(jmsQueueAddress(SRV_UPDATE, JMS_QUEUE_UPDATE), form,
                 formFragment -> formFragment.list(ENTRIES).add(val),
                 resourceVerifier -> resourceVerifier.verifyListAttributeContainsValue(ENTRIES, val));
     }
@@ -99,6 +99,6 @@ class JMSQueueTest extends AbstractServerDestinationsTest {
         FormFragment form = page.getJmsQueueForm();
         table.bind(form);
 
-        crudOperations.delete(jmsQueueAddress(SRV_UPDATE, JMSQUEUE_DELETE), table, JMSQUEUE_DELETE);
+        crudOperations.delete(jmsQueueAddress(SRV_UPDATE, JMS_QUEUE_DELETE), table, JMS_QUEUE_DELETE);
     }
 }

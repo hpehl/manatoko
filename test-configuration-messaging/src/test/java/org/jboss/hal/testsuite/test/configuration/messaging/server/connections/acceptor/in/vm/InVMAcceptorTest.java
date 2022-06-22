@@ -38,10 +38,10 @@ import static org.jboss.hal.resources.Ids.ITEM;
 import static org.jboss.hal.resources.Ids.MESSAGING_ACCEPTOR;
 import static org.jboss.hal.resources.Ids.MESSAGING_IN_VM_ACCEPTOR;
 import static org.jboss.hal.testsuite.container.WildFlyConfiguration.FULL_HA;
-import static org.jboss.hal.testsuite.fixtures.MessagingFixtures.ACCP_INVM_CREATE;
-import static org.jboss.hal.testsuite.fixtures.MessagingFixtures.ACCP_INVM_DELETE;
-import static org.jboss.hal.testsuite.fixtures.MessagingFixtures.ACCP_INVM_TRY_UPDATE;
-import static org.jboss.hal.testsuite.fixtures.MessagingFixtures.ACCP_INVM_UPDATE;
+import static org.jboss.hal.testsuite.fixtures.MessagingFixtures.ACCEPTOR_IN_VM_CREATE;
+import static org.jboss.hal.testsuite.fixtures.MessagingFixtures.ACCEPTOR_IN_VM_DELETE;
+import static org.jboss.hal.testsuite.fixtures.MessagingFixtures.ACCEPTOR_IN_VM_TRY_UPDATE;
+import static org.jboss.hal.testsuite.fixtures.MessagingFixtures.ACCEPTOR_IN_VM_UPDATE;
 import static org.jboss.hal.testsuite.fixtures.MessagingFixtures.SERVER_ID;
 import static org.jboss.hal.testsuite.fixtures.MessagingFixtures.SRV_UPDATE;
 import static org.jboss.hal.testsuite.fixtures.MessagingFixtures.acceptorInVMAddress;
@@ -57,9 +57,9 @@ class InVMAcceptorTest extends AbstractServerConnectionsTest {
         OnlineManagementClient client = wildFly.managementClient();
         client.apply(new AddMessagingServer(SRV_UPDATE));
         Operations operations = new Operations(client);
-        operations.add(acceptorInVMAddress(SRV_UPDATE, ACCP_INVM_UPDATE), Values.of(SERVER_ID, 11)).assertSuccess();
-        operations.add(acceptorInVMAddress(SRV_UPDATE, ACCP_INVM_TRY_UPDATE), Values.of(SERVER_ID, 12)).assertSuccess();
-        operations.add(acceptorInVMAddress(SRV_UPDATE, ACCP_INVM_DELETE), Values.of(SERVER_ID, 22)).assertSuccess();
+        operations.add(acceptorInVMAddress(SRV_UPDATE, ACCEPTOR_IN_VM_UPDATE), Values.of(SERVER_ID, 11)).assertSuccess();
+        operations.add(acceptorInVMAddress(SRV_UPDATE, ACCEPTOR_IN_VM_TRY_UPDATE), Values.of(SERVER_ID, 12)).assertSuccess();
+        operations.add(acceptorInVMAddress(SRV_UPDATE, ACCEPTOR_IN_VM_DELETE), Values.of(SERVER_ID, 22)).assertSuccess();
     }
 
     @BeforeEach
@@ -76,9 +76,9 @@ class InVMAcceptorTest extends AbstractServerConnectionsTest {
         FormFragment form = page.getAcceptorInVMForm();
         table.bind(form);
 
-        crudOperations.create(acceptorInVMAddress(SRV_UPDATE, ACCP_INVM_CREATE), table,
+        crudOperations.create(acceptorInVMAddress(SRV_UPDATE, ACCEPTOR_IN_VM_CREATE), table,
                 formFragment -> {
-                    formFragment.text(NAME, ACCP_INVM_CREATE);
+                    formFragment.text(NAME, ACCEPTOR_IN_VM_CREATE);
                     formFragment.number(SERVER_ID, 123);
                 });
     }
@@ -92,7 +92,7 @@ class InVMAcceptorTest extends AbstractServerConnectionsTest {
         FormFragment form = page.getAcceptorInVMForm();
         table.bind(form);
 
-        crudOperations.createWithErrorAndCancelDialog(table, ACCP_INVM_CREATE, SERVER_ID);
+        crudOperations.createWithErrorAndCancelDialog(table, ACCEPTOR_IN_VM_CREATE, SERVER_ID);
     }
 
     @Test
@@ -103,8 +103,8 @@ class InVMAcceptorTest extends AbstractServerConnectionsTest {
         TableFragment table = page.getAcceptorInVMTable();
         FormFragment form = page.getAcceptorInVMForm();
         table.bind(form);
-        table.select(ACCP_INVM_UPDATE);
-        crudOperations.update(acceptorInVMAddress(SRV_UPDATE, ACCP_INVM_UPDATE), form, SERVER_ID, 89);
+        table.select(ACCEPTOR_IN_VM_UPDATE);
+        crudOperations.update(acceptorInVMAddress(SRV_UPDATE, ACCEPTOR_IN_VM_UPDATE), form, SERVER_ID, 89);
     }
 
     @Test
@@ -115,7 +115,7 @@ class InVMAcceptorTest extends AbstractServerConnectionsTest {
         TableFragment table = page.getAcceptorInVMTable();
         FormFragment form = page.getAcceptorInVMForm();
         table.bind(form);
-        table.select(ACCP_INVM_TRY_UPDATE);
+        table.select(ACCEPTOR_IN_VM_TRY_UPDATE);
         crudOperations.updateWithError(form, f -> f.clear(SERVER_ID), SERVER_ID);
     }
 
@@ -128,7 +128,7 @@ class InVMAcceptorTest extends AbstractServerConnectionsTest {
         FormFragment form = page.getAcceptorInVMForm();
         table.bind(form);
 
-        crudOperations.delete(acceptorInVMAddress(SRV_UPDATE, ACCP_INVM_DELETE), table, ACCP_INVM_DELETE);
+        crudOperations.delete(acceptorInVMAddress(SRV_UPDATE, ACCEPTOR_IN_VM_DELETE), table, ACCEPTOR_IN_VM_DELETE);
     }
 
 }

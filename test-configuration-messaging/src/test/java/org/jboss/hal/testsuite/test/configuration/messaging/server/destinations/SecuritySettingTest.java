@@ -40,9 +40,9 @@ import static org.jboss.hal.testsuite.container.WildFlyConfiguration.FULL_HA;
 import static org.jboss.hal.testsuite.fixtures.MessagingFixtures.CONSUME;
 import static org.jboss.hal.testsuite.fixtures.MessagingFixtures.MESSAGING_SECURITY_SETTING_ROLE;
 import static org.jboss.hal.testsuite.fixtures.MessagingFixtures.ROLE_CREATE;
-import static org.jboss.hal.testsuite.fixtures.MessagingFixtures.SECSET_CREATE;
-import static org.jboss.hal.testsuite.fixtures.MessagingFixtures.SECSET_DELETE;
-import static org.jboss.hal.testsuite.fixtures.MessagingFixtures.SECSET_UPDATE;
+import static org.jboss.hal.testsuite.fixtures.MessagingFixtures.SECURITY_SETTINGS_CREATE;
+import static org.jboss.hal.testsuite.fixtures.MessagingFixtures.SECURITY_SETTINGS_DELETE;
+import static org.jboss.hal.testsuite.fixtures.MessagingFixtures.SECURITY_SETTINGS_UPDATE;
 import static org.jboss.hal.testsuite.fixtures.MessagingFixtures.SRV_UPDATE;
 import static org.jboss.hal.testsuite.fixtures.MessagingFixtures.securitySettingAddress;
 import static org.jboss.hal.testsuite.fixtures.MessagingFixtures.securitySettingRoleAddress;
@@ -58,8 +58,8 @@ class SecuritySettingTest extends AbstractServerDestinationsTest {
         OnlineManagementClient client = wildFly.managementClient();
         client.apply(new AddMessagingServer(SRV_UPDATE));
         Operations operations = new Operations(client);
-        createSecuritySettingsWithRoles(operations, SECSET_DELETE);
-        createSecuritySettingsWithRoles(operations, SECSET_UPDATE);
+        createSecuritySettingsWithRoles(operations, SECURITY_SETTINGS_DELETE);
+        createSecuritySettingsWithRoles(operations, SECURITY_SETTINGS_UPDATE);
     }
 
     private static void createSecuritySettingsWithRoles(Operations operations, String securitySetting)
@@ -85,9 +85,9 @@ class SecuritySettingTest extends AbstractServerDestinationsTest {
         FormFragment form = page.getSecuritySettingForm();
         table.bind(form);
 
-        crudOperations.create(securitySettingAddress(SRV_UPDATE, SECSET_CREATE), table,
+        crudOperations.create(securitySettingAddress(SRV_UPDATE, SECURITY_SETTINGS_CREATE), table,
                 formFragment -> {
-                    formFragment.text(PATTERN, SECSET_CREATE);
+                    formFragment.text(PATTERN, SECURITY_SETTINGS_CREATE);
                     formFragment.text(ROLE, Random.name());
                 });
     }
@@ -99,8 +99,9 @@ class SecuritySettingTest extends AbstractServerDestinationsTest {
         FormFragment form = page.getSecuritySettingForm();
         table.bind(form);
 
-        table.select(SECSET_UPDATE);
-        crudOperations.update(securitySettingRoleAddress(SRV_UPDATE, SECSET_UPDATE, ROLE_CREATE), form, CONSUME, true);
+        table.select(SECURITY_SETTINGS_UPDATE);
+        crudOperations.update(securitySettingRoleAddress(SRV_UPDATE, SECURITY_SETTINGS_UPDATE, ROLE_CREATE), form, CONSUME,
+                true);
     }
 
     @Test
@@ -110,6 +111,7 @@ class SecuritySettingTest extends AbstractServerDestinationsTest {
         FormFragment form = page.getSecuritySettingForm();
         table.bind(form);
 
-        crudOperations.delete(securitySettingAddress(SRV_UPDATE, SECSET_DELETE), table, SECSET_DELETE);
+        crudOperations.delete(securitySettingAddress(SRV_UPDATE, SECURITY_SETTINGS_DELETE), table,
+                SECURITY_SETTINGS_DELETE);
     }
 }

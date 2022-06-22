@@ -42,9 +42,9 @@ import static org.jboss.hal.resources.Ids.ITEM;
 import static org.jboss.hal.resources.Ids.MESSAGING_CONNECTOR;
 import static org.jboss.hal.resources.Ids.MESSAGING_REMOTE_CONNECTOR;
 import static org.jboss.hal.testsuite.container.WildFlyConfiguration.FULL_HA;
-import static org.jboss.hal.testsuite.fixtures.MessagingFixtures.CONN_REM_CREATE;
-import static org.jboss.hal.testsuite.fixtures.MessagingFixtures.CONN_REM_DELETE;
-import static org.jboss.hal.testsuite.fixtures.MessagingFixtures.CONN_REM_UPDATE;
+import static org.jboss.hal.testsuite.fixtures.MessagingFixtures.CONNECTOR_REMOTE_CREATE;
+import static org.jboss.hal.testsuite.fixtures.MessagingFixtures.CONNECTOR_REMOTE_DELETE;
+import static org.jboss.hal.testsuite.fixtures.MessagingFixtures.CONNECTOR_REMOTE_UPDATE;
 import static org.jboss.hal.testsuite.fixtures.MessagingFixtures.SRV_UPDATE;
 import static org.jboss.hal.testsuite.fixtures.MessagingFixtures.connectorRemoteAddress;
 
@@ -60,9 +60,9 @@ class RemoteConnectorTest extends AbstractServerConnectionsTest {
         OnlineManagementClient client = wildFly.managementClient();
         client.apply(new AddMessagingServer(SRV_UPDATE));
         Operations operations = new Operations(client);
-        operations.add(connectorRemoteAddress(SRV_UPDATE, CONN_REM_UPDATE), Values.of(SOCKET_BINDING, HTTP))
+        operations.add(connectorRemoteAddress(SRV_UPDATE, CONNECTOR_REMOTE_UPDATE), Values.of(SOCKET_BINDING, HTTP))
                 .assertSuccess();
-        operations.add(connectorRemoteAddress(SRV_UPDATE, CONN_REM_DELETE), Values.of(SOCKET_BINDING, HTTP))
+        operations.add(connectorRemoteAddress(SRV_UPDATE, CONNECTOR_REMOTE_DELETE), Values.of(SOCKET_BINDING, HTTP))
                 .assertSuccess();
     }
 
@@ -80,9 +80,9 @@ class RemoteConnectorTest extends AbstractServerConnectionsTest {
         FormFragment form = page.getConnectorRemoteForm();
         table.bind(form);
 
-        crudOperations.create(connectorRemoteAddress(SRV_UPDATE, CONN_REM_CREATE), table,
+        crudOperations.create(connectorRemoteAddress(SRV_UPDATE, CONNECTOR_REMOTE_CREATE), table,
                 formFragment -> {
-                    formFragment.text(NAME, CONN_REM_CREATE);
+                    formFragment.text(NAME, CONNECTOR_REMOTE_CREATE);
                     formFragment.text(SOCKET_BINDING, HTTP);
                 });
     }
@@ -96,7 +96,7 @@ class RemoteConnectorTest extends AbstractServerConnectionsTest {
         FormFragment form = page.getConnectorRemoteForm();
         table.bind(form);
 
-        crudOperations.createWithErrorAndCancelDialog(table, CONN_REM_CREATE, SOCKET_BINDING);
+        crudOperations.createWithErrorAndCancelDialog(table, CONNECTOR_REMOTE_CREATE, SOCKET_BINDING);
     }
 
     @Test
@@ -107,8 +107,8 @@ class RemoteConnectorTest extends AbstractServerConnectionsTest {
         TableFragment table = page.getConnectorRemoteTable();
         FormFragment form = page.getConnectorRemoteForm();
         table.bind(form);
-        table.select(CONN_REM_UPDATE);
-        crudOperations.update(connectorRemoteAddress(SRV_UPDATE, CONN_REM_UPDATE), form, SOCKET_BINDING, HTTPS);
+        table.select(CONNECTOR_REMOTE_UPDATE);
+        crudOperations.update(connectorRemoteAddress(SRV_UPDATE, CONNECTOR_REMOTE_UPDATE), form, SOCKET_BINDING, HTTPS);
     }
 
     @Test
@@ -119,7 +119,7 @@ class RemoteConnectorTest extends AbstractServerConnectionsTest {
         TableFragment table = page.getConnectorRemoteTable();
         FormFragment form = page.getConnectorRemoteForm();
         table.bind(form);
-        table.select(CONN_REM_UPDATE);
+        table.select(CONNECTOR_REMOTE_UPDATE);
         crudOperations.updateWithError(form, f -> f.clear(SOCKET_BINDING), SOCKET_BINDING);
     }
 
@@ -132,6 +132,7 @@ class RemoteConnectorTest extends AbstractServerConnectionsTest {
         FormFragment form = page.getConnectorRemoteForm();
         table.bind(form);
 
-        crudOperations.delete(connectorRemoteAddress(SRV_UPDATE, CONN_REM_DELETE), table, CONN_REM_DELETE);
+        crudOperations.delete(connectorRemoteAddress(SRV_UPDATE, CONNECTOR_REMOTE_DELETE), table,
+                CONNECTOR_REMOTE_DELETE);
     }
 }

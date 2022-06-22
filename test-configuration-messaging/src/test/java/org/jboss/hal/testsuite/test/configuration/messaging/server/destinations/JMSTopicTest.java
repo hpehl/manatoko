@@ -45,9 +45,9 @@ import static org.jboss.hal.dmr.ModelDescriptionConstants.SERVER;
 import static org.jboss.hal.resources.Ids.ITEM;
 import static org.jboss.hal.resources.Ids.MESSAGING_JMS_TOPIC;
 import static org.jboss.hal.testsuite.container.WildFlyConfiguration.FULL_HA;
-import static org.jboss.hal.testsuite.fixtures.MessagingFixtures.JMSTOPIC_CREATE;
-import static org.jboss.hal.testsuite.fixtures.MessagingFixtures.JMSTOPIC_DELETE;
-import static org.jboss.hal.testsuite.fixtures.MessagingFixtures.JMSTOPIC_UPDATE;
+import static org.jboss.hal.testsuite.fixtures.MessagingFixtures.JMS_TOPIC_CREATE;
+import static org.jboss.hal.testsuite.fixtures.MessagingFixtures.JMS_TOPIC_DELETE;
+import static org.jboss.hal.testsuite.fixtures.MessagingFixtures.JMS_TOPIC_UPDATE;
 import static org.jboss.hal.testsuite.fixtures.MessagingFixtures.SRV_UPDATE;
 import static org.jboss.hal.testsuite.fixtures.MessagingFixtures.jmsTopicAddress;
 import static org.jboss.hal.testsuite.fragment.finder.FinderFragment.runtimeSubsystemPath;
@@ -67,9 +67,9 @@ class JMSTopicTest extends AbstractServerDestinationsTest {
         client.apply(new AddMessagingServer(SRV_UPDATE));
         serverEnvironmentUtils = new ServerEnvironmentUtils(client);
         Operations operations = new Operations(client);
-        operations.add(jmsTopicAddress(SRV_UPDATE, JMSTOPIC_UPDATE), Values.ofList(ENTRIES, Random.name()))
+        operations.add(jmsTopicAddress(SRV_UPDATE, JMS_TOPIC_UPDATE), Values.ofList(ENTRIES, Random.name()))
                 .assertSuccess();
-        operations.add(jmsTopicAddress(SRV_UPDATE, JMSTOPIC_DELETE), Values.ofList(ENTRIES, Random.name()))
+        operations.add(jmsTopicAddress(SRV_UPDATE, JMS_TOPIC_DELETE), Values.ofList(ENTRIES, Random.name()))
                 .assertSuccess();
     }
 
@@ -85,9 +85,9 @@ class JMSTopicTest extends AbstractServerDestinationsTest {
         FormFragment form = page.getJmsTopicForm();
         table.bind(form);
 
-        crudOperations.create(jmsTopicAddress(SRV_UPDATE, JMSTOPIC_CREATE), table,
+        crudOperations.create(jmsTopicAddress(SRV_UPDATE, JMS_TOPIC_CREATE), table,
                 formFragment -> {
-                    formFragment.text(NAME, JMSTOPIC_CREATE);
+                    formFragment.text(NAME, JMS_TOPIC_CREATE);
                     formFragment.properties(ENTRIES).add(Random.name());
                 });
     }
@@ -100,8 +100,8 @@ class JMSTopicTest extends AbstractServerDestinationsTest {
         table.bind(form);
         String val = Random.name();
 
-        table.select(JMSTOPIC_UPDATE);
-        crudOperations.update(jmsTopicAddress(SRV_UPDATE, JMSTOPIC_UPDATE), form,
+        table.select(JMS_TOPIC_UPDATE);
+        crudOperations.update(jmsTopicAddress(SRV_UPDATE, JMS_TOPIC_UPDATE), form,
                 formFragment -> formFragment.list(ENTRIES).add(val),
                 resourceVerifier -> resourceVerifier.verifyListAttributeContainsValue(ENTRIES, val));
     }
@@ -113,7 +113,7 @@ class JMSTopicTest extends AbstractServerDestinationsTest {
         FormFragment form = page.getJmsTopicForm();
         table.bind(form);
 
-        crudOperations.delete(jmsTopicAddress(SRV_UPDATE, JMSTOPIC_DELETE), table, JMSTOPIC_DELETE);
+        crudOperations.delete(jmsTopicAddress(SRV_UPDATE, JMS_TOPIC_DELETE), table, JMS_TOPIC_DELETE);
     }
 
     @Test
@@ -121,7 +121,7 @@ class JMSTopicTest extends AbstractServerDestinationsTest {
         FinderPath path = runtimeSubsystemPath(serverEnvironmentUtils.getServerHostName(), MESSAGING_ACTIVEMQ)
                 .append(Ids.MESSAGING_SERVER_RUNTIME, Ids.messagingServer(SRV_UPDATE));
         String itemId = Ids.destination(null, null, SRV_UPDATE, "jms-topic",
-                JMSTOPIC_UPDATE);
+                JMS_TOPIC_UPDATE);
 
         ColumnFragment column = console.finder(NameTokens.RUNTIME, path)
                 .column(Ids.MESSAGING_SERVER_DESTINATION_RUNTIME);
@@ -129,7 +129,7 @@ class JMSTopicTest extends AbstractServerDestinationsTest {
                 .dropdown()
                 .click("Pause");
 
-        new ResourceVerifier(jmsTopicAddress(SRV_UPDATE, JMSTOPIC_UPDATE), client)
+        new ResourceVerifier(jmsTopicAddress(SRV_UPDATE, JMS_TOPIC_UPDATE), client)
                 .verifyAttribute(PAUSED, true);
     }
 }

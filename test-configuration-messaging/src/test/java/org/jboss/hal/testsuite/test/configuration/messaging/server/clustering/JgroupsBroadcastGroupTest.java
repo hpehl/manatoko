@@ -39,7 +39,7 @@ import static org.jboss.hal.dmr.ModelDescriptionConstants.SERVER;
 import static org.jboss.hal.testsuite.container.WildFlyConfiguration.FULL_HA;
 import static org.jboss.hal.testsuite.fixtures.MessagingFixtures.BROADCAST_GROUP_ITEM;
 import static org.jboss.hal.testsuite.fixtures.MessagingFixtures.BROADCAST_PERIOD;
-import static org.jboss.hal.testsuite.fixtures.MessagingFixtures.CONN_INVM_CREATE;
+import static org.jboss.hal.testsuite.fixtures.MessagingFixtures.CONNECTOR_IN_VM_CREATE;
 import static org.jboss.hal.testsuite.fixtures.MessagingFixtures.JGROUPS_BG_CREATE;
 import static org.jboss.hal.testsuite.fixtures.MessagingFixtures.JGROUPS_BG_DELETE;
 import static org.jboss.hal.testsuite.fixtures.MessagingFixtures.JGROUPS_BG_UPDATE;
@@ -61,10 +61,10 @@ class JgroupsBroadcastGroupTest extends AbstractClusteringTest {
         client.apply(new AddMessagingServer(SRV_UPDATE));
 
         Operations operations = new Operations(client);
-        operations.add(connectorInVMAddress(SRV_UPDATE, CONN_INVM_CREATE), Values.of(SERVER_ID, Random.number()));
+        operations.add(connectorInVMAddress(SRV_UPDATE, CONNECTOR_IN_VM_CREATE), Values.of(SERVER_ID, Random.number()));
 
         ModelNode connectors = new ModelNode();
-        connectors.add(new ModelNode(CONN_INVM_CREATE));
+        connectors.add(new ModelNode(CONNECTOR_IN_VM_CREATE));
         operations.add(jgroupsBroadcastGroupAddress(SRV_UPDATE, JGROUPS_BG_UPDATE),
                 Values.of(JGROUPS_CLUSTER, Random.name()).and(CONNECTORS, connectors));
         operations.add(jgroupsBroadcastGroupAddress(SRV_UPDATE, JGROUPS_BG_DELETE),
@@ -87,7 +87,7 @@ class JgroupsBroadcastGroupTest extends AbstractClusteringTest {
     void create() throws Exception {
         crudOperations.create(jgroupsBroadcastGroupAddress(SRV_UPDATE, JGROUPS_BG_CREATE), table, f -> {
             f.text(NAME, JGROUPS_BG_CREATE);
-            f.list(CONNECTORS).add(CONN_INVM_CREATE);
+            f.list(CONNECTORS).add(CONNECTOR_IN_VM_CREATE);
             f.text(JGROUPS_CLUSTER, Random.name());
         }, ResourceVerifier::verifyExists);
     }
