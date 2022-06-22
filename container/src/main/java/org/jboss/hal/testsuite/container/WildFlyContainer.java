@@ -70,6 +70,7 @@ public class WildFlyContainer extends GenericContainer<WildFlyContainer> {
     private final boolean standalone;
     private final String image;
     private final String[] command;
+    private final String defaultHost;
     private boolean started;
 
     private WildFlyContainer(boolean standalone, String image, String... command) {
@@ -84,6 +85,7 @@ public class WildFlyContainer extends GenericContainer<WildFlyContainer> {
         this.standalone = standalone;
         this.image = image;
         this.command = command;
+        this.defaultHost = DomainMode.instance().defaultHost();
         this.started = false;
     }
 
@@ -110,7 +112,7 @@ public class WildFlyContainer extends GenericContainer<WildFlyContainer> {
             if (standalone) {
                 address = Address.coreService("management");
             } else {
-                address = Address.host("master").and(Constants.CORE_SERVICE, "management");
+                address = Address.host(defaultHost).and(Constants.CORE_SERVICE, "management");
             }
             address = address.and("management-interface", "http-interface");
             try {
@@ -142,8 +144,7 @@ public class WildFlyContainer extends GenericContainer<WildFlyContainer> {
         if (standalone) {
             options = OnlineOptions.standalone().hostAndPort(getHost(), getMappedPort(PORT)).build();
         } else {
-            String host = DomainMode.instance().defaultHost();
-            options = OnlineOptions.domain().forHost(host).build().hostAndPort(getHost(), getMappedPort(PORT)).build();
+            options = OnlineOptions.domain().forHost(defaultHost).build().hostAndPort(getHost(), getMappedPort(PORT)).build();
         }
         return ManagementClient.onlineLazy(options);
     }

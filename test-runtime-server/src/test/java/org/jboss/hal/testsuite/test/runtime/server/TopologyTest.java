@@ -59,7 +59,7 @@ class TopologyTest {
     static void setupModel() throws IOException {
         client = wildFly.managementClient();
         DomainAdministration administration = new DomainAdministration(client);
-        administration.stopServer("master", "server-one");
+        administration.stopServer("server-one");
     }
 
     @Inject Console console;

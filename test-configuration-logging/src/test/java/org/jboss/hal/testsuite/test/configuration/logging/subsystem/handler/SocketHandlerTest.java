@@ -25,7 +25,6 @@ import org.jboss.hal.testsuite.fixtures.LoggingFixtures;
 import org.jboss.hal.testsuite.fragment.FormFragment;
 import org.jboss.hal.testsuite.fragment.TableFragment;
 import org.jboss.hal.testsuite.model.AvailablePortFinder;
-import org.jboss.hal.testsuite.model.ConfigUtils;
 import org.jboss.hal.testsuite.page.configuration.LoggingConfigurationPage;
 import org.jboss.hal.testsuite.page.configuration.LoggingSubsystemConfigurationPage;
 import org.jboss.hal.testsuite.test.Manatoko;
@@ -60,7 +59,7 @@ class SocketHandlerTest extends AbstractSocketHandlerTest {
         ops = new Operations(client);
 
         AddRemoteSocketBinding addRemoteSocketBinding = new AddRemoteSocketBinding(OUTBOUND_SOCKET_BINDING_REF,
-                ConfigUtils.getDefaultHost(), AvailablePortFinder.getNextAvailableTCPPort());
+                Random.name(), AvailablePortFinder.getNextAvailableTCPPort());
         client.apply(addRemoteSocketBinding);
         ops.add(clientSslContextAddress(SSL_CONTEXT)).assertSuccess();
         Values params = Values.of(NAMED_FORMATTER, "PATTERN").and(OUTBOUND_SOCKET_BINDING_REF, "mail-smtp");

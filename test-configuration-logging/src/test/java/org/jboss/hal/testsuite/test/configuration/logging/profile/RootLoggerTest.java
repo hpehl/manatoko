@@ -23,7 +23,6 @@ import org.jboss.hal.testsuite.command.AddRemoteSocketBinding;
 import org.jboss.hal.testsuite.container.WildFlyContainer;
 import org.jboss.hal.testsuite.fixtures.LoggingFixtures;
 import org.jboss.hal.testsuite.model.AvailablePortFinder;
-import org.jboss.hal.testsuite.model.ConfigUtils;
 import org.jboss.hal.testsuite.page.configuration.LoggingConfigurationPage;
 import org.jboss.hal.testsuite.page.configuration.LoggingProfileConfigurationPage;
 import org.jboss.hal.testsuite.test.Manatoko;
@@ -52,7 +51,7 @@ class RootLoggerTest extends AbstractRootLoggerTest {
         Operations ops = new Operations(client);
 
         AddRemoteSocketBinding addRemoteSocketBinding = new AddRemoteSocketBinding(OUTBOUND_SOCKET_BINDING_REF,
-                ConfigUtils.getDefaultHost(), AvailablePortFinder.getNextAvailableTCPPort());
+                Random.name(), AvailablePortFinder.getNextAvailableTCPPort());
         client.apply(addRemoteSocketBinding);
         ops.add(LoggingFixtures.LoggingProfile.loggingProfileAddress(LOGGING_PROFILE)).assertSuccess();
         ops.add(LoggingFixtures.LoggingProfile.rootLoggerAddress(LOGGING_PROFILE)).assertSuccess();
