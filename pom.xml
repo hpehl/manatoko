@@ -59,6 +59,7 @@
         <version.arquillian.drone>3.0.0-alpha.4</version.arquillian.drone>
         <version.arquillian.graphene>3.0.0-alpha.3</version.arquillian.graphene>
         <version.arquillian>1.7.0.Alpha10</version.arquillian>
+        <version.awaitility>4.2.0</version.awaitility>
         <version.checkstyle.config>1.0.8.Final</version.checkstyle.config>
         <version.commons.lang3>3.12.0</version.commons.lang3>
         <version.commons.text>1.9</version.commons.text>
@@ -97,6 +98,7 @@
         <project.build.sourceEncoding>${encoding}</project.build.sourceEncoding>
         <project.reporting.outputEncoding>${encoding}</project.reporting.outputEncoding>
         <test.environment>remote</test.environment>
+        <domain.default.host>master</domain.default.host>
         <wildfly.domain.image>quay.io/halconsole/wildfly-domain:latest</wildfly.domain.image>
         <wildfly.standalone.image>quay.io/halconsole/wildfly:latest</wildfly.standalone.image>
     </properties>

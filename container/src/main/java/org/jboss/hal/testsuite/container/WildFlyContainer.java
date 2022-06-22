@@ -18,6 +18,7 @@ package org.jboss.hal.testsuite.container;
 import java.util.Arrays;
 
 import org.jboss.hal.testsuite.environment.Environment;
+import org.jboss.hal.testsuite.model.DomainMode;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.testcontainers.containers.GenericContainer;
@@ -141,7 +142,8 @@ public class WildFlyContainer extends GenericContainer<WildFlyContainer> {
         if (standalone) {
             options = OnlineOptions.standalone().hostAndPort(getHost(), getMappedPort(PORT)).build();
         } else {
-            options = OnlineOptions.domain().forHost("master").build().hostAndPort(getHost(), getMappedPort(PORT)).build();
+            String host = DomainMode.instance().defaultHost();
+            options = OnlineOptions.domain().forHost(host).build().hostAndPort(getHost(), getMappedPort(PORT)).build();
         }
         return ManagementClient.onlineLazy(options);
     }

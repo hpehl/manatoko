@@ -119,7 +119,7 @@ By default, the tests will use the following images:
 - WildFly standalone: [quay.io/halconsole/wildfly:latest](https://quay.io/repository/halconsole/wildfly)
 - WildFly domain: [quay.io/halconsole/wildfly-domain:latest](https://quay.io/repository/halconsole/wildfly-domain)
 
-The image names are defined by the properties `hal.image`, `wildfly.standalone.image` and `wildfly.domain.image` defined in [`container.properties`](container/src/main/resources/container.properties). You can customize these images by overriding the properties using `-D<key>=<value>`. Say you want to use the latest development version of HAL instead of the latest stable release, then use
+The image names can be customized by overriding the properties defined in [`container.properties`](container/src/main/resources/container.properties). Say you want to use the latest development version of HAL instead of the latest stable release, then use
 
 ```shell
 ./mvnw test -P all-tests -Dhal.image=quay.io/halconsole/hal-development:latest
@@ -133,6 +133,10 @@ If you want to use a specific WildFly version for the tests, use
   -Dwildfly.domain.image=quay.io/halconsole/wildfly-domain:23.0.0.Final
 ```
 
+# Operation Mode
+
+Tests which run in domain mode, make certain assumptions. These assumptions rely on the properties defined in [`domain.properties`](management-model/src/main/resources/domain.properties). You can customize these properties using `-D<key>=<value>`. 
+
 # Modules
 
 Manatoko consists of many modules. Each module has a distinct responsibility. Here's an overview of the modules and its dependencies:
@@ -140,8 +144,8 @@ Manatoko consists of many modules. Each module has a distinct responsibility. He
 ![Manatoko dependencies](dependency-graph.png "Manatoko dependencies")
 
 - `manatoko-environment`: Singleton to manage the [test environment](#test-environment) (local or remote) 
-- `manatoko-container`: Classes to start / stop the test containers 
 - `manatoko-management-model`: Classes for working with the management model and JBoss DMR
+- `manatoko-container`: Classes to start / stop the test containers 
 - `manatoko-test-common`: Annotations and Junit extensions for writing and running the unit tests 
 - `manatoko-ui`: Arquillian fragments and pages
 - `manatoko-fixture`: Constants and test fixtures used by the unit tests

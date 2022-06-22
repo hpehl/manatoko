@@ -38,6 +38,10 @@
             <groupId>${project.groupId}</groupId>
             <artifactId>manatoko-environment</artifactId>
         </dependency>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>manatoko-management-model</artifactId>
+        </dependency>
 
         <!-- WildFly, JBoss & HAL -->
         <dependency>
