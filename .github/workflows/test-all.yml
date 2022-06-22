@@ -44,6 +44,7 @@ jobs:
           - test-configuration-systemproperty
           - test-configuration-transaction
           - test-configuration-webservice
+          - test-runtime-server
     runs-on: ubuntu-latest
     continue-on-error: true
     steps:
