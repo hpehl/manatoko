@@ -171,7 +171,7 @@ This repository contains various scripts to automate tasks.
 
 ## `depgraph.sh`
 
-Creates the [dependency graph](#modules) for the modules.
+Creates the [dependency graph](#modules) of the modules.
 
 ## `format.sh`
 
