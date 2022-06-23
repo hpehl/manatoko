@@ -112,8 +112,8 @@
         <module>container</module>
         <module>environment</module>
         <module>fixture</module>
+        <module>junit</module>
         <module>management-model</module>
-        <module>test-common</module>
         <module>test-parent</module>
         <module>ui</module>
     </modules>
@@ -233,8 +233,8 @@
                         <include>org.jboss.hal:manatoko-container</include>
                         <include>org.jboss.hal:manatoko-environment</include>
                         <include>org.jboss.hal:manatoko-fixture</include>
+                        <include>org.jboss.hal:manatoko-junit</include>
                         <include>org.jboss.hal:manatoko-management-model</include>
-                        <include>org.jboss.hal:manatoko-test-common</include>
                         <include>org.jboss.hal:manatoko-test-noop</include>
                         <include>org.jboss.hal:manatoko-ui</include>
                     </includes>

@@ -65,7 +65,7 @@
             </dependency>
             <dependency>
                 <groupId>${project.groupId}</groupId>
-                <artifactId>manatoko-test-common</artifactId>
+                <artifactId>manatoko-junit</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>

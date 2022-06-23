@@ -146,7 +146,7 @@ Manatoko consists of many modules. Each module has a distinct responsibility. He
 - `manatoko-environment`: Singleton to manage the [test environment](#test-environment) (local or remote) 
 - `manatoko-management-model`: Classes for working with the management model and JBoss DMR
 - `manatoko-container`: Classes to start / stop the test containers 
-- `manatoko-test-common`: Annotations and Junit extensions for writing and running the unit tests 
+- `manatoko-junit`: Annotations and Junit extensions for writing and running the unit tests 
 - `manatoko-ui`: Arquillian fragments and pages
 - `manatoko-fixture`: Constants and test fixtures used by the unit tests
 - `manatoko-arquillian`: Arquillian extension for the integration with Testcontainers

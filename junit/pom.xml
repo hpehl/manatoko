@@ -26,10 +26,10 @@
         <relativePath>../code-parent/pom.xml</relativePath>
     </parent>
 
-    <artifactId>manatoko-test-common</artifactId>
+    <artifactId>manatoko-junit</artifactId>
     <packaging>jar</packaging>
-    <name>Manatoko :: Test :: Common</name>
-    <description>Common test code</description>
+    <name>Manatoko :: JUnit</name>
+    <description>JUnit annotations and extensions</description>
 
     <dependencies>
         <!-- Manatoko -->
