@@ -1,4 +1,4 @@
-name: HAL UI Test All Modules
+name: Schedule All Modules
 
 on:
    schedule:

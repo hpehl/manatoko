@@ -1,4 +1,4 @@
-name: HAL UI Test Single Module
+name: Test Single Module
 
 on:
   workflow_dispatch:
