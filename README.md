@@ -10,9 +10,10 @@ The goal is that tests should be self-contained. Containers are started and stop
 
 **TOC**
 * [Write Tests](#write-tests)
+  * [Operation Mode](#operation-mode)
 * [Test Environment](#test-environment)
   * [Remote](#remote)
-   * [Local](#local)
+  * [Local](#local)
 * [Run Tests](#run-tests)
   * [Run All Tests](#run-all-tests)
   * [Run Specific Tests](#run-specific-tests)
@@ -61,7 +62,19 @@ class SystemPropertyTest {
 }
 ```
 
-See [`SystemPropertyTest`](test-configuration-systemproperty/src/test/java/org/jboss/hal/testsuite/configuration/systemproperty/SystemPropertyTest.java) for more details. 
+See [`SystemPropertyTest`](test-configuration-systemproperty/src/test/java/org/jboss/hal/testsuite/configuration/systemproperty/SystemPropertyTest.java) for the full code.
+
+## Operation Mode
+
+The example injects a WildFly standalone container using the default configuration (`standalone.xml`). The enum [`WildFlyConfiguration`](container/src/main/java/org/jboss/hal/testsuite/container/WildFlyConfiguration.java) lists all supported configurations for standalone mode. 
+
+If you want to use the domain mode, inject the WildFly container using 
+
+```java
+@Container static WildFlyContainer wildFly = WildFlyContainer.domain();
+```
+
+Tests which run in domain mode, make certain assumptions (like the default host). These assumptions rely on the properties defined in [`domain.properties`](management-model/src/main/resources/domain.properties). You can customize these properties using `-D<key>=<value>`.
 
 # Test Environment
 
@@ -132,10 +145,6 @@ If you want to use a specific WildFly version for the tests, use
   -Dwildfly.standalone.image=quay.io/halconsole/wildfly:23.0.0.Final \
   -Dwildfly.domain.image=quay.io/halconsole/wildfly-domain:23.0.0.Final
 ```
-
-# Operation Mode
-
-Tests which run in domain mode, make certain assumptions. These assumptions rely on the properties defined in [`domain.properties`](management-model/src/main/resources/domain.properties). You can customize these properties using `-D<key>=<value>`. 
 
 # Modules
 
