@@ -28,6 +28,7 @@ import static org.jboss.hal.dmr.ModelDescriptionConstants.KEY_MANAGER;
 import static org.jboss.hal.dmr.ModelDescriptionConstants.KEY_STORE;
 import static org.jboss.hal.dmr.ModelDescriptionConstants.SECRET_KEY_CREDENTIAL_STORE;
 import static org.jboss.hal.dmr.ModelDescriptionConstants.SERVER_SSL_CONTEXT;
+import static org.jboss.hal.dmr.ModelDescriptionConstants.SYSLOG_AUDIT_LOG;
 import static org.jboss.hal.dmr.ModelDescriptionConstants.TOKEN_REALM;
 import static org.jboss.hal.dmr.ModelDescriptionConstants.TRUST_MANAGER;
 import static org.jboss.hal.dmr.ModelDescriptionConstants.X500_SUBJECT_EVIDENCE_DECODER;
@@ -35,6 +36,7 @@ import static org.jboss.hal.dmr.ModelDescriptionConstants.X509_SUBJECT_ALT_NAME_
 import static org.jboss.hal.testsuite.model.CrudConstants.CREATE;
 import static org.jboss.hal.testsuite.model.CrudConstants.DELETE;
 import static org.jboss.hal.testsuite.model.CrudConstants.READ;
+import static org.jboss.hal.testsuite.model.CrudConstants.RESET;
 import static org.jboss.hal.testsuite.model.CrudConstants.UPDATE;
 
 public final class SecurityFixtures {
@@ -47,6 +49,7 @@ public final class SecurityFixtures {
     private static final String KEY_STORE_PREFIX = "km";
     private static final String SECRET_KEY_CREDENTIAL_STORE_PREFIX = "skcs";
     private static final String SERVER_SSL_CONTEXT_PREFIX = "srv-ssl";
+    private static final String SYSLOG_AUDIT_LOG_PREFIX = "sys-aud";
     private static final String TOKEN_REALM_PREFIX = "tr";
     private static final String TRUST_MANAGER_PREFIX = "tm";
 
@@ -63,12 +66,14 @@ public final class SecurityFixtures {
     public static final String DEFAULT_RESOLVER = "default-resolver";
     public static final String EVIDENCE_DECODER_ITEM = "mappers-decoders-evidence-decoder-item";
     public static final String EVIDENCE_DECODERS = "evidence-decoders";
+    public static final String HOST_NAME = "host-name";
     public static final String INITIAL_PROVIDERS = "initial-providers";
     public static final String INTROSPECTION_URL = "introspection-url";
     public static final String INTROSPECTION_URL_VALUE = "https://acme.org";
     public static final String ISSUER = "issuer";
     public static final String JWT = "jwt";
     public static final String JWT_TAB = "elytron-token-realm-jwt-tab";
+    public static final String LOCALHOST = "localhost";
     public static final String OAUTH2_INTROSPECTION = "oauth2-introspection";
     public static final String OAUTH2_INTROSPECTION_TAB = "elytron-token-realm-oauth2-introspection-tab";
     public static final String OCSP = "ocsp";
@@ -77,6 +82,7 @@ public final class SecurityFixtures {
     public static final String RESPONDER = "responder";
     public static final String SECRET_KEY = "secret-key";
     public static final String SEGMENT = "segment";
+    public static final String SERVER_ADDRESS = "server-address";
     public static final String SSL_CONTEXT_CIPHER_SUITE_NAMES = "TLS_AES_128_CCM_8_SHA256:TLS_AES_256_GCM_SHA384:TLS_CHACHA20_POLY1305_SHA256:TLS_AES_128_GCM_SHA256";
 
     public static final Address SUBSYSTEM_ADDRESS = Address.subsystem(ELYTRON);
@@ -181,6 +187,17 @@ public final class SecurityFixtures {
 
     public static Address serverSslContextAddress(String name) {
         return SUBSYSTEM_ADDRESS.and(SERVER_SSL_CONTEXT, name);
+    }
+
+    // ------------------------------------------------------ syslog audit
+
+    public static final String SYSLOG_AUDIT_LOG_CREATE = Ids.build(SYSLOG_AUDIT_LOG_PREFIX, CREATE, Random.name());
+    public static final String SYSLOG_AUDIT_LOG_RESET = Ids.build(SYSLOG_AUDIT_LOG_PREFIX, RESET, Random.name());
+    public static final String SYSLOG_AUDIT_LOG_UPDATE = Ids.build(SYSLOG_AUDIT_LOG_PREFIX, UPDATE, Random.name());
+    public static final String SYSLOG_AUDIT_LOG_DELETE = Ids.build(SYSLOG_AUDIT_LOG_PREFIX, DELETE, Random.name());
+
+    public static Address syslogAuditLogAddress(String name) {
+        return SUBSYSTEM_ADDRESS.and(SYSLOG_AUDIT_LOG, name);
     }
 
     // ------------------------------------------------------ token realm
