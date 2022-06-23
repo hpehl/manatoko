@@ -1,16 +1,8 @@
 name: HAL UI Test All Modules
 
 on:
-  workflow_dispatch:
-    inputs:
-      hal-image:
-        type: choice
-        required: true
-        default: quay.io/halconsole/hal
-        description: 'The HAL image name'
-        options:
-          - quay.io/halconsole/hal
-          - quay.io/halconsole/hal-development
+   schedule:
+    - cron: '0 0 * * *'
 
 jobs:
   test:
@@ -56,5 +48,7 @@ jobs:
           cache: maven
       - name: Install
         run: mvn --batch-mode install
-      - name: Run Tests
-        run: mvn --batch-mode --projects ${{ matrix.module }} --also-make -P all-tests test -Dhal.image=${{ github.event.inputs.hal-image }}
+      - name: Run Tests (Stable)
+        run: mvn --batch-mode --projects ${{ matrix.module }} --also-make -P all-tests test -Dhal.image=quay.io/halconsole/hal
+      - name: Run Tests (Development)
+        run: mvn --batch-mode --projects ${{ matrix.module }} --also-make -P all-tests test -Dhal.image=quay.io/halconsole/hal-development
