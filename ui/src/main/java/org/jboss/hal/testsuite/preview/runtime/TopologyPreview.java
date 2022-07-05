@@ -37,7 +37,7 @@ public class TopologyPreview extends FinderPreviewFragment {
     }
 
     public void selectServer(String server) {
-        WebElement element = root.findElement(By.id(hostServerId(server) + "-container"));
+        WebElement element = root.findElement(By.cssSelector("[data-server=" + hostServerId(server) + "]"));
         element.click();
     }
 
