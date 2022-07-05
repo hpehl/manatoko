@@ -150,6 +150,7 @@
                         <useDefaultExcludes>true</useDefaultExcludes>
                         <excludes>
                             <exclude>.sdkmanrc</exclude>
+                            <exclude>dependency-graph.dot</exclude>
                             <exclude>LICENSE</exclude>
                             <exclude>**/*license*.txt</exclude>
                         </excludes>
