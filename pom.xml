@@ -89,6 +89,7 @@
         <repo.scm.url>https://github.com/hpehl/manatoko</repo.scm.url>
 
         <!-- Build related -->
+        <default.host>primary</default.host>
         <encoding>UTF-8</encoding>
         <hal.image>quay.io/halconsole/hal:latest</hal.image>
         <java.version>11</java.version>
@@ -98,7 +99,6 @@
         <project.build.sourceEncoding>${encoding}</project.build.sourceEncoding>
         <project.reporting.outputEncoding>${encoding}</project.reporting.outputEncoding>
         <test.environment>remote</test.environment>
-        <domain.default.host>primary</domain.default.host>
         <wildfly.domain.image>quay.io/halconsole/wildfly-domain:latest</wildfly.domain.image>
         <wildfly.standalone.image>quay.io/halconsole/wildfly:latest</wildfly.standalone.image>
     </properties>
