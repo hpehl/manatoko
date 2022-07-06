@@ -37,13 +37,13 @@ import static org.jboss.arquillian.graphene.Graphene.waitModel;
 import static org.jboss.hal.dmr.ModelDescriptionConstants.MESSAGING_ACTIVEMQ;
 import static org.jboss.hal.dmr.ModelDescriptionConstants.SERVER;
 import static org.jboss.hal.dmr.ModelDescriptionConstants.SHARED_STORE_COLOCATED;
-import static org.jboss.hal.dmr.ModelDescriptionConstants.SHARED_STORE_MASTER;
+import static org.jboss.hal.dmr.ModelDescriptionConstants.SHARED_STORE_PRIMARY;
 import static org.jboss.hal.resources.Ids.MESSAGING_HA_REPLICATION;
 import static org.jboss.hal.resources.Ids.MESSAGING_HA_REPLICATION_LIVE_ONLY;
-import static org.jboss.hal.resources.Ids.MESSAGING_HA_REPLICATION_MASTER;
+import static org.jboss.hal.resources.Ids.MESSAGING_HA_REPLICATION_PRIMARY;
 import static org.jboss.hal.resources.Ids.MESSAGING_HA_SHARED_STORE;
 import static org.jboss.hal.resources.Ids.MESSAGING_HA_SHARED_STORE_COLOCATED;
-import static org.jboss.hal.resources.Ids.MESSAGING_HA_SHARED_STORE_MASTER;
+import static org.jboss.hal.resources.Ids.MESSAGING_HA_SHARED_STORE_PRIMARY;
 import static org.jboss.hal.resources.Ids.MESSAGING_SERVER_CONFIGURATION;
 import static org.jboss.hal.resources.Ids.MESSAGING_SERVER_HA_POLICY;
 import static org.jboss.hal.resources.Ids.MESSAGING_SERVER_SETTINGS;
@@ -120,23 +120,23 @@ class FinderTest extends AbstractHaPolicyTest {
     }
 
     @Test
-    void createReplicationMaster() throws Exception {
-        HAPolicy.REPLICATION_MASTER.create(createPolicyInFinder);
+    void createReplicationPrimary() throws Exception {
+        HAPolicy.REPLICATION_PRIMARY.create(createPolicyInFinder);
     }
 
     @Test
-    void removeReplicationMaster() throws Exception {
-        HAPolicy.REPLICATION_MASTER.remove(removePolicyInFinder);
+    void removeReplicationPrimary() throws Exception {
+        HAPolicy.REPLICATION_PRIMARY.remove(removePolicyInFinder);
     }
 
     @Test
-    void createReplicationSlave() throws Exception {
-        HAPolicy.REPLICATION_SLAVE.create(createPolicyInFinder);
+    void createReplicationSecondary() throws Exception {
+        HAPolicy.REPLICATION_SECONDARY.create(createPolicyInFinder);
     }
 
     @Test
-    void removeReplicationSlave() throws Exception {
-        HAPolicy.REPLICATION_SLAVE.remove(removePolicyInFinder);
+    void removeReplicationSecondary() throws Exception {
+        HAPolicy.REPLICATION_SECONDARY.remove(removePolicyInFinder);
     }
 
     @Test
@@ -150,23 +150,23 @@ class FinderTest extends AbstractHaPolicyTest {
     }
 
     @Test
-    void createSharedStoreMaster() throws Exception {
-        HAPolicy.SHARED_STORE_MASTER.create(createPolicyInFinder);
+    void createSharedStorePrimary() throws Exception {
+        HAPolicy.SHARED_STORE_PRIMARY.create(createPolicyInFinder);
     }
 
     @Test
-    void removeSharedStoreMaster() throws Exception {
-        HAPolicy.SHARED_STORE_MASTER.remove(removePolicyInFinder);
+    void removeSharedStorePrimary() throws Exception {
+        HAPolicy.SHARED_STORE_PRIMARY.remove(removePolicyInFinder);
     }
 
     @Test
-    void createSharedStoreSlave() throws Exception {
-        HAPolicy.SHARED_STORE_SLAVE.create(createPolicyInFinder);
+    void createSharedStoreSecondary() throws Exception {
+        HAPolicy.SHARED_STORE_SECONDARY.create(createPolicyInFinder);
     }
 
     @Test
-    void removeSharedStoreSlave() throws Exception {
-        HAPolicy.SHARED_STORE_SLAVE.remove(removePolicyInFinder);
+    void removeSharedStoreSecondary() throws Exception {
+        HAPolicy.SHARED_STORE_SECONDARY.remove(removePolicyInFinder);
     }
 
     @Test
@@ -182,7 +182,7 @@ class FinderTest extends AbstractHaPolicyTest {
     // use default values, do not select any radio box.
 
     // test the back/next wizard workflow
-    // first select replication/live-master, then goes back and select shared-store/colocated
+    // first select replication/live-primary, then goes back and select shared-store/colocated
     @Test
     void createSharedStoreColocatedBackForth() throws Exception {
         column.selectItem(MESSAGING_SERVER_HA_POLICY).defaultAction();
@@ -191,14 +191,14 @@ class FinderTest extends AbstractHaPolicyTest {
         wizard.getRoot().findElement(By.id(MESSAGING_HA_REPLICATION)).click();
         // clicks the "next" button and waits for the dom id
         wizard.next(MESSAGING_HA_REPLICATION_LIVE_ONLY);
-        // selects the "Live server (master)" radio item
-        wizard.getRoot().findElement(By.id(MESSAGING_HA_REPLICATION_MASTER)).click();
+        // selects the "Live server (primary)" radio item
+        wizard.getRoot().findElement(By.id(MESSAGING_HA_REPLICATION_PRIMARY)).click();
         // clicks the "back" button and waits for the "shared-store" dom id
         wizard.back(By.id(MESSAGING_HA_SHARED_STORE));
         // clicks the "shared-store" radio item
         wizard.getRoot().findElement(By.id(MESSAGING_HA_SHARED_STORE)).click();
         // clicks "next"
-        wizard.next(MESSAGING_HA_SHARED_STORE_MASTER);
+        wizard.next(MESSAGING_HA_SHARED_STORE_PRIMARY);
         // clicks on the "Colocate live and backup server" radio box
         wizard.getRoot().findElement(By.id(MESSAGING_HA_SHARED_STORE_COLOCATED)).click();
         // finish the wizard
@@ -211,30 +211,30 @@ class FinderTest extends AbstractHaPolicyTest {
     }
 
     // test the back/next wizard workflow with default values
-    // first select replication/live-master, then goes back and select shared-store, do not select any item and finish
+    // first select replication/live-primary, then goes back and select shared-store, do not select any item and finish
     @Test
-    void createSharedStoreLiveMasterBackForth() throws Exception {
+    void createSharedStoreLivePrimaryBackForth() throws Exception {
         column.selectItem(MESSAGING_SERVER_HA_POLICY).defaultAction();
         wizard = console.wizard();
         // selects the "replication" radio item
         wizard.getRoot().findElement(By.id(MESSAGING_HA_REPLICATION)).click();
         // clicks the "next" button and waits for the dom id
         wizard.next(MESSAGING_HA_REPLICATION_LIVE_ONLY);
-        // selects the "Live server (master)" radio item
-        wizard.getRoot().findElement(By.id(MESSAGING_HA_REPLICATION_MASTER)).click();
+        // selects the "Live server (primary)" radio item
+        wizard.getRoot().findElement(By.id(MESSAGING_HA_REPLICATION_PRIMARY)).click();
         // clicks the "back" button and waits for the "shared-store" dom id
         wizard.back(By.id(MESSAGING_HA_SHARED_STORE));
         // clicks the "shared-store" radio item
         wizard.getRoot().findElement(By.id(MESSAGING_HA_SHARED_STORE)).click();
         // clicks "next"
-        wizard.next(MESSAGING_HA_SHARED_STORE_MASTER);
-        // finish the wizard with default "Live server (master)" radio selected
+        wizard.next(MESSAGING_HA_SHARED_STORE_PRIMARY);
+        // finish the wizard with default "Live server (primary)" radio selected
         wizard.next();
 
         console.verifySuccess();
-        new ResourceVerifier(haPolicyAddress(SRV_UPDATE, SHARED_STORE_MASTER), client)
+        new ResourceVerifier(haPolicyAddress(SRV_UPDATE, SHARED_STORE_PRIMARY), client)
                 .verifyExists();
-        operations.removeIfExists(haPolicyAddress(SRV_UPDATE, SHARED_STORE_MASTER));
+        operations.removeIfExists(haPolicyAddress(SRV_UPDATE, SHARED_STORE_PRIMARY));
     }
 
     @Test

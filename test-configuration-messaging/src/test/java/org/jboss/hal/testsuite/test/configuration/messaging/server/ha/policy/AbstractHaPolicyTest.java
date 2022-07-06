@@ -28,12 +28,12 @@ import org.wildfly.extras.creaper.core.online.operations.Address;
 import static org.jboss.hal.resources.Ids.MESSAGING_HA_REPLICATION;
 import static org.jboss.hal.resources.Ids.MESSAGING_HA_REPLICATION_COLOCATED;
 import static org.jboss.hal.resources.Ids.MESSAGING_HA_REPLICATION_LIVE_ONLY;
-import static org.jboss.hal.resources.Ids.MESSAGING_HA_REPLICATION_MASTER;
-import static org.jboss.hal.resources.Ids.MESSAGING_HA_REPLICATION_SLAVE;
+import static org.jboss.hal.resources.Ids.MESSAGING_HA_REPLICATION_PRIMARY;
+import static org.jboss.hal.resources.Ids.MESSAGING_HA_REPLICATION_SECONDARY;
 import static org.jboss.hal.resources.Ids.MESSAGING_HA_SHARED_STORE;
 import static org.jboss.hal.resources.Ids.MESSAGING_HA_SHARED_STORE_COLOCATED;
-import static org.jboss.hal.resources.Ids.MESSAGING_HA_SHARED_STORE_MASTER;
-import static org.jboss.hal.resources.Ids.MESSAGING_HA_SHARED_STORE_SLAVE;
+import static org.jboss.hal.resources.Ids.MESSAGING_HA_SHARED_STORE_PRIMARY;
+import static org.jboss.hal.resources.Ids.MESSAGING_HA_SHARED_STORE_SECONDARY;
 import static org.jboss.hal.testsuite.fixtures.MessagingFixtures.SRV_UPDATE;
 import static org.jboss.hal.testsuite.fixtures.MessagingFixtures.haPolicyAddress;
 
@@ -49,20 +49,20 @@ abstract class AbstractHaPolicyTest {
         LIVE_ONLY(MESSAGING_HA_REPLICATION, MESSAGING_HA_REPLICATION_LIVE_ONLY,
                 haPolicyAddress(SRV_UPDATE, ModelDescriptionConstants.LIVE_ONLY)),
 
-        REPLICATION_MASTER(MESSAGING_HA_REPLICATION, MESSAGING_HA_REPLICATION_MASTER,
-                haPolicyAddress(SRV_UPDATE, ModelDescriptionConstants.REPLICATION_MASTER)),
+        REPLICATION_PRIMARY(MESSAGING_HA_REPLICATION, MESSAGING_HA_REPLICATION_PRIMARY,
+                haPolicyAddress(SRV_UPDATE, ModelDescriptionConstants.REPLICATION_PRIMARY)),
 
-        REPLICATION_SLAVE(MESSAGING_HA_REPLICATION, MESSAGING_HA_REPLICATION_SLAVE,
-                haPolicyAddress(SRV_UPDATE, ModelDescriptionConstants.REPLICATION_SLAVE)),
+        REPLICATION_SECONDARY(MESSAGING_HA_REPLICATION, MESSAGING_HA_REPLICATION_SECONDARY,
+                haPolicyAddress(SRV_UPDATE, ModelDescriptionConstants.REPLICATION_SECONDARY)),
 
         REPLICATION_COLOCATED(MESSAGING_HA_REPLICATION, MESSAGING_HA_REPLICATION_COLOCATED,
                 haPolicyAddress(SRV_UPDATE, ModelDescriptionConstants.REPLICATION_COLOCATED)),
 
-        SHARED_STORE_MASTER(MESSAGING_HA_SHARED_STORE, MESSAGING_HA_SHARED_STORE_MASTER,
-                haPolicyAddress(SRV_UPDATE, ModelDescriptionConstants.SHARED_STORE_MASTER)),
+        SHARED_STORE_PRIMARY(MESSAGING_HA_SHARED_STORE, MESSAGING_HA_SHARED_STORE_PRIMARY,
+                haPolicyAddress(SRV_UPDATE, ModelDescriptionConstants.SHARED_STORE_PRIMARY)),
 
-        SHARED_STORE_SLAVE(MESSAGING_HA_SHARED_STORE, MESSAGING_HA_SHARED_STORE_SLAVE,
-                haPolicyAddress(SRV_UPDATE, ModelDescriptionConstants.SHARED_STORE_SLAVE)),
+        SHARED_STORE_SECONDARY(MESSAGING_HA_SHARED_STORE, MESSAGING_HA_SHARED_STORE_SECONDARY,
+                haPolicyAddress(SRV_UPDATE, ModelDescriptionConstants.SHARED_STORE_SECONDARY)),
 
         SHARED_STORE_COLOCATED(MESSAGING_HA_SHARED_STORE, MESSAGING_HA_SHARED_STORE_COLOCATED,
                 haPolicyAddress(SRV_UPDATE, ModelDescriptionConstants.SHARED_STORE_COLOCATED));

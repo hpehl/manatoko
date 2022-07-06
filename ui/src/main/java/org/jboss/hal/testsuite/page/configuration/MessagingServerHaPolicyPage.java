@@ -26,22 +26,22 @@ import static org.jboss.hal.resources.Ids.FORM;
 import static org.jboss.hal.resources.Ids.MESSAGING_HA_POLICY_EMPTY;
 import static org.jboss.hal.resources.Ids.MESSAGING_HA_REPLICATION_COLOCATED;
 import static org.jboss.hal.resources.Ids.MESSAGING_HA_REPLICATION_LIVE_ONLY;
-import static org.jboss.hal.resources.Ids.MESSAGING_HA_REPLICATION_MASTER;
-import static org.jboss.hal.resources.Ids.MESSAGING_HA_REPLICATION_SLAVE;
+import static org.jboss.hal.resources.Ids.MESSAGING_HA_REPLICATION_PRIMARY;
+import static org.jboss.hal.resources.Ids.MESSAGING_HA_REPLICATION_SECONDARY;
 import static org.jboss.hal.resources.Ids.MESSAGING_HA_SHARED_STORE_COLOCATED;
-import static org.jboss.hal.resources.Ids.MESSAGING_HA_SHARED_STORE_MASTER;
-import static org.jboss.hal.resources.Ids.MESSAGING_HA_SHARED_STORE_SLAVE;
+import static org.jboss.hal.resources.Ids.MESSAGING_HA_SHARED_STORE_PRIMARY;
+import static org.jboss.hal.resources.Ids.MESSAGING_HA_SHARED_STORE_SECONDARY;
 
 @Place(NameTokens.MESSAGING_SERVER_HA_POLICY)
 public class MessagingServerHaPolicyPage extends BasePage {
 
     @FindBy(id = MESSAGING_HA_POLICY_EMPTY) private EmptyState emptyState;
     @FindBy(id = MESSAGING_HA_REPLICATION_LIVE_ONLY + "-" + FORM) private FormFragment replicationLiveOnlyForm;
-    @FindBy(id = MESSAGING_HA_REPLICATION_MASTER + "-" + FORM) private FormFragment replicationMasterForm;
-    @FindBy(id = MESSAGING_HA_REPLICATION_SLAVE + "-" + FORM) private FormFragment replicationSlaveForm;
+    @FindBy(id = MESSAGING_HA_REPLICATION_PRIMARY + "-" + FORM) private FormFragment replicationPrimaryForm;
+    @FindBy(id = MESSAGING_HA_REPLICATION_SECONDARY + "-" + FORM) private FormFragment replicationSecondaryForm;
     @FindBy(id = MESSAGING_HA_REPLICATION_COLOCATED + "-" + FORM) private FormFragment replicationColocatedForm;
-    @FindBy(id = MESSAGING_HA_SHARED_STORE_MASTER + "-" + FORM) private FormFragment sharedStoreMasterForm;
-    @FindBy(id = MESSAGING_HA_SHARED_STORE_SLAVE + "-" + FORM) private FormFragment sharedStoreSlaveForm;
+    @FindBy(id = MESSAGING_HA_SHARED_STORE_PRIMARY + "-" + FORM) private FormFragment sharedStorePrimaryForm;
+    @FindBy(id = MESSAGING_HA_SHARED_STORE_SECONDARY + "-" + FORM) private FormFragment sharedStoreSecondaryForm;
     @FindBy(id = MESSAGING_HA_SHARED_STORE_COLOCATED + "-" + FORM) private FormFragment sharedStoreColocatedForm;
 
     public EmptyState getEmptyState() {
@@ -52,24 +52,24 @@ public class MessagingServerHaPolicyPage extends BasePage {
         return replicationLiveOnlyForm;
     }
 
-    public FormFragment getReplicationMasterForm() {
-        return replicationMasterForm;
+    public FormFragment getReplicationPrimaryForm() {
+        return replicationPrimaryForm;
     }
 
-    public FormFragment getReplicationSlaveForm() {
-        return replicationSlaveForm;
+    public FormFragment getReplicationSecondaryForm() {
+        return replicationSecondaryForm;
     }
 
     public FormFragment getReplicationColocatedForm() {
         return replicationColocatedForm;
     }
 
-    public FormFragment getSharedStoreMasterForm() {
-        return sharedStoreMasterForm;
+    public FormFragment getSharedStorePrimaryForm() {
+        return sharedStorePrimaryForm;
     }
 
-    public FormFragment getSharedStoreSlaveForm() {
-        return sharedStoreSlaveForm;
+    public FormFragment getSharedStoreSecondaryForm() {
+        return sharedStoreSecondaryForm;
     }
 
     public FormFragment getSharedStoreColocatedForm() {

@@ -32,7 +32,7 @@ import static org.jboss.hal.testsuite.fixtures.MessagingFixtures.SRV_UPDATE;
 
 @Manatoko
 @Testcontainers
-class ReplicationMasterTest extends AbstractHaPolicyTest {
+class ReplicationPrimaryTest extends AbstractHaPolicyTest {
 
     @Container static WildFlyContainer wildFly = WildFlyContainer.standalone(FULL_HA);
 
@@ -41,7 +41,7 @@ class ReplicationMasterTest extends AbstractHaPolicyTest {
         OnlineManagementClient client = wildFly.managementClient();
         client.apply(new AddMessagingServer(SRV_UPDATE));
         Operations operations = new Operations(client);
-        operations.add(HAPolicy.REPLICATION_MASTER.haPolicyAddress).assertSuccess();
+        operations.add(HAPolicy.REPLICATION_PRIMARY.haPolicyAddress).assertSuccess();
     }
 
     @BeforeEach
@@ -51,7 +51,7 @@ class ReplicationMasterTest extends AbstractHaPolicyTest {
 
     @Test
     void editClusterName() throws Exception {
-        crudOperations.update(HAPolicy.REPLICATION_MASTER.haPolicyAddress, page.getReplicationMasterForm(),
+        crudOperations.update(HAPolicy.REPLICATION_PRIMARY.haPolicyAddress, page.getReplicationPrimaryForm(),
                 "cluster-name");
     }
 }

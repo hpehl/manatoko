@@ -32,7 +32,7 @@ import static org.jboss.hal.testsuite.fixtures.MessagingFixtures.SRV_UPDATE;
 
 @Manatoko
 @Testcontainers
-class SharedStoreMasterTest extends AbstractHaPolicyTest {
+class ReplicationSecondaryTest extends AbstractHaPolicyTest {
 
     @Container static WildFlyContainer wildFly = WildFlyContainer.standalone(FULL_HA);
 
@@ -41,7 +41,7 @@ class SharedStoreMasterTest extends AbstractHaPolicyTest {
         OnlineManagementClient client = wildFly.managementClient();
         client.apply(new AddMessagingServer(SRV_UPDATE));
         Operations operations = new Operations(client);
-        operations.add(HAPolicy.SHARED_STORE_MASTER.haPolicyAddress).assertSuccess();
+        operations.add(HAPolicy.REPLICATION_SECONDARY.haPolicyAddress).assertSuccess();
     }
 
     @BeforeEach
@@ -50,8 +50,8 @@ class SharedStoreMasterTest extends AbstractHaPolicyTest {
     }
 
     @Test
-    void editFailoverOnServerShutdown() throws Exception {
-        crudOperations.update(HAPolicy.SHARED_STORE_MASTER.haPolicyAddress, page.getSharedStoreMasterForm(),
-                "failover-on-server-shutdown", true);
+    void editClusterName() throws Exception {
+        crudOperations.update(HAPolicy.REPLICATION_SECONDARY.haPolicyAddress, page.getReplicationSecondaryForm(),
+                "cluster-name");
     }
 }

@@ -85,29 +85,29 @@ class ViewTest extends AbstractHaPolicyTest {
     }
 
     @Test
-    void createReplicationMaster() throws Exception {
+    void createReplicationPrimary() throws Exception {
         page.navigateAgain(ModelDescriptionConstants.SERVER, MessagingFixtures.SRV_UPDATE);
-        HAPolicy.REPLICATION_MASTER.create(createPolicyInView);
+        HAPolicy.REPLICATION_PRIMARY.create(createPolicyInView);
     }
 
     @Test
-    void removeReplicationMaster() throws Exception {
-        operations.add(HAPolicy.REPLICATION_MASTER.haPolicyAddress);
+    void removeReplicationPrimary() throws Exception {
+        operations.add(HAPolicy.REPLICATION_PRIMARY.haPolicyAddress);
         page.navigateAgain(ModelDescriptionConstants.SERVER, MessagingFixtures.SRV_UPDATE);
-        HAPolicy.REPLICATION_MASTER.remove(removePolicyInView);
+        HAPolicy.REPLICATION_PRIMARY.remove(removePolicyInView);
     }
 
     @Test
-    void createReplicationSlave() throws Exception {
+    void createReplicationSecondary() throws Exception {
         page.navigateAgain(ModelDescriptionConstants.SERVER, MessagingFixtures.SRV_UPDATE);
-        HAPolicy.REPLICATION_SLAVE.create(createPolicyInView);
+        HAPolicy.REPLICATION_SECONDARY.create(createPolicyInView);
     }
 
     @Test
-    void removeReplicationSlave() throws Exception {
-        operations.add(HAPolicy.REPLICATION_SLAVE.haPolicyAddress);
+    void removeReplicationSecondary() throws Exception {
+        operations.add(HAPolicy.REPLICATION_SECONDARY.haPolicyAddress);
         page.navigateAgain(ModelDescriptionConstants.SERVER, MessagingFixtures.SRV_UPDATE);
-        HAPolicy.REPLICATION_SLAVE.remove(removePolicyInView);
+        HAPolicy.REPLICATION_SECONDARY.remove(removePolicyInView);
     }
 
     @Test
@@ -124,29 +124,29 @@ class ViewTest extends AbstractHaPolicyTest {
     }
 
     @Test
-    void createSharedStoreMaster() throws Exception {
+    void createSharedStorePrimary() throws Exception {
         page.navigateAgain(ModelDescriptionConstants.SERVER, MessagingFixtures.SRV_UPDATE);
-        HAPolicy.SHARED_STORE_MASTER.create(createPolicyInView);
+        HAPolicy.SHARED_STORE_PRIMARY.create(createPolicyInView);
     }
 
     @Test
-    void removeSharedStoreMaster() throws Exception {
-        operations.add(HAPolicy.SHARED_STORE_MASTER.haPolicyAddress);
+    void removeSharedStorePrimary() throws Exception {
+        operations.add(HAPolicy.SHARED_STORE_PRIMARY.haPolicyAddress);
         page.navigateAgain(ModelDescriptionConstants.SERVER, MessagingFixtures.SRV_UPDATE);
-        HAPolicy.SHARED_STORE_MASTER.remove(removePolicyInView);
+        HAPolicy.SHARED_STORE_PRIMARY.remove(removePolicyInView);
     }
 
     @Test
-    void createSharedStoreSlave() throws Exception {
+    void createSharedStoreSecondary() throws Exception {
         page.navigateAgain(ModelDescriptionConstants.SERVER, MessagingFixtures.SRV_UPDATE);
-        HAPolicy.SHARED_STORE_SLAVE.create(createPolicyInView);
+        HAPolicy.SHARED_STORE_SECONDARY.create(createPolicyInView);
     }
 
     @Test
-    void removeSharedStoreSlave() throws Exception {
-        operations.add(HAPolicy.SHARED_STORE_SLAVE.haPolicyAddress);
+    void removeSharedStoreSecondary() throws Exception {
+        operations.add(HAPolicy.SHARED_STORE_SECONDARY.haPolicyAddress);
         page.navigateAgain(ModelDescriptionConstants.SERVER, MessagingFixtures.SRV_UPDATE);
-        HAPolicy.SHARED_STORE_SLAVE.remove(removePolicyInView);
+        HAPolicy.SHARED_STORE_SECONDARY.remove(removePolicyInView);
     }
 
     @Test
