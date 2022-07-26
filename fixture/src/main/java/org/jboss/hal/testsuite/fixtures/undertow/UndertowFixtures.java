@@ -27,6 +27,7 @@ public class UndertowFixtures {
     private static final String HOST_PREFIX = "hst";
 
     public static final Address UNDERTOW_ADDRESS = Address.subsystem("undertow");
+    public static final String DEFAULT_SERVER = "default-server";
     public static final String DEFAULT_SERVLET_CONTAINER = "default-servlet-container";
     public static final String DEFAULT_VIRTUAL_HOST = "default-virtual-host";
 

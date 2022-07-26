@@ -33,7 +33,6 @@ import org.wildfly.extras.creaper.core.online.operations.Address;
 import org.wildfly.extras.creaper.core.online.operations.Operations;
 import org.wildfly.extras.creaper.core.online.operations.Values;
 
-import static org.jboss.as.cli.impl.aesh.cmd.security.model.HTTPServer.DEFAULT_SERVER;
 import static org.jboss.hal.dmr.ModelDescriptionConstants.DEFAULT_HOST;
 import static org.jboss.hal.dmr.ModelDescriptionConstants.DEFAULT_SECURITY_DOMAIN;
 import static org.jboss.hal.dmr.ModelDescriptionConstants.DEFAULT_WEB_MODULE;
@@ -42,6 +41,7 @@ import static org.jboss.hal.dmr.ModelDescriptionConstants.NAME;
 import static org.jboss.hal.dmr.ModelDescriptionConstants.RESOLVE_EXPRESSIONS;
 import static org.jboss.hal.dmr.ModelDescriptionConstants.STATISTICS_ENABLED;
 import static org.jboss.hal.testsuite.container.WildFlyConfiguration.DEFAULT;
+import static org.jboss.hal.testsuite.fixtures.undertow.UndertowFixtures.DEFAULT_SERVER;
 import static org.jboss.hal.testsuite.fixtures.undertow.UndertowFixtures.DEFAULT_SERVER_CREATE;
 import static org.jboss.hal.testsuite.fixtures.undertow.UndertowFixtures.DEFAULT_SERVLET_CONTAINER;
 import static org.jboss.hal.testsuite.fixtures.undertow.UndertowFixtures.DEFAULT_SERVLET_CONTAINER_CREATE;
