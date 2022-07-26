@@ -13,7 +13,7 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package org.jboss.hal.testsuite.test.configuration.web.services.client.configuration;
+package org.jboss.hal.testsuite.test.configuration.webservice.client.configuration;
 
 import org.apache.commons.lang3.RandomStringUtils;
 import org.jboss.arquillian.core.api.annotation.Inject;
@@ -37,30 +37,30 @@ import static org.jboss.hal.testsuite.container.WildFlyConfiguration.DEFAULT;
 
 @Manatoko
 @Testcontainers
-class PreHandlerChainTest {
+class PostHandlerChainTest {
 
     private static final String CLIENT_CONFIGURATION_EDIT = "client-configuration-to-be-edited-"
             + RandomStringUtils.randomAlphanumeric(7);
 
-    private static final WebServicesFixtures.HandlerChain PRE_HANDLER_CHAIN_CREATE = new WebServicesFixtures.HandlerChain.Builder(
+    private static final WebServicesFixtures.HandlerChain POST_HANDLER_CHAIN_CREATE = new WebServicesFixtures.HandlerChain.Builder(
             CLIENT_CONFIGURATION_EDIT)
-            .handlerChainName("pre-handler-chain-to-be-created-" + RandomStringUtils.randomAlphanumeric(7))
+            .handlerChainName("post-handler-chain-to-be-created-" + RandomStringUtils.randomAlphanumeric(7))
             .clientConfiguration()
-            .preHandlerChain()
+            .postHandlerChain()
             .build();
 
-    private static final WebServicesFixtures.HandlerChain PRE_HANDLER_CHAIN_EDIT = new WebServicesFixtures.HandlerChain.Builder(
+    private static final WebServicesFixtures.HandlerChain POST_HANDLER_CHAIN_EDIT = new WebServicesFixtures.HandlerChain.Builder(
             CLIENT_CONFIGURATION_EDIT)
-            .handlerChainName("pre-handler-chain-to-be-edited-" + RandomStringUtils.randomAlphanumeric(7))
+            .handlerChainName("post-handler-chain-to-be-edited-" + RandomStringUtils.randomAlphanumeric(7))
             .clientConfiguration()
-            .preHandlerChain()
+            .postHandlerChain()
             .build();
 
-    private static final WebServicesFixtures.HandlerChain PRE_HANDLER_CHAIN_DELETE = new WebServicesFixtures.HandlerChain.Builder(
+    private static final WebServicesFixtures.HandlerChain POST_HANDLER_CHAIN_DELETE = new WebServicesFixtures.HandlerChain.Builder(
             CLIENT_CONFIGURATION_EDIT)
-            .handlerChainName("pre-handler-chain-to-be-removed-" + RandomStringUtils.randomAlphanumeric(7))
+            .handlerChainName("post-handler-chain-to-be-removed-" + RandomStringUtils.randomAlphanumeric(7))
             .clientConfiguration()
-            .preHandlerChain()
+            .postHandlerChain()
             .build();
 
     @Container static WildFlyContainer wildFly = WildFlyContainer.standalone(DEFAULT);
@@ -70,8 +70,8 @@ class PreHandlerChainTest {
         OnlineManagementClient client = wildFly.managementClient();
         Operations operations = new Operations(client);
         operations.add(WebServicesFixtures.clientConfigurationAddress(CLIENT_CONFIGURATION_EDIT));
-        operations.add(PRE_HANDLER_CHAIN_EDIT.handlerChainAddress());
-        operations.add(PRE_HANDLER_CHAIN_DELETE.handlerChainAddress());
+        operations.add(POST_HANDLER_CHAIN_EDIT.handlerChainAddress());
+        operations.add(POST_HANDLER_CHAIN_DELETE.handlerChainAddress());
     }
 
     @Inject Console console;
@@ -79,28 +79,28 @@ class PreHandlerChainTest {
     @Page WebServicesPage page;
 
     @BeforeEach
-    void prepare() {
+    void initPage() {
         page.navigate();
         console.verticalNavigation().selectPrimary(Ids.WEBSERVICES_CLIENT_CONFIG_ITEM);
-        page.getClientConfigurationTable().action(CLIENT_CONFIGURATION_EDIT, "Pre");
+        page.getClientConfigurationTable().action(CLIENT_CONFIGURATION_EDIT, "Post");
     }
 
     @Test
     void create() throws Exception {
-        crudOperations.create(PRE_HANDLER_CHAIN_CREATE.handlerChainAddress(),
-                page.getClientConfigurationHandlerChainTable(), PRE_HANDLER_CHAIN_CREATE.getHandlerChainName());
+        crudOperations.create(POST_HANDLER_CHAIN_CREATE.handlerChainAddress(),
+                page.getClientConfigurationHandlerChainTable(), POST_HANDLER_CHAIN_CREATE.getHandlerChainName());
     }
 
     @Test
     void remove() throws Exception {
-        crudOperations.delete(PRE_HANDLER_CHAIN_DELETE.handlerChainAddress(),
-                page.getClientConfigurationHandlerChainTable(), PRE_HANDLER_CHAIN_DELETE.getHandlerChainName());
+        crudOperations.delete(POST_HANDLER_CHAIN_DELETE.handlerChainAddress(),
+                page.getClientConfigurationHandlerChainTable(), POST_HANDLER_CHAIN_DELETE.getHandlerChainName());
     }
 
     @Test
     void editProtocolBindings() throws Exception {
-        page.getClientConfigurationHandlerChainTable().select(PRE_HANDLER_CHAIN_EDIT.getHandlerChainName());
-        crudOperations.update(PRE_HANDLER_CHAIN_EDIT.handlerChainAddress(),
+        page.getClientConfigurationHandlerChainTable().select(POST_HANDLER_CHAIN_EDIT.getHandlerChainName());
+        crudOperations.update(POST_HANDLER_CHAIN_EDIT.handlerChainAddress(),
                 page.getClientConfigurationHandlerChainForm(), "protocol-bindings");
     }
 }

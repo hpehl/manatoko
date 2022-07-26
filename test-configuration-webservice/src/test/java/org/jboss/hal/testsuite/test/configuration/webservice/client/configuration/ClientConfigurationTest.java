@@ -13,7 +13,7 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package org.jboss.hal.testsuite.test.configuration.web.services.client.configuration;
+package org.jboss.hal.testsuite.test.configuration.webservice.client.configuration;
 
 import java.util.HashMap;
 import java.util.Map;

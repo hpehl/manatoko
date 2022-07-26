@@ -15,23 +15,47 @@
  */
 package org.jboss.hal.testsuite.fixtures.undertow;
 
+import org.jboss.hal.resources.Ids;
+import org.jboss.hal.testsuite.Random;
+import org.jboss.hal.testsuite.model.CrudConstants;
 import org.wildfly.extras.creaper.core.online.operations.Address;
 
 public class UndertowFixtures {
 
-    public static final Address UNDERTOW_ADDRESS = Address.subsystem("undertow");
+    private static final String SERVER_PREFIX = "srv";
+    private static final String SERVLET_CONTAINER_PREFIX = "slt_cnt";
+    private static final String HOST_PREFIX = "hst";
 
-    public static final String DEFAULT_SECURITY_DOMAIN = "default-security-domain";
-    public static final String DEFAULT_SERVER = "default-server";
+    public static final Address UNDERTOW_ADDRESS = Address.subsystem("undertow");
     public static final String DEFAULT_SERVLET_CONTAINER = "default-servlet-container";
     public static final String DEFAULT_VIRTUAL_HOST = "default-virtual-host";
-    public static final String INSTANCE_ID = "instance-id";
-    public static final String STATISTICS_ENABLED = "statistics-enabled";
-    public static final String DEFAULT_HOST = "default-host";
+
+    // ------------------------------------------------------ server
+
+    public static final String DEFAULT_SERVER_CREATE = Ids.build(SERVER_PREFIX, CrudConstants.CREATE, Random.name());
 
     public static Address serverAddress(String serverName) {
         return UNDERTOW_ADDRESS.and("server", serverName);
     }
+
+    // ------------------------------------------------------ servlet container
+
+    public static final String DEFAULT_SERVLET_CONTAINER_CREATE = Ids.build(SERVLET_CONTAINER_PREFIX, CrudConstants.CREATE,
+            Random.name());
+
+    public static Address servletContainerAddress(String name) {
+        return UNDERTOW_ADDRESS.and("servlet-container", name);
+    }
+
+    // ------------------------------------------------------ virtual host
+
+    public static final String DEFAULT_VIRTUAL_HOST_CREATE = Ids.build(HOST_PREFIX, CrudConstants.CREATE, Random.name());
+
+    public static Address virtualHostAddress(String serverName, String name) {
+        return serverAddress(serverName).and("host", name);
+    }
+
+    // ------------------------------------------------------ listeners
 
     public static Address ajpListenerAddress(String serverName, String ajpListenerName) {
         return serverAddress(serverName).and("ajp-listener", ajpListenerName);
@@ -45,13 +69,7 @@ public class UndertowFixtures {
         return serverAddress(serverName).and("https-listener", httpsListenerName);
     }
 
-    public static Address servletContainerAddress(String name) {
-        return UNDERTOW_ADDRESS.and("servlet-container", name);
-    }
-
-    public static Address virtualHostAddress(String serverName, String name) {
-        return serverAddress(serverName).and("host", name);
-    }
+    // ------------------------------------------------------ misc
 
     public static Address bufferCacheAddress(String bufferCacheName) {
         return UNDERTOW_ADDRESS.and("buffer-cache", bufferCacheName);
@@ -62,6 +80,5 @@ public class UndertowFixtures {
     }
 
     private UndertowFixtures() {
-
     }
 }
