@@ -1,9 +1,11 @@
-name: Verify Codebase
+name: Create Surefire Report
 
-on: [push, pull_request]
+on:
+   schedule:
+    - cron: '0 0 * * *'
 
 jobs:
-  verify:
+  test:
     runs-on: ubuntu-latest
     env:
       MVN: ./mvnw --show-version --batch-mode
@@ -18,6 +20,13 @@ jobs:
           java-version: '11'
           distribution: 'temurin'
           cache: maven
-      - name: Verify
-        id: verify
-        run: $MVN -P all-tests -DskipTests verify
+      - name: Site
+        id: site
+        run: $MVN -P all-tests site -Daggregate=true
+      - name: Publish
+        id: publish
+        uses: JamesIves/github-pages-deploy-action@v4.2.5
+        with:
+          branch: gh-pages
+          folder: ./target/site
+          clean: true

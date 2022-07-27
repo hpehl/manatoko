@@ -18,16 +18,22 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
+    env:
+      MVN: ./mvnw --show-version --batch-mode
     steps:
       - name: Checkout
+        id: checkout
         uses: actions/checkout@v3
       - name: Set up JDK
+        id: setup-jdk
         uses: actions/setup-java@v3
         with:
           java-version: '11'
           distribution: 'temurin'
           cache: maven
       - name: Install
-        run: mvn --batch-mode install
+        id: install
+        run: $MVN install
       - name: Run Tests
-        run: mvn --batch-mode --projects ${{ github.event.inputs.module }} --also-make -P all-tests test -Dhal.image=${{ github.event.inputs.hal-image }}
+        id: run-tests
+        run: $MVN --projects ${{ github.event.inputs.module }} --also-make -P all-tests test -Dhal.image=${{ github.event.inputs.hal-image }}

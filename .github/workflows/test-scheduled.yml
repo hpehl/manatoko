@@ -33,22 +33,30 @@ jobs:
           - test-configuration-socketbinding
           - test-configuration-systemproperty
           - test-configuration-transaction
+          - test-configuration-web
           - test-configuration-webservice
           - test-runtime-server
     runs-on: ubuntu-latest
     continue-on-error: true
+    env:
+      MVN: ./mvnw --show-version --batch-mode
     steps:
       - name: Checkout
+        id: checkout
         uses: actions/checkout@v3
       - name: Set up JDK
+        id: setup-jdk
         uses: actions/setup-java@v3
         with:
           java-version: '11'
           distribution: 'temurin'
           cache: maven
       - name: Install
-        run: mvn --batch-mode install
+        id: install
+        run: $MVN install
       - name: Run Tests (Stable)
-        run: mvn --batch-mode --projects ${{ matrix.module }} --also-make -P all-tests test -Dhal.image=quay.io/halconsole/hal
+        id: run-tests-stable
+        run: $MVN --projects ${{ matrix.module }} --also-make -P all-tests test -Dhal.image=quay.io/halconsole/hal
       - name: Run Tests (Development)
-        run: mvn --batch-mode --projects ${{ matrix.module }} --also-make -P all-tests test -Dhal.image=quay.io/halconsole/hal-development
+        id: run-tests-development
+        run: $MVN --projects ${{ matrix.module }} --also-make -P all-tests test -Dhal.image=quay.io/halconsole/hal-development
