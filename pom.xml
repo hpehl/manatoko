@@ -53,6 +53,15 @@
         <url>${repo.scm.url}</url>
         <tag>HEAD</tag>
     </scm>
+    <issueManagement>
+        <system>JIRA</system>
+        <url>https://issues.jboss.org/browse/HAL</url>
+    </issueManagement>
+    <ciManagement>
+        <system>Github Actions</system>
+        <url>https://github.com/hal/manatoko/actions</url>
+        <notifiers/>
+   </ciManagement>
 
     <properties>
         <!-- Dependency versions -->
@@ -83,10 +92,17 @@
         <version.formatter.plugin>2.20.0</version.formatter.plugin>
         <version.impsort.plugin>1.7.0</version.impsort.plugin>
         <version.license.plugin>4.1</version.license.plugin>
+        <version.site.plugin>4.0.0-M3</version.site.plugin>
+
+        <!-- Reporting versions -->
+        <version.jxr.reporting>3.2.0</version.jxr.reporting>
+        <version.project.reporting>3.4.0</version.project.reporting>
+        <version.surefire.reporting>3.0.0-M7</version.surefire.reporting>
+        <version.fluido.skin>1.11.1</version.fluido.skin>
 
         <!-- Repos, URLs & protocols -->
-        <repo.scm.connection>git@github.com:hpehl/manatoko.git</repo.scm.connection>
-        <repo.scm.url>https://github.com/hpehl/manatoko</repo.scm.url>
+        <repo.scm.connection>git@github.com:hal/manatoko.git</repo.scm.connection>
+        <repo.scm.url>https://github.com/hal/manatoko</repo.scm.url>
 
         <!-- Build related -->
         <default.host>primary</default.host>
@@ -217,6 +233,25 @@
                         </rules>
                     </configuration>
                 </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-jxr-plugin</artifactId>
+                    <version>${version.jxr.reporting}</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-project-info-reports-plugin</artifactId>
+                    <version>${version.project.reporting}</version>
+                </plugin>
+                <plugin><groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-site-plugin</artifactId>
+                    <version>${version.site.plugin}</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-surefire-report-plugin</artifactId>
+                    <version>${version.surefire.reporting}</version>
+                </plugin>
             </plugins>
         </pluginManagement>
 
@@ -279,6 +314,9 @@
                     </execution>
                 </executions>
             </plugin>
+            <plugin><groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-site-plugin</artifactId>
+            </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
@@ -288,6 +326,38 @@
             </plugin>
         </plugins>
     </build>
+
+    <reporting>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-project-info-reports-plugin</artifactId>
+                <reportSets>
+                    <reportSet>
+                        <reports>
+                            <report>index</report>
+                        </reports>
+                    </reportSet>
+                </reportSets>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jxr-plugin</artifactId>
+                <reportSets>
+                    <reportSet>
+                        <reports>
+                            <report>aggregate</report>
+                            <report>test-aggregate</report>
+                        </reports>
+                    </reportSet>
+                </reportSets>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-report-plugin</artifactId>
+            </plugin>
+        </plugins>
+    </reporting>
 
     <profiles>
         <profile>
