@@ -27,7 +27,6 @@ pom.xml.versionsBackup
 pom.xml.next
 target
 **/target
-.mvn
 
 # eclipse
 .project
