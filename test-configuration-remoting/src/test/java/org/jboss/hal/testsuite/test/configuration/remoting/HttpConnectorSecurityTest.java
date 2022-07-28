@@ -47,8 +47,8 @@ import static org.jboss.hal.testsuite.fixtures.RemotingFixtures.HTTP_CONNECTOR_S
 import static org.jboss.hal.testsuite.fixtures.RemotingFixtures.INCLUDE_MECHANISMS;
 import static org.jboss.hal.testsuite.fixtures.RemotingFixtures.httpConnectorAddress;
 import static org.jboss.hal.testsuite.fixtures.RemotingFixtures.httpConnectorSecurityAddress;
-import static org.jboss.hal.testsuite.fixtures.undertow.UndertowFixtures.DEFAULT_SERVER;
-import static org.jboss.hal.testsuite.fixtures.undertow.UndertowFixtures.httpListenerAddress;
+import static org.jboss.hal.testsuite.fixtures.WebFixtures.DEFAULT_SERVER;
+import static org.jboss.hal.testsuite.fixtures.WebFixtures.httpListenerAddress;
 
 @Manatoko
 @Testcontainers

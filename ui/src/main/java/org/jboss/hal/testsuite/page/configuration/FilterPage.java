@@ -23,7 +23,7 @@ import org.jboss.hal.testsuite.page.Place;
 import org.openqa.selenium.support.FindBy;
 
 @Place(NameTokens.UNDERTOW_FILTER)
-public class UndertowFiltersPage extends BasePage {
+public class FilterPage extends BasePage {
 
     @FindBy(id = "undertow-rewrite-table_wrapper") private TableFragment rewriteTable;
 
@@ -41,7 +41,7 @@ public class UndertowFiltersPage extends BasePage {
 
     @FindBy(id = "undertow-mod-cluster-form") private FormFragment modClusterFilterForm;
 
-    @FindBy(id = "undertow-gzip-table_wrapper") private TableFragment gzipFilterTable;
+    @FindBy(id = "undertow-gzip-table_wrapper") private TableFragment gzipTable;
 
     @FindBy(id = "undertow-expression-filter-table_wrapper") private TableFragment expressionFilterTable;
 
@@ -87,8 +87,8 @@ public class UndertowFiltersPage extends BasePage {
         return modClusterFilterForm;
     }
 
-    public TableFragment getGzipFilterTable() {
-        return gzipFilterTable;
+    public TableFragment getGzipTable() {
+        return gzipTable;
     }
 
     public TableFragment getExpressionFilterTable() {

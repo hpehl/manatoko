@@ -21,7 +21,7 @@ import org.jboss.arquillian.graphene.page.Page;
 import org.jboss.hal.testsuite.CrudOperations;
 import org.jboss.hal.testsuite.Random;
 import org.jboss.hal.testsuite.container.WildFlyContainer;
-import org.jboss.hal.testsuite.fixtures.undertow.UndertowFixtures;
+import org.jboss.hal.testsuite.fixtures.WebFixtures;
 import org.jboss.hal.testsuite.page.configuration.UndertowPage;
 import org.jboss.hal.testsuite.test.Manatoko;
 import org.junit.jupiter.api.BeforeAll;
@@ -41,15 +41,15 @@ import static org.jboss.hal.dmr.ModelDescriptionConstants.NAME;
 import static org.jboss.hal.dmr.ModelDescriptionConstants.RESOLVE_EXPRESSIONS;
 import static org.jboss.hal.dmr.ModelDescriptionConstants.STATISTICS_ENABLED;
 import static org.jboss.hal.testsuite.container.WildFlyConfiguration.DEFAULT;
-import static org.jboss.hal.testsuite.fixtures.undertow.UndertowFixtures.DEFAULT_SERVER;
-import static org.jboss.hal.testsuite.fixtures.undertow.UndertowFixtures.DEFAULT_SERVER_CREATE;
-import static org.jboss.hal.testsuite.fixtures.undertow.UndertowFixtures.DEFAULT_SERVLET_CONTAINER;
-import static org.jboss.hal.testsuite.fixtures.undertow.UndertowFixtures.DEFAULT_SERVLET_CONTAINER_CREATE;
-import static org.jboss.hal.testsuite.fixtures.undertow.UndertowFixtures.DEFAULT_VIRTUAL_HOST;
-import static org.jboss.hal.testsuite.fixtures.undertow.UndertowFixtures.DEFAULT_VIRTUAL_HOST_CREATE;
-import static org.jboss.hal.testsuite.fixtures.undertow.UndertowFixtures.UNDERTOW_ADDRESS;
-import static org.jboss.hal.testsuite.fixtures.undertow.UndertowFixtures.servletContainerAddress;
-import static org.jboss.hal.testsuite.fixtures.undertow.UndertowFixtures.virtualHostAddress;
+import static org.jboss.hal.testsuite.fixtures.WebFixtures.DEFAULT_SERVER;
+import static org.jboss.hal.testsuite.fixtures.WebFixtures.DEFAULT_SERVER_CREATE;
+import static org.jboss.hal.testsuite.fixtures.WebFixtures.DEFAULT_SERVLET_CONTAINER;
+import static org.jboss.hal.testsuite.fixtures.WebFixtures.DEFAULT_SERVLET_CONTAINER_CREATE;
+import static org.jboss.hal.testsuite.fixtures.WebFixtures.DEFAULT_VIRTUAL_HOST;
+import static org.jboss.hal.testsuite.fixtures.WebFixtures.DEFAULT_VIRTUAL_HOST_CREATE;
+import static org.jboss.hal.testsuite.fixtures.WebFixtures.UNDERTOW_ADDRESS;
+import static org.jboss.hal.testsuite.fixtures.WebFixtures.servletContainerAddress;
+import static org.jboss.hal.testsuite.fixtures.WebFixtures.virtualHostAddress;
 
 @Manatoko
 @Testcontainers
@@ -61,7 +61,7 @@ class GlobalSettingsTest {
     @BeforeAll
     static void setupModel() throws Exception {
         operations = new Operations(wildFly.managementClient());
-        Address serverAddress = UndertowFixtures.serverAddress(DEFAULT_SERVER_CREATE);
+        Address serverAddress = WebFixtures.serverAddress(DEFAULT_SERVER_CREATE);
         operations.add(serverAddress);
         operations.add(servletContainerAddress(DEFAULT_SERVLET_CONTAINER_CREATE));
         operations.add(virtualHostAddress(DEFAULT_SERVER_CREATE, DEFAULT_VIRTUAL_HOST_CREATE),

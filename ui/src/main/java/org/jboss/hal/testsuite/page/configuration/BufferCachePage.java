@@ -15,25 +15,26 @@
  */
 package org.jboss.hal.testsuite.page.configuration;
 
+import org.jboss.hal.meta.token.NameTokens;
 import org.jboss.hal.testsuite.fragment.FormFragment;
 import org.jboss.hal.testsuite.fragment.TableFragment;
 import org.jboss.hal.testsuite.page.BasePage;
 import org.jboss.hal.testsuite.page.Place;
 import org.openqa.selenium.support.FindBy;
 
-@Place("undertow-buffer-cache")
-public class UndertowBufferCachePage extends BasePage {
+@Place(NameTokens.UNDERTOW_BUFFER_CACHE)
+public class BufferCachePage extends BasePage {
 
-    @FindBy(id = "buffer-cache-table_wrapper") private TableFragment bufferCacheTable;
+    @FindBy(id = "buffer-cache-table_wrapper") private TableFragment table;
 
-    @FindBy(id = "buffer-cache-form") private FormFragment bufferCacheForm;
+    @FindBy(id = "buffer-cache-form") private FormFragment form;
 
-    public TableFragment getBufferCacheTable() {
-        return bufferCacheTable;
+    public TableFragment getTable() {
+        return table;
     }
 
-    public FormFragment getBufferCacheForm() {
-        return bufferCacheForm;
+    public FormFragment getForm() {
+        return form;
     }
 
 }

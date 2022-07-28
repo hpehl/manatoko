@@ -15,25 +15,26 @@
  */
 package org.jboss.hal.testsuite.page.configuration;
 
+import org.jboss.hal.meta.token.NameTokens;
 import org.jboss.hal.testsuite.fragment.FormFragment;
 import org.jboss.hal.testsuite.fragment.TableFragment;
 import org.jboss.hal.testsuite.page.BasePage;
 import org.jboss.hal.testsuite.page.Place;
 import org.openqa.selenium.support.FindBy;
 
-@Place("undertow-byte-buffer-pool")
-public class UndertowByteBufferPoolPage extends BasePage {
+@Place(NameTokens.UNDERTOW_BYTE_BUFFER_POOL)
+public class ByteBufferPoolPage extends BasePage {
 
-    @FindBy(id = "byte-buffer-pool-table_wrapper") private TableFragment byteBufferPoolTable;
+    @FindBy(id = "byte-buffer-pool-table_wrapper") private TableFragment table;
 
-    @FindBy(id = "byte-buffer-pool-form") private FormFragment byteBufferPoolForm;
+    @FindBy(id = "byte-buffer-pool-form") private FormFragment form;
 
-    public TableFragment getByteBufferPoolTable() {
-        return byteBufferPoolTable;
+    public TableFragment getTable() {
+        return table;
     }
 
-    public FormFragment getByteBufferPoolForm() {
-        return byteBufferPoolForm;
+    public FormFragment getForm() {
+        return form;
     }
 
 }

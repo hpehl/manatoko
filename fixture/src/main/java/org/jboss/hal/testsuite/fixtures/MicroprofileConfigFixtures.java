@@ -13,7 +13,7 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package org.jboss.hal.testsuite.fixtures.microprofile;
+package org.jboss.hal.testsuite.fixtures;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;

@@ -13,24 +13,17 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package org.jboss.hal.testsuite.fixtures.undertow;
+package org.jboss.hal.testsuite.fixtures;
 
 import org.wildfly.extras.creaper.core.online.operations.Address;
 
-public class UndertowHandlersFixtures {
+public class MicroprofileMetricsFixtures {
 
-    private static final Address HANDLERS_ADDRESS = UndertowFixtures.UNDERTOW_ADDRESS.and("configuration", "handler");
+    public static final Address MICROPROFILE_METRICS_ADDRESS = Address.subsystem("microprofile-metrics-smallrye");
+    public static final String EXPOSE_ALL_SUBSYSTEMS = "expose-all-subsystems";
+    public static final String EXPOSED_SUBSYSTEMS = "exposed-subsystems";
+    public static final String SECURITY_ENABLED = "security-enabled";
 
-    public static Address fileHandlerAddress(String fileHandlerName) {
-        return HANDLERS_ADDRESS.and("file", fileHandlerName);
+    private MicroprofileMetricsFixtures() {
     }
-
-    public static Address reverseProxyAddress(String reverseProxyName) {
-        return HANDLERS_ADDRESS.and("reverse-proxy", reverseProxyName);
-    }
-
-    private UndertowHandlersFixtures() {
-
-    }
-
 }
