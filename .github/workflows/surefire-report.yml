@@ -5,7 +5,7 @@ on:
     - cron: '0 0 * * *'
 
 jobs:
-  test:
+  report:
     runs-on: ubuntu-latest
     env:
       MVN: ./mvnw --show-version --batch-mode
@@ -20,9 +20,12 @@ jobs:
           java-version: '11'
           distribution: 'temurin'
           cache: maven
+      - name: Run Tests
+        id: run-tests
+        run: $MVN --fail-never -P all-tests test
       - name: Site
         id: site
-        run: $MVN -P all-tests site -Daggregate=true
+        run: $MVN -P all-tests site:site -Daggregate=true
       - name: Publish
         id: publish
         uses: JamesIves/github-pages-deploy-action@v4.2.5
