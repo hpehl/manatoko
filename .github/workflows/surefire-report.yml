@@ -25,7 +25,7 @@ jobs:
         run: $MVN --fail-never -P all-tests test
       - name: Site
         id: site
-        run: $MVN -P all-tests site:site -Daggregate=true
+        run: $MVN -P all-tests site:site -DskipTests -Daggregate=true
       - name: Publish
         id: publish
         uses: JamesIves/github-pages-deploy-action@v4.4.0
