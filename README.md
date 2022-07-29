@@ -17,6 +17,7 @@ The goal is that tests should be self-contained. Containers are started and stop
 * [Run Tests](#run-tests)
   * [Run All Tests](#run-all-tests)
   * [Run Specific Tests](#run-specific-tests)
+* [Test Report](#test-report)
 * [Images](#images)
 * [Modules](#modules)
 * [Scripts](#scripts)
@@ -123,6 +124,10 @@ If you want to execute one specific test or test method, use one of the followin
 ```
 
 If you want to debug a test, append `-Dmaven.surefire.debug` and attach a debugger to port 5005.
+
+# Test Report
+
+All tests are executed every 24h and the results are aggregated by `maven-surefire-report-plugin`. The reports is then published to GitHub pages: https://hal.github.io/manatoko/surefire-report.html 
 
 # Images
 
