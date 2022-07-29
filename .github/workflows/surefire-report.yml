@@ -1,8 +1,8 @@
 name: Create Surefire Report
 
-on: workflow_dispatch
-#   schedule:
-#    - cron: '0 0 * * *'
+on:
+   schedule:
+    - cron: '0 0 * * *'
 
 jobs:
   report:

@@ -27,7 +27,6 @@ import static org.jboss.hal.dmr.ModelDescriptionConstants.CREDENTIAL_REFERENCE;
 import static org.jboss.hal.dmr.ModelDescriptionConstants.PATH;
 import static org.jboss.hal.dmr.ModelDescriptionConstants.RELATIVE_TO;
 import static org.jboss.hal.testsuite.fixtures.PathsFixtures.JBOSS_SERVER_DATA_DIR;
-import static org.jboss.hal.testsuite.fixtures.SecurityFixtures.CREDENTIAL_STORE_CREATE;
 import static org.jboss.hal.testsuite.fixtures.SecurityFixtures.credentialStoreAddress;
 
 public class AddCredentialStore implements OnlineCommand {
@@ -41,7 +40,7 @@ public class AddCredentialStore implements OnlineCommand {
     @Override
     public void apply(final OnlineCommandContext context) throws Exception {
         Operations operations = new Operations(context.client);
-        operations.add(credentialStoreAddress(CREDENTIAL_STORE_CREATE), Values
+        operations.add(credentialStoreAddress(name), Values
                 .of(PATH, Random.name())
                 .and(RELATIVE_TO, JBOSS_SERVER_DATA_DIR)
                 .and(CREATE, true)

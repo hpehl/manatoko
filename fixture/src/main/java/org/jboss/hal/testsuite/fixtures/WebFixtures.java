@@ -52,14 +52,18 @@ public class WebFixtures {
     public static final String DEFAULT_SERVER = "default-server";
     public static final String DEFAULT_SERVLET_CONTAINER = "default-servlet-container";
     public static final String DEFAULT_VIRTUAL_HOST = "default-virtual-host";
+    public static final String ENABLE_JACC = "enable-jacc";
+    public static final String ENABLE_JASPI = "enable-jaspi";
     public static final String ERROR_PAGE = "error-page";
     public static final String EXPRESSION_FILTER = "expression-filter";
     public static final String GZIP = "gzip";
     public static final String HEADER_VALUE = "header-value";
+    public static final String INTEGRATED_JASPI = "integrated-jaspi";
     public static final String MAX_CONCURRENT_REQUESTS = "max-concurrent-requests";
     public static final String MAX_REGIONS = "max-regions";
     public static final String MOD_CLUSTER = "mod-cluster";
     public static final String MANAGEMENT_SOCKET_BINDING = "management-socket-binding";
+    public static final String OVERRIDE_DEPLOYMENT_CONFIG = "override-deployment-config";
     public static final String PARAMETERS = "parameters";
     public static final String REDIRECT = "redirect";
     public static final String REQUEST_LIMIT = "request-limit";
@@ -72,6 +76,12 @@ public class WebFixtures {
     public static final String APPLICATION_SECURITY_DOMAIN_CREATE = Ids.build(APPLICATION_SECURITY_DOMAIN_PREFIX, CREATE,
             Random.name());
     public static final String APPLICATION_SECURITY_DOMAIN_READ = Ids.build(APPLICATION_SECURITY_DOMAIN_PREFIX, READ,
+            Random.name());
+    public static final String APPLICATION_SECURITY_DOMAIN_UPDATE = Ids.build(APPLICATION_SECURITY_DOMAIN_PREFIX, UPDATE,
+            Random.name());
+    public static final String APPLICATION_SECURITY_DOMAIN_HAF = Ids.build(APPLICATION_SECURITY_DOMAIN_PREFIX, "haf",
+            Random.name());
+    public static final String APPLICATION_SECURITY_DOMAIN_SD = Ids.build(APPLICATION_SECURITY_DOMAIN_PREFIX, "sd",
             Random.name());
     public static final String APPLICATION_SECURITY_DOMAIN_DELETE = Ids.build(APPLICATION_SECURITY_DOMAIN_PREFIX, DELETE,
             Random.name());

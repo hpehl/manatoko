@@ -24,8 +24,10 @@ import static org.jboss.hal.dmr.ModelDescriptionConstants.CERTIFICATE_AUTHORITY;
 import static org.jboss.hal.dmr.ModelDescriptionConstants.CLIENT_SSL_CONTEXT;
 import static org.jboss.hal.dmr.ModelDescriptionConstants.CREDENTIAL_STORE;
 import static org.jboss.hal.dmr.ModelDescriptionConstants.ELYTRON;
+import static org.jboss.hal.dmr.ModelDescriptionConstants.HTTP_AUTHENTICATION_FACTORY;
 import static org.jboss.hal.dmr.ModelDescriptionConstants.KEY_MANAGER;
 import static org.jboss.hal.dmr.ModelDescriptionConstants.KEY_STORE;
+import static org.jboss.hal.dmr.ModelDescriptionConstants.PROVIDER_HTTP_SERVER_MECHANISM_FACTORY;
 import static org.jboss.hal.dmr.ModelDescriptionConstants.SECRET_KEY_CREDENTIAL_STORE;
 import static org.jboss.hal.dmr.ModelDescriptionConstants.SERVER_SSL_CONTEXT;
 import static org.jboss.hal.dmr.ModelDescriptionConstants.SYSLOG_AUDIT_LOG;
@@ -45,10 +47,13 @@ public final class SecurityFixtures {
     private static final String CREDENTIAL_STORE_PREFIX = "cred-store";
     private static final String EXPRESSION_RESOLVER_PREFIX = "er";
     private static final String EVIDENCE_DECODER_PREFIX = "ed";
+    private static final String HTTP_AUTHENTICATION_FACTORY_PREFIX = "haf";
+    private static final String PROVIDER_HTTP_SERVER_MECHANISM_FACTORY_PREFIX = "phsmf";
     private static final String KEY_MANAGER_PREFIX = "ks";
     private static final String KEY_STORE_PREFIX = "km";
     private static final String SECRET_KEY_CREDENTIAL_STORE_PREFIX = "skcs";
     private static final String SERVER_SSL_CONTEXT_PREFIX = "srv-ssl";
+    private static final String SECURITY_DOMAIN_PREFIX = "sd";
     private static final String SYSLOG_AUDIT_LOG_PREFIX = "sys-aud";
     private static final String TOKEN_REALM_PREFIX = "tr";
     private static final String TRUST_MANAGER_PREFIX = "tm";
@@ -67,6 +72,7 @@ public final class SecurityFixtures {
     public static final String EVIDENCE_DECODER_ITEM = "mappers-decoders-evidence-decoder-item";
     public static final String EVIDENCE_DECODERS = "evidence-decoders";
     public static final String HOST_NAME = "host-name";
+    public static final String HTTP_SERVER_MECHANISM_FACTORY = "http-server-mechanism-factory";
     public static final String INITIAL_PROVIDERS = "initial-providers";
     public static final String INTROSPECTION_URL = "introspection-url";
     public static final String INTROSPECTION_URL_VALUE = "https://acme.org";
@@ -147,6 +153,22 @@ public final class SecurityFixtures {
         return SUBSYSTEM_ADDRESS.and("expression", "encryption");
     }
 
+    // ------------------------------------------------------ http factories
+
+    public static final String HTTP_AUTHENTICATION_FACTORY_CREATE = Ids.build(HTTP_AUTHENTICATION_FACTORY_PREFIX, CREATE,
+            Random.name());
+
+    public static final String PROVIDER_HTTP_SERVER_MECHANISM_FACTORY_CREATE = Ids
+            .build(PROVIDER_HTTP_SERVER_MECHANISM_FACTORY_PREFIX, CREATE, Random.name());
+
+    public static Address httpAuthenticationFactoryAddress(String name) {
+        return SUBSYSTEM_ADDRESS.and(HTTP_AUTHENTICATION_FACTORY, name);
+    }
+
+    public static Address providerHttpServerMechanismFactoryAddress(String name) {
+        return SUBSYSTEM_ADDRESS.and(PROVIDER_HTTP_SERVER_MECHANISM_FACTORY, name);
+    }
+
     // ------------------------------------------------------ key manager
 
     public static final String KEY_MANAGER_CREATE = Ids.build(KEY_MANAGER_PREFIX, CREATE, Random.name());
@@ -188,6 +210,10 @@ public final class SecurityFixtures {
     public static Address serverSslContextAddress(String name) {
         return SUBSYSTEM_ADDRESS.and(SERVER_SSL_CONTEXT, name);
     }
+
+    // ------------------------------------------------------ security domain
+
+    public static final String SECURITY_DOMAIN_CREATE = Ids.build(SECURITY_DOMAIN_PREFIX, CREATE, Random.name());
 
     // ------------------------------------------------------ syslog audit
 

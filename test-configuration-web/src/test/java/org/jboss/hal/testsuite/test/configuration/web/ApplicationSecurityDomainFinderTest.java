@@ -19,8 +19,6 @@ import org.jboss.arquillian.core.api.annotation.Inject;
 import org.jboss.hal.meta.token.NameTokens;
 import org.jboss.hal.resources.Ids;
 import org.jboss.hal.testsuite.Console;
-import org.jboss.hal.testsuite.CrudOperations;
-import org.jboss.hal.testsuite.Random;
 import org.jboss.hal.testsuite.command.AddSecurityDomain;
 import org.jboss.hal.testsuite.container.WildFlyContainer;
 import org.jboss.hal.testsuite.fragment.AddResourceDialogFragment;
@@ -42,6 +40,7 @@ import com.gwtplatform.mvp.shared.proxy.PlaceRequest;
 import static org.jboss.hal.dmr.ModelDescriptionConstants.NAME;
 import static org.jboss.hal.dmr.ModelDescriptionConstants.SECURITY_DOMAIN;
 import static org.jboss.hal.testsuite.container.WildFlyConfiguration.DEFAULT;
+import static org.jboss.hal.testsuite.fixtures.SecurityFixtures.SECURITY_DOMAIN_CREATE;
 import static org.jboss.hal.testsuite.fixtures.WebFixtures.APPLICATION_SECURITY_DOMAIN_CREATE;
 import static org.jboss.hal.testsuite.fixtures.WebFixtures.APPLICATION_SECURITY_DOMAIN_DELETE;
 import static org.jboss.hal.testsuite.fixtures.WebFixtures.APPLICATION_SECURITY_DOMAIN_READ;
@@ -54,25 +53,21 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 class ApplicationSecurityDomainFinderTest {
 
     @Container static WildFlyContainer wildFly = WildFlyContainer.standalone(DEFAULT);
-    static String securityDomain;
     static OnlineManagementClient client;
 
     @BeforeAll
     static void setupModel() throws Exception {
         client = wildFly.managementClient();
-
-        securityDomain = Random.name();
-        client.apply(new AddSecurityDomain(securityDomain));
+        client.apply(new AddSecurityDomain(SECURITY_DOMAIN_CREATE));
 
         Operations operations = new Operations(client);
         operations.add(applicationSecurityDomainAddress(APPLICATION_SECURITY_DOMAIN_READ),
-                Values.of(SECURITY_DOMAIN, securityDomain));
+                Values.of(SECURITY_DOMAIN, SECURITY_DOMAIN_CREATE));
         operations.add(applicationSecurityDomainAddress(APPLICATION_SECURITY_DOMAIN_DELETE),
-                Values.of(SECURITY_DOMAIN, securityDomain));
+                Values.of(SECURITY_DOMAIN, SECURITY_DOMAIN_CREATE));
     }
 
     @Inject Console console;
-    @Inject CrudOperations crudOperations;
     ColumnFragment column;
 
     @BeforeEach
@@ -87,7 +82,7 @@ class ApplicationSecurityDomainFinderTest {
         AddResourceDialogFragment dialog = column.add();
         FormFragment form = dialog.getForm();
         form.text(NAME, APPLICATION_SECURITY_DOMAIN_CREATE);
-        form.text(SECURITY_DOMAIN, securityDomain);
+        form.text(SECURITY_DOMAIN, SECURITY_DOMAIN_CREATE);
         dialog.add();
 
         console.verifySuccess();

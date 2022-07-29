@@ -24,7 +24,7 @@ import org.jboss.hal.testsuite.page.Place;
 import org.openqa.selenium.support.FindBy;
 
 @Place(Ids.UNDERTOW_APP_SECURITY_DOMAIN)
-public class UndertowApplicationSecurityDomainPage extends BasePage {
+public class ApplicationSecurityDomainPage extends BasePage {
 
     @FindBy(id = Ids.UNDERTOW_APP_SECURITY_DOMAIN_TAB_CONTAINER) private TabsFragment tab;
 
