@@ -127,7 +127,7 @@ If you want to debug a test, append `-Dmaven.surefire.debug` and attach a debugg
 
 # Test Report
 
-All tests are executed every 24h and the results are aggregated by `maven-surefire-report-plugin`. The reports is then published to GitHub pages: https://hal.github.io/manatoko/surefire-report.html 
+All tests are executed every 24h and the results are aggregated by the `maven-surefire-report-plugin`. The report is then published to GitHub pages: https://hal.github.io/manatoko/surefire-report.html 
 
 # Images
 
