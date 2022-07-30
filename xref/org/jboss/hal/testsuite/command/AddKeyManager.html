@@ -23,15 +23,15 @@
 <a class="jxr_linenumber" name="L15" href="#L15">15</a>  <em class="jxr_comment"> */</em>
 <a class="jxr_linenumber" name="L16" href="#L16">16</a>  <strong class="jxr_keyword">package</strong> org.jboss.hal.testsuite.command;
 <a class="jxr_linenumber" name="L17" href="#L17">17</a>  
-<a class="jxr_linenumber" name="L18" href="#L18">18</a>  <strong class="jxr_keyword">import</strong> org.jboss.hal.testsuite.model.CredentialReference;
-<a class="jxr_linenumber" name="L19" href="#L19">19</a>  <strong class="jxr_keyword">import</strong> org.wildfly.extras.creaper.core.online.OnlineCommand;
-<a class="jxr_linenumber" name="L20" href="#L20">20</a>  <strong class="jxr_keyword">import</strong> org.wildfly.extras.creaper.core.online.OnlineCommandContext;
-<a class="jxr_linenumber" name="L21" href="#L21">21</a>  <strong class="jxr_keyword">import</strong> org.wildfly.extras.creaper.core.online.operations.Operations;
-<a class="jxr_linenumber" name="L22" href="#L22">22</a>  <strong class="jxr_keyword">import</strong> org.wildfly.extras.creaper.core.online.operations.Values;
-<a class="jxr_linenumber" name="L23" href="#L23">23</a>  
-<a class="jxr_linenumber" name="L24" href="#L24">24</a>  <strong class="jxr_keyword">import</strong> <strong class="jxr_keyword">static</strong> org.jboss.hal.dmr.ModelDescriptionConstants.CREDENTIAL_REFERENCE;
-<a class="jxr_linenumber" name="L25" href="#L25">25</a>  <strong class="jxr_keyword">import</strong> <strong class="jxr_keyword">static</strong> org.jboss.hal.dmr.ModelDescriptionConstants.KEY_STORE;
-<a class="jxr_linenumber" name="L26" href="#L26">26</a>  <strong class="jxr_keyword">import</strong> <strong class="jxr_keyword">static</strong> org.jboss.hal.testsuite.fixtures.SecurityFixtures.KEY_STORE_CREATE;
+<a class="jxr_linenumber" name="L18" href="#L18">18</a>  <strong class="jxr_keyword">import</strong> org.jboss.hal.testsuite.Random;
+<a class="jxr_linenumber" name="L19" href="#L19">19</a>  <strong class="jxr_keyword">import</strong> org.jboss.hal.testsuite.model.CredentialReference;
+<a class="jxr_linenumber" name="L20" href="#L20">20</a>  <strong class="jxr_keyword">import</strong> org.wildfly.extras.creaper.core.online.OnlineCommand;
+<a class="jxr_linenumber" name="L21" href="#L21">21</a>  <strong class="jxr_keyword">import</strong> org.wildfly.extras.creaper.core.online.OnlineCommandContext;
+<a class="jxr_linenumber" name="L22" href="#L22">22</a>  <strong class="jxr_keyword">import</strong> org.wildfly.extras.creaper.core.online.operations.Operations;
+<a class="jxr_linenumber" name="L23" href="#L23">23</a>  <strong class="jxr_keyword">import</strong> org.wildfly.extras.creaper.core.online.operations.Values;
+<a class="jxr_linenumber" name="L24" href="#L24">24</a>  
+<a class="jxr_linenumber" name="L25" href="#L25">25</a>  <strong class="jxr_keyword">import</strong> <strong class="jxr_keyword">static</strong> org.jboss.hal.dmr.ModelDescriptionConstants.CREDENTIAL_REFERENCE;
+<a class="jxr_linenumber" name="L26" href="#L26">26</a>  <strong class="jxr_keyword">import</strong> <strong class="jxr_keyword">static</strong> org.jboss.hal.dmr.ModelDescriptionConstants.KEY_STORE;
 <a class="jxr_linenumber" name="L27" href="#L27">27</a>  <strong class="jxr_keyword">import</strong> <strong class="jxr_keyword">static</strong> org.jboss.hal.testsuite.fixtures.SecurityFixtures.keyManagerAddress;
 <a class="jxr_linenumber" name="L28" href="#L28">28</a>  
 <a class="jxr_linenumber" name="L29" href="#L29">29</a>  <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">class</strong> <a name="AddKeyManager" href="../../../../../org/jboss/hal/testsuite/command/AddKeyManager.html#AddKeyManager">AddKeyManager</a> <strong class="jxr_keyword">implements</strong> OnlineCommand {
@@ -44,13 +44,14 @@
 <a class="jxr_linenumber" name="L36" href="#L36">36</a>  
 <a class="jxr_linenumber" name="L37" href="#L37">37</a>      @Override
 <a class="jxr_linenumber" name="L38" href="#L38">38</a>      <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> apply(<strong class="jxr_keyword">final</strong> OnlineCommandContext context) <strong class="jxr_keyword">throws</strong> Exception {
-<a class="jxr_linenumber" name="L39" href="#L39">39</a>          context.client.apply(<strong class="jxr_keyword">new</strong> <a name="AddKeyStore" href="../../../../../org/jboss/hal/testsuite/command/AddKeyStore.html#AddKeyStore">AddKeyStore</a>(KEY_STORE_CREATE));
-<a class="jxr_linenumber" name="L40" href="#L40">40</a>  
-<a class="jxr_linenumber" name="L41" href="#L41">41</a>          Operations operations = <strong class="jxr_keyword">new</strong> Operations(context.client);
-<a class="jxr_linenumber" name="L42" href="#L42">42</a>          operations.add(keyManagerAddress(name), Values.of(KEY_STORE, KEY_STORE_CREATE)
-<a class="jxr_linenumber" name="L43" href="#L43">43</a>                  .and(CREDENTIAL_REFERENCE, CredentialReference.clearText(<span class="jxr_string">"secret"</span>)));
-<a class="jxr_linenumber" name="L44" href="#L44">44</a>      }
-<a class="jxr_linenumber" name="L45" href="#L45">45</a>  }
+<a class="jxr_linenumber" name="L39" href="#L39">39</a>          String keyStore = Random.name();
+<a class="jxr_linenumber" name="L40" href="#L40">40</a>          context.client.apply(<strong class="jxr_keyword">new</strong> <a name="AddKeyStore" href="../../../../../org/jboss/hal/testsuite/command/AddKeyStore.html#AddKeyStore">AddKeyStore</a>(keyStore));
+<a class="jxr_linenumber" name="L41" href="#L41">41</a>  
+<a class="jxr_linenumber" name="L42" href="#L42">42</a>          Operations operations = <strong class="jxr_keyword">new</strong> Operations(context.client);
+<a class="jxr_linenumber" name="L43" href="#L43">43</a>          operations.add(keyManagerAddress(name), Values.of(KEY_STORE, keyStore)
+<a class="jxr_linenumber" name="L44" href="#L44">44</a>                  .and(CREDENTIAL_REFERENCE, CredentialReference.clearText(<span class="jxr_string">"secret"</span>)));
+<a class="jxr_linenumber" name="L45" href="#L45">45</a>      }
+<a class="jxr_linenumber" name="L46" href="#L46">46</a>  }
 </pre>
 <hr/>
 <div id="footer">Copyright &#169; 2022 <a href="https://developers.redhat.com/">Red Hat</a>. All rights reserved.</div>
