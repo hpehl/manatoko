@@ -65,7 +65,7 @@
 
     <properties>
         <!-- Dependency versions -->
-        <version.arquillian.drone>3.0.0-alpha.5</version.arquillian.drone>
+        <version.arquillian.drone>3.0.0-alpha.6</version.arquillian.drone>
         <version.arquillian.graphene>3.0.0-alpha.3</version.arquillian.graphene>
         <version.arquillian>1.7.0.Alpha11</version.arquillian>
         <version.awaitility>4.2.0</version.awaitility>
