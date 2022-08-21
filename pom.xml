@@ -67,7 +67,7 @@
         <!-- Dependency versions -->
         <version.arquillian.drone>3.0.0-alpha.5</version.arquillian.drone>
         <version.arquillian.graphene>3.0.0-alpha.3</version.arquillian.graphene>
-        <version.arquillian>1.7.0.Alpha11</version.arquillian>
+        <version.arquillian>1.7.0.Alpha12</version.arquillian>
         <version.awaitility>4.2.0</version.awaitility>
         <version.checkstyle.config>1.0.8.Final</version.checkstyle.config>
         <version.commons.lang3>3.12.0</version.commons.lang3>
@@ -83,7 +83,7 @@
         <version.selenium>4.2.2</version.selenium>
         <version.slf4j>2.0.0-alpha7</version.slf4j>
         <version.testcontainers>1.17.3</version.testcontainers>
-        <version.wildfly.core>18.1.1.Final</version.wildfly.core>
+        <version.wildfly.core>18.1.2.Final</version.wildfly.core>
 
         <!-- Plugin versions -->
         <version.checkstyle.plugin>3.1.1</version.checkstyle.plugin>
