@@ -16,6 +16,8 @@
 package org.jboss.hal.testsuite.container;
 
 import java.nio.file.Paths;
+import java.util.Arrays;
+import java.util.Collections;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
@@ -24,6 +26,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.testcontainers.containers.BrowserWebDriverContainer;
 import org.testcontainers.containers.wait.strategy.Wait;
+import org.testcontainers.utility.DockerImageName;
 
 import static org.testcontainers.containers.BrowserWebDriverContainer.VncRecordingMode.RECORD_FAILING;
 import static org.testcontainers.containers.VncRecordingContainer.VncRecordingFormat.MP4;
@@ -43,9 +46,12 @@ public class Browser extends BrowserWebDriverContainer<Browser> {
     private RemoteWebDriver webDriver;
 
     private Browser() {
-        super();
+        super(DockerImageName.parse("quay.io/redhatqe/selenium-standalone")
+                .asCompatibleSubstituteFor("selenium/standalone-chrome"));
         withNetwork(Network.INSTANCE)
-                .withCapabilities(new ChromeOptions())
+                .withCapabilities(new ChromeOptions()
+                        .addArguments("--no-sandbox", "--disable-dev-shm-usage")
+                        .setHeadless(true))
                 .withRecordingMode(RECORD_FAILING, Paths.get("target/recordings").toFile(), MP4)
                 .waitingFor(Wait.forLogMessage(".*Started Selenium Standalone.*", 1))
                 .withStartupTimeout(Timeouts.BROWSER_STARTUP_TIMEOUT);
@@ -65,6 +71,14 @@ public class Browser extends BrowserWebDriverContainer<Browser> {
                 .scriptTimeout(Timeouts.WEBDRIVER_SCRIPT_TIMEOUT)
                 .implicitlyWait(Timeouts.WEBDRIVER_IMPLICIT_WAIT_TIMEOUT);
         logger.info("Browser started: {}", this);
+    }
+
+    @Override
+    protected void configure() {
+        super.configure();
+        setCommand("/init");
+        setEnv(Collections.singletonList("VNC_PORT=5900"));
+        setExposedPorts(Arrays.asList(4444, 5999));
     }
 
     @Override
