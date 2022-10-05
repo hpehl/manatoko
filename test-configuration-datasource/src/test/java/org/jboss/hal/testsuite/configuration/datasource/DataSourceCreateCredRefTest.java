@@ -22,6 +22,7 @@ import org.jboss.hal.resources.Names;
 import org.jboss.hal.testsuite.Console;
 import org.jboss.hal.testsuite.Random;
 import org.jboss.hal.testsuite.command.AddCredentialStore;
+import org.jboss.hal.testsuite.container.Browser;
 import org.jboss.hal.testsuite.container.WildFlyContainer;
 import org.jboss.hal.testsuite.fragment.FormFragment;
 import org.jboss.hal.testsuite.fragment.WizardFragment;
@@ -61,6 +62,8 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 @Manatoko
 @Testcontainers
 class DataSourceCreateCredRefTest {
+
+    @Container static Browser browser = new Browser();
 
     @Container static WildFlyContainer wildFly = WildFlyContainer.standalone(DEFAULT);
     static final String H2_CSS_SELECTOR = "input[type=radio][name=template][value=h2]";

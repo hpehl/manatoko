@@ -19,6 +19,7 @@ import org.jboss.arquillian.core.api.annotation.Inject;
 import org.jboss.arquillian.graphene.page.Page;
 import org.jboss.hal.testsuite.Console;
 import org.jboss.hal.testsuite.CrudOperations;
+import org.jboss.hal.testsuite.container.Browser;
 import org.jboss.hal.testsuite.container.WildFlyContainer;
 import org.jboss.hal.testsuite.fragment.FormFragment;
 import org.jboss.hal.testsuite.fragment.SelectFragment;
@@ -55,6 +56,8 @@ import static org.junit.jupiter.api.Assertions.fail;
 @Manatoko
 @Testcontainers
 class InfinispanSessionTest {
+
+    @Container static Browser browser = new Browser();
 
     @Container static WildFlyContainer wildFly = WildFlyContainer.standalone(FULL);
     private static OnlineManagementClient client;

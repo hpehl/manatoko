@@ -23,6 +23,7 @@ import org.jboss.hal.resources.Ids;
 import org.jboss.hal.testsuite.Console;
 import org.jboss.hal.testsuite.CrudOperations;
 import org.jboss.hal.testsuite.Random;
+import org.jboss.hal.testsuite.container.Browser;
 import org.jboss.hal.testsuite.container.WildFlyContainer;
 import org.jboss.hal.testsuite.fragment.FormFragment;
 import org.jboss.hal.testsuite.model.CredentialReference;
@@ -65,6 +66,8 @@ import static org.jboss.hal.testsuite.fixtures.DataSourceFixtures.h2ConnectionUr
 @Manatoko
 @Testcontainers
 class DataSourceConfigurationTest {
+
+    @Container static Browser browser = new Browser();
 
     @Container static WildFlyContainer wildFly = WildFlyContainer.standalone(DEFAULT);
     static OnlineManagementClient client;

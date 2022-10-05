@@ -21,6 +21,7 @@ import org.jboss.hal.resources.Ids;
 import org.jboss.hal.resources.Names;
 import org.jboss.hal.testsuite.Console;
 import org.jboss.hal.testsuite.Random;
+import org.jboss.hal.testsuite.container.Browser;
 import org.jboss.hal.testsuite.container.WildFlyContainer;
 import org.jboss.hal.testsuite.fragment.finder.ColumnFragment;
 import org.jboss.hal.testsuite.model.Library;
@@ -56,6 +57,8 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 @Manatoko
 @Testcontainers
 class DataSourceFinderTest {
+
+    @Container static Browser browser = new Browser();
 
     @Container static WildFlyContainer wildFly = WildFlyContainer.standalone(DEFAULT);
     static final String H2_DRIVER_NAME = "h2";

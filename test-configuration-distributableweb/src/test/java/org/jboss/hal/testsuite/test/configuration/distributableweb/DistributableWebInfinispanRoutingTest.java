@@ -19,6 +19,7 @@ import org.jboss.arquillian.core.api.annotation.Inject;
 import org.jboss.arquillian.graphene.page.Page;
 import org.jboss.hal.resources.Names;
 import org.jboss.hal.testsuite.Console;
+import org.jboss.hal.testsuite.container.Browser;
 import org.jboss.hal.testsuite.container.WildFlyContainer;
 import org.jboss.hal.testsuite.fragment.AddResourceDialogFragment;
 import org.jboss.hal.testsuite.fragment.FormFragment;
@@ -52,6 +53,8 @@ import static org.junit.jupiter.api.Assertions.fail;
 @Manatoko
 @Testcontainers
 class DistributableWebInfinispanRoutingTest {
+
+    @Container static Browser browser = new Browser();
 
     @Container static WildFlyContainer wildFly = WildFlyContainer.standalone(FULL);
 

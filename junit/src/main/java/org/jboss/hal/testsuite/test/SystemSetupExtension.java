@@ -40,7 +40,7 @@ public class SystemSetupExtension implements BeforeAllCallback, ExtensionContext
         if (!systemReady) {
             systemReady = true;
             if (Environment.instance().remote()) {
-                Browser.instance().start();
+                // Browser.instance().start();
             }
             HalContainer.instance().start();
         }

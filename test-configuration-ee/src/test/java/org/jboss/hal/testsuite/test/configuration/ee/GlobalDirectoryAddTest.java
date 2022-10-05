@@ -21,6 +21,7 @@ import org.jboss.hal.resources.Ids;
 import org.jboss.hal.testsuite.Console;
 import org.jboss.hal.testsuite.CrudOperations;
 import org.jboss.hal.testsuite.Random;
+import org.jboss.hal.testsuite.container.Browser;
 import org.jboss.hal.testsuite.container.WildFlyContainer;
 import org.jboss.hal.testsuite.fragment.FormFragment;
 import org.jboss.hal.testsuite.page.configuration.EEPage;
@@ -41,6 +42,8 @@ import static org.jboss.hal.testsuite.fixtures.PathsFixtures.JBOSS_SERVER_DATA_D
 @Manatoko
 @Testcontainers
 class GlobalDirectoryAddTest {
+
+    @Container static Browser browser = new Browser();
 
     @Container static WildFlyContainer wildFly = WildFlyContainer.standalone(DEFAULT);
 

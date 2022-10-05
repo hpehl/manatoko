@@ -16,8 +16,7 @@
 package org.jboss.hal.testsuite.container;
 
 import java.nio.file.Paths;
-import java.util.Arrays;
-import java.util.Collections;
+import java.util.List;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
@@ -25,10 +24,10 @@ import org.openqa.selenium.remote.RemoteWebDriver;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.testcontainers.containers.BrowserWebDriverContainer;
+import org.testcontainers.containers.DefaultRecordingFileFactory;
 import org.testcontainers.containers.wait.strategy.Wait;
 import org.testcontainers.utility.DockerImageName;
 
-import static org.testcontainers.containers.BrowserWebDriverContainer.VncRecordingMode.RECORD_FAILING;
 import static org.testcontainers.containers.VncRecordingContainer.VncRecordingFormat.MP4;
 
 public class Browser extends BrowserWebDriverContainer<Browser> {
@@ -37,24 +36,22 @@ public class Browser extends BrowserWebDriverContainer<Browser> {
     private static final Logger logger = LoggerFactory.getLogger(BrowserWebDriverContainer.class);
 
     public static Browser instance() {
-        if (instance == null) {
-            instance = new Browser();
-        }
         return instance;
     }
 
     private RemoteWebDriver webDriver;
 
-    private Browser() {
-        super(DockerImageName.parse("quay.io/redhatqe/selenium-standalone")
+    public Browser() {
+        super(DockerImageName.parse("quay.io/jbossqe-eap/selenium-images")
                 .asCompatibleSubstituteFor("selenium/standalone-chrome"));
-        withNetwork(Network.INSTANCE)
-                .withCapabilities(new ChromeOptions()
-                        .addArguments("--no-sandbox", "--disable-dev-shm-usage")
-                        .setHeadless(true))
-                .withRecordingMode(RECORD_FAILING, Paths.get("target/recordings").toFile(), MP4)
+        this.withNetwork(Network.INSTANCE)
+                .withNetworkAliases("selenium")
+                .withCapabilities(new ChromeOptions())
+                .withRecordingMode(VncRecordingMode.RECORD_ALL, Paths.get("target/recordings").toFile(), MP4)
+                .withRecordingFileFactory(new DefaultRecordingFileFactory())
                 .waitingFor(Wait.forLogMessage(".*Started Selenium Standalone.*", 1))
                 .withStartupTimeout(Timeouts.BROWSER_STARTUP_TIMEOUT);
+        Browser.instance = this;
     }
 
     @Override
@@ -77,8 +74,8 @@ public class Browser extends BrowserWebDriverContainer<Browser> {
     protected void configure() {
         super.configure();
         setCommand("/init");
-        setEnv(Collections.singletonList("VNC_PORT=5900"));
-        setExposedPorts(Arrays.asList(4444, 5999));
+        setEnv(List.of("VNC_PORT=5900"));
+        setExposedPorts(List.of(4444, 5900));
     }
 
     @Override
