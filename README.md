@@ -89,6 +89,28 @@ This is the default mode. In this mode a [web driver container](https://www.test
 
 This mode is activated by the maven profile `local`. In this mode a browser is started locally and Arquillian Graphene takes care of providing the web driver.
 
+# Images
+
+By default, the tests will use the following images:
+
+- HAL: [quay.io/halconsole/hal:latest](https://quay.io/repository/halconsole/hal)
+- WildFly standalone: [quay.io/halconsole/wildfly:latest](https://quay.io/repository/halconsole/wildfly)
+- WildFly domain: [quay.io/halconsole/wildfly-domain:latest](https://quay.io/repository/halconsole/wildfly-domain)
+
+The image names can be customized by overriding the properties defined in [`container.properties`](container/src/main/resources/container.properties). Say you want to use the latest development version of HAL instead of the latest stable release, then use
+
+```shell
+./mvnw test -P all-tests -Dhal.image=quay.io/halconsole/hal-development:latest
+```
+
+If you want to use a specific WildFly version for the tests, use
+
+```shell
+./mvnw test -P all-tests \
+  -Dwildfly.standalone.image=quay.io/halconsole/wildfly:23.0.0.Final \
+  -Dwildfly.domain.image=quay.io/halconsole/wildfly-domain:23.0.0.Final
+```
+
 # Run Tests
 
 ## Run All Tests
@@ -128,28 +150,6 @@ If you want to debug a test, append `-Dmaven.surefire.debug` and attach a debugg
 # Test Report
 
 All tests are executed every 24h and the results are aggregated by the `maven-surefire-report-plugin`. The report is then published to GitHub pages: https://hal.github.io/manatoko/surefire-report.html 
-
-# Images
-
-By default, the tests will use the following images:
-
-- HAL: [quay.io/halconsole/hal:latest](https://quay.io/repository/halconsole/hal)
-- WildFly standalone: [quay.io/halconsole/wildfly:latest](https://quay.io/repository/halconsole/wildfly)
-- WildFly domain: [quay.io/halconsole/wildfly-domain:latest](https://quay.io/repository/halconsole/wildfly-domain)
-
-The image names can be customized by overriding the properties defined in [`container.properties`](container/src/main/resources/container.properties). Say you want to use the latest development version of HAL instead of the latest stable release, then use
-
-```shell
-./mvnw test -P all-tests -Dhal.image=quay.io/halconsole/hal-development:latest
-```
-
-If you want to use a specific WildFly version for the tests, use
-
-```shell
-./mvnw test -P all-tests \
-  -Dwildfly.standalone.image=quay.io/halconsole/wildfly:23.0.0.Final \
-  -Dwildfly.domain.image=quay.io/halconsole/wildfly-domain:23.0.0.Final
-```
 
 # Modules
 
