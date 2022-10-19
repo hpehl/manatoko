@@ -21,6 +21,7 @@ import java.util.concurrent.Callable;
 import org.jboss.arquillian.core.api.annotation.Inject;
 import org.jboss.hal.meta.token.NameTokens;
 import org.jboss.hal.testsuite.Console;
+import org.jboss.hal.testsuite.container.Browser;
 import org.jboss.hal.testsuite.container.WildFlyContainer;
 import org.jboss.hal.testsuite.fragment.finder.FinderPath;
 import org.jboss.hal.testsuite.preview.runtime.TopologyPreview;
@@ -52,6 +53,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 class TopologyTest {
 
     @Container static WildFlyContainer wildFly = WildFlyContainer.domain();
+
+    @Container static Browser browser = new Browser();
     static OnlineManagementClient client;
     static final Logger logger = LoggerFactory.getLogger(TopologyTest.class);
 

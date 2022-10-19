@@ -17,6 +17,7 @@ package org.jboss.hal.testsuite.test.configuration.messaging.server.connections.
 
 import org.jboss.hal.resources.Ids;
 import org.jboss.hal.testsuite.command.AddMessagingServer;
+import org.jboss.hal.testsuite.container.Browser;
 import org.jboss.hal.testsuite.container.WildFlyContainer;
 import org.jboss.hal.testsuite.fragment.FormFragment;
 import org.jboss.hal.testsuite.fragment.TableFragment;
@@ -51,6 +52,8 @@ import static org.jboss.hal.testsuite.fixtures.MessagingFixtures.acceptorInVMAdd
 class InVMAcceptorTest extends AbstractServerConnectionsTest {
 
     @Container static WildFlyContainer wildFly = WildFlyContainer.standalone(FULL_HA);
+
+    @Container static Browser browser = new Browser();
 
     @BeforeAll
     static void setupModel() throws Exception {

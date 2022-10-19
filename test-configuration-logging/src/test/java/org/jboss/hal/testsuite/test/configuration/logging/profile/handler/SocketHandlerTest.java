@@ -20,6 +20,7 @@ import org.jboss.arquillian.graphene.page.Page;
 import org.jboss.hal.testsuite.Console;
 import org.jboss.hal.testsuite.Random;
 import org.jboss.hal.testsuite.command.AddRemoteSocketBinding;
+import org.jboss.hal.testsuite.container.Browser;
 import org.jboss.hal.testsuite.container.WildFlyContainer;
 import org.jboss.hal.testsuite.fixtures.LoggingFixtures;
 import org.jboss.hal.testsuite.fragment.FormFragment;
@@ -53,6 +54,8 @@ import static org.jboss.hal.testsuite.fixtures.LoggingFixtures.SocketHandler;
 class SocketHandlerTest extends AbstractSocketHandlerTest {
 
     @Container static WildFlyContainer wildFly = WildFlyContainer.standalone(DEFAULT);
+
+    @Container static Browser browser = new Browser();
     static final String LOGGING_PROFILE = "logging-profile-" + Random.name();
 
     @BeforeAll

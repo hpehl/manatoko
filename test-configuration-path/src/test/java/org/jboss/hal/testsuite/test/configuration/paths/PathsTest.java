@@ -21,6 +21,7 @@ import org.jboss.arquillian.core.api.annotation.Inject;
 import org.jboss.arquillian.graphene.page.Page;
 import org.jboss.hal.testsuite.CrudOperations;
 import org.jboss.hal.testsuite.Random;
+import org.jboss.hal.testsuite.container.Browser;
 import org.jboss.hal.testsuite.container.WildFlyContainer;
 import org.jboss.hal.testsuite.fixtures.PathsFixtures;
 import org.jboss.hal.testsuite.page.configuration.PathsPage;
@@ -40,6 +41,8 @@ import static org.jboss.hal.testsuite.container.WildFlyConfiguration.DEFAULT;
 class PathsTest {
 
     @Container static WildFlyContainer wildFly = WildFlyContainer.standalone(DEFAULT);
+
+    @Container static Browser browser = new Browser();
 
     @BeforeAll
     static void setupModel() throws Exception {

@@ -20,6 +20,7 @@ import org.jboss.arquillian.graphene.page.Page;
 import org.jboss.hal.testsuite.Console;
 import org.jboss.hal.testsuite.CrudOperations;
 import org.jboss.hal.testsuite.Random;
+import org.jboss.hal.testsuite.container.Browser;
 import org.jboss.hal.testsuite.container.WildFlyContainer;
 import org.jboss.hal.testsuite.fragment.FormFragment;
 import org.jboss.hal.testsuite.fragment.TableFragment;
@@ -49,6 +50,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 class WorkerTest {
 
     @Container static WildFlyContainer wildFly = WildFlyContainer.standalone(DEFAULT);
+
+    @Container static Browser browser = new Browser();
 
     @BeforeAll
     static void setupModel() throws Exception {

@@ -19,6 +19,7 @@ import java.io.IOException;
 
 import org.jboss.arquillian.graphene.findby.ByJQuery;
 import org.jboss.hal.testsuite.Random;
+import org.jboss.hal.testsuite.container.Browser;
 import org.jboss.hal.testsuite.container.WildFlyContainer;
 import org.jboss.hal.testsuite.fragment.TabsFragment;
 import org.jboss.hal.testsuite.model.ModelNodeGenerator;
@@ -63,6 +64,8 @@ class NearCacheTest extends AbstractRemoteCacheContainerTest {
             + Random.name();
 
     @Container static WildFlyContainer wildFly = WildFlyContainer.standalone(FULL_HA);
+
+    @Container static Browser browser = new Browser();
     private static OnlineManagementClient client;
 
     @BeforeAll

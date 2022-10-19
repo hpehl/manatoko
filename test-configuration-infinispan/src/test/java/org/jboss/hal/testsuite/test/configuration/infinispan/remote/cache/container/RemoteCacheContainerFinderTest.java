@@ -18,6 +18,7 @@ package org.jboss.hal.testsuite.test.configuration.infinispan.remote.cache.conta
 import org.jboss.hal.meta.token.NameTokens;
 import org.jboss.hal.resources.Ids;
 import org.jboss.hal.testsuite.Random;
+import org.jboss.hal.testsuite.container.Browser;
 import org.jboss.hal.testsuite.container.WildFlyContainer;
 import org.jboss.hal.testsuite.fragment.AddResourceDialogFragment;
 import org.jboss.hal.testsuite.fragment.FormFragment;
@@ -56,6 +57,8 @@ class RemoteCacheContainerFinderTest extends AbstractRemoteCacheContainerTest {
     private static final String REMOTE_SOCKET_BINDING_READ = "remote-socket-binding-read-" + Random.name();
     private static final String REMOTE_SOCKET_BINDING_DELETE = "remote-socket-binding-delete-" + Random.name();
     @Container static WildFlyContainer wildFly = WildFlyContainer.standalone(FULL_HA);
+
+    @Container static Browser browserContainer = new Browser();
     private static OnlineManagementClient client;
     private static Administration administration;
 

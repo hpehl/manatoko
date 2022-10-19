@@ -20,6 +20,7 @@ import org.jboss.arquillian.graphene.page.Page;
 import org.jboss.hal.testsuite.Console;
 import org.jboss.hal.testsuite.Random;
 import org.jboss.hal.testsuite.command.AddRemoteSocketBinding;
+import org.jboss.hal.testsuite.container.Browser;
 import org.jboss.hal.testsuite.container.WildFlyContainer;
 import org.jboss.hal.testsuite.fixtures.DataSourceFixtures;
 import org.jboss.hal.testsuite.fragment.AddResourceDialogFragment;
@@ -74,6 +75,8 @@ class StoreTest {
     private static final String REMOTE_CLUSTER_HOTROD = Random.name();
 
     @Container static WildFlyContainer wildFly = WildFlyContainer.standalone(FULL_HA);
+
+    @Container static Browser browser = new Browser();
     private static OnlineManagementClient client;
 
     @BeforeAll

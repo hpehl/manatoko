@@ -24,6 +24,7 @@ import org.jboss.hal.dmr.ModelDescriptionConstants;
 import org.jboss.hal.testsuite.Console;
 import org.jboss.hal.testsuite.CrudOperations;
 import org.jboss.hal.testsuite.Random;
+import org.jboss.hal.testsuite.container.Browser;
 import org.jboss.hal.testsuite.container.WildFlyContainer;
 import org.jboss.hal.testsuite.model.ModelNodeGenerator;
 import org.jboss.hal.testsuite.model.ResourceVerifier;
@@ -52,6 +53,8 @@ class ExternalJMSTopicTest {
     private static final String EXTERNAL_JMS_TOPIC_DELETE = "external-jms-topic-to-be-deleted-" + Random.name();
 
     @Container static WildFlyContainer wildFly = WildFlyContainer.standalone(FULL_HA);
+
+    @Container static Browser browser = new Browser();
     private static Operations operations;
 
     @BeforeAll

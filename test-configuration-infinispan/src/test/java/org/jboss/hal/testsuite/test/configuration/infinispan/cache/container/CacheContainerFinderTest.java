@@ -19,6 +19,7 @@ import org.jboss.arquillian.core.api.annotation.Inject;
 import org.jboss.hal.meta.token.NameTokens;
 import org.jboss.hal.resources.Ids;
 import org.jboss.hal.testsuite.Console;
+import org.jboss.hal.testsuite.container.Browser;
 import org.jboss.hal.testsuite.container.WildFlyContainer;
 import org.jboss.hal.testsuite.fragment.AddResourceDialogFragment;
 import org.jboss.hal.testsuite.fragment.finder.ColumnFragment;
@@ -55,6 +56,8 @@ import static org.junit.jupiter.api.Assertions.fail;
 class CacheContainerFinderTest {
 
     @Container static WildFlyContainer wildFly = WildFlyContainer.standalone(FULL_HA);
+
+    @Container static Browser browser = new Browser();
     static OnlineManagementClient client;
 
     @BeforeAll

@@ -20,6 +20,7 @@ import org.jboss.hal.meta.token.NameTokens;
 import org.jboss.hal.resources.Ids;
 import org.jboss.hal.testsuite.Console;
 import org.jboss.hal.testsuite.Random;
+import org.jboss.hal.testsuite.container.Browser;
 import org.jboss.hal.testsuite.container.WildFlyContainer;
 import org.jboss.hal.testsuite.fragment.AddResourceDialogFragment;
 import org.jboss.hal.testsuite.fragment.finder.ColumnFragment;
@@ -47,6 +48,8 @@ class DistributedCacheFinderTest {
 
     static final String CACHE_CONTAINER = "cache-container-" + Random.name();
     static final String DISTRIBUTED_CACHE_CREATE = "distributed-cache-create-" + Random.name();
+
+    @Container static Browser browser = new Browser();
     @Container static WildFlyContainer wildFly = WildFlyContainer.standalone(FULL_HA);
     private static OnlineManagementClient client;
 

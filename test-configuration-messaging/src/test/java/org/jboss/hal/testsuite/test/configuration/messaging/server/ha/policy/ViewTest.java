@@ -18,6 +18,7 @@ package org.jboss.hal.testsuite.test.configuration.messaging.server.ha.policy;
 import org.jboss.arquillian.graphene.findby.ByJQuery;
 import org.jboss.hal.dmr.ModelDescriptionConstants;
 import org.jboss.hal.testsuite.command.AddMessagingServer;
+import org.jboss.hal.testsuite.container.Browser;
 import org.jboss.hal.testsuite.container.WildFlyContainer;
 import org.jboss.hal.testsuite.fixtures.MessagingFixtures;
 import org.jboss.hal.testsuite.fragment.EmptyState;
@@ -39,6 +40,8 @@ import static org.jboss.hal.testsuite.fixtures.MessagingFixtures.SRV_UPDATE;
 class ViewTest extends AbstractHaPolicyTest {
 
     @Container static WildFlyContainer wildFly = WildFlyContainer.standalone(FULL_HA);
+
+    @Container static Browser browser = new Browser();
     private static OnlineManagementClient client;
     private static Operations operations;
 

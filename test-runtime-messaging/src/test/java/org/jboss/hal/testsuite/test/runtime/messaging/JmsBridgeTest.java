@@ -22,6 +22,7 @@ import org.jboss.hal.meta.token.NameTokens;
 import org.jboss.hal.resources.Ids;
 import org.jboss.hal.testsuite.Console;
 import org.jboss.hal.testsuite.command.AddJmsBridge;
+import org.jboss.hal.testsuite.container.Browser;
 import org.jboss.hal.testsuite.container.WildFlyContainer;
 import org.jboss.hal.testsuite.fragment.finder.FinderFragment;
 import org.jboss.hal.testsuite.fragment.finder.FinderPath;
@@ -46,6 +47,8 @@ import static org.jboss.hal.testsuite.fragment.finder.FinderFragment.runtimeSubs
 public class JmsBridgeTest {
 
     @Container static WildFlyContainer wildFly = WildFlyContainer.standalone(FULL_HA);
+
+    @Container static Browser browser = new Browser();
     static ServerEnvironmentUtils serverEnvironmentUtils;
 
     @BeforeAll

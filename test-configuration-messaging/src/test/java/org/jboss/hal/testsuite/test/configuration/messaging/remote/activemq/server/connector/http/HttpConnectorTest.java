@@ -24,6 +24,7 @@ import org.jboss.hal.testsuite.Console;
 import org.jboss.hal.testsuite.CrudOperations;
 import org.jboss.hal.testsuite.Random;
 import org.jboss.hal.testsuite.command.AddLocalSocketBinding;
+import org.jboss.hal.testsuite.container.Browser;
 import org.jboss.hal.testsuite.container.WildFlyContainer;
 import org.jboss.hal.testsuite.model.ModelNodeGenerator;
 import org.jboss.hal.testsuite.model.ResourceVerifier;
@@ -55,6 +56,8 @@ class HttpConnectorTest {
     private static final String LOCAL_SOCKET_BINDING_UPDATE = "local-socket-binding-update-" + Random.name();
 
     @Container static WildFlyContainer wildFly = WildFlyContainer.standalone(FULL_HA);
+
+    @Container static Browser browser = new Browser();
     private static Operations operations;
 
     @BeforeAll

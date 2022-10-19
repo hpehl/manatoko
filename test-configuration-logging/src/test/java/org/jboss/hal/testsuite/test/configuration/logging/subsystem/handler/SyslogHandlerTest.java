@@ -18,6 +18,7 @@ package org.jboss.hal.testsuite.test.configuration.logging.subsystem.handler;
 import org.jboss.arquillian.core.api.annotation.Inject;
 import org.jboss.arquillian.graphene.page.Page;
 import org.jboss.hal.testsuite.Console;
+import org.jboss.hal.testsuite.container.Browser;
 import org.jboss.hal.testsuite.container.WildFlyContainer;
 import org.jboss.hal.testsuite.fixtures.LoggingFixtures;
 import org.jboss.hal.testsuite.fragment.FormFragment;
@@ -46,6 +47,8 @@ import static org.jboss.hal.testsuite.fixtures.LoggingFixtures.SyslogHandler.SYS
 class SyslogHandlerTest extends AbstractSyslogHandlerTest {
 
     @Container static WildFlyContainer wildFly = WildFlyContainer.standalone(DEFAULT);
+
+    @Container static Browser browser = new Browser();
 
     @BeforeAll
     static void setupModel() throws Exception {

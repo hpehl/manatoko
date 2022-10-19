@@ -20,6 +20,7 @@ import org.jboss.hal.meta.token.NameTokens;
 import org.jboss.hal.resources.Ids;
 import org.jboss.hal.testsuite.Console;
 import org.jboss.hal.testsuite.command.AddSecurityDomain;
+import org.jboss.hal.testsuite.container.Browser;
 import org.jboss.hal.testsuite.container.WildFlyContainer;
 import org.jboss.hal.testsuite.fragment.AddResourceDialogFragment;
 import org.jboss.hal.testsuite.fragment.FormFragment;
@@ -53,6 +54,8 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 class ApplicationSecurityDomainFinderTest {
 
     @Container static WildFlyContainer wildFly = WildFlyContainer.standalone(DEFAULT);
+
+    @Container static Browser browser = new Browser();
     static OnlineManagementClient client;
 
     @BeforeAll

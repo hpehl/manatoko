@@ -19,6 +19,7 @@ import java.util.Arrays;
 
 import org.jboss.hal.dmr.ModelDescriptionConstants;
 import org.jboss.hal.testsuite.Random;
+import org.jboss.hal.testsuite.container.Browser;
 import org.jboss.hal.testsuite.container.WildFlyContainer;
 import org.jboss.hal.testsuite.fixtures.JGroupsFixtures;
 import org.jboss.hal.testsuite.test.Manatoko;
@@ -49,6 +50,8 @@ class AttributesTest extends AbstractPooledConnectionFactoryTest {
     private static final String JGROUPS_CHANNEL = "jgroups-channel-" + Random.name();
 
     @Container static WildFlyContainer wildFly = WildFlyContainer.standalone(FULL_HA);
+
+    @Container static Browser browser = new Browser();
     private static Operations operations;
 
     @BeforeAll

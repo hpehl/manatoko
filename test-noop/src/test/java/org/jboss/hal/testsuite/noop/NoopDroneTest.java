@@ -16,11 +16,13 @@
 package org.jboss.hal.testsuite.noop;
 
 import org.jboss.arquillian.drone.api.annotation.Drone;
+import org.jboss.hal.testsuite.container.Browser;
 import org.jboss.hal.testsuite.test.Manatoko;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.WebDriver;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.testcontainers.junit.jupiter.Container;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
@@ -28,6 +30,8 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 class NoopDroneTest {
 
     private static final Logger logger = LoggerFactory.getLogger(NoopDroneTest.class);
+
+    @Container static Browser browserContainer = new Browser();
 
     @Drone WebDriver browser;
 

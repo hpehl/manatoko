@@ -20,6 +20,7 @@ import org.jboss.hal.meta.token.NameTokens;
 import org.jboss.hal.resources.Ids;
 import org.jboss.hal.testsuite.Console;
 import org.jboss.hal.testsuite.Random;
+import org.jboss.hal.testsuite.container.Browser;
 import org.jboss.hal.testsuite.container.WildFlyContainer;
 import org.jboss.hal.testsuite.fragment.AddResourceDialogFragment;
 import org.jboss.hal.testsuite.fragment.finder.ColumnFragment;
@@ -55,6 +56,8 @@ class ScatteredCacheFinderTest {
     private static final String SCATTERED_CACHE_DELETE = "scattered-cache-delete-" + Random.name();
     private static final String SCATTERED_CACHE_VIEW = "scattered-cache-view-" + Random.name();
     @Container static WildFlyContainer wildFly = WildFlyContainer.standalone(FULL_HA);
+
+    @Container static Browser browser = new Browser();
     private static OnlineManagementClient client;
 
     @BeforeAll

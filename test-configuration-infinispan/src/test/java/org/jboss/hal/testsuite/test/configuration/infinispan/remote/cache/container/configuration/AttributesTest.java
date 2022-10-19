@@ -16,6 +16,7 @@
 package org.jboss.hal.testsuite.test.configuration.infinispan.remote.cache.container.configuration;
 
 import org.jboss.hal.testsuite.Random;
+import org.jboss.hal.testsuite.container.Browser;
 import org.jboss.hal.testsuite.container.WildFlyContainer;
 import org.jboss.hal.testsuite.model.ModelNodeGenerator;
 import org.jboss.hal.testsuite.test.Manatoko;
@@ -46,6 +47,8 @@ class AttributesTest extends AbstractRemoteCacheContainerTest {
     private static final String REMOTE_CLUSTER = "remote-cluster-" + Random.name();
 
     @Container static WildFlyContainer wildFly = WildFlyContainer.standalone(FULL_HA);
+
+    @Container static Browser browser = new Browser();
     private static Operations operations;
 
     @BeforeAll
