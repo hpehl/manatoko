@@ -47,8 +47,7 @@ public class Browser extends BrowserWebDriverContainer<Browser> {
         this.withNetwork(Network.INSTANCE)
                 .withNetworkAliases("selenium")
                 .withCapabilities(new ChromeOptions())
-                .withRecordingMode(VncRecordingMode.RECORD_ALL, Paths.get("target/recordings").toFile(), MP4)
-                .withRecordingFileFactory(new DefaultRecordingFileFactory())
+                .withRecordingMode(VncRecordingMode.RECORD_FAILING, Paths.get("target/recordings").toFile(), MP4)
                 .waitingFor(Wait.forLogMessage(".*Started Selenium Standalone.*", 1))
                 .withStartupTimeout(Timeouts.BROWSER_STARTUP_TIMEOUT);
         Browser.instance = this;
