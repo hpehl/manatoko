@@ -16,7 +16,6 @@
 package org.jboss.hal.testsuite.test.configuration.infinispan.remote.cache.container;
 
 import org.jboss.hal.testsuite.Random;
-import org.jboss.hal.testsuite.container.Browser;
 import org.jboss.hal.testsuite.container.WildFlyContainer;
 import org.jboss.hal.testsuite.model.ModelNodeGenerator;
 import org.jboss.hal.testsuite.test.Manatoko;
@@ -49,8 +48,6 @@ class SecurityTest extends AbstractRemoteCacheContainerTest {
     private static final String SSL_CONTEXT = "client-ssl-context-" + Random.name();
 
     @Container static WildFlyContainer wildFly = WildFlyContainer.standalone(FULL_HA);
-
-    @Container static Browser browser = new Browser();
 
     @BeforeAll
     static void setupModel() throws Exception {

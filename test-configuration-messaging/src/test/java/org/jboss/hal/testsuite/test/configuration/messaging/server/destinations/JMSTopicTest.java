@@ -19,7 +19,6 @@ import org.jboss.hal.meta.token.NameTokens;
 import org.jboss.hal.resources.Ids;
 import org.jboss.hal.testsuite.Random;
 import org.jboss.hal.testsuite.command.AddMessagingServer;
-import org.jboss.hal.testsuite.container.Browser;
 import org.jboss.hal.testsuite.container.WildFlyContainer;
 import org.jboss.hal.testsuite.fragment.FormFragment;
 import org.jboss.hal.testsuite.fragment.TableFragment;
@@ -59,8 +58,6 @@ import static org.jboss.hal.testsuite.fragment.finder.FinderFragment.runtimeSubs
 class JMSTopicTest extends AbstractServerDestinationsTest {
 
     @Container static WildFlyContainer wildFly = WildFlyContainer.standalone(FULL_HA);
-
-    @Container static Browser browser = new Browser();
     static OnlineManagementClient client;
     static ServerEnvironmentUtils serverEnvironmentUtils;
 

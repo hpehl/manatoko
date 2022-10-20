@@ -20,7 +20,6 @@ import org.jboss.arquillian.graphene.page.Page;
 import org.jboss.hal.resources.Names;
 import org.jboss.hal.testsuite.Console;
 import org.jboss.hal.testsuite.CrudOperations;
-import org.jboss.hal.testsuite.container.Browser;
 import org.jboss.hal.testsuite.container.WildFlyContainer;
 import org.jboss.hal.testsuite.fragment.TableFragment;
 import org.jboss.hal.testsuite.page.configuration.JGroupsPage;
@@ -49,8 +48,6 @@ import static org.jboss.hal.testsuite.fixtures.JGroupsFixtures.forkAddress;
 class ChannelForkTest {
 
     @Container static WildFlyContainer wildFly = WildFlyContainer.standalone(HA);
-
-    @Container static Browser browser = new Browser();
 
     @BeforeAll
     static void setupModel() throws Exception {

@@ -20,7 +20,6 @@ import org.jboss.arquillian.graphene.page.Page;
 import org.jboss.hal.resources.Ids;
 import org.jboss.hal.testsuite.Console;
 import org.jboss.hal.testsuite.CrudOperations;
-import org.jboss.hal.testsuite.container.Browser;
 import org.jboss.hal.testsuite.container.WildFlyContainer;
 import org.jboss.hal.testsuite.fragment.FormFragment;
 import org.jboss.hal.testsuite.page.configuration.JcaPage;
@@ -42,8 +41,6 @@ import static org.jboss.hal.testsuite.fixtures.JcaFixtures.DEBUG;
 class JcaConfigurationTest {
 
     @Container static WildFlyContainer wildFly = WildFlyContainer.standalone(DEFAULT);
-
-    @Container static Browser browser = new Browser();
 
     @Inject Console console;
     @Inject CrudOperations crud;

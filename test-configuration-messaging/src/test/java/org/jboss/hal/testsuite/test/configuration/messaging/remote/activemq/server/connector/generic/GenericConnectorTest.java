@@ -22,7 +22,6 @@ import org.jboss.hal.testsuite.Console;
 import org.jboss.hal.testsuite.CrudOperations;
 import org.jboss.hal.testsuite.Random;
 import org.jboss.hal.testsuite.command.AddLocalSocketBinding;
-import org.jboss.hal.testsuite.container.Browser;
 import org.jboss.hal.testsuite.container.WildFlyContainer;
 import org.jboss.hal.testsuite.fixtures.MessagingFixtures;
 import org.jboss.hal.testsuite.model.ModelNodeGenerator;
@@ -52,8 +51,6 @@ class GenericConnectorTest {
     private static final String GENERIC_CONNECTOR_DELETE = "generic-connector-to-delete-" + Random.name();
     private static final String LOCAL_SOCKET_BINDING = "local-socket-binding-" + Random.name();
     @Container static WildFlyContainer wildFly = WildFlyContainer.standalone(FULL_HA);
-
-    @Container static Browser browser = new Browser();
 
     @BeforeAll
     static void setupModel() throws Exception {

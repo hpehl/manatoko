@@ -19,7 +19,6 @@ import org.jboss.dmr.ModelNode;
 import org.jboss.hal.resources.Ids;
 import org.jboss.hal.testsuite.Random;
 import org.jboss.hal.testsuite.command.AddMessagingServer;
-import org.jboss.hal.testsuite.container.Browser;
 import org.jboss.hal.testsuite.container.WildFlyContainer;
 import org.jboss.hal.testsuite.fragment.AddResourceDialogFragment;
 import org.jboss.hal.testsuite.fragment.EmptyState;
@@ -75,8 +74,6 @@ import static org.jboss.hal.testsuite.fixtures.MessagingFixtures.pooledConnectio
 class PooledConnectionFactoryTest extends AbstractServerConnectionsTest {
 
     @Container static WildFlyContainer wildFly = WildFlyContainer.standalone(FULL_HA);
-
-    @Container static Browser browser = new Browser();
     private static OnlineManagementClient client;
     private static Operations operations;
 

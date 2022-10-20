@@ -19,7 +19,6 @@ import java.io.IOException;
 import java.util.Collections;
 
 import org.jboss.hal.testsuite.Random;
-import org.jboss.hal.testsuite.container.Browser;
 import org.jboss.hal.testsuite.container.WildFlyContainer;
 import org.jboss.hal.testsuite.model.ModelNodeGenerator;
 import org.jboss.hal.testsuite.test.Manatoko;
@@ -52,8 +51,6 @@ class RemoteClusterTest extends AbstractRemoteCacheContainerTest {
     private static final String REMOTE_CLUSTER_DELETE = "remote-cluster-to-be-deleted-" + Random.name();
 
     @Container static WildFlyContainer wildFly = WildFlyContainer.standalone(FULL_HA);
-
-    @Container static Browser browser = new Browser();
 
     @BeforeAll
     static void setupModel() throws Exception {

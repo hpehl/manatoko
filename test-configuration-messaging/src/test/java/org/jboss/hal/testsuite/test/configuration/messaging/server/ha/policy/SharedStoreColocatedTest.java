@@ -17,7 +17,6 @@ package org.jboss.hal.testsuite.test.configuration.messaging.server.ha.policy;
 
 import org.jboss.hal.testsuite.Random;
 import org.jboss.hal.testsuite.command.AddMessagingServer;
-import org.jboss.hal.testsuite.container.Browser;
 import org.jboss.hal.testsuite.container.WildFlyContainer;
 import org.jboss.hal.testsuite.test.Manatoko;
 import org.junit.jupiter.api.BeforeAll;
@@ -37,8 +36,6 @@ import static org.jboss.hal.testsuite.fixtures.MessagingFixtures.SRV_UPDATE;
 class SharedStoreColocatedTest extends AbstractHaPolicyTest {
 
     @Container static WildFlyContainer wildFly = WildFlyContainer.standalone(FULL_HA);
-
-    @Container static Browser browser = new Browser();
 
     @BeforeAll
     static void setupModel() throws Exception {

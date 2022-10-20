@@ -21,7 +21,6 @@ import org.jboss.hal.testsuite.Console;
 import org.jboss.hal.testsuite.CrudOperations;
 import org.jboss.hal.testsuite.Random;
 import org.jboss.hal.testsuite.command.AddLocalSocketBinding;
-import org.jboss.hal.testsuite.container.Browser;
 import org.jboss.hal.testsuite.container.WildFlyContainer;
 import org.jboss.hal.testsuite.fixtures.JGroupsFixtures;
 import org.jboss.hal.testsuite.page.configuration.MessagingRemoteActiveMQPage;
@@ -54,8 +53,6 @@ class DiscoveryGroupTest {
     private static final String SOCKET_BINDING = "socket-binding";
 
     @Container static WildFlyContainer wildFly = WildFlyContainer.standalone(FULL_HA);
-
-    @Container static Browser browser = new Browser();
 
     @BeforeAll
     static void setupModel() throws Exception {

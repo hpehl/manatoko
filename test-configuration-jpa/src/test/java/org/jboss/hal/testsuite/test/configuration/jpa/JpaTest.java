@@ -18,7 +18,6 @@ package org.jboss.hal.testsuite.test.configuration.jpa;
 import org.jboss.arquillian.core.api.annotation.Inject;
 import org.jboss.arquillian.graphene.page.Page;
 import org.jboss.hal.testsuite.CrudOperations;
-import org.jboss.hal.testsuite.container.Browser;
 import org.jboss.hal.testsuite.container.WildFlyContainer;
 import org.jboss.hal.testsuite.fragment.FormFragment;
 import org.jboss.hal.testsuite.page.configuration.JpaPage;
@@ -38,8 +37,6 @@ import static org.jboss.hal.testsuite.fixtures.JpaFixtures.SUBSYSTEM_ADDRESS;
 class JpaTest {
 
     @Container static WildFlyContainer wildFly = WildFlyContainer.standalone(DEFAULT);
-
-    @Container static Browser browser = new Browser();
 
     @Inject CrudOperations crud;
     @Page JpaPage page;

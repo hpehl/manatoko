@@ -18,7 +18,6 @@ package org.jboss.hal.testsuite.test.configuration.messaging.server.ha.policy;
 import org.jboss.hal.meta.token.NameTokens;
 import org.jboss.hal.resources.Ids;
 import org.jboss.hal.testsuite.command.AddMessagingServer;
-import org.jboss.hal.testsuite.container.Browser;
 import org.jboss.hal.testsuite.container.WildFlyContainer;
 import org.jboss.hal.testsuite.fragment.WizardFragment;
 import org.jboss.hal.testsuite.model.ResourceVerifier;
@@ -59,8 +58,6 @@ import static org.jboss.hal.testsuite.fragment.finder.FinderFragment.configurati
 class FinderTest extends AbstractHaPolicyTest {
 
     @Container static WildFlyContainer wildFly = WildFlyContainer.standalone(FULL_HA);
-
-    @Container static Browser browser = new Browser();
     private static OnlineManagementClient client;
     private static Operations operations;
 

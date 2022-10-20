@@ -21,7 +21,6 @@ import org.jboss.hal.testsuite.CrudOperations;
 import org.jboss.hal.testsuite.Random;
 import org.jboss.hal.testsuite.command.AddHttpAuthenticationFactory;
 import org.jboss.hal.testsuite.command.AddSecurityDomain;
-import org.jboss.hal.testsuite.container.Browser;
 import org.jboss.hal.testsuite.container.WildFlyContainer;
 import org.jboss.hal.testsuite.page.configuration.ApplicationSecurityDomainPage;
 import org.jboss.hal.testsuite.test.Manatoko;
@@ -54,8 +53,6 @@ class ApplicationSecurityDomainTest {
     private static final String HTTP_AUTHENTICATION_FACTORY_NAME = Random.name();
 
     @Container static WildFlyContainer wildFly = WildFlyContainer.standalone(DEFAULT);
-
-    @Container static Browser browser = new Browser();
     static Operations operations;
 
     @BeforeAll

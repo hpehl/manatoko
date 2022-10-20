@@ -21,7 +21,6 @@ import org.jboss.hal.dmr.ModelDescriptionConstants;
 import org.jboss.hal.testsuite.Console;
 import org.jboss.hal.testsuite.CrudOperations;
 import org.jboss.hal.testsuite.Random;
-import org.jboss.hal.testsuite.container.Browser;
 import org.jboss.hal.testsuite.container.WildFlyContainer;
 import org.jboss.hal.testsuite.fixtures.DataSourceFixtures;
 import org.jboss.hal.testsuite.fragment.FormFragment;
@@ -62,8 +61,6 @@ class WriteBehaviourTest {
     private static final String SCATTERED_CACHE = "scattered-cache-" + Random.name();
     private static final String DS = "data-source-for-scattered-cache-" + Random.name();
     @Container static WildFlyContainer wildFly = WildFlyContainer.standalone(FULL_HA);
-
-    @Container static Browser browser = new Browser();
     private static OnlineManagementClient client;
 
     @BeforeAll

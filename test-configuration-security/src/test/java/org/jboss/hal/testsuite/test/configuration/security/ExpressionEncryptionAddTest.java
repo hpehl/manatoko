@@ -21,7 +21,6 @@ import org.jboss.hal.resources.Ids;
 import org.jboss.hal.testsuite.Console;
 import org.jboss.hal.testsuite.Random;
 import org.jboss.hal.testsuite.command.AddCredentialStore;
-import org.jboss.hal.testsuite.container.Browser;
 import org.jboss.hal.testsuite.container.WildFlyContainer;
 import org.jboss.hal.testsuite.fragment.FormFragment;
 import org.jboss.hal.testsuite.fragment.WizardFragment;
@@ -49,8 +48,6 @@ import static org.jboss.hal.testsuite.fixtures.SecurityFixtures.expressionEncryp
 class ExpressionEncryptionAddTest {
 
     @Container static WildFlyContainer wildFly = WildFlyContainer.standalone(DEFAULT);
-
-    @Container static Browser browser = new Browser();
     static OnlineManagementClient client;
 
     @BeforeAll

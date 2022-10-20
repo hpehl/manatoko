@@ -24,7 +24,6 @@ import org.jboss.hal.testsuite.Random;
 import org.jboss.hal.testsuite.command.AddKeyManager;
 import org.jboss.hal.testsuite.command.AddSocketBinding;
 import org.jboss.hal.testsuite.command.BindPublicInterface;
-import org.jboss.hal.testsuite.container.Browser;
 import org.jboss.hal.testsuite.container.WildFlyContainer;
 import org.jboss.hal.testsuite.fragment.FormFragment;
 import org.jboss.hal.testsuite.fragment.TableFragment;
@@ -64,8 +63,6 @@ public class ModClusterFilterTest {
     static final String ADVERTISE_SOCKET_BINDING_NAME = Random.name();
 
     @Container static WildFlyContainer wildFly = WildFlyContainer.standalone(DEFAULT);
-
-    @Container static Browser browser = new Browser();
     static OnlineManagementClient client;
     static Operations operations;
 

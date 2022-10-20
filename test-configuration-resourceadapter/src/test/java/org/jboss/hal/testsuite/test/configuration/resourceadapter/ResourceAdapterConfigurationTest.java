@@ -23,7 +23,6 @@ import org.jboss.dmr.ModelNode;
 import org.jboss.hal.testsuite.Console;
 import org.jboss.hal.testsuite.CrudOperations;
 import org.jboss.hal.testsuite.Random;
-import org.jboss.hal.testsuite.container.Browser;
 import org.jboss.hal.testsuite.container.WildFlyContainer;
 import org.jboss.hal.testsuite.model.ResourceVerifier;
 import org.jboss.hal.testsuite.page.configuration.ResourceAdapterPage;
@@ -63,8 +62,6 @@ import static org.jboss.hal.testsuite.fixtures.ResourceAdapterFixtures.resourceA
 class ResourceAdapterConfigurationTest {
 
     @Container static WildFlyContainer wildFly = WildFlyContainer.standalone(DEFAULT);
-
-    @Container static Browser browser = new Browser();
     private static OnlineManagementClient client;
 
     @BeforeAll

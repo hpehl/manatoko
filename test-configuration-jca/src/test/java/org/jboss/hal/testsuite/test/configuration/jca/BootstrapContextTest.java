@@ -20,7 +20,6 @@ import org.jboss.arquillian.graphene.page.Page;
 import org.jboss.hal.resources.Ids;
 import org.jboss.hal.testsuite.Console;
 import org.jboss.hal.testsuite.CrudOperations;
-import org.jboss.hal.testsuite.container.Browser;
 import org.jboss.hal.testsuite.container.WildFlyConfiguration;
 import org.jboss.hal.testsuite.container.WildFlyContainer;
 import org.jboss.hal.testsuite.fragment.FormFragment;
@@ -50,8 +49,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 class BootstrapContextTest {
 
     @Container static WildFlyContainer wildFly = WildFlyContainer.standalone(WildFlyConfiguration.DEFAULT);
-
-    @Container static Browser browser = new Browser();
 
     @BeforeAll
     static void setupModel() throws Exception {

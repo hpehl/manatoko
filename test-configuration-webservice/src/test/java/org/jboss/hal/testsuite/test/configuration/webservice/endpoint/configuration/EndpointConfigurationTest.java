@@ -25,7 +25,6 @@ import org.jboss.hal.resources.Ids;
 import org.jboss.hal.testsuite.Console;
 import org.jboss.hal.testsuite.CrudOperations;
 import org.jboss.hal.testsuite.Random;
-import org.jboss.hal.testsuite.container.Browser;
 import org.jboss.hal.testsuite.container.WildFlyContainer;
 import org.jboss.hal.testsuite.fixtures.WebServicesFixtures;
 import org.jboss.hal.testsuite.fragment.FormFragment;
@@ -56,8 +55,6 @@ class EndpointConfigurationTest {
             + RandomStringUtils.randomAlphanumeric(7);
 
     @Container static WildFlyContainer wildFly = WildFlyContainer.standalone(DEFAULT);
-
-    @Container static Browser browser = new Browser();
     private static OnlineManagementClient client;
 
     @BeforeAll

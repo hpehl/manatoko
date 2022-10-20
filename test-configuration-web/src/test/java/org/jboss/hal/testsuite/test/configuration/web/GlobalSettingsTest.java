@@ -20,7 +20,6 @@ import org.jboss.arquillian.graphene.findby.ByJQuery;
 import org.jboss.arquillian.graphene.page.Page;
 import org.jboss.hal.testsuite.CrudOperations;
 import org.jboss.hal.testsuite.Random;
-import org.jboss.hal.testsuite.container.Browser;
 import org.jboss.hal.testsuite.container.WildFlyContainer;
 import org.jboss.hal.testsuite.fixtures.WebFixtures;
 import org.jboss.hal.testsuite.page.configuration.UndertowPage;
@@ -57,8 +56,6 @@ import static org.jboss.hal.testsuite.fixtures.WebFixtures.virtualHostAddress;
 class GlobalSettingsTest {
 
     @Container static WildFlyContainer wildFly = WildFlyContainer.standalone(DEFAULT);
-
-    @Container static Browser browser = new Browser();
     static Operations operations;
 
     @BeforeAll

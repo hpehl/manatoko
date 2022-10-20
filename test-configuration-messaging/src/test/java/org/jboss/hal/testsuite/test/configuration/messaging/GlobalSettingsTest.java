@@ -18,7 +18,6 @@ package org.jboss.hal.testsuite.test.configuration.messaging;
 import org.jboss.arquillian.core.api.annotation.Inject;
 import org.jboss.arquillian.graphene.page.Page;
 import org.jboss.hal.testsuite.CrudOperations;
-import org.jboss.hal.testsuite.container.Browser;
 import org.jboss.hal.testsuite.container.WildFlyContainer;
 import org.jboss.hal.testsuite.fragment.FormFragment;
 import org.jboss.hal.testsuite.page.configuration.MessagingPage;
@@ -39,8 +38,6 @@ import static org.jboss.hal.testsuite.fixtures.MessagingFixtures.SUBSYSTEM_ADDRE
 class GlobalSettingsTest {
 
     @Container static WildFlyContainer wildFly = WildFlyContainer.standalone(FULL_HA);
-
-    @Container static Browser browser = new Browser();
 
     @Page MessagingPage page;
     @Inject CrudOperations crudOperations;
