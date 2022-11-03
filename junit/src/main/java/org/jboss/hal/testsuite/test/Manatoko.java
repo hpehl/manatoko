@@ -30,7 +30,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
  */
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
-@ExtendWith({ SystemSetupExtension.class, ArquillianExtension.class })
+@ExtendWith({ SystemSetupExtension.class, ArquillianExtension.class, Junit5VncRecorder.class })
 @Inherited
 public @interface Manatoko {
 }
