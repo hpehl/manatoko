@@ -96,7 +96,7 @@
 
         <!-- Reporting versions -->
         <version.jxr.reporting>3.3.0</version.jxr.reporting>
-        <version.project.reporting>3.4.4</version.project.reporting>
+        <version.project.reporting>3.4.5</version.project.reporting>
         <version.surefire.reporting>3.0.0</version.surefire.reporting>
         <version.fluido.skin>1.11.1</version.fluido.skin>
 
