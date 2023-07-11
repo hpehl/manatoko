@@ -92,7 +92,7 @@
         <version.formatter.plugin>2.23.0</version.formatter.plugin>
         <version.impsort.plugin>1.9.0</version.impsort.plugin>
         <version.license.plugin>4.1</version.license.plugin>
-        <version.site.plugin>4.0.0-M8</version.site.plugin>
+        <version.site.plugin>4.0.0-M9</version.site.plugin>
 
         <!-- Reporting versions -->
         <version.jxr.reporting>3.3.0</version.jxr.reporting>
