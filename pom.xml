@@ -83,7 +83,7 @@
         <version.selenium>4.2.2</version.selenium>
         <version.slf4j>2.0.3</version.slf4j>
         <version.testcontainers>1.18.3</version.testcontainers>
-        <version.wildfly.core>20.0.2.Final</version.wildfly.core>
+        <version.wildfly.core>21.1.0.Final</version.wildfly.core>
 
         <!-- Plugin versions -->
         <version.checkstyle.plugin>3.1.1</version.checkstyle.plugin>
