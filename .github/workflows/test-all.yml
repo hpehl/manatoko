@@ -15,6 +15,7 @@ on:
 jobs:
   test:
     strategy:
+      fail-fast: false
       matrix:
         module:
           - test-configuration-batch
@@ -45,7 +46,6 @@ jobs:
           - test-configuration-webservice
           - test-runtime-server
     runs-on: ubuntu-latest
-    continue-on-error: true
     env:
       MVN: ./mvnw --show-version --batch-mode
     steps:
