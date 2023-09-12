@@ -21,8 +21,6 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
 import static org.jboss.arquillian.graphene.Graphene.waitGui;
-import static org.jboss.hal.resources.CSS.formControl;
-import static org.jboss.hal.resources.CSS.formControlStatic;
 
 /**
  * Fragment for the composite form input (name + path) used in the logging subsystem.
@@ -30,8 +28,8 @@ import static org.jboss.hal.resources.CSS.formControlStatic;
 @SuppressWarnings("WeakerAccess")
 public class FileInputFragment {
 
-    @FindBy(css = "input[type=text]." + formControl) private List<WebElement> editing;
-    @FindBy(css = "." + formControlStatic) private List<WebElement> readonly;
+    @FindBy(xpath = ".") private List<WebElement> editing;
+    @FindBy(xpath = ".") private List<WebElement> readonly;
 
     public void setPath(String value) {
         WebElement inputElement = editing.get(0);
