@@ -37,8 +37,10 @@ import org.wildfly.extras.creaper.core.online.operations.Values;
 
 import static org.jboss.hal.dmr.ModelDescriptionConstants.AFFINITY;
 import static org.jboss.hal.dmr.ModelDescriptionConstants.CACHE_CONTAINER;
+import static org.jboss.hal.dmr.ModelDescriptionConstants.INFINISPAN;
 import static org.jboss.hal.dmr.ModelDescriptionConstants.NAME;
 import static org.jboss.hal.dmr.ModelDescriptionConstants.RANKED;
+import static org.jboss.hal.dmr.ModelDescriptionConstants.ROUTING;
 import static org.jboss.hal.testsuite.container.WildFlyConfiguration.FULL;
 import static org.jboss.hal.testsuite.fixtures.DistributableWebFixtures.ATTRIBUTE;
 import static org.jboss.hal.testsuite.fixtures.DistributableWebFixtures.GRANULARITY;
@@ -47,6 +49,7 @@ import static org.jboss.hal.testsuite.fixtures.DistributableWebFixtures.INFINISP
 import static org.jboss.hal.testsuite.fixtures.DistributableWebFixtures.INFINISPAN_SESSION_DELETE;
 import static org.jboss.hal.testsuite.fixtures.DistributableWebFixtures.INFINISPAN_SESSION_UPDATE;
 import static org.jboss.hal.testsuite.fixtures.DistributableWebFixtures.SESSION;
+import static org.jboss.hal.testsuite.fixtures.DistributableWebFixtures.SUBSYSTEM_ADDRESS;
 import static org.jboss.hal.testsuite.fixtures.DistributableWebFixtures.infinispanSessionAddress;
 import static org.jboss.hal.testsuite.fixtures.InfinispanFixtures.CC_CREATE;
 import static org.jboss.hal.testsuite.test.configuration.distributableweb.DistributableWebOperations.addCacheContainer;
@@ -65,9 +68,10 @@ class InfinispanSessionTest {
         Operations operations = new Operations(client);
         addCacheContainer(client, operations, CC_CREATE);
         Values values = Values.of(CACHE_CONTAINER, CC_CREATE).and(GRANULARITY, SESSION);
-        operations.add(infinispanSessionAddress(INFINISPAN_SESSION_UPDATE), values);
-        operations.add(infinispanSessionAddress(INFINISPAN_SESSION_AFFINITY), values);
-        operations.add(infinispanSessionAddress(INFINISPAN_SESSION_DELETE), values);
+        operations.add(SUBSYSTEM_ADDRESS.and(ROUTING, INFINISPAN), Values.of(CACHE_CONTAINER, CC_CREATE)).assertSuccess();
+        operations.add(infinispanSessionAddress(INFINISPAN_SESSION_UPDATE), values).assertSuccess();
+        operations.add(infinispanSessionAddress(INFINISPAN_SESSION_AFFINITY), values).assertSuccess();
+        operations.add(infinispanSessionAddress(INFINISPAN_SESSION_DELETE), values).assertSuccess();
     }
 
     @Page DistributableWebPage page;

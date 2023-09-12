@@ -19,13 +19,13 @@ import org.jboss.hal.testsuite.Random;
 import org.jboss.hal.testsuite.command.AddRemoteSocketBinding;
 import org.jboss.hal.testsuite.model.AvailablePortFinder;
 import org.jboss.hal.testsuite.model.ModelNodeGenerator;
-import org.wildfly.extras.creaper.commands.infinispan.cache.AddLocalCache;
 import org.wildfly.extras.creaper.core.online.OnlineManagementClient;
 import org.wildfly.extras.creaper.core.online.operations.Batch;
 import org.wildfly.extras.creaper.core.online.operations.Operations;
 import org.wildfly.extras.creaper.core.online.operations.Values;
 
 import static org.jboss.hal.dmr.ModelDescriptionConstants.DEFAULT_CACHE;
+import static org.jboss.hal.dmr.ModelDescriptionConstants.LOCAL_CACHE;
 import static org.jboss.hal.testsuite.fixtures.InfinispanFixtures.SOCKET_BINDINGS;
 import static org.jboss.hal.testsuite.fixtures.InfinispanFixtures.cacheContainerAddress;
 import static org.jboss.hal.testsuite.fixtures.InfinispanFixtures.remoteCacheContainerAddress;
@@ -35,9 +35,9 @@ interface DistributableWebOperations {
     static void addCacheContainer(OnlineManagementClient client, Operations operations, String cacheContainer)
             throws Exception {
         String localCache = Random.name();
-        operations.add(cacheContainerAddress(cacheContainer));
-        client.apply(new AddLocalCache.Builder(localCache).cacheContainer(cacheContainer).build());
-        operations.writeAttribute(cacheContainerAddress(cacheContainer), DEFAULT_CACHE, localCache);
+        operations.add(cacheContainerAddress(cacheContainer)).assertSuccess();
+        operations.add(cacheContainerAddress(cacheContainer).and(LOCAL_CACHE, localCache)).assertSuccess();
+        operations.writeAttribute(cacheContainerAddress(cacheContainer), DEFAULT_CACHE, localCache).assertSuccess();
     }
 
     static void addRemoteSocketBinding(OnlineManagementClient client, Operations operations, String name)
