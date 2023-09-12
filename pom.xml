@@ -160,16 +160,20 @@
                     <artifactId>license-maven-plugin</artifactId>
                     <version>${version.license.plugin}</version>
                     <configuration>
-                        <header>build-config/src/main/resources/etc/license.txt</header>
-                        <strictCheck>true</strictCheck>
                         <aggregate>true</aggregate>
+                        <strictCheck>true</strictCheck>
                         <useDefaultExcludes>true</useDefaultExcludes>
-                        <excludes>
-                            <exclude>.sdkmanrc</exclude>
-                            <exclude>dependency-graph.dot</exclude>
-                            <exclude>LICENSE</exclude>
-                            <exclude>**/*license*.txt</exclude>
-                        </excludes>
+                        <licenseSets>
+                            <licenseSet>
+                                <header>build-config/src/main/resources/etc/license.txt</header>
+                                <excludes>
+                                    <exclude>.sdkmanrc</exclude>
+                                    <exclude>dependency-graph.dot</exclude>
+                                    <exclude>LICENSE</exclude>
+                                    <exclude>**/*license*.txt</exclude>
+                                </excludes>
+                            </licenseSet>
+                        </licenseSets>
                     </configuration>
                 </plugin>
                 <plugin>
