@@ -36,8 +36,8 @@ import org.wildfly.extras.creaper.core.online.operations.Operations;
 import org.wildfly.extras.creaper.core.online.operations.Values;
 
 import static org.jboss.hal.dmr.ModelDescriptionConstants.CLASS;
-import static org.jboss.hal.dmr.ModelDescriptionConstants.CONNECTOR;
 import static org.jboss.hal.dmr.ModelDescriptionConstants.DEFAULT;
+import static org.jboss.hal.dmr.ModelDescriptionConstants.LISTENER;
 import static org.jboss.hal.dmr.ModelDescriptionConstants.NAME;
 import static org.jboss.hal.testsuite.container.WildFlyConfiguration.HA;
 import static org.jboss.hal.testsuite.fixtures.ModclusterFixtures.CLASS_NAME;
@@ -61,11 +61,13 @@ class CustomLoadMetricTest {
         OnlineManagementClient client = wildFly.managementClient();
         Operations operations = new Operations(client);
         Batch proxyAdd = new Batch();
-        proxyAdd.add(proxyAddress(PROXY_UPDATE), Values.of(CONNECTOR, DEFAULT));
+        proxyAdd.add(proxyAddress(PROXY_UPDATE), Values.of(LISTENER, DEFAULT));
         proxyAdd.add(loadProviderDynamicAddress(PROXY_UPDATE));
-        operations.batch(proxyAdd);
-        operations.add(customLoadMetricAddress(PROXY_UPDATE, CUSTOM_LOAD_METRIC_DELETE), Values.of(CLASS, CLASS_NAME));
-        operations.add(customLoadMetricAddress(PROXY_UPDATE, CUSTOM_LOAD_METRIC_UPDATE), Values.of(CLASS, CLASS_NAME));
+        operations.batch(proxyAdd).assertSuccess();
+        operations.add(customLoadMetricAddress(PROXY_UPDATE, CUSTOM_LOAD_METRIC_DELETE), Values.of(CLASS, CLASS_NAME))
+                .assertSuccess();
+        operations.add(customLoadMetricAddress(PROXY_UPDATE, CUSTOM_LOAD_METRIC_UPDATE), Values.of(CLASS, CLASS_NAME))
+                .assertSuccess();
     }
 
     @Inject Console console;
