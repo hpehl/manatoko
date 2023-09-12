@@ -17,7 +17,6 @@ package org.jboss.hal.testsuite.test.configuration.distributableweb;
 
 import org.jboss.arquillian.core.api.annotation.Inject;
 import org.jboss.arquillian.graphene.page.Page;
-import org.jboss.hal.resources.Names;
 import org.jboss.hal.testsuite.Console;
 import org.jboss.hal.testsuite.container.WildFlyContainer;
 import org.jboss.hal.testsuite.fragment.SelectFragment;
@@ -73,7 +72,7 @@ class DistributableWebLocalRoutingTest {
         console.waitNoNotification();
         SelectFragment select = page.getSwitchRouting();
         if (select != null) {
-            select.select(Names.LOCAL, LOCAL);
+            select.select(LOCAL, LOCAL);
             console.verifySuccess();
         } else {
             fail("Select control to switch routing not found!");
