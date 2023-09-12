@@ -46,13 +46,17 @@ import static org.jboss.hal.testsuite.fixtures.WebFixtures.expressionFilterAddre
 @Testcontainers
 public class ExpressionFilterTest {
 
+    private static final String EXPRESSION_VALUE_BASE = "path(/a) -> redirect(/%s)";
+
     @Container static WildFlyContainer wildFly = WildFlyContainer.standalone(DEFAULT);
 
     @BeforeAll
     static void setupModel() throws Exception {
         Operations operations = new Operations(wildFly.managementClient());
-        operations.add(expressionFilterAddress(FILTER_UPDATE), Values.of(EXPRESSION, Random.name()));
-        operations.add(expressionFilterAddress(FILTER_DELETE), Values.of(EXPRESSION, Random.name()));
+        operations.add(expressionFilterAddress(FILTER_UPDATE),
+                Values.of(EXPRESSION, String.format(EXPRESSION_VALUE_BASE, Random.name())));
+        operations.add(expressionFilterAddress(FILTER_DELETE),
+                Values.of(EXPRESSION, String.format(EXPRESSION_VALUE_BASE, Random.name())));
     }
 
     @Inject Console console;
@@ -74,13 +78,13 @@ public class ExpressionFilterTest {
     void create() throws Exception {
         crud.create(expressionFilterAddress(FILTER_CREATE), table, form -> {
             form.text(NAME, FILTER_CREATE);
-            form.text(EXPRESSION, Random.name());
+            form.text(EXPRESSION, String.format(EXPRESSION_VALUE_BASE, Random.name()));
         });
     }
 
     @Test
     void update() throws Exception {
-        String expression = Random.name();
+        String expression = String.format(EXPRESSION_VALUE_BASE, Random.name());
 
         table.select(FILTER_UPDATE);
         crud.update(expressionFilterAddress(FILTER_UPDATE), form, f -> f.text(EXPRESSION, expression),
