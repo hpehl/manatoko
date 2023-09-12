@@ -74,13 +74,13 @@
         <version.commons.text>1.10.0</version.commons.text>
         <version.creaper>2.0.2</version.creaper>
         <version.gwtp>1.6</version.gwtp>
-        <version.hal>3.6.4.Final</version.hal>
+        <version.hal>3.6.10.Final</version.hal>
         <version.jboss.dmr>1.6.1.Final</version.jboss.dmr>
         <version.jboss.logmanager>2.1.19.Final</version.jboss.logmanager>
         <version.jgrapht>1.5.1</version.jgrapht>
         <version.junit>5.9.1</version.junit>
         <version.logback>1.4.8</version.logback>
-        <version.selenium>4.2.2</version.selenium>
+        <version.selenium>4.10.0</version.selenium>
         <version.slf4j>2.0.3</version.slf4j>
         <version.testcontainers>1.18.3</version.testcontainers>
         <version.wildfly.core>20.0.2.Final</version.wildfly.core>
