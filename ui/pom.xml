@@ -58,7 +58,6 @@
             <artifactId>graphene-webdriver-api</artifactId>
         </dependency>
 
-
         <!-- Selenium -->
         <dependency>
             <groupId>org.seleniumhq.selenium</groupId>
