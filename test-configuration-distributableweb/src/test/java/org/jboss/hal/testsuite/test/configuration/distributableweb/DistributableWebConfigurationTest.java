@@ -33,6 +33,8 @@ import org.wildfly.extras.creaper.core.online.operations.Operations;
 import org.wildfly.extras.creaper.core.online.operations.Values;
 
 import static org.jboss.hal.dmr.ModelDescriptionConstants.CACHE_CONTAINER;
+import static org.jboss.hal.dmr.ModelDescriptionConstants.INFINISPAN;
+import static org.jboss.hal.dmr.ModelDescriptionConstants.ROUTING;
 import static org.jboss.hal.testsuite.container.WildFlyConfiguration.FULL;
 import static org.jboss.hal.testsuite.fixtures.DistributableWebFixtures.DEFAULT_SESSION_MANAGEMENT;
 import static org.jboss.hal.testsuite.fixtures.DistributableWebFixtures.DEFAULT_SSO_MANAGEMENT;
@@ -57,9 +59,10 @@ class DistributableWebConfigurationTest {
         OnlineManagementClient client = wildFly.managementClient();
         Operations operations = new Operations(client);
         addCacheContainer(client, operations, CC_READ);
+        operations.add(SUBSYSTEM_ADDRESS.and(ROUTING, INFINISPAN), Values.of(CACHE_CONTAINER, CC_READ)).assertSuccess();
         operations.add(infinispanSessionAddress(INFINISPAN_SESSION_REF), Values.of(CACHE_CONTAINER, CC_READ)
-                .and(GRANULARITY, SESSION));
-        operations.add(infinispanSSOAddress(INFINISPAN_SSO_REF), Values.of(CACHE_CONTAINER, CC_READ));
+                .and(GRANULARITY, SESSION)).assertSuccess();
+        operations.add(infinispanSSOAddress(INFINISPAN_SSO_REF), Values.of(CACHE_CONTAINER, CC_READ)).assertSuccess();
     }
 
     @Page DistributableWebPage page;

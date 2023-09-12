@@ -30,18 +30,19 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
-import org.wildfly.extras.creaper.commands.infinispan.cache.AddLocalCache;
 import org.wildfly.extras.creaper.core.online.OnlineManagementClient;
 import org.wildfly.extras.creaper.core.online.operations.Operations;
 
 import static org.jboss.hal.dmr.ModelDescriptionConstants.CACHE_CONTAINER;
 import static org.jboss.hal.dmr.ModelDescriptionConstants.INFINISPAN;
 import static org.jboss.hal.dmr.ModelDescriptionConstants.LOCAL;
+import static org.jboss.hal.dmr.ModelDescriptionConstants.LOCAL_CACHE;
 import static org.jboss.hal.dmr.ModelDescriptionConstants.ROUTING;
 import static org.jboss.hal.testsuite.container.WildFlyConfiguration.FULL;
 import static org.jboss.hal.testsuite.fixtures.DistributableWebFixtures.SUBSYSTEM_ADDRESS;
 import static org.jboss.hal.testsuite.fixtures.InfinispanFixtures.CC_READ;
 import static org.jboss.hal.testsuite.fixtures.InfinispanFixtures.LC_READ;
+import static org.jboss.hal.testsuite.fixtures.InfinispanFixtures.cacheContainerAddress;
 import static org.jboss.hal.testsuite.test.configuration.distributableweb.DistributableWebOperations.addCacheContainer;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.fail;
@@ -59,9 +60,9 @@ class DistributableWebInfinispanRoutingTest {
     static void setupModel() throws Exception {
         OnlineManagementClient client = wildFly.managementClient();
         Operations operations = new Operations(client);
-        operations.add(SUBSYSTEM_ADDRESS.and(ROUTING, LOCAL));
+        operations.add(SUBSYSTEM_ADDRESS.and(ROUTING, LOCAL)).assertSuccess();
         addCacheContainer(client, operations, CC_READ);
-        client.apply(new AddLocalCache.Builder(LC_READ).cacheContainer(CC_READ).build());
+        operations.add(cacheContainerAddress(CC_READ).and(LOCAL_CACHE, LC_READ)).assertSuccess();
     }
 
     @Page DistributableWebPage page;
