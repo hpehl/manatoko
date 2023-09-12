@@ -35,8 +35,8 @@ import org.wildfly.extras.creaper.core.online.operations.Batch;
 import org.wildfly.extras.creaper.core.online.operations.Operations;
 import org.wildfly.extras.creaper.core.online.operations.Values;
 
-import static org.jboss.hal.dmr.ModelDescriptionConstants.CONNECTOR;
 import static org.jboss.hal.dmr.ModelDescriptionConstants.DEFAULT;
+import static org.jboss.hal.dmr.ModelDescriptionConstants.LISTENER;
 import static org.jboss.hal.dmr.ModelDescriptionConstants.NAME;
 import static org.jboss.hal.dmr.ModelDescriptionConstants.TYPE;
 import static org.jboss.hal.testsuite.container.WildFlyConfiguration.HA;
@@ -61,11 +61,11 @@ class LoadMetricTest {
         OnlineManagementClient client = wildFly.managementClient();
         Operations operations = new Operations(client);
         Batch proxyAdd = new Batch();
-        proxyAdd.add(proxyAddress(PROXY_UPDATE), Values.of(CONNECTOR, DEFAULT));
+        proxyAdd.add(proxyAddress(PROXY_UPDATE), Values.of(LISTENER, DEFAULT));
         proxyAdd.add(loadProviderDynamicAddress(PROXY_UPDATE));
-        operations.batch(proxyAdd);
-        operations.add(loadMetricAddress(PROXY_UPDATE, LOAD_METRIC_DELETE), Values.of(TYPE, "mem"));
-        operations.add(loadMetricAddress(PROXY_UPDATE, LOAD_METRIC_UPDATE), Values.of(TYPE, "mem"));
+        operations.batch(proxyAdd).assertSuccess();
+        operations.add(loadMetricAddress(PROXY_UPDATE, LOAD_METRIC_DELETE), Values.of(TYPE, "heap")).assertSuccess();
+        operations.add(loadMetricAddress(PROXY_UPDATE, LOAD_METRIC_UPDATE), Values.of(TYPE, "heap")).assertSuccess();
     }
 
     @Inject Console console;
