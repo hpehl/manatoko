@@ -45,98 +45,102 @@
 <a class="jxr_linenumber" name="L37" href="#L37">37</a>  
 <a class="jxr_linenumber" name="L38" href="#L38">38</a>  <strong class="jxr_keyword">import</strong> <strong class="jxr_keyword">static</strong> org.jboss.hal.dmr.ModelDescriptionConstants.AFFINITY;
 <a class="jxr_linenumber" name="L39" href="#L39">39</a>  <strong class="jxr_keyword">import</strong> <strong class="jxr_keyword">static</strong> org.jboss.hal.dmr.ModelDescriptionConstants.CACHE_CONTAINER;
-<a class="jxr_linenumber" name="L40" href="#L40">40</a>  <strong class="jxr_keyword">import</strong> <strong class="jxr_keyword">static</strong> org.jboss.hal.dmr.ModelDescriptionConstants.NAME;
-<a class="jxr_linenumber" name="L41" href="#L41">41</a>  <strong class="jxr_keyword">import</strong> <strong class="jxr_keyword">static</strong> org.jboss.hal.dmr.ModelDescriptionConstants.RANKED;
-<a class="jxr_linenumber" name="L42" href="#L42">42</a>  <strong class="jxr_keyword">import</strong> <strong class="jxr_keyword">static</strong> org.jboss.hal.testsuite.container.WildFlyConfiguration.FULL;
-<a class="jxr_linenumber" name="L43" href="#L43">43</a>  <strong class="jxr_keyword">import</strong> <strong class="jxr_keyword">static</strong> org.jboss.hal.testsuite.fixtures.DistributableWebFixtures.ATTRIBUTE;
-<a class="jxr_linenumber" name="L44" href="#L44">44</a>  <strong class="jxr_keyword">import</strong> <strong class="jxr_keyword">static</strong> org.jboss.hal.testsuite.fixtures.DistributableWebFixtures.GRANULARITY;
-<a class="jxr_linenumber" name="L45" href="#L45">45</a>  <strong class="jxr_keyword">import</strong> <strong class="jxr_keyword">static</strong> org.jboss.hal.testsuite.fixtures.DistributableWebFixtures.INFINISPAN_SESSION_AFFINITY;
-<a class="jxr_linenumber" name="L46" href="#L46">46</a>  <strong class="jxr_keyword">import</strong> <strong class="jxr_keyword">static</strong> org.jboss.hal.testsuite.fixtures.DistributableWebFixtures.INFINISPAN_SESSION_CREATE;
-<a class="jxr_linenumber" name="L47" href="#L47">47</a>  <strong class="jxr_keyword">import</strong> <strong class="jxr_keyword">static</strong> org.jboss.hal.testsuite.fixtures.DistributableWebFixtures.INFINISPAN_SESSION_DELETE;
-<a class="jxr_linenumber" name="L48" href="#L48">48</a>  <strong class="jxr_keyword">import</strong> <strong class="jxr_keyword">static</strong> org.jboss.hal.testsuite.fixtures.DistributableWebFixtures.INFINISPAN_SESSION_UPDATE;
-<a class="jxr_linenumber" name="L49" href="#L49">49</a>  <strong class="jxr_keyword">import</strong> <strong class="jxr_keyword">static</strong> org.jboss.hal.testsuite.fixtures.DistributableWebFixtures.SESSION;
-<a class="jxr_linenumber" name="L50" href="#L50">50</a>  <strong class="jxr_keyword">import</strong> <strong class="jxr_keyword">static</strong> org.jboss.hal.testsuite.fixtures.DistributableWebFixtures.infinispanSessionAddress;
-<a class="jxr_linenumber" name="L51" href="#L51">51</a>  <strong class="jxr_keyword">import</strong> <strong class="jxr_keyword">static</strong> org.jboss.hal.testsuite.fixtures.InfinispanFixtures.CC_CREATE;
-<a class="jxr_linenumber" name="L52" href="#L52">52</a>  <strong class="jxr_keyword">import</strong> <strong class="jxr_keyword">static</strong> org.jboss.hal.testsuite.test.configuration.distributableweb.DistributableWebOperations.addCacheContainer;
-<a class="jxr_linenumber" name="L53" href="#L53">53</a>  <strong class="jxr_keyword">import</strong> <strong class="jxr_keyword">static</strong> org.junit.jupiter.api.Assertions.fail;
-<a class="jxr_linenumber" name="L54" href="#L54">54</a>  
-<a class="jxr_linenumber" name="L55" href="#L55">55</a>  @Manatoko
-<a class="jxr_linenumber" name="L56" href="#L56">56</a>  @Testcontainers
-<a class="jxr_linenumber" name="L57" href="#L57">57</a>  <strong class="jxr_keyword">class</strong> <a name="InfinispanSessionTest" href="../../../../../../../org/jboss/hal/testsuite/test/configuration/distributableweb/InfinispanSessionTest.html#InfinispanSessionTest">InfinispanSessionTest</a> {
-<a class="jxr_linenumber" name="L58" href="#L58">58</a>  
-<a class="jxr_linenumber" name="L59" href="#L59">59</a>      @Container <strong class="jxr_keyword">static</strong> WildFlyContainer wildFly = WildFlyContainer.standalone(FULL);
-<a class="jxr_linenumber" name="L60" href="#L60">60</a>      <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">static</strong> OnlineManagementClient client;
+<a class="jxr_linenumber" name="L40" href="#L40">40</a>  <strong class="jxr_keyword">import</strong> <strong class="jxr_keyword">static</strong> org.jboss.hal.dmr.ModelDescriptionConstants.INFINISPAN;
+<a class="jxr_linenumber" name="L41" href="#L41">41</a>  <strong class="jxr_keyword">import</strong> <strong class="jxr_keyword">static</strong> org.jboss.hal.dmr.ModelDescriptionConstants.NAME;
+<a class="jxr_linenumber" name="L42" href="#L42">42</a>  <strong class="jxr_keyword">import</strong> <strong class="jxr_keyword">static</strong> org.jboss.hal.dmr.ModelDescriptionConstants.RANKED;
+<a class="jxr_linenumber" name="L43" href="#L43">43</a>  <strong class="jxr_keyword">import</strong> <strong class="jxr_keyword">static</strong> org.jboss.hal.dmr.ModelDescriptionConstants.ROUTING;
+<a class="jxr_linenumber" name="L44" href="#L44">44</a>  <strong class="jxr_keyword">import</strong> <strong class="jxr_keyword">static</strong> org.jboss.hal.testsuite.container.WildFlyConfiguration.FULL;
+<a class="jxr_linenumber" name="L45" href="#L45">45</a>  <strong class="jxr_keyword">import</strong> <strong class="jxr_keyword">static</strong> org.jboss.hal.testsuite.fixtures.DistributableWebFixtures.ATTRIBUTE;
+<a class="jxr_linenumber" name="L46" href="#L46">46</a>  <strong class="jxr_keyword">import</strong> <strong class="jxr_keyword">static</strong> org.jboss.hal.testsuite.fixtures.DistributableWebFixtures.GRANULARITY;
+<a class="jxr_linenumber" name="L47" href="#L47">47</a>  <strong class="jxr_keyword">import</strong> <strong class="jxr_keyword">static</strong> org.jboss.hal.testsuite.fixtures.DistributableWebFixtures.INFINISPAN_SESSION_AFFINITY;
+<a class="jxr_linenumber" name="L48" href="#L48">48</a>  <strong class="jxr_keyword">import</strong> <strong class="jxr_keyword">static</strong> org.jboss.hal.testsuite.fixtures.DistributableWebFixtures.INFINISPAN_SESSION_CREATE;
+<a class="jxr_linenumber" name="L49" href="#L49">49</a>  <strong class="jxr_keyword">import</strong> <strong class="jxr_keyword">static</strong> org.jboss.hal.testsuite.fixtures.DistributableWebFixtures.INFINISPAN_SESSION_DELETE;
+<a class="jxr_linenumber" name="L50" href="#L50">50</a>  <strong class="jxr_keyword">import</strong> <strong class="jxr_keyword">static</strong> org.jboss.hal.testsuite.fixtures.DistributableWebFixtures.INFINISPAN_SESSION_UPDATE;
+<a class="jxr_linenumber" name="L51" href="#L51">51</a>  <strong class="jxr_keyword">import</strong> <strong class="jxr_keyword">static</strong> org.jboss.hal.testsuite.fixtures.DistributableWebFixtures.SESSION;
+<a class="jxr_linenumber" name="L52" href="#L52">52</a>  <strong class="jxr_keyword">import</strong> <strong class="jxr_keyword">static</strong> org.jboss.hal.testsuite.fixtures.DistributableWebFixtures.SUBSYSTEM_ADDRESS;
+<a class="jxr_linenumber" name="L53" href="#L53">53</a>  <strong class="jxr_keyword">import</strong> <strong class="jxr_keyword">static</strong> org.jboss.hal.testsuite.fixtures.DistributableWebFixtures.infinispanSessionAddress;
+<a class="jxr_linenumber" name="L54" href="#L54">54</a>  <strong class="jxr_keyword">import</strong> <strong class="jxr_keyword">static</strong> org.jboss.hal.testsuite.fixtures.InfinispanFixtures.CC_CREATE;
+<a class="jxr_linenumber" name="L55" href="#L55">55</a>  <strong class="jxr_keyword">import</strong> <strong class="jxr_keyword">static</strong> org.jboss.hal.testsuite.test.configuration.distributableweb.DistributableWebOperations.addCacheContainer;
+<a class="jxr_linenumber" name="L56" href="#L56">56</a>  <strong class="jxr_keyword">import</strong> <strong class="jxr_keyword">static</strong> org.junit.jupiter.api.Assertions.fail;
+<a class="jxr_linenumber" name="L57" href="#L57">57</a>  
+<a class="jxr_linenumber" name="L58" href="#L58">58</a>  @Manatoko
+<a class="jxr_linenumber" name="L59" href="#L59">59</a>  @Testcontainers
+<a class="jxr_linenumber" name="L60" href="#L60">60</a>  <strong class="jxr_keyword">class</strong> <a name="InfinispanSessionTest" href="../../../../../../../org/jboss/hal/testsuite/test/configuration/distributableweb/InfinispanSessionTest.html#InfinispanSessionTest">InfinispanSessionTest</a> {
 <a class="jxr_linenumber" name="L61" href="#L61">61</a>  
-<a class="jxr_linenumber" name="L62" href="#L62">62</a>      @BeforeAll
-<a class="jxr_linenumber" name="L63" href="#L63">63</a>      <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">void</strong> setupModel() <strong class="jxr_keyword">throws</strong> Exception {
-<a class="jxr_linenumber" name="L64" href="#L64">64</a>          client = wildFly.managementClient();
-<a class="jxr_linenumber" name="L65" href="#L65">65</a>          Operations operations = <strong class="jxr_keyword">new</strong> Operations(client);
-<a class="jxr_linenumber" name="L66" href="#L66">66</a>          addCacheContainer(client, operations, CC_CREATE);
-<a class="jxr_linenumber" name="L67" href="#L67">67</a>          Values values = Values.of(CACHE_CONTAINER, CC_CREATE).and(GRANULARITY, SESSION);
-<a class="jxr_linenumber" name="L68" href="#L68">68</a>          operations.add(infinispanSessionAddress(INFINISPAN_SESSION_UPDATE), values);
-<a class="jxr_linenumber" name="L69" href="#L69">69</a>          operations.add(infinispanSessionAddress(INFINISPAN_SESSION_AFFINITY), values);
-<a class="jxr_linenumber" name="L70" href="#L70">70</a>          operations.add(infinispanSessionAddress(INFINISPAN_SESSION_DELETE), values);
-<a class="jxr_linenumber" name="L71" href="#L71">71</a>      }
-<a class="jxr_linenumber" name="L72" href="#L72">72</a>  
-<a class="jxr_linenumber" name="L73" href="#L73">73</a>      @Page DistributableWebPage page;
-<a class="jxr_linenumber" name="L74" href="#L74">74</a>      @Inject CrudOperations crud;
-<a class="jxr_linenumber" name="L75" href="#L75">75</a>      @Inject Console console;
-<a class="jxr_linenumber" name="L76" href="#L76">76</a>      TableFragment table;
-<a class="jxr_linenumber" name="L77" href="#L77">77</a>      FormFragment form;
-<a class="jxr_linenumber" name="L78" href="#L78">78</a>  
-<a class="jxr_linenumber" name="L79" href="#L79">79</a>      @BeforeEach
-<a class="jxr_linenumber" name="L80" href="#L80">80</a>      <strong class="jxr_keyword">void</strong> setUp() {
-<a class="jxr_linenumber" name="L81" href="#L81">81</a>          page.navigate();
-<a class="jxr_linenumber" name="L82" href="#L82">82</a>          console.verticalNavigation().selectPrimary(<span class="jxr_string">"dw-infinispan-session-management-item"</span>);
-<a class="jxr_linenumber" name="L83" href="#L83">83</a>          table = page.getInfinispanSessionManagementTable();
-<a class="jxr_linenumber" name="L84" href="#L84">84</a>          form = page.getInfinispanSessionManagementForm();
-<a class="jxr_linenumber" name="L85" href="#L85">85</a>          table.bind(form);
-<a class="jxr_linenumber" name="L86" href="#L86">86</a>      }
-<a class="jxr_linenumber" name="L87" href="#L87">87</a>  
-<a class="jxr_linenumber" name="L88" href="#L88">88</a>      @Test
-<a class="jxr_linenumber" name="L89" href="#L89">89</a>      <strong class="jxr_keyword">void</strong> create() <strong class="jxr_keyword">throws</strong> Exception {
-<a class="jxr_linenumber" name="L90" href="#L90">90</a>          crud.create(infinispanSessionAddress(INFINISPAN_SESSION_CREATE), table, f -&gt; {
-<a class="jxr_linenumber" name="L91" href="#L91">91</a>              f.text(NAME, INFINISPAN_SESSION_CREATE);
-<a class="jxr_linenumber" name="L92" href="#L92">92</a>              f.text(CACHE_CONTAINER, CC_CREATE);
-<a class="jxr_linenumber" name="L93" href="#L93">93</a>          });
-<a class="jxr_linenumber" name="L94" href="#L94">94</a>      }
-<a class="jxr_linenumber" name="L95" href="#L95">95</a>  
-<a class="jxr_linenumber" name="L96" href="#L96">96</a>      @Test
-<a class="jxr_linenumber" name="L97" href="#L97">97</a>      <strong class="jxr_keyword">void</strong> update() <strong class="jxr_keyword">throws</strong> Exception {
-<a class="jxr_linenumber" name="L98" href="#L98">98</a>          table.select(INFINISPAN_SESSION_UPDATE);
-<a class="jxr_linenumber" name="L99" href="#L99">99</a>          crud.update(infinispanSessionAddress(INFINISPAN_SESSION_UPDATE), form,
-<a class="jxr_linenumber" name="L100" href="#L100">100</a>                 f -&gt; f.select(GRANULARITY, ATTRIBUTE),
-<a class="jxr_linenumber" name="L101" href="#L101">101</a>                 verifier -&gt; verifier.verifyAttribute(GRANULARITY, ATTRIBUTE));
-<a class="jxr_linenumber" name="L102" href="#L102">102</a>     }
-<a class="jxr_linenumber" name="L103" href="#L103">103</a> 
-<a class="jxr_linenumber" name="L104" href="#L104">104</a>     @Test
-<a class="jxr_linenumber" name="L105" href="#L105">105</a>     <strong class="jxr_keyword">void</strong> switchAffinity() <strong class="jxr_keyword">throws</strong> Exception {
-<a class="jxr_linenumber" name="L106" href="#L106">106</a>         table.select(INFINISPAN_SESSION_AFFINITY);
-<a class="jxr_linenumber" name="L107" href="#L107">107</a>         page.getInfinispanSessionManagementTabs().select(<span class="jxr_string">"dw-infinispan-session-management-affinity-tab"</span>);
-<a class="jxr_linenumber" name="L108" href="#L108">108</a>         SelectFragment select = page.getSwitchAffinity();
-<a class="jxr_linenumber" name="L109" href="#L109">109</a>         <strong class="jxr_keyword">if</strong> (select != <strong class="jxr_keyword">null</strong>) {
-<a class="jxr_linenumber" name="L110" href="#L110">110</a>             select.select(RANKED);
-<a class="jxr_linenumber" name="L111" href="#L111">111</a>             console.verifySuccess();
-<a class="jxr_linenumber" name="L112" href="#L112">112</a>             <strong class="jxr_keyword">new</strong> ResourceVerifier(infinispanSessionAddress(INFINISPAN_SESSION_AFFINITY).and(AFFINITY, RANKED), client)
-<a class="jxr_linenumber" name="L113" href="#L113">113</a>                     .verifyExists();
-<a class="jxr_linenumber" name="L114" href="#L114">114</a>         } <strong class="jxr_keyword">else</strong> {
-<a class="jxr_linenumber" name="L115" href="#L115">115</a>             fail(<span class="jxr_string">"Select control to switch affinity not found!"</span>);
-<a class="jxr_linenumber" name="L116" href="#L116">116</a>         }
-<a class="jxr_linenumber" name="L117" href="#L117">117</a> 
-<a class="jxr_linenumber" name="L118" href="#L118">118</a>     }
-<a class="jxr_linenumber" name="L119" href="#L119">119</a> 
-<a class="jxr_linenumber" name="L120" href="#L120">120</a>     @Test
-<a class="jxr_linenumber" name="L121" href="#L121">121</a>     <strong class="jxr_keyword">void</strong> reset() <strong class="jxr_keyword">throws</strong> Exception {
-<a class="jxr_linenumber" name="L122" href="#L122">122</a>         table.select(INFINISPAN_SESSION_UPDATE);
-<a class="jxr_linenumber" name="L123" href="#L123">123</a>         crud.reset(infinispanSessionAddress(INFINISPAN_SESSION_UPDATE), form);
-<a class="jxr_linenumber" name="L124" href="#L124">124</a>     }
-<a class="jxr_linenumber" name="L125" href="#L125">125</a> 
-<a class="jxr_linenumber" name="L126" href="#L126">126</a>     @Test
-<a class="jxr_linenumber" name="L127" href="#L127">127</a>     <strong class="jxr_keyword">void</strong> delete() <strong class="jxr_keyword">throws</strong> Exception {
-<a class="jxr_linenumber" name="L128" href="#L128">128</a>         table.select(INFINISPAN_SESSION_DELETE);
-<a class="jxr_linenumber" name="L129" href="#L129">129</a>         crud.delete(infinispanSessionAddress(INFINISPAN_SESSION_DELETE), table, INFINISPAN_SESSION_DELETE);
-<a class="jxr_linenumber" name="L130" href="#L130">130</a>     }
-<a class="jxr_linenumber" name="L131" href="#L131">131</a> }
+<a class="jxr_linenumber" name="L62" href="#L62">62</a>      @Container <strong class="jxr_keyword">static</strong> WildFlyContainer wildFly = WildFlyContainer.standalone(FULL);
+<a class="jxr_linenumber" name="L63" href="#L63">63</a>      <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">static</strong> OnlineManagementClient client;
+<a class="jxr_linenumber" name="L64" href="#L64">64</a>  
+<a class="jxr_linenumber" name="L65" href="#L65">65</a>      @BeforeAll
+<a class="jxr_linenumber" name="L66" href="#L66">66</a>      <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">void</strong> setupModel() <strong class="jxr_keyword">throws</strong> Exception {
+<a class="jxr_linenumber" name="L67" href="#L67">67</a>          client = wildFly.managementClient();
+<a class="jxr_linenumber" name="L68" href="#L68">68</a>          Operations operations = <strong class="jxr_keyword">new</strong> Operations(client);
+<a class="jxr_linenumber" name="L69" href="#L69">69</a>          addCacheContainer(client, operations, CC_CREATE);
+<a class="jxr_linenumber" name="L70" href="#L70">70</a>          Values values = Values.of(CACHE_CONTAINER, CC_CREATE).and(GRANULARITY, SESSION);
+<a class="jxr_linenumber" name="L71" href="#L71">71</a>          operations.add(SUBSYSTEM_ADDRESS.and(ROUTING, INFINISPAN), Values.of(CACHE_CONTAINER, CC_CREATE)).assertSuccess();
+<a class="jxr_linenumber" name="L72" href="#L72">72</a>          operations.add(infinispanSessionAddress(INFINISPAN_SESSION_UPDATE), values).assertSuccess();
+<a class="jxr_linenumber" name="L73" href="#L73">73</a>          operations.add(infinispanSessionAddress(INFINISPAN_SESSION_AFFINITY), values).assertSuccess();
+<a class="jxr_linenumber" name="L74" href="#L74">74</a>          operations.add(infinispanSessionAddress(INFINISPAN_SESSION_DELETE), values).assertSuccess();
+<a class="jxr_linenumber" name="L75" href="#L75">75</a>      }
+<a class="jxr_linenumber" name="L76" href="#L76">76</a>  
+<a class="jxr_linenumber" name="L77" href="#L77">77</a>      @Page DistributableWebPage page;
+<a class="jxr_linenumber" name="L78" href="#L78">78</a>      @Inject CrudOperations crud;
+<a class="jxr_linenumber" name="L79" href="#L79">79</a>      @Inject Console console;
+<a class="jxr_linenumber" name="L80" href="#L80">80</a>      TableFragment table;
+<a class="jxr_linenumber" name="L81" href="#L81">81</a>      FormFragment form;
+<a class="jxr_linenumber" name="L82" href="#L82">82</a>  
+<a class="jxr_linenumber" name="L83" href="#L83">83</a>      @BeforeEach
+<a class="jxr_linenumber" name="L84" href="#L84">84</a>      <strong class="jxr_keyword">void</strong> setUp() {
+<a class="jxr_linenumber" name="L85" href="#L85">85</a>          page.navigate();
+<a class="jxr_linenumber" name="L86" href="#L86">86</a>          console.verticalNavigation().selectPrimary(<span class="jxr_string">"dw-infinispan-session-management-item"</span>);
+<a class="jxr_linenumber" name="L87" href="#L87">87</a>          table = page.getInfinispanSessionManagementTable();
+<a class="jxr_linenumber" name="L88" href="#L88">88</a>          form = page.getInfinispanSessionManagementForm();
+<a class="jxr_linenumber" name="L89" href="#L89">89</a>          table.bind(form);
+<a class="jxr_linenumber" name="L90" href="#L90">90</a>      }
+<a class="jxr_linenumber" name="L91" href="#L91">91</a>  
+<a class="jxr_linenumber" name="L92" href="#L92">92</a>      @Test
+<a class="jxr_linenumber" name="L93" href="#L93">93</a>      <strong class="jxr_keyword">void</strong> create() <strong class="jxr_keyword">throws</strong> Exception {
+<a class="jxr_linenumber" name="L94" href="#L94">94</a>          crud.create(infinispanSessionAddress(INFINISPAN_SESSION_CREATE), table, f -&gt; {
+<a class="jxr_linenumber" name="L95" href="#L95">95</a>              f.text(NAME, INFINISPAN_SESSION_CREATE);
+<a class="jxr_linenumber" name="L96" href="#L96">96</a>              f.text(CACHE_CONTAINER, CC_CREATE);
+<a class="jxr_linenumber" name="L97" href="#L97">97</a>          });
+<a class="jxr_linenumber" name="L98" href="#L98">98</a>      }
+<a class="jxr_linenumber" name="L99" href="#L99">99</a>  
+<a class="jxr_linenumber" name="L100" href="#L100">100</a>     @Test
+<a class="jxr_linenumber" name="L101" href="#L101">101</a>     <strong class="jxr_keyword">void</strong> update() <strong class="jxr_keyword">throws</strong> Exception {
+<a class="jxr_linenumber" name="L102" href="#L102">102</a>         table.select(INFINISPAN_SESSION_UPDATE);
+<a class="jxr_linenumber" name="L103" href="#L103">103</a>         crud.update(infinispanSessionAddress(INFINISPAN_SESSION_UPDATE), form,
+<a class="jxr_linenumber" name="L104" href="#L104">104</a>                 f -&gt; f.select(GRANULARITY, ATTRIBUTE),
+<a class="jxr_linenumber" name="L105" href="#L105">105</a>                 verifier -&gt; verifier.verifyAttribute(GRANULARITY, ATTRIBUTE));
+<a class="jxr_linenumber" name="L106" href="#L106">106</a>     }
+<a class="jxr_linenumber" name="L107" href="#L107">107</a> 
+<a class="jxr_linenumber" name="L108" href="#L108">108</a>     @Test
+<a class="jxr_linenumber" name="L109" href="#L109">109</a>     <strong class="jxr_keyword">void</strong> switchAffinity() <strong class="jxr_keyword">throws</strong> Exception {
+<a class="jxr_linenumber" name="L110" href="#L110">110</a>         table.select(INFINISPAN_SESSION_AFFINITY);
+<a class="jxr_linenumber" name="L111" href="#L111">111</a>         page.getInfinispanSessionManagementTabs().select(<span class="jxr_string">"dw-infinispan-session-management-affinity-tab"</span>);
+<a class="jxr_linenumber" name="L112" href="#L112">112</a>         SelectFragment select = page.getSwitchAffinity();
+<a class="jxr_linenumber" name="L113" href="#L113">113</a>         <strong class="jxr_keyword">if</strong> (select != <strong class="jxr_keyword">null</strong>) {
+<a class="jxr_linenumber" name="L114" href="#L114">114</a>             select.select(RANKED);
+<a class="jxr_linenumber" name="L115" href="#L115">115</a>             console.verifySuccess();
+<a class="jxr_linenumber" name="L116" href="#L116">116</a>             <strong class="jxr_keyword">new</strong> ResourceVerifier(infinispanSessionAddress(INFINISPAN_SESSION_AFFINITY).and(AFFINITY, RANKED), client)
+<a class="jxr_linenumber" name="L117" href="#L117">117</a>                     .verifyExists();
+<a class="jxr_linenumber" name="L118" href="#L118">118</a>         } <strong class="jxr_keyword">else</strong> {
+<a class="jxr_linenumber" name="L119" href="#L119">119</a>             fail(<span class="jxr_string">"Select control to switch affinity not found!"</span>);
+<a class="jxr_linenumber" name="L120" href="#L120">120</a>         }
+<a class="jxr_linenumber" name="L121" href="#L121">121</a> 
+<a class="jxr_linenumber" name="L122" href="#L122">122</a>     }
+<a class="jxr_linenumber" name="L123" href="#L123">123</a> 
+<a class="jxr_linenumber" name="L124" href="#L124">124</a>     @Test
+<a class="jxr_linenumber" name="L125" href="#L125">125</a>     <strong class="jxr_keyword">void</strong> reset() <strong class="jxr_keyword">throws</strong> Exception {
+<a class="jxr_linenumber" name="L126" href="#L126">126</a>         table.select(INFINISPAN_SESSION_UPDATE);
+<a class="jxr_linenumber" name="L127" href="#L127">127</a>         crud.reset(infinispanSessionAddress(INFINISPAN_SESSION_UPDATE), form);
+<a class="jxr_linenumber" name="L128" href="#L128">128</a>     }
+<a class="jxr_linenumber" name="L129" href="#L129">129</a> 
+<a class="jxr_linenumber" name="L130" href="#L130">130</a>     @Test
+<a class="jxr_linenumber" name="L131" href="#L131">131</a>     <strong class="jxr_keyword">void</strong> delete() <strong class="jxr_keyword">throws</strong> Exception {
+<a class="jxr_linenumber" name="L132" href="#L132">132</a>         table.select(INFINISPAN_SESSION_DELETE);
+<a class="jxr_linenumber" name="L133" href="#L133">133</a>         crud.delete(infinispanSessionAddress(INFINISPAN_SESSION_DELETE), table, INFINISPAN_SESSION_DELETE);
+<a class="jxr_linenumber" name="L134" href="#L134">134</a>     }
+<a class="jxr_linenumber" name="L135" href="#L135">135</a> }
 </pre>
 <hr/>
 <div id="footer">Copyright &#169; 2022&#x2013;2023 <a href="https://developers.redhat.com/">Red Hat</a>. All rights reserved.</div>
