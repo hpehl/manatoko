@@ -13,66 +13,50 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package org.jboss.hal.testsuite.test.configuration.infinispan.cache.container;
+package org.jboss.hal.testsuite.test.configuration.infinispan.cache.container.local.cache;
 
 import java.util.HashMap;
 import java.util.Map;
 
 import org.jboss.arquillian.core.api.annotation.Inject;
-import org.jboss.arquillian.graphene.Graphene;
 import org.jboss.arquillian.graphene.page.Page;
-import org.jboss.hal.resources.Ids;
-import org.jboss.hal.resources.Names;
 import org.jboss.hal.testsuite.Console;
 import org.jboss.hal.testsuite.CrudOperations;
 import org.jboss.hal.testsuite.container.WildFlyContainer;
-import org.jboss.hal.testsuite.fragment.EmptyState;
 import org.jboss.hal.testsuite.fragment.FormFragment;
-import org.jboss.hal.testsuite.fragment.SelectFragment;
-import org.jboss.hal.testsuite.model.ResourceVerifier;
 import org.jboss.hal.testsuite.page.configuration.LocalCachePage;
 import org.jboss.hal.testsuite.test.Manatoko;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestMethodOrder;
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebElement;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
-import org.wildfly.extras.creaper.commands.infinispan.cache.AddLocalCache;
 import org.wildfly.extras.creaper.core.online.OnlineManagementClient;
 import org.wildfly.extras.creaper.core.online.operations.Operations;
 
-import static org.jboss.arquillian.graphene.Graphene.waitGui;
 import static org.jboss.hal.dmr.ModelDescriptionConstants.CACHE_CONTAINER;
-import static org.jboss.hal.dmr.ModelDescriptionConstants.FILE;
 import static org.jboss.hal.dmr.ModelDescriptionConstants.NAME;
-import static org.jboss.hal.dmr.ModelDescriptionConstants.STORE;
-import static org.jboss.hal.resources.CSS.bootstrapSelect;
-import static org.jboss.hal.resources.Ids.LOCAL_CACHE;
+import static org.jboss.hal.dmr.ModelDescriptionConstants.TRANSACTION;
 import static org.jboss.hal.testsuite.container.WildFlyConfiguration.FULL_HA;
 import static org.jboss.hal.testsuite.fixtures.InfinispanFixtures.CC_UPDATE;
-import static org.jboss.hal.testsuite.fixtures.InfinispanFixtures.LC_NO_STORE;
-import static org.jboss.hal.testsuite.fixtures.InfinispanFixtures.MAX_BATCH_SIZE;
+import static org.jboss.hal.testsuite.fixtures.InfinispanFixtures.LC_UPDATE;
+import static org.jboss.hal.testsuite.fixtures.InfinispanFixtures.LOCAL_CACHE_ITEM;
 import static org.jboss.hal.testsuite.fixtures.InfinispanFixtures.cacheContainerAddress;
-import static org.jboss.hal.testsuite.fixtures.InfinispanFixtures.storeAddress;
+import static org.jboss.hal.testsuite.fixtures.InfinispanFixtures.componentAddress;
+import static org.jboss.hal.testsuite.fixtures.InfinispanFixtures.localCacheAddress;
 
 @Manatoko
 @Testcontainers
-@TestMethodOrder(MethodOrderer.MethodName.class)
-class LocalCacheStoreTest {
+class TransactionRemoveTest {
 
     @Container static WildFlyContainer wildFly = WildFlyContainer.standalone(FULL_HA);
-    private static OnlineManagementClient client;
 
     @BeforeAll
     static void setupModel() throws Exception {
-        client = wildFly.managementClient();
+        OnlineManagementClient client = wildFly.managementClient();
         Operations operations = new Operations(client);
         operations.add(cacheContainerAddress(CC_UPDATE));
-        client.apply(new AddLocalCache.Builder(LC_NO_STORE).cacheContainer(CC_UPDATE).build());
+        operations.add(localCacheAddress(CC_UPDATE, LC_UPDATE));
     }
 
     @Inject Console console;
@@ -83,27 +67,15 @@ class LocalCacheStoreTest {
     void prepare() {
         Map<String, String> params = new HashMap<>();
         params.put(CACHE_CONTAINER, CC_UPDATE);
-        params.put(NAME, LC_NO_STORE);
+        params.put(NAME, LC_UPDATE);
         page.navigate(params);
-        console.verticalNavigation().selectPrimary(Ids.build(LOCAL_CACHE, STORE, Ids.ITEM));
+        console.verticalNavigation().selectPrimary(LOCAL_CACHE_ITEM);
     }
 
     @Test
-    void fileStoreCreate() throws Exception {
-        EmptyState emptyState = page.getLocalCacheNoStore();
-        WebElement selectElement = emptyState.getRoot().findElement(By.cssSelector("div." + bootstrapSelect));
-        SelectFragment select = Graphene.createPageFragment(SelectFragment.class, selectElement);
-        waitGui().until().element(emptyState.getRoot()).is().visible();
-        select.select(Names.FILE, FILE);
-        emptyState.mainAction();
-        console.verifySuccess();
-        new ResourceVerifier(storeAddress(CC_UPDATE, LC_NO_STORE, FILE), client)
-                .verifyExists();
-    }
-
-    @Test
-    void fileStoreUpdate() throws Exception {
-        FormFragment form = page.getFileStoreForm();
-        crud.update(storeAddress(CC_UPDATE, LC_NO_STORE, FILE), form, MAX_BATCH_SIZE, 123);
+    void remove() throws Exception {
+        page.getLocalCacheTabs().select("local-cache-cache-component-transaction-tab");
+        FormFragment form = page.getTransactionForm();
+        crud.deleteSingleton(componentAddress(CC_UPDATE, LC_UPDATE, TRANSACTION), form);
     }
 }

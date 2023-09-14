@@ -13,11 +13,7 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package org.jboss.hal.testsuite.test.configuration.infinispan.cache.container.scattered.cache.memory;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+package org.jboss.hal.testsuite.test.configuration.infinispan.cache.container.scattered.cache.configuration;
 
 import org.jboss.arquillian.core.api.annotation.Inject;
 import org.jboss.arquillian.graphene.page.Page;
@@ -25,29 +21,30 @@ import org.jboss.hal.testsuite.Console;
 import org.jboss.hal.testsuite.CrudOperations;
 import org.jboss.hal.testsuite.Random;
 import org.jboss.hal.testsuite.container.WildFlyContainer;
+import org.jboss.hal.testsuite.fragment.FormFragment;
 import org.jboss.hal.testsuite.page.configuration.ScatteredCachePage;
 import org.jboss.hal.testsuite.test.Manatoko;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
 import org.wildfly.extras.creaper.core.online.OnlineManagementClient;
 import org.wildfly.extras.creaper.core.online.operations.Operations;
 
+import static org.jboss.hal.dmr.ModelDescriptionConstants.JGROUPS;
+import static org.jboss.hal.dmr.ModelDescriptionConstants.TRANSPORT;
 import static org.jboss.hal.testsuite.container.WildFlyConfiguration.FULL_HA;
-import static org.jboss.hal.testsuite.fixtures.InfinispanFixtures.binaryMemoryAddress;
 import static org.jboss.hal.testsuite.fixtures.InfinispanFixtures.cacheContainerAddress;
+import static org.jboss.hal.testsuite.fixtures.InfinispanFixtures.lockingAddress;
 import static org.jboss.hal.testsuite.fixtures.InfinispanFixtures.scatteredCacheAddress;
 
 @Manatoko
 @Testcontainers
-@Disabled // TODO Fix failing tests
-class BinaryMemoryTest {
+class LockingEditTest {
 
     private static final String CACHE_CONTAINER = "cache-container-" + Random.name();
-    private static final String SCATTERED_CACHE = "scattered-cache-" + Random.name();
+    private static final String SCATTERED_CACHE_LOCKING = "scattered-cache-" + Random.name();
     @Container static WildFlyContainer wildFly = WildFlyContainer.standalone(FULL_HA);
     private static Operations operations;
 
@@ -56,37 +53,32 @@ class BinaryMemoryTest {
         OnlineManagementClient client = wildFly.managementClient();
         operations = new Operations(client);
         operations.add(cacheContainerAddress(CACHE_CONTAINER));
-        operations.add(cacheContainerAddress(CACHE_CONTAINER).and("transport", "jgroups"));
-        operations.add(scatteredCacheAddress(CACHE_CONTAINER, SCATTERED_CACHE));
+        operations.add(cacheContainerAddress(CACHE_CONTAINER).and(TRANSPORT, JGROUPS));
+        operations.add(scatteredCacheAddress(CACHE_CONTAINER, SCATTERED_CACHE_LOCKING));
     }
 
+    @Inject CrudOperations crud;
     @Inject Console console;
-    @Inject CrudOperations crudOperations;
     @Page ScatteredCachePage page;
+    FormFragment form;
 
     @BeforeEach
     void prepare() {
-        page.navigate(CACHE_CONTAINER, SCATTERED_CACHE);
-        console.verticalNavigation().selectPrimary("scattered-cache-memory-item");
+        page.navigate(CACHE_CONTAINER, SCATTERED_CACHE_LOCKING);
+        console.verticalNavigation().selectPrimary("scattered-cache-item");
+        form = page.getLockingForm();
     }
 
     @Test
-    void editEvictionType() throws Exception {
-        String currentEvictionType = operations
-                .readAttribute(binaryMemoryAddress(CACHE_CONTAINER, SCATTERED_CACHE), "eviction-type")
-                .stringValue("COUNT");
-        List<String> evictionTypes = new ArrayList<>(Arrays.asList("COUNT", "MEMORY"));
-        evictionTypes.remove(currentEvictionType);
-        String evictionType = evictionTypes.get(0);
-        crudOperations.update(binaryMemoryAddress(CACHE_CONTAINER, SCATTERED_CACHE), page.getBinaryMemoryForm(),
-                formFragment -> formFragment.select("eviction-type", evictionType),
-                resourceVerifier -> resourceVerifier.verifyAttribute("eviction-type", evictionType));
+    void editAcquireTimeout() throws Exception {
+        crud.update(lockingAddress(CACHE_CONTAINER, SCATTERED_CACHE_LOCKING), form, "acquire-timeout", 123L);
     }
 
     @Test
-    void editSize() throws Exception {
-        console.waitNoNotification();
-        crudOperations.update(binaryMemoryAddress(CACHE_CONTAINER, SCATTERED_CACHE), page.getBinaryMemoryForm(), "size",
-                (long) Random.number());
+    void editToggleStriping() throws Exception {
+        boolean striping = operations.readAttribute(lockingAddress(CACHE_CONTAINER, SCATTERED_CACHE_LOCKING),
+                "stripping")
+                .booleanValue(false);
+        crud.update(lockingAddress(CACHE_CONTAINER, SCATTERED_CACHE_LOCKING), form, "striping", !striping);
     }
 }

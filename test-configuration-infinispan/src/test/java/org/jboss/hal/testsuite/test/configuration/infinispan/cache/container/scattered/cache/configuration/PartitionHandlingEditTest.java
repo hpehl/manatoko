@@ -26,15 +26,12 @@ import org.jboss.hal.testsuite.page.configuration.ScatteredCachePage;
 import org.jboss.hal.testsuite.test.Manatoko;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestMethodOrder;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
 import org.wildfly.extras.creaper.core.online.OnlineManagementClient;
 import org.wildfly.extras.creaper.core.online.operations.Operations;
 
-import static org.jboss.hal.dmr.ModelDescriptionConstants.ENABLED;
 import static org.jboss.hal.dmr.ModelDescriptionConstants.JGROUPS;
 import static org.jboss.hal.dmr.ModelDescriptionConstants.TRANSPORT;
 import static org.jboss.hal.testsuite.container.WildFlyConfiguration.FULL_HA;
@@ -44,8 +41,7 @@ import static org.jboss.hal.testsuite.fixtures.InfinispanFixtures.scatteredCache
 
 @Manatoko
 @Testcontainers
-@TestMethodOrder(MethodOrderer.MethodName.class)
-class PartitionHandlingTest {
+class PartitionHandlingEditTest {
 
     private static final String CACHE_CONTAINER = "cache-container-" + Random.name();
     private static final String SCATTERED_CACHE_PART_HANDLING = "scattered-cache-" + Random.name();
@@ -59,7 +55,6 @@ class PartitionHandlingTest {
         operations.add(cacheContainerAddress(CACHE_CONTAINER));
         operations.add(cacheContainerAddress(CACHE_CONTAINER).and(TRANSPORT, JGROUPS));
         operations.add(scatteredCacheAddress(CACHE_CONTAINER, SCATTERED_CACHE_PART_HANDLING));
-        operations.removeIfExists(partitionHandlingAddress(CACHE_CONTAINER, SCATTERED_CACHE_PART_HANDLING));
     }
 
     @Inject CrudOperations crud;
@@ -75,21 +70,9 @@ class PartitionHandlingTest {
     }
 
     @Test
-    void create() throws Exception {
-        crud.createSingleton(partitionHandlingAddress(CACHE_CONTAINER, SCATTERED_CACHE_PART_HANDLING), form);
-    }
-
-    @Test
-    void remove() throws Exception {
-        crud.deleteSingleton(partitionHandlingAddress(CACHE_CONTAINER, SCATTERED_CACHE_PART_HANDLING), form);
-    }
-
-    @Test
     void editToggleEnabled() throws Exception {
-        boolean enabled = operations.readAttribute(partitionHandlingAddress(CACHE_CONTAINER, SCATTERED_CACHE_PART_HANDLING),
-                ENABLED)
-                .booleanValue(false);
-        crud.update(partitionHandlingAddress(CACHE_CONTAINER, SCATTERED_CACHE_PART_HANDLING), form, ENABLED, !enabled);
+        crud.update(partitionHandlingAddress(CACHE_CONTAINER, SCATTERED_CACHE_PART_HANDLING), form,
+                formFragment -> formFragment.select("merge-policy", "REMOVE_ALL"),
+                resourceVerifier -> resourceVerifier.verifyAttribute("merge-policy", "REMOVE_ALL"));
     }
-
 }

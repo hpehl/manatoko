@@ -13,20 +13,19 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package org.jboss.hal.testsuite.test.configuration.infinispan.cache.container;
+package org.jboss.hal.testsuite.test.configuration.infinispan.cache.container.local.cache;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import org.jboss.arquillian.core.api.annotation.Inject;
 import org.jboss.arquillian.graphene.page.Page;
-import org.jboss.hal.resources.Ids;
 import org.jboss.hal.testsuite.Console;
 import org.jboss.hal.testsuite.CrudOperations;
-import org.jboss.hal.testsuite.Random;
 import org.jboss.hal.testsuite.container.WildFlyContainer;
 import org.jboss.hal.testsuite.fragment.FormFragment;
-import org.jboss.hal.testsuite.fragment.HeaderBreadcrumbFragment;
-import org.jboss.hal.testsuite.page.configuration.CacheContainerPage;
+import org.jboss.hal.testsuite.page.configuration.LocalCachePage;
 import org.jboss.hal.testsuite.test.Manatoko;
-import org.junit.Ignore;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -35,18 +34,21 @@ import org.testcontainers.junit.jupiter.Testcontainers;
 import org.wildfly.extras.creaper.core.online.OnlineManagementClient;
 import org.wildfly.extras.creaper.core.online.operations.Operations;
 
+import static org.jboss.hal.dmr.ModelDescriptionConstants.CACHE_CONTAINER;
+import static org.jboss.hal.dmr.ModelDescriptionConstants.LOCKING;
 import static org.jboss.hal.dmr.ModelDescriptionConstants.NAME;
 import static org.jboss.hal.testsuite.container.WildFlyConfiguration.FULL_HA;
 import static org.jboss.hal.testsuite.fixtures.InfinispanFixtures.CC_UPDATE;
+import static org.jboss.hal.testsuite.fixtures.InfinispanFixtures.LC_UPDATE;
+import static org.jboss.hal.testsuite.fixtures.InfinispanFixtures.LOCAL_CACHE_ITEM;
 import static org.jboss.hal.testsuite.fixtures.InfinispanFixtures.cacheContainerAddress;
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.jboss.hal.testsuite.fixtures.InfinispanFixtures.componentAddress;
+import static org.jboss.hal.testsuite.fixtures.InfinispanFixtures.localCacheAddress;
 
 @Manatoko
 @Testcontainers
-@Ignore // TODO Enable once https://issues.redhat.com/browse/HAL-1902 has been fixed
-class CacheContainerConfigurationTest {
+class LockingRemoveTest {
 
-    static final String ALIASES = "aliases";
     @Container static WildFlyContainer wildFly = WildFlyContainer.standalone(FULL_HA);
 
     @BeforeAll
@@ -54,35 +56,26 @@ class CacheContainerConfigurationTest {
         OnlineManagementClient client = wildFly.managementClient();
         Operations operations = new Operations(client);
         operations.add(cacheContainerAddress(CC_UPDATE));
+        operations.add(localCacheAddress(CC_UPDATE, LC_UPDATE));
     }
 
     @Inject Console console;
     @Inject CrudOperations crud;
-    @Page CacheContainerPage page;
-    FormFragment form;
+    @Page LocalCachePage page;
 
     @BeforeEach
-    void setUp() {
-        page.navigate(NAME, CC_UPDATE);
-        console.verticalNavigation().selectPrimary(Ids.CACHE_CONTAINER_ITEM);
-        form = page.getConfigurationForm();
+    void prepare() {
+        Map<String, String> params = new HashMap<>();
+        params.put(CACHE_CONTAINER, CC_UPDATE);
+        params.put(NAME, LC_UPDATE);
+        page.navigate(params);
+        console.verticalNavigation().selectPrimary(LOCAL_CACHE_ITEM);
     }
 
     @Test
-    void view() {
-        assertEquals(HeaderBreadcrumbFragment.abbreviate(CC_UPDATE), console.header().breadcrumb().lastValue());
-    }
-
-    @Test
-    void update() throws Exception {
-        String aliases = Random.name();
-        crud.update(cacheContainerAddress(CC_UPDATE), form,
-                f -> f.list(ALIASES).add(aliases),
-                resourceVerifier -> resourceVerifier.verifyListAttributeContainsValue(ALIASES, aliases));
-    }
-
-    @Test
-    void reset() throws Exception {
-        crud.reset(cacheContainerAddress(CC_UPDATE), form);
+    void remove() throws Exception {
+        page.getLocalCacheTabs().select("local-cache-cache-component-locking-tab");
+        FormFragment form = page.getLockingForm();
+        crud.deleteSingleton(componentAddress(CC_UPDATE, LC_UPDATE, LOCKING), form);
     }
 }

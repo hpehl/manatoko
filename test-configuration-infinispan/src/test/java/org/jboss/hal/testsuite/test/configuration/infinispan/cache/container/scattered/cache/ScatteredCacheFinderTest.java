@@ -19,7 +19,6 @@ import org.jboss.arquillian.core.api.annotation.Inject;
 import org.jboss.hal.meta.token.NameTokens;
 import org.jboss.hal.resources.Ids;
 import org.jboss.hal.testsuite.Console;
-import org.jboss.hal.testsuite.Random;
 import org.jboss.hal.testsuite.container.WildFlyContainer;
 import org.jboss.hal.testsuite.fragment.AddResourceDialogFragment;
 import org.jboss.hal.testsuite.fragment.finder.ColumnFragment;
@@ -27,8 +26,8 @@ import org.jboss.hal.testsuite.model.ResourceVerifier;
 import org.jboss.hal.testsuite.test.Manatoko;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
+import org.openqa.selenium.By;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
 import org.wildfly.extras.creaper.core.online.OnlineManagementClient;
@@ -37,8 +36,15 @@ import org.wildfly.extras.creaper.core.online.operations.admin.Administration;
 
 import com.gwtplatform.mvp.shared.proxy.PlaceRequest;
 
+import static org.jboss.arquillian.graphene.Graphene.waitGui;
 import static org.jboss.hal.dmr.ModelDescriptionConstants.INFINISPAN;
+import static org.jboss.hal.dmr.ModelDescriptionConstants.JGROUPS;
+import static org.jboss.hal.dmr.ModelDescriptionConstants.TRANSPORT;
 import static org.jboss.hal.testsuite.container.WildFlyConfiguration.FULL_HA;
+import static org.jboss.hal.testsuite.fixtures.InfinispanFixtures.CC_READ;
+import static org.jboss.hal.testsuite.fixtures.InfinispanFixtures.SC_CREATE;
+import static org.jboss.hal.testsuite.fixtures.InfinispanFixtures.SC_DELETE;
+import static org.jboss.hal.testsuite.fixtures.InfinispanFixtures.SC_READ;
 import static org.jboss.hal.testsuite.fixtures.InfinispanFixtures.cacheContainerAddress;
 import static org.jboss.hal.testsuite.fixtures.InfinispanFixtures.scatteredCacheAddress;
 import static org.jboss.hal.testsuite.fragment.finder.FinderFragment.configurationSubsystemPath;
@@ -47,13 +53,8 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @Manatoko
 @Testcontainers
-@Disabled // TODO Fix failing tests
 class ScatteredCacheFinderTest {
 
-    private static final String CACHE_CONTAINER = "cache-container-" + Random.name();
-    private static final String SCATTERED_CACHE_CREATE = "scattered-cache-create-" + Random.name();
-    private static final String SCATTERED_CACHE_DELETE = "scattered-cache-delete-" + Random.name();
-    private static final String SCATTERED_CACHE_VIEW = "scattered-cache-view-" + Random.name();
     @Container static WildFlyContainer wildFly = WildFlyContainer.standalone(FULL_HA);
     private static OnlineManagementClient client;
 
@@ -61,10 +62,10 @@ class ScatteredCacheFinderTest {
     static void setupModel() throws Exception {
         client = wildFly.managementClient();
         Operations operations = new Operations(client);
-        operations.add(cacheContainerAddress(CACHE_CONTAINER));
-        operations.add(cacheContainerAddress(CACHE_CONTAINER).and("transport", "jgroups"));
-        operations.add(scatteredCacheAddress(CACHE_CONTAINER, SCATTERED_CACHE_VIEW));
-        operations.add(scatteredCacheAddress(CACHE_CONTAINER, SCATTERED_CACHE_DELETE));
+        operations.add(cacheContainerAddress(CC_READ));
+        operations.add(cacheContainerAddress(CC_READ).and(TRANSPORT, JGROUPS));
+        operations.add(scatteredCacheAddress(CC_READ, SC_READ));
+        operations.add(scatteredCacheAddress(CC_READ, SC_DELETE));
         new Administration(client).reloadIfRequired();
     }
 
@@ -74,7 +75,7 @@ class ScatteredCacheFinderTest {
     @BeforeEach
     void prepare() {
         cacheColumn = console.finder(NameTokens.CONFIGURATION,
-                configurationSubsystemPath(INFINISPAN).append(Ids.CACHE_CONTAINER, Ids.cacheContainer(CACHE_CONTAINER)))
+                configurationSubsystemPath(INFINISPAN).append(Ids.CACHE_CONTAINER, Ids.cacheContainer(CC_READ)))
                 .column("cache");
     }
 
@@ -82,12 +83,12 @@ class ScatteredCacheFinderTest {
     void create() throws Exception {
         cacheColumn.dropdownAction("cache-add-actions", "scattered-cache-add");
         AddResourceDialogFragment addResourceDialogFragment = console.addResourceDialog();
-        addResourceDialogFragment.getForm().text("name", SCATTERED_CACHE_CREATE);
+        addResourceDialogFragment.getForm().text("name", SC_CREATE);
         addResourceDialogFragment.add();
         console.verifySuccess();
-        assertTrue(cacheColumn.containsItem(scatteredCacheId(SCATTERED_CACHE_CREATE)),
+        assertTrue(cacheColumn.containsItem(scatteredCacheId(SC_CREATE)),
                 "Newly created scattered cache should be present in the cache column");
-        new ResourceVerifier(scatteredCacheAddress(CACHE_CONTAINER, SCATTERED_CACHE_CREATE), client).verifyExists();
+        new ResourceVerifier(scatteredCacheAddress(CC_READ, SC_CREATE), client).verifyExists();
     }
 
     private static String scatteredCacheId(String scatteredCacheName) {
@@ -96,23 +97,24 @@ class ScatteredCacheFinderTest {
 
     @Test
     void view() {
-        cacheColumn.selectItem(scatteredCacheId(SCATTERED_CACHE_VIEW)).view();
+        cacheColumn.selectItem(scatteredCacheId(SC_READ)).view();
         console.verify(new PlaceRequest.Builder().nameToken("scattered-cache")
-                .with("cache-container", CACHE_CONTAINER)
-                .with("name", SCATTERED_CACHE_VIEW)
+                .with("cache-container", CC_READ)
+                .with("name", SC_READ)
                 .build());
     }
 
     @Test
     void delete() throws Exception {
-        assertTrue(cacheColumn.containsItem(scatteredCacheId(SCATTERED_CACHE_DELETE)),
+        assertTrue(cacheColumn.containsItem(scatteredCacheId(SC_DELETE)),
                 "Scattered cache to be removed should be present in the column before removal");
-        cacheColumn.selectItem(scatteredCacheId(SCATTERED_CACHE_DELETE)).dropdown().click("Remove");
+        cacheColumn.selectItem(scatteredCacheId(SC_DELETE)).dropdown().click("Remove");
         console.confirmationDialog().confirm();
         console.verifySuccess();
-        assertFalse(cacheColumn.containsItem(scatteredCacheId(SCATTERED_CACHE_DELETE)),
+        waitGui().until().element(By.id(scatteredCacheId(SC_DELETE))).is().not().present();
+        assertFalse(cacheColumn.containsItem(scatteredCacheId(SC_DELETE)),
                 "Recently removed scattered cache should not be present in the column anymore");
-        new ResourceVerifier(scatteredCacheAddress(CACHE_CONTAINER, SCATTERED_CACHE_DELETE),
+        new ResourceVerifier(scatteredCacheAddress(CC_READ, SC_DELETE),
                 client).verifyDoesNotExist();
     }
 }

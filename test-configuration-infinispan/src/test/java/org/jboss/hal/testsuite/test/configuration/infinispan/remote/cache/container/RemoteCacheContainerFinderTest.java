@@ -49,7 +49,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @Manatoko
 @Testcontainers
-@Disabled // TODO Fix failing tests
+@Disabled // TODO Enable once https://issues.redhat.com/browse/HAL-1904 has been fixed
 class RemoteCacheContainerFinderTest extends AbstractRemoteCacheContainerTest {
 
     private static final String REMOTE_SOCKET_BINDING_CREATE = "remote-socket-binding-create-" + Random.name();

@@ -15,10 +15,6 @@
  */
 package org.jboss.hal.testsuite.test.configuration.infinispan.cache.container.scattered.cache.memory;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
 import org.jboss.arquillian.core.api.annotation.Inject;
 import org.jboss.arquillian.graphene.page.Page;
 import org.jboss.hal.testsuite.Console;
@@ -29,12 +25,12 @@ import org.jboss.hal.testsuite.page.configuration.ScatteredCachePage;
 import org.jboss.hal.testsuite.test.Manatoko;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
 import org.wildfly.extras.creaper.core.online.OnlineManagementClient;
 import org.wildfly.extras.creaper.core.online.operations.Operations;
+import org.wildfly.extras.creaper.core.online.operations.admin.Administration;
 
 import static org.jboss.hal.testsuite.container.WildFlyConfiguration.FULL_HA;
 import static org.jboss.hal.testsuite.fixtures.InfinispanFixtures.cacheContainerAddress;
@@ -43,21 +39,20 @@ import static org.jboss.hal.testsuite.fixtures.InfinispanFixtures.scatteredCache
 
 @Manatoko
 @Testcontainers
-@Disabled // TODO Fix failing tests
 class OffHeapMemoryTest {
 
     private static final String CACHE_CONTAINER = "cache-container-" + Random.name();
     private static final String SCATTERED_CACHE = "scattered-cache-" + Random.name();
     @Container static WildFlyContainer wildFly = WildFlyContainer.standalone(FULL_HA);
-    private static Operations operations;
 
     @BeforeAll
     static void setupModel() throws Exception {
         OnlineManagementClient client = wildFly.managementClient();
-        operations = new Operations(client);
+        Operations operations = new Operations(client);
         operations.add(cacheContainerAddress(CACHE_CONTAINER));
         operations.add(cacheContainerAddress(CACHE_CONTAINER).and("transport", "jgroups"));
         operations.add(scatteredCacheAddress(CACHE_CONTAINER, SCATTERED_CACHE));
+        new Administration(client).reloadIfRequired();
     }
 
     @Inject Console console;
@@ -68,35 +63,13 @@ class OffHeapMemoryTest {
     void prepare() {
         page.navigate(CACHE_CONTAINER, SCATTERED_CACHE);
         console.verticalNavigation().selectPrimary("scattered-cache-memory-item");
-    }
-
-    @Test
-    void editCapacity() throws Exception {
-        crudOperations.update(offHeapMemoryAddress(CACHE_CONTAINER, SCATTERED_CACHE), page.getOffHeapMemoryForm(),
-                "capacity",
-                Random.number());
-    }
-
-    @Test
-    void editEvictionType() throws Exception {
-        console.waitNoNotification();
-        String currentEvictionType = operations
-                .readAttribute(offHeapMemoryAddress(CACHE_CONTAINER, SCATTERED_CACHE), "eviction-type")
-                .stringValue("COUNT");
-        List<String> evictionTypes = new ArrayList<>(Arrays.asList("COUNT", "MEMORY"));
-        evictionTypes.remove(currentEvictionType);
-        String evictionType = evictionTypes.get(0);
-        crudOperations.update(offHeapMemoryAddress(CACHE_CONTAINER, SCATTERED_CACHE), page.getOffHeapMemoryForm(),
-                formFragment -> formFragment.select("eviction-type", evictionType),
-                resourceVerifier -> resourceVerifier.verifyAttribute("eviction-type", evictionType));
+        page.selectOffHeapMemory();
     }
 
     @Test
     void editSize() throws Exception {
         console.waitNoNotification();
         crudOperations.update(offHeapMemoryAddress(CACHE_CONTAINER, SCATTERED_CACHE), page.getOffHeapMemoryForm(),
-                "size",
-                (long) Random.number());
+                "size", (long) Random.number());
     }
-
 }

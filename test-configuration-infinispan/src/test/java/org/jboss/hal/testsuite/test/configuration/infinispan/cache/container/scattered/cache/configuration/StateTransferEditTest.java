@@ -15,10 +15,6 @@
  */
 package org.jboss.hal.testsuite.test.configuration.infinispan.cache.container.scattered.cache.configuration;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
 import org.jboss.arquillian.core.api.annotation.Inject;
 import org.jboss.arquillian.graphene.page.Page;
 import org.jboss.hal.testsuite.Console;
@@ -30,9 +26,7 @@ import org.jboss.hal.testsuite.page.configuration.ScatteredCachePage;
 import org.jboss.hal.testsuite.test.Manatoko;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestMethodOrder;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
 import org.wildfly.extras.creaper.core.online.OnlineManagementClient;
@@ -43,26 +37,23 @@ import static org.jboss.hal.dmr.ModelDescriptionConstants.TRANSPORT;
 import static org.jboss.hal.testsuite.container.WildFlyConfiguration.FULL_HA;
 import static org.jboss.hal.testsuite.fixtures.InfinispanFixtures.cacheContainerAddress;
 import static org.jboss.hal.testsuite.fixtures.InfinispanFixtures.scatteredCacheAddress;
-import static org.jboss.hal.testsuite.fixtures.InfinispanFixtures.transactionAddress;
+import static org.jboss.hal.testsuite.fixtures.InfinispanFixtures.stateTransferAddress;
 
 @Manatoko
 @Testcontainers
-@TestMethodOrder(MethodOrderer.MethodName.class)
-class TransactionTest {
+class StateTransferEditTest {
 
     private static final String CACHE_CONTAINER = "cache-container-" + Random.name();
-    private static final String SCATTERED_CACHE_TRANSACTION = "scattered-cache-" + Random.name();
+    private static final String SCATTERED_CACHE_STATE_TRANSFER = "scattered-cache-" + Random.name();
     @Container static WildFlyContainer wildFly = WildFlyContainer.standalone(FULL_HA);
-    private static Operations operations;
 
     @BeforeAll
     static void setupModel() throws Exception {
         OnlineManagementClient client = wildFly.managementClient();
-        operations = new Operations(client);
+        Operations operations = new Operations(client);
         operations.add(cacheContainerAddress(CACHE_CONTAINER));
         operations.add(cacheContainerAddress(CACHE_CONTAINER).and(TRANSPORT, JGROUPS));
-        operations.add(scatteredCacheAddress(CACHE_CONTAINER, SCATTERED_CACHE_TRANSACTION));
-        operations.removeIfExists(transactionAddress(CACHE_CONTAINER, SCATTERED_CACHE_TRANSACTION));
+        operations.add(scatteredCacheAddress(CACHE_CONTAINER, SCATTERED_CACHE_STATE_TRANSFER));
     }
 
     @Inject CrudOperations crud;
@@ -72,41 +63,18 @@ class TransactionTest {
 
     @BeforeEach
     void prepare() {
-        page.navigate(CACHE_CONTAINER, SCATTERED_CACHE_TRANSACTION);
+        page.navigate(CACHE_CONTAINER, SCATTERED_CACHE_STATE_TRANSFER);
         console.verticalNavigation().selectPrimary("scattered-cache-item");
-        form = page.getTransactionForm();
+        form = page.getStateTransferForm();
     }
 
     @Test
-    void create() throws Exception {
-        crud.createSingleton(transactionAddress(CACHE_CONTAINER, SCATTERED_CACHE_TRANSACTION), form);
+    void editChunkSize() throws Exception {
+        crud.update(stateTransferAddress(CACHE_CONTAINER, SCATTERED_CACHE_STATE_TRANSFER), form, "chunk-size", 123);
     }
 
     @Test
-    void remove() throws Exception {
-        crud.deleteSingleton(transactionAddress(CACHE_CONTAINER, SCATTERED_CACHE_TRANSACTION), form);
-    }
-
-    @Test
-    void editLocking() throws Exception {
-        String currentLocking = operations
-                .readAttribute(transactionAddress(CACHE_CONTAINER, SCATTERED_CACHE_TRANSACTION), "locking")
-                .stringValue();
-        List<String> lockings = new ArrayList<>(Arrays.asList("PESSIMISTIC", "OPTIMISTIC"));
-        lockings.remove(currentLocking);
-        crud.update(transactionAddress(CACHE_CONTAINER, SCATTERED_CACHE_TRANSACTION), form,
-                formFragment -> formFragment.select("locking", lockings.get(0)),
-                resourceVerifier -> resourceVerifier.verifyAttribute("locking", lockings.get(0)));
-    }
-
-    @Test
-    void editMode() throws Exception {
-        String currentMode = operations.readAttribute(transactionAddress(CACHE_CONTAINER, SCATTERED_CACHE_TRANSACTION), "mode")
-                .stringValue();
-        List<String> modes = new ArrayList<>(Arrays.asList("NONE", "BATCH", "NON_XA", "NON_DURABLE_XA", "FULL_XA"));
-        modes.remove(currentMode);
-        crud.update(transactionAddress(CACHE_CONTAINER, SCATTERED_CACHE_TRANSACTION), form,
-                formFragment -> formFragment.select("mode", modes.get(0)),
-                resourceVerifier -> resourceVerifier.verifyAttribute("mode", modes.get(0)));
+    void editTimeout() throws Exception {
+        crud.update(stateTransferAddress(CACHE_CONTAINER, SCATTERED_CACHE_STATE_TRANSFER), form, "timeout", 789L);
     }
 }

@@ -13,20 +13,17 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package org.jboss.hal.testsuite.test.configuration.infinispan.cache.container;
+package org.jboss.hal.testsuite.test.configuration.infinispan.cache.container.scattered.cache.configuration;
 
 import org.jboss.arquillian.core.api.annotation.Inject;
 import org.jboss.arquillian.graphene.page.Page;
-import org.jboss.hal.resources.Ids;
 import org.jboss.hal.testsuite.Console;
 import org.jboss.hal.testsuite.CrudOperations;
 import org.jboss.hal.testsuite.Random;
 import org.jboss.hal.testsuite.container.WildFlyContainer;
 import org.jboss.hal.testsuite.fragment.FormFragment;
-import org.jboss.hal.testsuite.fragment.HeaderBreadcrumbFragment;
-import org.jboss.hal.testsuite.page.configuration.CacheContainerPage;
+import org.jboss.hal.testsuite.page.configuration.ScatteredCachePage;
 import org.jboss.hal.testsuite.test.Manatoko;
-import org.junit.Ignore;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -35,54 +32,54 @@ import org.testcontainers.junit.jupiter.Testcontainers;
 import org.wildfly.extras.creaper.core.online.OnlineManagementClient;
 import org.wildfly.extras.creaper.core.online.operations.Operations;
 
-import static org.jboss.hal.dmr.ModelDescriptionConstants.NAME;
+import static org.jboss.hal.dmr.ModelDescriptionConstants.JGROUPS;
+import static org.jboss.hal.dmr.ModelDescriptionConstants.TRANSPORT;
 import static org.jboss.hal.testsuite.container.WildFlyConfiguration.FULL_HA;
-import static org.jboss.hal.testsuite.fixtures.InfinispanFixtures.CC_UPDATE;
 import static org.jboss.hal.testsuite.fixtures.InfinispanFixtures.cacheContainerAddress;
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.jboss.hal.testsuite.fixtures.InfinispanFixtures.expirationAddress;
+import static org.jboss.hal.testsuite.fixtures.InfinispanFixtures.scatteredCacheAddress;
 
 @Manatoko
 @Testcontainers
-@Ignore // TODO Enable once https://issues.redhat.com/browse/HAL-1902 has been fixed
-class CacheContainerConfigurationTest {
+class ExpirationEditTest {
 
-    static final String ALIASES = "aliases";
+    private static final String CACHE_CONTAINER = "cache-container-" + Random.name();
+    private static final String SCATTERED_CACHE_EXP = "scattered-cache-" + Random.name();
     @Container static WildFlyContainer wildFly = WildFlyContainer.standalone(FULL_HA);
 
     @BeforeAll
     static void setupModel() throws Exception {
         OnlineManagementClient client = wildFly.managementClient();
         Operations operations = new Operations(client);
-        operations.add(cacheContainerAddress(CC_UPDATE));
+        operations.add(cacheContainerAddress(CACHE_CONTAINER));
+        operations.add(cacheContainerAddress(CACHE_CONTAINER).and(TRANSPORT, JGROUPS));
+        operations.add(scatteredCacheAddress(CACHE_CONTAINER, SCATTERED_CACHE_EXP));
     }
 
-    @Inject Console console;
     @Inject CrudOperations crud;
-    @Page CacheContainerPage page;
+    @Inject Console console;
+    @Page ScatteredCachePage page;
     FormFragment form;
 
     @BeforeEach
-    void setUp() {
-        page.navigate(NAME, CC_UPDATE);
-        console.verticalNavigation().selectPrimary(Ids.CACHE_CONTAINER_ITEM);
-        form = page.getConfigurationForm();
+    void prepare() {
+        page.navigate(CACHE_CONTAINER, SCATTERED_CACHE_EXP);
+        console.verticalNavigation().selectPrimary("scattered-cache-item");
+        form = page.getExpirationForm();
     }
 
     @Test
-    void view() {
-        assertEquals(HeaderBreadcrumbFragment.abbreviate(CC_UPDATE), console.header().breadcrumb().lastValue());
+    void editInterval() throws Exception {
+        crud.update(expirationAddress(CACHE_CONTAINER, SCATTERED_CACHE_EXP), form, "interval", 123L);
     }
 
     @Test
-    void update() throws Exception {
-        String aliases = Random.name();
-        crud.update(cacheContainerAddress(CC_UPDATE), form,
-                f -> f.list(ALIASES).add(aliases),
-                resourceVerifier -> resourceVerifier.verifyListAttributeContainsValue(ALIASES, aliases));
+    void editLifespan() throws Exception {
+        crud.update(expirationAddress(CACHE_CONTAINER, SCATTERED_CACHE_EXP), form, "lifespan", 312L);
     }
 
     @Test
-    void reset() throws Exception {
-        crud.reset(cacheContainerAddress(CC_UPDATE), form);
+    void editMaxIdle() throws Exception {
+        crud.update(expirationAddress(CACHE_CONTAINER, SCATTERED_CACHE_EXP), form, "max-idle", 412L);
     }
 }

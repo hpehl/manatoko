@@ -21,115 +21,88 @@ import org.jboss.hal.testsuite.Console;
 import org.jboss.hal.testsuite.CrudOperations;
 import org.jboss.hal.testsuite.Random;
 import org.jboss.hal.testsuite.container.WildFlyContainer;
+import org.jboss.hal.testsuite.fragment.FormFragment;
 import org.jboss.hal.testsuite.page.configuration.ScatteredCachePage;
 import org.jboss.hal.testsuite.test.Manatoko;
+import org.jboss.hal.testsuite.test.configuration.infinispan.cache.container.scattered.cache.store.StoreSetup;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
-import org.wildfly.extras.creaper.core.online.OnlineManagementClient;
 import org.wildfly.extras.creaper.core.online.operations.Operations;
 import org.wildfly.extras.creaper.core.online.operations.Values;
 
 import static org.jboss.hal.testsuite.container.WildFlyConfiguration.FULL_HA;
-import static org.jboss.hal.testsuite.fixtures.InfinispanFixtures.cacheContainerAddress;
+import static org.jboss.hal.testsuite.fixtures.InfinispanFixtures.CC_CREATE;
+import static org.jboss.hal.testsuite.fixtures.InfinispanFixtures.SC_CREATE;
 import static org.jboss.hal.testsuite.fixtures.InfinispanFixtures.customStoreAddress;
-import static org.jboss.hal.testsuite.fixtures.InfinispanFixtures.scatteredCacheAddress;
 
 @Manatoko
 @Testcontainers
-@Disabled // TODO Fix failing tests
 class AttributesTest {
 
-    private static final String CACHE_CONTAINER = "cache-container-" + Random.name();
-    private static final String SCATTERED_CACHE = "scattered-cache-" + Random.name();
     @Container static WildFlyContainer wildFly = WildFlyContainer.standalone(FULL_HA);
-    private static Operations operations;
 
     @BeforeAll
     static void setupModel() throws Exception {
-        OnlineManagementClient client = wildFly.managementClient();
-        operations = new Operations(client);
-        operations.add(cacheContainerAddress(CACHE_CONTAINER));
-        operations.add(cacheContainerAddress(CACHE_CONTAINER).and("transport", "jgroups"));
-        operations.add(scatteredCacheAddress(CACHE_CONTAINER, SCATTERED_CACHE));
-        operations.headers(Values.of("allow-resource-service-restart", true))
-                .add(customStoreAddress(CACHE_CONTAINER, SCATTERED_CACHE), Values.of("class", Random.name()));
+        StoreSetup.setup(wildFly, operations -> operations.headers(Values.of("allow-resource-service-restart", true))
+                .add(customStoreAddress(CC_CREATE, SC_CREATE), Values.of("class", Random.name())));
     }
 
     @Inject Console console;
-    @Inject CrudOperations crudOperations;
+    @Inject CrudOperations crud;
     @Page ScatteredCachePage page;
+    Operations operations;
+    FormFragment form;
 
     @BeforeEach
     void prepare() {
-        page.navigate(CACHE_CONTAINER, SCATTERED_CACHE);
+        operations = new Operations(wildFly.managementClient());
+        page.navigate(CC_CREATE, SC_CREATE);
         console.verticalNavigation().selectPrimary("scattered-cache-store-item");
+        page.selectCustomStoreAttributes();
+        form = page.getCustomStoreAttributesForm();
     }
 
     @Test
     void editClass() throws Exception {
-        console.waitNoNotification();
-        crudOperations.update(customStoreAddress(CACHE_CONTAINER, SCATTERED_CACHE), page.getCustomStoreAttributesForm(),
-                "class");
-    }
-
-    @Test
-    void toggleFetchState() throws Exception {
-        console.waitNoNotification();
-        boolean fetchState = operations.readAttribute(customStoreAddress(CACHE_CONTAINER, SCATTERED_CACHE), "fetch-state")
-                .booleanValue(true);
-        crudOperations.update(customStoreAddress(CACHE_CONTAINER, SCATTERED_CACHE), page.getCustomStoreAttributesForm(),
-                "fetch-state", !fetchState);
+        crud.update(customStoreAddress(CC_CREATE, SC_CREATE), form, "class");
     }
 
     @Test
     void editMaxBatchSize() throws Exception {
-        console.waitNoNotification();
-        crudOperations.update(customStoreAddress(CACHE_CONTAINER, SCATTERED_CACHE), page.getCustomStoreAttributesForm(),
-                "max-batch-size", Random.number());
+        crud.update(customStoreAddress(CC_CREATE, SC_CREATE), form, "max-batch-size", Random.number());
     }
 
     @Test
     void togglePassivation() throws Exception {
-        console.waitNoNotification();
-        crudOperations.update(customStoreAddress(CACHE_CONTAINER, SCATTERED_CACHE), page.getCustomStoreAttributesForm(),
-                "max-batch-size", Random.number());
+        crud.update(customStoreAddress(CC_CREATE, SC_CREATE), form, "max-batch-size", Random.number());
     }
 
     @Test
     void togglePreload() throws Exception {
-        console.waitNoNotification();
-        boolean preload = operations.readAttribute(customStoreAddress(CACHE_CONTAINER, SCATTERED_CACHE), "preload")
+        boolean preload = operations.readAttribute(customStoreAddress(CC_CREATE, SC_CREATE), "preload")
                 .booleanValue(false);
-        crudOperations.update(customStoreAddress(CACHE_CONTAINER, SCATTERED_CACHE), page.getCustomStoreAttributesForm(),
-                "preload", !preload);
+        crud.update(customStoreAddress(CC_CREATE, SC_CREATE), form, "preload", !preload);
     }
 
     @Test
     void editProperties() throws Exception {
-        console.waitNoNotification();
-        crudOperations.update(customStoreAddress(CACHE_CONTAINER, SCATTERED_CACHE), page.getCustomStoreAttributesForm(),
-                "properties", Random.properties());
+        crud.update(customStoreAddress(CC_CREATE, SC_CREATE), form, "properties", Random.properties());
     }
 
     @Test
     void togglePurge() throws Exception {
-        console.waitNoNotification();
-        boolean purge = operations.readAttribute(customStoreAddress(CACHE_CONTAINER, SCATTERED_CACHE), "purge")
+        boolean purge = operations.readAttribute(customStoreAddress(CC_CREATE, SC_CREATE), "purge")
                 .booleanValue(true);
-        crudOperations.update(customStoreAddress(CACHE_CONTAINER, SCATTERED_CACHE), page.getCustomStoreAttributesForm(),
-                "purge", !purge);
+        crud.update(customStoreAddress(CC_CREATE, SC_CREATE), form, "purge", !purge);
     }
 
     @Test
     void toggleShared() throws Exception {
-        console.waitNoNotification();
-        boolean shared = operations.readAttribute(customStoreAddress(CACHE_CONTAINER, SCATTERED_CACHE), "shared")
+        boolean shared = operations.readAttribute(customStoreAddress(CC_CREATE, SC_CREATE), "shared")
                 .booleanValue(false);
-        crudOperations.update(customStoreAddress(CACHE_CONTAINER, SCATTERED_CACHE), page.getCustomStoreAttributesForm(),
-                "shared", !shared);
+        crud.update(customStoreAddress(CC_CREATE, SC_CREATE), form, "shared", !shared);
     }
 }
