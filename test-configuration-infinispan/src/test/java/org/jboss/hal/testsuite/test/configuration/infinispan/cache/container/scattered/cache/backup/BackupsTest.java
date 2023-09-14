@@ -39,7 +39,6 @@ import org.testcontainers.junit.jupiter.Testcontainers;
 import org.wildfly.extras.creaper.core.online.OnlineManagementClient;
 import org.wildfly.extras.creaper.core.online.operations.Operations;
 
-import static org.jboss.hal.dmr.ModelDescriptionConstants.ENABLED;
 import static org.jboss.hal.testsuite.container.WildFlyConfiguration.FULL_HA;
 import static org.jboss.hal.testsuite.fixtures.InfinispanFixtures.backupAddress;
 import static org.jboss.hal.testsuite.fixtures.InfinispanFixtures.cacheContainerAddress;
@@ -100,15 +99,6 @@ class BackupsTest {
         table.select(BACKUP_EDIT);
         crudOperations.update(backupAddress(CACHE_CONTAINER, SCATTERED_CACHE, BACKUP_EDIT), form, "after-failures",
                 Random.number());
-    }
-
-    @Test
-    void toggleEnabled() throws Exception {
-        console.waitNoNotification();
-        table.select(BACKUP_EDIT);
-        boolean enabled = operations.readAttribute(backupAddress(CACHE_CONTAINER, SCATTERED_CACHE, BACKUP_EDIT), "enabled")
-                .booleanValue();
-        crudOperations.update(backupAddress(CACHE_CONTAINER, SCATTERED_CACHE, BACKUP_EDIT), form, ENABLED, !enabled);
     }
 
     @Test

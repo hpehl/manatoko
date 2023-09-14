@@ -28,12 +28,14 @@ import org.jboss.hal.testsuite.test.Manatoko;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.openqa.selenium.By;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
 import org.wildfly.extras.creaper.core.online.OnlineManagementClient;
 import org.wildfly.extras.creaper.core.online.operations.Operations;
 import org.wildfly.extras.creaper.core.online.operations.admin.Administration;
 
+import static org.jboss.arquillian.graphene.Graphene.waitGui;
 import static org.jboss.hal.dmr.ModelDescriptionConstants.INFINISPAN;
 import static org.jboss.hal.testsuite.container.WildFlyConfiguration.FULL_HA;
 import static org.jboss.hal.testsuite.fixtures.InfinispanFixtures.cacheContainerAddress;
@@ -75,8 +77,10 @@ class DistributedCacheFinderTest {
         addResourceDialogFragment.getForm().text("name", DISTRIBUTED_CACHE_CREATE);
         addResourceDialogFragment.add();
         console.verifySuccess();
+        String distributedCacheId = Ids.build("distributed-cache", DISTRIBUTED_CACHE_CREATE);
+        waitGui().until().element(By.id(distributedCacheId)).is().present();
         assertTrue(
-                cacheColumn.containsItem(Ids.build("distributed-cache", DISTRIBUTED_CACHE_CREATE)),
+                cacheColumn.containsItem(distributedCacheId),
                 "Newly created distributed cache should be present in the cache column");
         new ResourceVerifier(distributedCacheAddress(CACHE_CONTAINER, DISTRIBUTED_CACHE_CREATE), client).verifyExists();
     }

@@ -132,7 +132,7 @@ public class Console {
      * Verify there is no error notification
      */
     public boolean verifyNoError() {
-        return By.cssSelector(DOT + toastNotificationsListPf + " ." + alertDanger).findElements(browser).size() < 1;
+        return By.cssSelector(DOT + toastNotificationsListPf + " ." + alertDanger).findElements(browser).isEmpty();
     }
 
     private void verifyNotification(String css) {

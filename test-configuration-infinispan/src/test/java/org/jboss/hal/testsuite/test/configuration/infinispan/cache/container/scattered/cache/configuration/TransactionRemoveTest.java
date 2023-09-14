@@ -26,9 +26,7 @@ import org.jboss.hal.testsuite.page.configuration.ScatteredCachePage;
 import org.jboss.hal.testsuite.test.Manatoko;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestMethodOrder;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
 import org.wildfly.extras.creaper.core.online.OnlineManagementClient;
@@ -38,16 +36,15 @@ import static org.jboss.hal.dmr.ModelDescriptionConstants.JGROUPS;
 import static org.jboss.hal.dmr.ModelDescriptionConstants.TRANSPORT;
 import static org.jboss.hal.testsuite.container.WildFlyConfiguration.FULL_HA;
 import static org.jboss.hal.testsuite.fixtures.InfinispanFixtures.cacheContainerAddress;
-import static org.jboss.hal.testsuite.fixtures.InfinispanFixtures.lockingAddress;
 import static org.jboss.hal.testsuite.fixtures.InfinispanFixtures.scatteredCacheAddress;
+import static org.jboss.hal.testsuite.fixtures.InfinispanFixtures.transactionAddress;
 
 @Manatoko
 @Testcontainers
-@TestMethodOrder(MethodOrderer.MethodName.class)
-class LockingTest {
+class TransactionRemoveTest {
 
     private static final String CACHE_CONTAINER = "cache-container-" + Random.name();
-    private static final String SCATTERED_CACHE_LOCKING = "scattered-cache-" + Random.name();
+    private static final String SCATTERED_CACHE_TRANSACTION = "scattered-cache-" + Random.name();
     @Container static WildFlyContainer wildFly = WildFlyContainer.standalone(FULL_HA);
     private static Operations operations;
 
@@ -57,10 +54,7 @@ class LockingTest {
         operations = new Operations(client);
         operations.add(cacheContainerAddress(CACHE_CONTAINER));
         operations.add(cacheContainerAddress(CACHE_CONTAINER).and(TRANSPORT, JGROUPS));
-        operations.add(scatteredCacheAddress(CACHE_CONTAINER, SCATTERED_CACHE_LOCKING));
-        // scattered-cache=*/component=locking is automatically created
-        // remove it to later create it
-        operations.removeIfExists(lockingAddress(CACHE_CONTAINER, SCATTERED_CACHE_LOCKING));
+        operations.add(scatteredCacheAddress(CACHE_CONTAINER, SCATTERED_CACHE_TRANSACTION));
     }
 
     @Inject CrudOperations crud;
@@ -70,35 +64,13 @@ class LockingTest {
 
     @BeforeEach
     void prepare() {
-        page.navigate(CACHE_CONTAINER, SCATTERED_CACHE_LOCKING);
+        page.navigate(CACHE_CONTAINER, SCATTERED_CACHE_TRANSACTION);
         console.verticalNavigation().selectPrimary("scattered-cache-item");
-        form = page.getLockingForm();
-    }
-
-    @Test
-    void create() throws Exception {
-        crud.createSingleton(lockingAddress(CACHE_CONTAINER, SCATTERED_CACHE_LOCKING), form);
+        form = page.getTransactionForm();
     }
 
     @Test
     void remove() throws Exception {
-        crud.deleteSingleton(lockingAddress(CACHE_CONTAINER, SCATTERED_CACHE_LOCKING), form);
-    }
-
-    @Test
-    void editAcquireTimeout() throws Exception {
-        crud.update(lockingAddress(CACHE_CONTAINER, SCATTERED_CACHE_LOCKING), form, "acquire-timeout", 123L);
-    }
-
-    @Test
-    void editConcurrencyLevel() throws Exception {
-        crud.update(lockingAddress(CACHE_CONTAINER, SCATTERED_CACHE_LOCKING), form, "concurrency-level", 324);
-    }
-
-    @Test
-    void editToggleStriping() throws Exception {
-        boolean striping = operations.readAttribute(lockingAddress(CACHE_CONTAINER, SCATTERED_CACHE_LOCKING), "stripping")
-                .booleanValue(false);
-        crud.update(lockingAddress(CACHE_CONTAINER, SCATTERED_CACHE_LOCKING), form, "striping", !striping);
+        crud.deleteSingleton(transactionAddress(CACHE_CONTAINER, SCATTERED_CACHE_TRANSACTION), form);
     }
 }

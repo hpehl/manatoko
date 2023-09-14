@@ -133,12 +133,8 @@ public final class InfinispanFixtures {
         return scatteredCacheAddress(cacheContainer, scatteredCache).and(COMPONENT, "transaction");
     }
 
-    public static Address objectMemoryAddress(String cacheContainer, String scatteredCache) {
-        return scatteredCacheAddress(cacheContainer, scatteredCache).and("memory", "object");
-    }
-
-    public static Address binaryMemoryAddress(String cacheContainer, String scatteredCache) {
-        return scatteredCacheAddress(cacheContainer, scatteredCache).and("memory", "binary");
+    public static Address heapMemoryAddress(String cacheContainer, String scatteredCache) {
+        return scatteredCacheAddress(cacheContainer, scatteredCache).and("memory", "heap");
     }
 
     public static Address offHeapMemoryAddress(String cacheContainer, String scatteredCache) {

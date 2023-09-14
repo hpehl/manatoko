@@ -74,9 +74,7 @@ public class ScatteredCachePage extends BasePage {
     @FindBy(css = "label[for='scattered-cache-memory-select'] + div."
             + bootstrapSelect) private SelectFragment switchMemoryDropdown;
 
-    @FindBy(id = "scattered-cache-cache-memory-object-form") private FormFragment objectMemoryForm;
-
-    @FindBy(id = "scattered-cache-cache-memory-binary-form") private FormFragment binaryMemoryForm;
+    @FindBy(id = "scattered-cache-cache-memory-heap-form") private FormFragment heapMemoryForm;
 
     @FindBy(id = "scattered-cache-cache-memory-off-heap-form") private FormFragment offHeapMemoryForm;
 
@@ -169,10 +167,6 @@ public class ScatteredCachePage extends BasePage {
         return transactionForm;
     }
 
-    public SelectFragment getSwitchMemoryDropdown() {
-        return switchMemoryDropdown;
-    }
-
     public TableFragment getBackupsTable() {
         return backupsTable;
     }
@@ -181,18 +175,19 @@ public class ScatteredCachePage extends BasePage {
         return backupsForm;
     }
 
-    public FormFragment getObjectMemoryForm() {
-        switchMemoryDropdown.select("Object", "object");
-        return objectMemoryForm;
+    public void selectHeapMemory() {
+        switchMemoryDropdown.select("Heap", "heap");
     }
 
-    public FormFragment getBinaryMemoryForm() {
-        switchMemoryDropdown.select("Binary", "binary");
-        return binaryMemoryForm;
+    public FormFragment getHeapMemoryForm() {
+        return heapMemoryForm;
+    }
+
+    public void selectOffHeapMemory() {
+        switchMemoryDropdown.select("Off Heap", "off-heap");
     }
 
     public FormFragment getOffHeapMemoryForm() {
-        switchMemoryDropdown.select("Off Heap", "off-heap");
         return offHeapMemoryForm;
     }
 
