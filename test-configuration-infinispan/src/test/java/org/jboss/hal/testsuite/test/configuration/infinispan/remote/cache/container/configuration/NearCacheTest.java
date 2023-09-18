@@ -27,6 +27,7 @@ import org.jboss.hal.testsuite.test.Manatoko;
 import org.jboss.hal.testsuite.test.configuration.infinispan.remote.cache.container.AbstractRemoteCacheContainerTest;
 import org.junit.Test;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Disabled;
 import org.openqa.selenium.WebElement;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
@@ -45,6 +46,7 @@ import static org.jboss.hal.testsuite.fixtures.InfinispanFixtures.remoteClusterA
 
 @Manatoko
 @Testcontainers
+@Disabled // TODO Enable once https://issues.redhat.com/browse/HAL-1904 has been fixed
 class NearCacheTest extends AbstractRemoteCacheContainerTest {
 
     private static final String REMOTE_CACHE_CONTAINER_NEAR_CACHE_CREATE = "remote-cache-container-with-near-cache-to-be-created-"

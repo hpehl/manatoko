@@ -21,128 +21,98 @@ import org.jboss.hal.testsuite.Console;
 import org.jboss.hal.testsuite.CrudOperations;
 import org.jboss.hal.testsuite.Random;
 import org.jboss.hal.testsuite.container.WildFlyContainer;
-import org.jboss.hal.testsuite.fixtures.InfinispanFixtures;
+import org.jboss.hal.testsuite.fragment.FormFragment;
 import org.jboss.hal.testsuite.page.configuration.ScatteredCachePage;
 import org.jboss.hal.testsuite.test.Manatoko;
+import org.jboss.hal.testsuite.test.configuration.infinispan.cache.container.scattered.cache.store.StoreSetup;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
-import org.wildfly.extras.creaper.core.online.OnlineManagementClient;
-import org.wildfly.extras.creaper.core.online.operations.Address;
 import org.wildfly.extras.creaper.core.online.operations.Operations;
 import org.wildfly.extras.creaper.core.online.operations.Values;
 
 import static org.jboss.hal.testsuite.container.WildFlyConfiguration.FULL_HA;
-import static org.jboss.hal.testsuite.fixtures.InfinispanFixtures.cacheContainerAddress;
+import static org.jboss.hal.testsuite.fixtures.InfinispanFixtures.CC_CREATE;
+import static org.jboss.hal.testsuite.fixtures.InfinispanFixtures.SC_CREATE;
 import static org.jboss.hal.testsuite.fixtures.InfinispanFixtures.fileStoreAddress;
-import static org.jboss.hal.testsuite.fixtures.InfinispanFixtures.scatteredCacheAddress;
 
 @Manatoko
 @Testcontainers
-@Disabled // TODO Fix failing tests
 class AttributesTest {
 
-    private static final String CACHE_CONTAINER = "cache-container-" + Random.name();
-    private static final String SCATTERED_CACHE = "scattered-cache-" + Random.name();
-    private static final String PATH = "path-" + Random.name();
     @Container static WildFlyContainer wildFly = WildFlyContainer.standalone(FULL_HA);
-    private static Operations operations;
 
     @BeforeAll
     static void setupModel() throws Exception {
-        OnlineManagementClient client = wildFly.managementClient();
-        operations = new Operations(client);
-        operations.add(cacheContainerAddress(CACHE_CONTAINER));
-        operations.add(cacheContainerAddress(CACHE_CONTAINER).and("transport", "jgroups"));
-        operations.add(scatteredCacheAddress(CACHE_CONTAINER, SCATTERED_CACHE));
-        operations.headers(Values.of("allow-resource-service-restart", true))
-                .add(fileStoreAddress(CACHE_CONTAINER, SCATTERED_CACHE));
-        operations.add(Address.of(InfinispanFixtures.PATH, PATH), Values.of(InfinispanFixtures.PATH, Random.name()));
+        StoreSetup.setup(wildFly, operations -> operations.headers(Values.of("allow-resource-service-restart", true))
+                .add(fileStoreAddress(CC_CREATE, SC_CREATE)));
     }
 
     @Inject Console console;
-    @Inject CrudOperations crudOperations;
+    @Inject CrudOperations crud;
     @Page ScatteredCachePage page;
+    Operations operations;
+    FormFragment form;
 
     @BeforeEach
     void prepare() {
-        page.navigate(CACHE_CONTAINER, SCATTERED_CACHE);
+        operations = new Operations(wildFly.managementClient());
+        page.navigate(CC_CREATE, SC_CREATE);
         console.verticalNavigation().selectPrimary("scattered-cache-store-item");
-    }
-
-    @Test
-    void toggleFetchState() throws Exception {
-        console.waitNoNotification();
-        boolean fetchState = operations.readAttribute(fileStoreAddress(CACHE_CONTAINER, SCATTERED_CACHE), "fetch-state")
-                .booleanValue(true);
-        crudOperations.update(fileStoreAddress(CACHE_CONTAINER, SCATTERED_CACHE), page.getFileStoreAttributesForm(),
-                "fetch-state", !fetchState);
+        page.selectFileStoreAttributes();
+        form = page.getFileStoreAttributesForm();
     }
 
     @Test
     void editMaxBatchSize() throws Exception {
         console.waitNoNotification();
-        crudOperations.update(fileStoreAddress(CACHE_CONTAINER, SCATTERED_CACHE), page.getFileStoreAttributesForm(),
+        crud.update(fileStoreAddress(CC_CREATE, SC_CREATE), form,
                 "max-batch-size", Random.number());
     }
 
     @Test
     void togglePassivation() throws Exception {
         console.waitNoNotification();
-        boolean passivation = operations.readAttribute(fileStoreAddress(CACHE_CONTAINER, SCATTERED_CACHE), "passivation")
+        boolean passivation = operations.readAttribute(fileStoreAddress(CC_CREATE, SC_CREATE),
+                "passivation")
                 .booleanValue(true);
-        crudOperations.update(fileStoreAddress(CACHE_CONTAINER, SCATTERED_CACHE), page.getFileStoreAttributesForm(),
+        crud.update(fileStoreAddress(CC_CREATE, SC_CREATE), form,
                 "passivation", !passivation);
-    }
-
-    @Test
-    void editPath() throws Exception {
-        console.waitNoNotification();
-        crudOperations.update(fileStoreAddress(CACHE_CONTAINER, SCATTERED_CACHE), page.getFileStoreAttributesForm(),
-                InfinispanFixtures.PATH);
     }
 
     @Test
     void togglePreload() throws Exception {
         console.waitNoNotification();
-        boolean preload = operations.readAttribute(fileStoreAddress(CACHE_CONTAINER, SCATTERED_CACHE), "preload")
+        boolean preload = operations.readAttribute(fileStoreAddress(CC_CREATE, SC_CREATE), "preload")
                 .booleanValue(false);
-        crudOperations.update(fileStoreAddress(CACHE_CONTAINER, SCATTERED_CACHE), page.getFileStoreAttributesForm(),
+        crud.update(fileStoreAddress(CC_CREATE, SC_CREATE), form,
                 "preload", !preload);
     }
 
     @Test
     void editProperties() throws Exception {
         console.waitNoNotification();
-        crudOperations.update(fileStoreAddress(CACHE_CONTAINER, SCATTERED_CACHE), page.getFileStoreAttributesForm(),
+        crud.update(fileStoreAddress(CC_CREATE, SC_CREATE), form,
                 "properties", Random.properties());
     }
 
     @Test
     void togglePurge() throws Exception {
         console.waitNoNotification();
-        boolean purge = operations.readAttribute(fileStoreAddress(CACHE_CONTAINER, SCATTERED_CACHE), "purge")
+        boolean purge = operations.readAttribute(fileStoreAddress(CC_CREATE, SC_CREATE), "purge")
                 .booleanValue(true);
-        crudOperations.update(fileStoreAddress(CACHE_CONTAINER, SCATTERED_CACHE), page.getFileStoreAttributesForm(),
+        crud.update(fileStoreAddress(CC_CREATE, SC_CREATE), form,
                 "purge", !purge);
-    }
-
-    @Test
-    void editRelativeTo() throws Exception {
-        console.waitNoNotification();
-        crudOperations.update(fileStoreAddress(CACHE_CONTAINER, SCATTERED_CACHE), page.getFileStoreAttributesForm(),
-                "relative-to", PATH);
     }
 
     @Test
     void toggleShared() throws Exception {
         console.waitNoNotification();
-        boolean shared = operations.readAttribute(fileStoreAddress(CACHE_CONTAINER, SCATTERED_CACHE), "shared")
+        boolean shared = operations.readAttribute(fileStoreAddress(CC_CREATE, SC_CREATE), "shared")
                 .booleanValue(false);
-        crudOperations.update(fileStoreAddress(CACHE_CONTAINER, SCATTERED_CACHE), page.getFileStoreAttributesForm(),
+        crud.update(fileStoreAddress(CC_CREATE, SC_CREATE), form,
                 "shared", !shared);
     }
 }

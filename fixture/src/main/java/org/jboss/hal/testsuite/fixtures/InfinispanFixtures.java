@@ -30,6 +30,7 @@ public final class InfinispanFixtures {
     private static final String CACHE_CONTAINER_PREFIX = "ccl";
     private static final String REMOTE_CACHE_CONTAINER_PREFIX = "rcc";
     private static final String LOCAL_CACHE_PREFIX = "lc";
+    private static final String SCATTERED_CACHE_PREFIX = "sc";
     private static final String COMPONENT = "component";
 
     public static final String ACQUIRE_TIMEOUT = "acquire-timeout";
@@ -39,13 +40,10 @@ public final class InfinispanFixtures {
     public static final String LIFESPAN = "lifespan";
     public static final String LOCAL_CACHE_ITEM = "local-cache-item";
     public static final String MAX_BATCH_SIZE = "max-batch-size";
-    public static final String MAX_ENTRIES = "max-entries";
     public static final String MAX_IDLE = "max-idle";
-    public static final String STRATEGY = "strategy";
     public static final String WRITE = "write";
     public static final String BEHIND = "behind";
     public static final String THROUGH = "through";
-    public static final String CONSISTENT_HASH_STRATEGY = "consistent-hash-strategy";
     public static final String PATH = "path";
 
     public static final Address SUBSYSTEM_ADDRESS = Address.subsystem(INFINISPAN);
@@ -101,13 +99,25 @@ public final class InfinispanFixtures {
     public static final String LC_RESET_TRANSACTION = Ids.build(LOCAL_CACHE_PREFIX, "reset-transaction", Random.name());
     public static final String LC_REMOVE = Ids.build(LOCAL_CACHE_PREFIX, "remove", Random.name());
 
+    public static Address componentAddress(String cacheContainer, String localCache, String component) {
+        return localCacheAddress(cacheContainer, localCache).and(COMPONENT, component);
+    }
+
     public static Address localCacheAddress(String cacheContainer, String localCache) {
         return cacheContainerAddress(cacheContainer).and("local-cache", localCache);
     }
 
+    // ------------------------------------------------------ distributed cache
+
     public static Address distributedCacheAddress(String cacheContainer, String distributedCache) {
         return cacheContainerAddress(cacheContainer).and("distributed-cache", distributedCache);
     }
+
+    // ------------------------------------------------------ scattered cache
+
+    public static final String SC_CREATE = Ids.build(SCATTERED_CACHE_PREFIX, CrudConstants.CREATE, Random.name());
+    public static final String SC_READ = Ids.build(SCATTERED_CACHE_PREFIX, CrudConstants.READ, Random.name());
+    public static final String SC_DELETE = Ids.build(SCATTERED_CACHE_PREFIX, CrudConstants.DELETE, Random.name());
 
     public static Address scatteredCacheAddress(String cacheContainer, String scatteredCache) {
         return cacheContainerAddress(cacheContainer).and("scattered-cache", scatteredCache);
@@ -167,10 +177,6 @@ public final class InfinispanFixtures {
 
     public static Address hotrodStoreAddress(String cacheContainer, String scatteredCache) {
         return scatteredCacheAddress(cacheContainer, scatteredCache).and(STORE, "hotrod");
-    }
-
-    public static Address componentAddress(String cacheContainer, String localCache, String component) {
-        return localCacheAddress(cacheContainer, localCache).and(COMPONENT, component);
     }
 
     // ------------------------------------------------------ local cache store

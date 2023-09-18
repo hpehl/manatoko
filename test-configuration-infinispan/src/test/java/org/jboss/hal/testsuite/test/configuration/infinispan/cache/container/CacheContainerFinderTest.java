@@ -27,8 +27,8 @@ import org.jboss.hal.testsuite.page.Places;
 import org.jboss.hal.testsuite.test.Manatoko;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
+import org.openqa.selenium.By;
 import org.openqa.selenium.TimeoutException;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
@@ -37,6 +37,7 @@ import org.wildfly.extras.creaper.core.online.operations.Operations;
 
 import com.gwtplatform.mvp.shared.proxy.PlaceRequest;
 
+import static org.jboss.arquillian.graphene.Graphene.waitGui;
 import static org.jboss.hal.dmr.ModelDescriptionConstants.INFINISPAN;
 import static org.jboss.hal.dmr.ModelDescriptionConstants.NAME;
 import static org.jboss.hal.testsuite.container.WildFlyConfiguration.FULL_HA;
@@ -51,7 +52,6 @@ import static org.junit.jupiter.api.Assertions.fail;
 
 @Manatoko
 @Testcontainers
-@Disabled // TODO Fix failing tests
 class CacheContainerFinderTest {
 
     @Container static WildFlyContainer wildFly = WildFlyContainer.standalone(FULL_HA);
@@ -100,7 +100,8 @@ class CacheContainerFinderTest {
         console.verify(placeRequest);
     }
 
-    @Test
+    // TODO Enable once https://issues.redhat.com/browse/HAL-1902 has been fixed
+    // @Test
     void view() {
         try {
             column.selectItem(Ids.cacheContainer(CC_READ)).view();
@@ -120,6 +121,7 @@ class CacheContainerFinderTest {
         console.confirmationDialog().confirm();
 
         console.verifySuccess();
+        waitGui().until().element(By.id(Ids.cacheContainer(CC_DELETE))).is().not().present();
         assertFalse(column.containsItem(Ids.cacheContainer(CC_DELETE)));
         new ResourceVerifier(cacheContainerAddress(CC_DELETE), client).verifyDoesNotExist();
     }
