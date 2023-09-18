@@ -82,6 +82,7 @@ class CacheContainerFinderTest {
         dialog.add();
 
         console.verifySuccess();
+        waitGui().until().element(By.id(Ids.cacheContainer(CC_CREATE))).is().visible();
         assertTrue(column.containsItem(Ids.cacheContainer(CC_CREATE)));
         new ResourceVerifier(cacheContainerAddress(CC_CREATE), client).verifyExists();
     }
@@ -100,8 +101,7 @@ class CacheContainerFinderTest {
         console.verify(placeRequest);
     }
 
-    // TODO Enable once https://issues.redhat.com/browse/HAL-1902 has been fixed
-    // @Test
+    @Test
     void view() {
         try {
             column.selectItem(Ids.cacheContainer(CC_READ)).view();

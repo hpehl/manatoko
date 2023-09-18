@@ -26,10 +26,8 @@ import org.jboss.hal.testsuite.fragment.FormFragment;
 import org.jboss.hal.testsuite.fragment.HeaderBreadcrumbFragment;
 import org.jboss.hal.testsuite.page.configuration.CacheContainerPage;
 import org.jboss.hal.testsuite.test.Manatoko;
-import org.junit.Ignore;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
@@ -44,7 +42,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @Manatoko
 @Testcontainers
-@Disabled // TODO Enable once https://issues.redhat.com/browse/HAL-1902 has been fixed
 class CacheContainerConfigurationTest {
 
     static final String ALIASES = "aliases";
