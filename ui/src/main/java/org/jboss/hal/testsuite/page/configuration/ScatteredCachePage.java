@@ -50,10 +50,6 @@ public class ScatteredCachePage extends BasePage {
     public static final String JDBC_STORE_WRITE_BEHAVIOUR_TAB = "scattered-cache-cache-store-jdbc-write-tab";
     private static final String JDBC_STORE_ATTRIBUTES_TAB = "scattered-cache-cache-store-jdbc-attributes-tab";
     private static final String JDBC_STORE_STRING_TABLE_TAB = "scattered-cache-cache-store-jdbc-string-table-tab";
-    public static final String BINARY_JDBC_STORE_WRITE_BEHAVIOUR_TAB = "scattered-cache-cache-store-binary-jdbc-write-tab";
-    private static final String BINARY_JDBC_STORE_ATTRIBUTES_TAB = "scattered-cache-cache-store-binary-jdbc-attributes-tab";
-    private static final String BINARY_JDBC_STORE_BINARY_TABLE_TAB = "scattered-cache-cache-store-binary-jdbc-binary-table-tab";
-
     public static final String HOTROD_STORE_WRITE_BEHAVIOUR_TAB = "scattered-cache-cache-store-hot-rod-write-tab";
     private static final String HOTROD_STORE_ATTRIBUTES_TAB = "scattered-cache-cache-store-hot-rod-attributes-tab";
 
@@ -74,9 +70,7 @@ public class ScatteredCachePage extends BasePage {
     @FindBy(css = "label[for='scattered-cache-memory-select'] + div."
             + bootstrapSelect) private SelectFragment switchMemoryDropdown;
 
-    @FindBy(id = "scattered-cache-cache-memory-object-form") private FormFragment objectMemoryForm;
-
-    @FindBy(id = "scattered-cache-cache-memory-binary-form") private FormFragment binaryMemoryForm;
+    @FindBy(id = "scattered-cache-cache-memory-heap-form") private FormFragment heapMemoryForm;
 
     @FindBy(id = "scattered-cache-cache-memory-off-heap-form") private FormFragment offHeapMemoryForm;
 
@@ -104,22 +98,6 @@ public class ScatteredCachePage extends BasePage {
     @FindBy(id = "scattered-cache-cache-store-jdbc-behind-form") private FormFragment jdbcStoreWriteBehindForm;
 
     @FindBy(id = "scattered-cache-cache-store-jdbc-string-table-form") private FormFragment jdbcStoreStringTableForm;
-
-    @FindBy(id = "scattered-cache-cache-store-binary-jdbc-tab-container") private TabsFragment binaryJDBCStoreTab;
-
-    @FindBy(id = "scattered-cache-cache-store-binary-jdbc-form") private FormFragment binaryJDBCStoreAttributesForm;
-
-    @FindBy(id = "scattered-cache-cache-store-binary-jdbc-behind-form") private FormFragment binaryJDBCStoreWriteBehindForm;
-
-    @FindBy(id = "scattered-cache-cache-store-binary-jdbc-binary-table-form") private FormFragment binaryJDBCStoreBinaryTableForm;
-
-    @FindBy(id = "scattered-cache-cache-store-mixed-jdbc-tab-container") private TabsFragment mixedJDBCStoreTab;
-
-    @FindBy(id = "scattered-cache-cache-store-mixed-jdbc-form") private FormFragment mixedJDBCStoreAttributesForm;
-
-    @FindBy(id = "scattered-cache-cache-store-mixed-jdbc-behind-form") private FormFragment mixedJDBCStoreWriteBehindForm;
-
-    @FindBy(id = "scattered-cache-cache-store-mixed-jdbc-binary-table-form") private FormFragment mixedJDBCStoreBinaryTableForm;
 
     @FindBy(id = "scattered-cache-cache-store-hot-rod-tab-container") private TabsFragment hotrodStoreTab;
 
@@ -169,10 +147,6 @@ public class ScatteredCachePage extends BasePage {
         return transactionForm;
     }
 
-    public SelectFragment getSwitchMemoryDropdown() {
-        return switchMemoryDropdown;
-    }
-
     public TableFragment getBackupsTable() {
         return backupsTable;
     }
@@ -181,110 +155,109 @@ public class ScatteredCachePage extends BasePage {
         return backupsForm;
     }
 
-    public FormFragment getObjectMemoryForm() {
-        switchMemoryDropdown.select("Object", "object");
-        return objectMemoryForm;
+    public void selectHeapMemory() {
+        switchMemoryDropdown.select("Heap", "heap");
     }
 
-    public FormFragment getBinaryMemoryForm() {
-        switchMemoryDropdown.select("Binary", "binary");
-        return binaryMemoryForm;
+    public FormFragment getHeapMemoryForm() {
+        return heapMemoryForm;
+    }
+
+    public void selectOffHeapMemory() {
+        switchMemoryDropdown.select("Off Heap", "off-heap");
     }
 
     public FormFragment getOffHeapMemoryForm() {
-        switchMemoryDropdown.select("Off Heap", "off-heap");
         return offHeapMemoryForm;
     }
 
-    public FormFragment getFileStoreAttributesForm() {
+    public void selectFileStoreAttributes() {
+        console.waitNoNotification();
         switchStoreDropdown.select("File", "file");
         fileStoreTab.select(FILE_STORE_ATTRIBUTES_TAB);
+    }
+
+    public void selectFileStoreWriteBehaviour() {
+        console.waitNoNotification();
+        switchStoreDropdown.select("File", "file");
+        fileStoreTab.select(FILE_STORE_WRITE_BEHAVIOUR_TAB);
+    }
+
+    public FormFragment getFileStoreAttributesForm() {
         return fileStoreAttributesForm;
     }
 
-    public TabsFragment getFileStoreTab() {
-        return fileStoreTab;
-    }
-
     public FormFragment getFileStoreWriteBehindForm() {
-        switchStoreDropdown.select("File", "file");
-        fileStoreTab.select(FILE_STORE_WRITE_BEHAVIOUR_TAB);
         return fileStoreWriteBehindForm;
     }
 
-    public TabsFragment getCustomStoreTab() {
-        return customStoreTab;
+    public void selectCustomStoreAttributes() {
+        console.waitNoNotification();
+        switchStoreDropdown.select("Custom", "custom");
+        customStoreTab.select(CUSTOM_STORE_ATTRIBUTES_TAB);
+    }
+
+    public void selectCustomStoreWriteBehaviour() {
+        console.waitNoNotification();
+        switchStoreDropdown.select("Custom", "custom");
+        customStoreTab.select(CUSTOM_STORE_WRITE_BEHAVIOUR_TAB);
     }
 
     public FormFragment getCustomStoreAttributesForm() {
-        switchStoreDropdown.select("Custom", "custom");
-        customStoreTab.select(CUSTOM_STORE_ATTRIBUTES_TAB);
         return customStoreAttributesForm;
     }
 
     public FormFragment getCustomStoreWriteBehindForm() {
-        switchStoreDropdown.select("Custom", "custom");
-        customStoreTab.select(CUSTOM_STORE_WRITE_BEHAVIOUR_TAB);
         return customStoreWriteBehindForm;
     }
 
-    public TabsFragment getJdbcStoreTab() {
-        return jdbcStoreTab;
+    public void selectJdbcStoreAttributes() {
+        console.waitNoNotification();
+        switchStoreDropdown.selectExact("JDBC", "jdbc");
+        jdbcStoreTab.select(JDBC_STORE_ATTRIBUTES_TAB);
+    }
+
+    public void selectJdbcStoreWriteBehaviour() {
+        console.waitNoNotification();
+        switchStoreDropdown.selectExact("JDBC", "jdbc");
+        jdbcStoreTab.select(JDBC_STORE_WRITE_BEHAVIOUR_TAB);
+    }
+
+    public void selectJdbcStoreStringTable() {
+        console.waitNoNotification();
+        switchStoreDropdown.selectExact("JDBC", "jdbc");
+        jdbcStoreTab.select(JDBC_STORE_STRING_TABLE_TAB);
     }
 
     public FormFragment getJdbcStoreAttributesForm() {
-        switchStoreDropdown.selectExact("JDBC", "jdbc");
-        jdbcStoreTab.select(JDBC_STORE_ATTRIBUTES_TAB);
         return jdbcStoreAttributesForm;
     }
 
     public FormFragment getJdbcStoreWriteBehindForm() {
-        switchStoreDropdown.selectExact("JDBC", "jdbc");
-        jdbcStoreTab.select(JDBC_STORE_WRITE_BEHAVIOUR_TAB);
         return jdbcStoreWriteBehindForm;
     }
 
     public FormFragment getJdbcStoreStringTableForm() {
-        switchStoreDropdown.selectExact("JDBC", "jdbc");
-        jdbcStoreTab.select(JDBC_STORE_STRING_TABLE_TAB);
         return jdbcStoreStringTableForm;
     }
 
-    public TabsFragment getBinaryJDBCStoreTab() {
-        return binaryJDBCStoreTab;
+    public void selectHotrodStoreAttributes() {
+        console.waitNoNotification();
+        switchStoreDropdown.selectExact("Hot Rod", "hotrod");
+        hotrodStoreTab.select(HOTROD_STORE_ATTRIBUTES_TAB);
     }
 
-    public FormFragment getBinaryJDBCStoreAttributesForm() {
-        switchStoreDropdown.selectExact("Binary JDBC", "binary-jdbc");
-        binaryJDBCStoreTab.select(BINARY_JDBC_STORE_ATTRIBUTES_TAB);
-        return binaryJDBCStoreAttributesForm;
-    }
-
-    public FormFragment getBinaryJDBCStoreBinaryTableForm() {
-        switchStoreDropdown.selectExact("Binary JDBC", "binary-jdbc");
-        binaryJDBCStoreTab.select(BINARY_JDBC_STORE_BINARY_TABLE_TAB);
-        return binaryJDBCStoreBinaryTableForm;
-    }
-
-    public FormFragment getBinaryJDBCStoreWriteBehindForm() {
-        switchStoreDropdown.selectExact("Binary JDBC", "binary-jdbc");
-        binaryJDBCStoreTab.select(BINARY_JDBC_STORE_WRITE_BEHAVIOUR_TAB);
-        return binaryJDBCStoreWriteBehindForm;
-    }
-
-    public TabsFragment getHotrodStoreTab() {
-        return hotrodStoreTab;
+    public void selectHotrodStoreWriteBehaviour() {
+        console.waitNoNotification();
+        switchStoreDropdown.selectExact("Hot Rod", "hotrod");
+        hotrodStoreTab.select(HOTROD_STORE_WRITE_BEHAVIOUR_TAB);
     }
 
     public FormFragment getHotrodStoreAttributesForm() {
-        switchStoreDropdown.selectExact("Hot Rod", "hotrod");
-        hotrodStoreTab.select(HOTROD_STORE_ATTRIBUTES_TAB);
         return hotrodStoreAttributesForm;
     }
 
     public FormFragment getHotrodStoreWriteBehindForm() {
-        switchStoreDropdown.selectExact("Hot Rod", "hotrod");
-        hotrodStoreTab.select(HOTROD_STORE_WRITE_BEHAVIOUR_TAB);
         return hotrodStoreWriteBehindForm;
     }
 

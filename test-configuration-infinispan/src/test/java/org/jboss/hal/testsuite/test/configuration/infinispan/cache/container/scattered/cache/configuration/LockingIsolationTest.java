@@ -26,9 +26,7 @@ import org.jboss.hal.testsuite.page.configuration.ScatteredCachePage;
 import org.jboss.hal.testsuite.test.Manatoko;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestMethodOrder;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
 import org.wildfly.extras.creaper.core.online.OnlineManagementClient;
@@ -37,27 +35,27 @@ import org.wildfly.extras.creaper.core.online.operations.Operations;
 import static org.jboss.hal.dmr.ModelDescriptionConstants.JGROUPS;
 import static org.jboss.hal.dmr.ModelDescriptionConstants.TRANSPORT;
 import static org.jboss.hal.testsuite.container.WildFlyConfiguration.FULL_HA;
+import static org.jboss.hal.testsuite.fixtures.InfinispanFixtures.ISOLATION;
 import static org.jboss.hal.testsuite.fixtures.InfinispanFixtures.cacheContainerAddress;
+import static org.jboss.hal.testsuite.fixtures.InfinispanFixtures.lockingAddress;
 import static org.jboss.hal.testsuite.fixtures.InfinispanFixtures.scatteredCacheAddress;
-import static org.jboss.hal.testsuite.fixtures.InfinispanFixtures.stateTransferAddress;
 
 @Manatoko
 @Testcontainers
-@TestMethodOrder(MethodOrderer.MethodName.class)
-class StateTransferTest {
+class LockingIsolationTest {
 
     private static final String CACHE_CONTAINER = "cache-container-" + Random.name();
-    private static final String SCATTERED_CACHE_STATE_TRANSFER = "scattered-cache-" + Random.name();
+    private static final String SCATTERED_CACHE_LOCKING = "scattered-cache-" + Random.name();
     @Container static WildFlyContainer wildFly = WildFlyContainer.standalone(FULL_HA);
+    private static Operations operations;
 
     @BeforeAll
     static void setupModel() throws Exception {
         OnlineManagementClient client = wildFly.managementClient();
-        Operations operations = new Operations(client);
+        operations = new Operations(client);
         operations.add(cacheContainerAddress(CACHE_CONTAINER));
         operations.add(cacheContainerAddress(CACHE_CONTAINER).and(TRANSPORT, JGROUPS));
-        operations.add(scatteredCacheAddress(CACHE_CONTAINER, SCATTERED_CACHE_STATE_TRANSFER));
-        operations.removeIfExists(stateTransferAddress(CACHE_CONTAINER, SCATTERED_CACHE_STATE_TRANSFER));
+        operations.add(scatteredCacheAddress(CACHE_CONTAINER, SCATTERED_CACHE_LOCKING));
     }
 
     @Inject CrudOperations crud;
@@ -67,28 +65,18 @@ class StateTransferTest {
 
     @BeforeEach
     void prepare() {
-        page.navigate(CACHE_CONTAINER, SCATTERED_CACHE_STATE_TRANSFER);
+        page.navigate(CACHE_CONTAINER, SCATTERED_CACHE_LOCKING);
         console.verticalNavigation().selectPrimary("scattered-cache-item");
-        form = page.getStateTransferForm();
+        form = page.getLockingForm();
     }
 
+    // If this was part of LockingEditTest, this would run into a NPE!
+    // Don't know why, but if it runs in its own unit test, everything is fine
+    // I guess it relates to some weird selenium timing issues. ¯\_(ツ)_/¯
     @Test
-    void create() throws Exception {
-        crud.createSingleton(stateTransferAddress(CACHE_CONTAINER, SCATTERED_CACHE_STATE_TRANSFER), form);
-    }
-
-    @Test
-    void remove() throws Exception {
-        crud.deleteSingleton(stateTransferAddress(CACHE_CONTAINER, SCATTERED_CACHE_STATE_TRANSFER), form);
-    }
-
-    @Test
-    void editChunkSize() throws Exception {
-        crud.update(stateTransferAddress(CACHE_CONTAINER, SCATTERED_CACHE_STATE_TRANSFER), form, "chunk-size", 123);
-    }
-
-    @Test
-    void editTimeout() throws Exception {
-        crud.update(stateTransferAddress(CACHE_CONTAINER, SCATTERED_CACHE_STATE_TRANSFER), form, "timeout", 789L);
+    void editIsolation() throws Exception {
+        crud.update(lockingAddress(CACHE_CONTAINER, SCATTERED_CACHE_LOCKING), form,
+                formFragment -> formFragment.select(ISOLATION, "NONE"),
+                resourceVerifier -> resourceVerifier.verifyAttribute(ISOLATION, "NONE"));
     }
 }

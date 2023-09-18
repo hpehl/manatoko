@@ -13,15 +13,18 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package org.jboss.hal.testsuite.test.configuration.infinispan.cache.container.scattered.cache.memory;
+package org.jboss.hal.testsuite.test.configuration.infinispan.cache.container.local.cache;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import org.jboss.arquillian.core.api.annotation.Inject;
 import org.jboss.arquillian.graphene.page.Page;
 import org.jboss.hal.testsuite.Console;
 import org.jboss.hal.testsuite.CrudOperations;
-import org.jboss.hal.testsuite.Random;
 import org.jboss.hal.testsuite.container.WildFlyContainer;
-import org.jboss.hal.testsuite.page.configuration.ScatteredCachePage;
+import org.jboss.hal.testsuite.fragment.FormFragment;
+import org.jboss.hal.testsuite.page.configuration.LocalCachePage;
 import org.jboss.hal.testsuite.test.Manatoko;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
@@ -30,46 +33,49 @@ import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
 import org.wildfly.extras.creaper.core.online.OnlineManagementClient;
 import org.wildfly.extras.creaper.core.online.operations.Operations;
-import org.wildfly.extras.creaper.core.online.operations.admin.Administration;
 
+import static org.jboss.hal.dmr.ModelDescriptionConstants.CACHE_CONTAINER;
+import static org.jboss.hal.dmr.ModelDescriptionConstants.EXPIRATION;
+import static org.jboss.hal.dmr.ModelDescriptionConstants.NAME;
 import static org.jboss.hal.testsuite.container.WildFlyConfiguration.FULL_HA;
+import static org.jboss.hal.testsuite.fixtures.InfinispanFixtures.CC_UPDATE;
+import static org.jboss.hal.testsuite.fixtures.InfinispanFixtures.LC_UPDATE;
+import static org.jboss.hal.testsuite.fixtures.InfinispanFixtures.LOCAL_CACHE_ITEM;
 import static org.jboss.hal.testsuite.fixtures.InfinispanFixtures.cacheContainerAddress;
-import static org.jboss.hal.testsuite.fixtures.InfinispanFixtures.offHeapMemoryAddress;
-import static org.jboss.hal.testsuite.fixtures.InfinispanFixtures.scatteredCacheAddress;
+import static org.jboss.hal.testsuite.fixtures.InfinispanFixtures.componentAddress;
+import static org.jboss.hal.testsuite.fixtures.InfinispanFixtures.localCacheAddress;
 
 @Manatoko
 @Testcontainers
-class OffHeapMemoryTest {
+class ExpirationResetTest {
 
-    private static final String CACHE_CONTAINER = "cache-container-" + Random.name();
-    private static final String SCATTERED_CACHE = "scattered-cache-" + Random.name();
     @Container static WildFlyContainer wildFly = WildFlyContainer.standalone(FULL_HA);
 
     @BeforeAll
     static void setupModel() throws Exception {
         OnlineManagementClient client = wildFly.managementClient();
         Operations operations = new Operations(client);
-        operations.add(cacheContainerAddress(CACHE_CONTAINER));
-        operations.add(cacheContainerAddress(CACHE_CONTAINER).and("transport", "jgroups"));
-        operations.add(scatteredCacheAddress(CACHE_CONTAINER, SCATTERED_CACHE));
-        new Administration(client).reloadIfRequired();
+        operations.add(cacheContainerAddress(CC_UPDATE));
+        operations.add(localCacheAddress(CC_UPDATE, LC_UPDATE));
     }
 
     @Inject Console console;
-    @Inject CrudOperations crudOperations;
-    @Page ScatteredCachePage page;
+    @Inject CrudOperations crud;
+    @Page LocalCachePage page;
 
     @BeforeEach
     void prepare() {
-        page.navigate(CACHE_CONTAINER, SCATTERED_CACHE);
-        console.verticalNavigation().selectPrimary("scattered-cache-memory-item");
-        page.selectOffHeapMemory();
+        Map<String, String> params = new HashMap<>();
+        params.put(CACHE_CONTAINER, CC_UPDATE);
+        params.put(NAME, LC_UPDATE);
+        page.navigate(params);
+        console.verticalNavigation().selectPrimary(LOCAL_CACHE_ITEM);
     }
 
     @Test
-    void editSize() throws Exception {
-        console.waitNoNotification();
-        crudOperations.update(offHeapMemoryAddress(CACHE_CONTAINER, SCATTERED_CACHE), page.getOffHeapMemoryForm(),
-                "size", (long) Random.number());
+    void reset() throws Exception {
+        page.getLocalCacheTabs().select("local-cache-cache-component-expiration-tab");
+        FormFragment form = page.getExpirationForm();
+        crud.reset(componentAddress(CC_UPDATE, LC_UPDATE, EXPIRATION), form);
     }
 }

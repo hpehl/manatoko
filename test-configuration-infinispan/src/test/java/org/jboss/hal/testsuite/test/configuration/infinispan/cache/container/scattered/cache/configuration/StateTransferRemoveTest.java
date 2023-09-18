@@ -13,7 +13,7 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package org.jboss.hal.testsuite.test.configuration.infinispan.cache.container.scattered.cache.memory;
+package org.jboss.hal.testsuite.test.configuration.infinispan.cache.container.scattered.cache.configuration;
 
 import org.jboss.arquillian.core.api.annotation.Inject;
 import org.jboss.arquillian.graphene.page.Page;
@@ -21,29 +21,30 @@ import org.jboss.hal.testsuite.Console;
 import org.jboss.hal.testsuite.CrudOperations;
 import org.jboss.hal.testsuite.Random;
 import org.jboss.hal.testsuite.container.WildFlyContainer;
+import org.jboss.hal.testsuite.fragment.FormFragment;
 import org.jboss.hal.testsuite.page.configuration.ScatteredCachePage;
 import org.jboss.hal.testsuite.test.Manatoko;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
 import org.wildfly.extras.creaper.core.online.OnlineManagementClient;
 import org.wildfly.extras.creaper.core.online.operations.Operations;
 
+import static org.jboss.hal.dmr.ModelDescriptionConstants.JGROUPS;
+import static org.jboss.hal.dmr.ModelDescriptionConstants.TRANSPORT;
 import static org.jboss.hal.testsuite.container.WildFlyConfiguration.FULL_HA;
 import static org.jboss.hal.testsuite.fixtures.InfinispanFixtures.cacheContainerAddress;
-import static org.jboss.hal.testsuite.fixtures.InfinispanFixtures.objectMemoryAddress;
 import static org.jboss.hal.testsuite.fixtures.InfinispanFixtures.scatteredCacheAddress;
+import static org.jboss.hal.testsuite.fixtures.InfinispanFixtures.stateTransferAddress;
 
 @Manatoko
 @Testcontainers
-@Disabled // TODO Fix failing tests
-class ObjectMemoryTest {
+class StateTransferRemoveTest {
 
     private static final String CACHE_CONTAINER = "cache-container-" + Random.name();
-    private static final String SCATTERED_CACHE = "scattered-cache-" + Random.name();
+    private static final String SCATTERED_CACHE_STATE_TRANSFER = "scattered-cache-" + Random.name();
     @Container static WildFlyContainer wildFly = WildFlyContainer.standalone(FULL_HA);
 
     @BeforeAll
@@ -51,23 +52,24 @@ class ObjectMemoryTest {
         OnlineManagementClient client = wildFly.managementClient();
         Operations operations = new Operations(client);
         operations.add(cacheContainerAddress(CACHE_CONTAINER));
-        operations.add(cacheContainerAddress(CACHE_CONTAINER).and("transport", "jgroups"));
-        operations.add(scatteredCacheAddress(CACHE_CONTAINER, SCATTERED_CACHE));
+        operations.add(cacheContainerAddress(CACHE_CONTAINER).and(TRANSPORT, JGROUPS));
+        operations.add(scatteredCacheAddress(CACHE_CONTAINER, SCATTERED_CACHE_STATE_TRANSFER));
     }
 
+    @Inject CrudOperations crud;
     @Inject Console console;
-    @Inject CrudOperations crudOperations;
     @Page ScatteredCachePage page;
+    FormFragment form;
 
     @BeforeEach
     void prepare() {
-        page.navigate(CACHE_CONTAINER, SCATTERED_CACHE);
-        console.verticalNavigation().selectPrimary("scattered-cache-memory-item");
+        page.navigate(CACHE_CONTAINER, SCATTERED_CACHE_STATE_TRANSFER);
+        console.verticalNavigation().selectPrimary("scattered-cache-item");
+        form = page.getStateTransferForm();
     }
 
     @Test
-    void editSize() throws Exception {
-        crudOperations.update(objectMemoryAddress(CACHE_CONTAINER, SCATTERED_CACHE), page.getObjectMemoryForm(), "size",
-                (long) Random.number());
+    void remove() throws Exception {
+        crud.deleteSingleton(stateTransferAddress(CACHE_CONTAINER, SCATTERED_CACHE_STATE_TRANSFER), form);
     }
 }

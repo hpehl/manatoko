@@ -13,7 +13,7 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package org.jboss.hal.testsuite.test.configuration.infinispan.cache.container.scattered.cache.memory;
+package org.jboss.hal.testsuite.test.configuration.infinispan.cache.container.scattered.cache.configuration;
 
 import org.jboss.arquillian.core.api.annotation.Inject;
 import org.jboss.arquillian.graphene.page.Page;
@@ -30,46 +30,52 @@ import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
 import org.wildfly.extras.creaper.core.online.OnlineManagementClient;
 import org.wildfly.extras.creaper.core.online.operations.Operations;
-import org.wildfly.extras.creaper.core.online.operations.admin.Administration;
 
+import static org.jboss.hal.dmr.ModelDescriptionConstants.JGROUPS;
+import static org.jboss.hal.dmr.ModelDescriptionConstants.TRANSPORT;
 import static org.jboss.hal.testsuite.container.WildFlyConfiguration.FULL_HA;
 import static org.jboss.hal.testsuite.fixtures.InfinispanFixtures.cacheContainerAddress;
-import static org.jboss.hal.testsuite.fixtures.InfinispanFixtures.offHeapMemoryAddress;
 import static org.jboss.hal.testsuite.fixtures.InfinispanFixtures.scatteredCacheAddress;
 
 @Manatoko
 @Testcontainers
-class OffHeapMemoryTest {
+class AttributesModulesTest {
 
     private static final String CACHE_CONTAINER = "cache-container-" + Random.name();
+    private static final String MODULES = "modules";
     private static final String SCATTERED_CACHE = "scattered-cache-" + Random.name();
+
     @Container static WildFlyContainer wildFly = WildFlyContainer.standalone(FULL_HA);
+    private static Operations operations;
 
     @BeforeAll
     static void setupModel() throws Exception {
         OnlineManagementClient client = wildFly.managementClient();
-        Operations operations = new Operations(client);
+        operations = new Operations(client);
         operations.add(cacheContainerAddress(CACHE_CONTAINER));
-        operations.add(cacheContainerAddress(CACHE_CONTAINER).and("transport", "jgroups"));
+        operations.add(cacheContainerAddress(CACHE_CONTAINER).and(TRANSPORT, JGROUPS));
         operations.add(scatteredCacheAddress(CACHE_CONTAINER, SCATTERED_CACHE));
-        new Administration(client).reloadIfRequired();
     }
 
+    @Inject CrudOperations crud;
     @Inject Console console;
-    @Inject CrudOperations crudOperations;
     @Page ScatteredCachePage page;
 
     @BeforeEach
     void prepare() {
         page.navigate(CACHE_CONTAINER, SCATTERED_CACHE);
-        console.verticalNavigation().selectPrimary("scattered-cache-memory-item");
-        page.selectOffHeapMemory();
+        console.verticalNavigation().selectPrimary("scattered-cache-item");
     }
 
     @Test
-    void editSize() throws Exception {
-        console.waitNoNotification();
-        crudOperations.update(offHeapMemoryAddress(CACHE_CONTAINER, SCATTERED_CACHE), page.getOffHeapMemoryForm(),
-                "size", (long) Random.number());
+    void editModules() throws Exception {
+        String module1 = Random.name();
+        String module2 = Random.name();
+        crud.update(scatteredCacheAddress(CACHE_CONTAINER, SCATTERED_CACHE), page.getConfigurationForm(),
+                form -> form.properties(MODULES).add(module1).add(module2),
+                resourceVerifier -> {
+                    resourceVerifier.verifyListAttributeContainsValue(MODULES, module1);
+                    resourceVerifier.verifyListAttributeContainsValue(MODULES, module2);
+                });
     }
 }

@@ -15,12 +15,17 @@
  */
 package org.jboss.hal.testsuite.test.configuration.infinispan.cache.container.scattered.cache.configuration;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 import org.jboss.arquillian.core.api.annotation.Inject;
 import org.jboss.arquillian.graphene.page.Page;
 import org.jboss.hal.testsuite.Console;
 import org.jboss.hal.testsuite.CrudOperations;
 import org.jboss.hal.testsuite.Random;
 import org.jboss.hal.testsuite.container.WildFlyContainer;
+import org.jboss.hal.testsuite.fragment.FormFragment;
 import org.jboss.hal.testsuite.page.configuration.ScatteredCachePage;
 import org.jboss.hal.testsuite.test.Manatoko;
 import org.junit.jupiter.api.BeforeAll;
@@ -36,15 +41,14 @@ import static org.jboss.hal.dmr.ModelDescriptionConstants.TRANSPORT;
 import static org.jboss.hal.testsuite.container.WildFlyConfiguration.FULL_HA;
 import static org.jboss.hal.testsuite.fixtures.InfinispanFixtures.cacheContainerAddress;
 import static org.jboss.hal.testsuite.fixtures.InfinispanFixtures.scatteredCacheAddress;
+import static org.jboss.hal.testsuite.fixtures.InfinispanFixtures.transactionAddress;
 
 @Manatoko
 @Testcontainers
-class AttributesTest {
+class TransactionEditTest {
 
     private static final String CACHE_CONTAINER = "cache-container-" + Random.name();
-    private static final String MODULES = "modules";
-    private static final String SCATTERED_CACHE = "scattered-cache-" + Random.name();
-
+    private static final String SCATTERED_CACHE_TRANSACTION = "scattered-cache-" + Random.name();
     @Container static WildFlyContainer wildFly = WildFlyContainer.standalone(FULL_HA);
     private static Operations operations;
 
@@ -54,43 +58,42 @@ class AttributesTest {
         operations = new Operations(client);
         operations.add(cacheContainerAddress(CACHE_CONTAINER));
         operations.add(cacheContainerAddress(CACHE_CONTAINER).and(TRANSPORT, JGROUPS));
-        operations.add(scatteredCacheAddress(CACHE_CONTAINER, SCATTERED_CACHE));
+        operations.add(scatteredCacheAddress(CACHE_CONTAINER, SCATTERED_CACHE_TRANSACTION));
     }
 
     @Inject CrudOperations crud;
     @Inject Console console;
     @Page ScatteredCachePage page;
+    FormFragment form;
 
     @BeforeEach
     void prepare() {
-        page.navigate(CACHE_CONTAINER, SCATTERED_CACHE);
+        page.navigate(CACHE_CONTAINER, SCATTERED_CACHE_TRANSACTION);
         console.verticalNavigation().selectPrimary("scattered-cache-item");
+        form = page.getTransactionForm();
     }
 
     @Test
-    void editInvalidationBatchSize() throws Exception {
-        crud.update(scatteredCacheAddress(CACHE_CONTAINER, SCATTERED_CACHE), page.getConfigurationForm(),
-                "invalidation-batch-size", Random.number());
+    void editLocking() throws Exception {
+        String currentLocking = operations
+                .readAttribute(transactionAddress(CACHE_CONTAINER, SCATTERED_CACHE_TRANSACTION), "locking")
+                .stringValue();
+        List<String> lockings = new ArrayList<>(Arrays.asList("PESSIMISTIC", "OPTIMISTIC"));
+        lockings.remove(currentLocking);
+        crud.update(transactionAddress(CACHE_CONTAINER, SCATTERED_CACHE_TRANSACTION), form,
+                formFragment -> formFragment.select("locking", lockings.get(0)),
+                resourceVerifier -> resourceVerifier.verifyAttribute("locking", lockings.get(0)));
     }
 
     @Test
-    void editRemoteTimeout() throws Exception {
-        crud.update(scatteredCacheAddress(CACHE_CONTAINER, SCATTERED_CACHE), page.getConfigurationForm(),
-                "remote-timeout", (long) Random.number());
-    }
-
-    @Test
-    void editSegments() throws Exception {
-        crud.update(scatteredCacheAddress(CACHE_CONTAINER, SCATTERED_CACHE), page.getConfigurationForm(),
-                "segments", Random.number());
-    }
-
-    @Test
-    void toggleStatisticsEnabled() throws Exception {
-        boolean statisticsEnabled = operations
-                .readAttribute(scatteredCacheAddress(CACHE_CONTAINER, SCATTERED_CACHE), "statistics-enabled")
-                .booleanValue();
-        crud.update(scatteredCacheAddress(CACHE_CONTAINER, SCATTERED_CACHE), page.getConfigurationForm(),
-                "statistics-enabled", !statisticsEnabled);
+    void editMode() throws Exception {
+        String currentMode = operations.readAttribute(transactionAddress(CACHE_CONTAINER, SCATTERED_CACHE_TRANSACTION),
+                "mode")
+                .stringValue();
+        List<String> modes = new ArrayList<>(Arrays.asList("NONE", "BATCH", "NON_XA", "NON_DURABLE_XA", "FULL_XA"));
+        modes.remove(currentMode);
+        crud.update(transactionAddress(CACHE_CONTAINER, SCATTERED_CACHE_TRANSACTION), form,
+                formFragment -> formFragment.select("mode", modes.get(0)),
+                resourceVerifier -> resourceVerifier.verifyAttribute("mode", modes.get(0)));
     }
 }

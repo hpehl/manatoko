@@ -38,7 +38,7 @@ import static org.jboss.hal.testsuite.fixtures.SecurityFixtures.clientSslContext
 
 @Manatoko
 @Testcontainers
-@Disabled // TODO Fix failing tests
+@Disabled // TODO Enable once https://issues.redhat.com/browse/HAL-1904 has been fixed
 class SecurityTest extends AbstractRemoteCacheContainerTest {
 
     private static final String REMOTE_CACHE_CONTAINER_TO_BE_TESTED = "remote-cache-container-to-be-tested-" + Random.name();

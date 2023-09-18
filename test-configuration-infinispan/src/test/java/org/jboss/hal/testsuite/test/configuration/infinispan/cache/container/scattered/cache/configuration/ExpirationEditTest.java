@@ -13,7 +13,7 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package org.jboss.hal.testsuite.test.configuration.infinispan.cache.container.scattered.cache.memory;
+package org.jboss.hal.testsuite.test.configuration.infinispan.cache.container.scattered.cache.configuration;
 
 import org.jboss.arquillian.core.api.annotation.Inject;
 import org.jboss.arquillian.graphene.page.Page;
@@ -21,6 +21,7 @@ import org.jboss.hal.testsuite.Console;
 import org.jboss.hal.testsuite.CrudOperations;
 import org.jboss.hal.testsuite.Random;
 import org.jboss.hal.testsuite.container.WildFlyContainer;
+import org.jboss.hal.testsuite.fragment.FormFragment;
 import org.jboss.hal.testsuite.page.configuration.ScatteredCachePage;
 import org.jboss.hal.testsuite.test.Manatoko;
 import org.junit.jupiter.api.BeforeAll;
@@ -30,19 +31,20 @@ import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
 import org.wildfly.extras.creaper.core.online.OnlineManagementClient;
 import org.wildfly.extras.creaper.core.online.operations.Operations;
-import org.wildfly.extras.creaper.core.online.operations.admin.Administration;
 
+import static org.jboss.hal.dmr.ModelDescriptionConstants.JGROUPS;
+import static org.jboss.hal.dmr.ModelDescriptionConstants.TRANSPORT;
 import static org.jboss.hal.testsuite.container.WildFlyConfiguration.FULL_HA;
 import static org.jboss.hal.testsuite.fixtures.InfinispanFixtures.cacheContainerAddress;
-import static org.jboss.hal.testsuite.fixtures.InfinispanFixtures.offHeapMemoryAddress;
+import static org.jboss.hal.testsuite.fixtures.InfinispanFixtures.expirationAddress;
 import static org.jboss.hal.testsuite.fixtures.InfinispanFixtures.scatteredCacheAddress;
 
 @Manatoko
 @Testcontainers
-class OffHeapMemoryTest {
+class ExpirationEditTest {
 
     private static final String CACHE_CONTAINER = "cache-container-" + Random.name();
-    private static final String SCATTERED_CACHE = "scattered-cache-" + Random.name();
+    private static final String SCATTERED_CACHE_EXP = "scattered-cache-" + Random.name();
     @Container static WildFlyContainer wildFly = WildFlyContainer.standalone(FULL_HA);
 
     @BeforeAll
@@ -50,26 +52,34 @@ class OffHeapMemoryTest {
         OnlineManagementClient client = wildFly.managementClient();
         Operations operations = new Operations(client);
         operations.add(cacheContainerAddress(CACHE_CONTAINER));
-        operations.add(cacheContainerAddress(CACHE_CONTAINER).and("transport", "jgroups"));
-        operations.add(scatteredCacheAddress(CACHE_CONTAINER, SCATTERED_CACHE));
-        new Administration(client).reloadIfRequired();
+        operations.add(cacheContainerAddress(CACHE_CONTAINER).and(TRANSPORT, JGROUPS));
+        operations.add(scatteredCacheAddress(CACHE_CONTAINER, SCATTERED_CACHE_EXP));
     }
 
+    @Inject CrudOperations crud;
     @Inject Console console;
-    @Inject CrudOperations crudOperations;
     @Page ScatteredCachePage page;
+    FormFragment form;
 
     @BeforeEach
     void prepare() {
-        page.navigate(CACHE_CONTAINER, SCATTERED_CACHE);
-        console.verticalNavigation().selectPrimary("scattered-cache-memory-item");
-        page.selectOffHeapMemory();
+        page.navigate(CACHE_CONTAINER, SCATTERED_CACHE_EXP);
+        console.verticalNavigation().selectPrimary("scattered-cache-item");
+        form = page.getExpirationForm();
     }
 
     @Test
-    void editSize() throws Exception {
-        console.waitNoNotification();
-        crudOperations.update(offHeapMemoryAddress(CACHE_CONTAINER, SCATTERED_CACHE), page.getOffHeapMemoryForm(),
-                "size", (long) Random.number());
+    void editInterval() throws Exception {
+        crud.update(expirationAddress(CACHE_CONTAINER, SCATTERED_CACHE_EXP), form, "interval", 123L);
+    }
+
+    @Test
+    void editLifespan() throws Exception {
+        crud.update(expirationAddress(CACHE_CONTAINER, SCATTERED_CACHE_EXP), form, "lifespan", 312L);
+    }
+
+    @Test
+    void editMaxIdle() throws Exception {
+        crud.update(expirationAddress(CACHE_CONTAINER, SCATTERED_CACHE_EXP), form, "max-idle", 412L);
     }
 }

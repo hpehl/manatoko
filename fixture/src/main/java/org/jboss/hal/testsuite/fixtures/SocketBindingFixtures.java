@@ -75,7 +75,7 @@ public final class SocketBindingFixtures {
         return socketBindingGroupAddress(sbg).and(LOCAL_DESTINATION_OUTBOUND_SOCKET_BINDING, name);
     }
 
-    // ------------------------------------------------------ outbound local
+    // ------------------------------------------------------ outbound remote
 
     public static final String OUTBOUND_REMOTE_CREATE = Ids.build(OUTBOUND_PREFIX, REMOTE, CrudConstants.CREATE, Random.name());
     public static final String OUTBOUND_REMOTE_READ = Ids.build(OUTBOUND_PREFIX, REMOTE, CrudConstants.READ, Random.name());
