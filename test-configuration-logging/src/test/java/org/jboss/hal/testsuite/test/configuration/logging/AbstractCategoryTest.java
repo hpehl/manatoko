@@ -62,7 +62,7 @@ public abstract class AbstractCategoryTest {
     @Test
     void read() {
         table.select(Category.CATEGORY_READ);
-        assertEquals(HAL_1469_FAIL_MESSAGE, Category.CATEGORY_READ, form.value(CATEGORY));
+        assertEquals(Category.CATEGORY_READ, form.value(CATEGORY), HAL_1469_FAIL_MESSAGE);
     }
 
     @Test

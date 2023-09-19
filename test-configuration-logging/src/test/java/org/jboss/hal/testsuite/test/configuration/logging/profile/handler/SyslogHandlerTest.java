@@ -28,7 +28,6 @@ import org.jboss.hal.testsuite.page.configuration.LoggingProfileConfigurationPag
 import org.jboss.hal.testsuite.test.Manatoko;
 import org.jboss.hal.testsuite.test.configuration.logging.AbstractSyslogHandlerTest;
 import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Disabled;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
 import org.wildfly.extras.creaper.core.online.OnlineManagementClient;
@@ -44,7 +43,6 @@ import static org.jboss.hal.testsuite.fixtures.LoggingFixtures.SyslogHandler.SYS
 
 @Manatoko
 @Testcontainers
-@Disabled // TODO Fix failing tests
 class SyslogHandlerTest extends AbstractSyslogHandlerTest {
 
     static final String LOGGING_PROFILE = "logging-profile-" + Random.name();
