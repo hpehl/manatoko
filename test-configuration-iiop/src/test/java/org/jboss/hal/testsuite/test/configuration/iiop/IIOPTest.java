@@ -68,11 +68,12 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 class IIOPTest {
 
     @Container static WildFlyContainer wildFly = WildFlyContainer.standalone(FULL);
+    private static Operations operations;
 
     @BeforeAll
     static void setupModel() throws Exception {
         OnlineManagementClient client = wildFly.managementClient();
-        Operations operations = new Operations(client);
+        operations = new Operations(client);
         operations.undefineAttribute(SUBSYSTEM_ADDRESS, PERSISTENT_SERVER_ID);
         operations.undefineAttribute(SUBSYSTEM_ADDRESS, EXPORT_CORBALOC);
         operations.writeAttribute(SUBSYSTEM_ADDRESS, SECURITY, IDENTITY);
@@ -168,21 +169,22 @@ class IIOPTest {
 
     @Test
     void updateSecurity() throws Exception {
+        boolean clientRequiresSSL = operations.readAttribute(SUBSYSTEM_ADDRESS, "client-requires-ssl").booleanValue();
+        boolean serverRequiresSSL = operations.readAttribute(SUBSYSTEM_ADDRESS, "client-requires-ssl").booleanValue();
+        boolean supportSSL = operations.readAttribute(SUBSYSTEM_ADDRESS, "support-ssl").booleanValue();
         page.getTabs().select(Ids.build(IIOP_PREFIX, GROUP, SECURITY, Ids.TAB));
         form = page.getSecurityForm();
-        crud.update(SUBSYSTEM_ADDRESS, form, SECURITY_DOMAIN, "other");
-    }
-
-    @Test
-    void updateSecurityInvalidSSLSettings() {
-        page.getTabs().select(Ids.build(IIOP_PREFIX, GROUP, SECURITY, Ids.TAB));
-        form = page.getSecurityForm();
-        crud.updateWithError(form,
-                f -> {
-                    f.text(CLIENT_SSL_CONTEXT, "foo");
-                    f.text(SECURITY_DOMAIN, "bar");
+        crud.update(SUBSYSTEM_ADDRESS, form,
+                formFragment -> {
+                    formFragment.flip("client-requires-ssl", !clientRequiresSSL);
+                    formFragment.flip("server-requires-ssl", !serverRequiresSSL);
+                    formFragment.flip("support-ssl", !supportSSL);
                 },
-                CLIENT_SSL_CONTEXT, SECURITY_DOMAIN);
+                resourceVerifier -> {
+                    resourceVerifier.verifyAttribute("client-requires-ssl", !clientRequiresSSL);
+                    resourceVerifier.verifyAttribute("server-requires-ssl", !serverRequiresSSL);
+                    resourceVerifier.verifyAttribute("support-ssl", !supportSSL);
+                });
     }
 
     @Test
