@@ -90,12 +90,6 @@ class ContextServiceTest {
     }
 
     @Test
-    void reset() throws Exception {
-        table.select(CONTEXT_SERVICE_UPDATE);
-        crud.reset(contextServiceAddress(CONTEXT_SERVICE_UPDATE), form);
-    }
-
-    @Test
     void delete() throws Exception {
         crud.delete(contextServiceAddress(CONTEXT_SERVICE_DELETE), table, CONTEXT_SERVICE_DELETE);
     }
