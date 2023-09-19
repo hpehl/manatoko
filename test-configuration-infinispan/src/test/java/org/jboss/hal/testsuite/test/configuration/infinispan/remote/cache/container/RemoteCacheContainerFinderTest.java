@@ -15,19 +15,24 @@
  */
 package org.jboss.hal.testsuite.test.configuration.infinispan.remote.cache.container;
 
+import org.jboss.arquillian.core.api.annotation.Inject;
+import org.jboss.arquillian.graphene.page.Page;
 import org.jboss.hal.meta.token.NameTokens;
 import org.jboss.hal.resources.Ids;
+import org.jboss.hal.testsuite.Console;
+import org.jboss.hal.testsuite.CrudOperations;
 import org.jboss.hal.testsuite.Random;
 import org.jboss.hal.testsuite.container.WildFlyContainer;
 import org.jboss.hal.testsuite.fragment.AddResourceDialogFragment;
 import org.jboss.hal.testsuite.fragment.FormFragment;
 import org.jboss.hal.testsuite.fragment.finder.ColumnFragment;
 import org.jboss.hal.testsuite.model.ResourceVerifier;
+import org.jboss.hal.testsuite.page.configuration.RemoteCacheContainerPage;
 import org.jboss.hal.testsuite.test.Manatoko;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
+import org.openqa.selenium.By;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
 import org.wildfly.extras.creaper.core.online.OnlineManagementClient;
@@ -36,6 +41,7 @@ import org.wildfly.extras.creaper.core.online.operations.admin.Administration;
 
 import com.gwtplatform.mvp.shared.proxy.PlaceRequest;
 
+import static org.jboss.arquillian.graphene.Graphene.waitGui;
 import static org.jboss.hal.dmr.ModelDescriptionConstants.INFINISPAN;
 import static org.jboss.hal.dmr.ModelDescriptionConstants.NAME;
 import static org.jboss.hal.testsuite.container.WildFlyConfiguration.FULL_HA;
@@ -44,13 +50,14 @@ import static org.jboss.hal.testsuite.fixtures.InfinispanFixtures.REMOTE_CC_DELE
 import static org.jboss.hal.testsuite.fixtures.InfinispanFixtures.REMOTE_CC_READ;
 import static org.jboss.hal.testsuite.fixtures.InfinispanFixtures.remoteCacheContainerAddress;
 import static org.jboss.hal.testsuite.fragment.finder.FinderFragment.configurationSubsystemPath;
+import static org.jboss.hal.testsuite.test.configuration.infinispan.remote.cache.container.RemoteCacheContainerCommons.createRemoteCacheContainer;
+import static org.jboss.hal.testsuite.test.configuration.infinispan.remote.cache.container.RemoteCacheContainerCommons.createRemoteSocketBinding;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @Manatoko
 @Testcontainers
-@Disabled // TODO Enable once https://issues.redhat.com/browse/HAL-1904 has been fixed
-class RemoteCacheContainerFinderTest extends AbstractRemoteCacheContainerTest {
+class RemoteCacheContainerFinderTest {
 
     private static final String REMOTE_SOCKET_BINDING_CREATE = "remote-socket-binding-create-" + Random.name();
     private static final String REMOTE_SOCKET_BINDING_READ = "remote-socket-binding-read-" + Random.name();
@@ -72,11 +79,13 @@ class RemoteCacheContainerFinderTest extends AbstractRemoteCacheContainerTest {
         administration.reloadIfRequired();
     }
 
+    @Page protected RemoteCacheContainerPage page;
+    @Inject protected Console console;
+    @Inject protected CrudOperations crudOperations;
     ColumnFragment column;
 
     @BeforeEach
     void setUp() {
-        browser.navigate().refresh();
         column = console.finder(NameTokens.CONFIGURATION, configurationSubsystemPath(INFINISPAN))
                 .column(Ids.CACHE_CONTAINER);
     }
@@ -109,7 +118,8 @@ class RemoteCacheContainerFinderTest extends AbstractRemoteCacheContainerTest {
     @Test
     void view() {
         column.selectItem(remoteCacheContainerId(REMOTE_CC_READ)).view();
-        PlaceRequest placeRequest = new PlaceRequest.Builder().nameToken("remote-cache-container").with("name", REMOTE_CC_READ)
+        PlaceRequest placeRequest = new PlaceRequest.Builder().nameToken("remote-cache-container")
+                .with("name", REMOTE_CC_READ)
                 .build();
         console.verify(placeRequest);
     }
@@ -119,6 +129,7 @@ class RemoteCacheContainerFinderTest extends AbstractRemoteCacheContainerTest {
         column.selectItem(remoteCacheContainerId(REMOTE_CC_DELETE)).dropdown().click("Remove");
         console.confirmationDialog().confirm();
         console.verifySuccess();
+        waitGui().until().element(By.id(remoteCacheContainerId(REMOTE_CC_DELETE))).is().not().present();
         assertFalse(column.containsItem(remoteCacheContainerId(REMOTE_CC_DELETE)));
         new ResourceVerifier(remoteCacheContainerAddress(REMOTE_CC_DELETE), client).verifyDoesNotExist();
         administration.reloadIfRequired();

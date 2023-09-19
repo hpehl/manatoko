@@ -42,7 +42,6 @@ import static org.jboss.hal.testsuite.fixtures.InfinispanFixtures.scatteredCache
 class AttributesTest {
 
     private static final String CACHE_CONTAINER = "cache-container-" + Random.name();
-    private static final String MODULES = "modules";
     private static final String SCATTERED_CACHE = "scattered-cache-" + Random.name();
 
     @Container static WildFlyContainer wildFly = WildFlyContainer.standalone(FULL_HA);

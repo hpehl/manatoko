@@ -15,6 +15,8 @@
  */
 package org.jboss.hal.testsuite.test.configuration.infinispan.remote.cache.container;
 
+import java.io.IOException;
+
 import org.jboss.arquillian.core.api.annotation.Inject;
 import org.jboss.arquillian.graphene.page.Page;
 import org.jboss.hal.testsuite.Console;
@@ -35,22 +37,22 @@ import org.wildfly.extras.creaper.core.online.operations.Values;
 import org.wildfly.extras.creaper.core.online.operations.admin.Administration;
 
 import static org.jboss.hal.testsuite.container.WildFlyConfiguration.FULL_HA;
-import static org.jboss.hal.testsuite.fixtures.InfinispanFixtures.SOCKET_BINDINGS;
 import static org.jboss.hal.testsuite.fixtures.InfinispanFixtures.remoteClusterAddress;
-import static org.jboss.hal.testsuite.fixtures.InfinispanFixtures.securityAddress;
-import static org.jboss.hal.testsuite.fixtures.SecurityFixtures.clientSslContextAddress;
 import static org.jboss.hal.testsuite.test.configuration.infinispan.remote.cache.container.RemoteCacheContainerCommons.createRemoteCacheContainer;
 import static org.jboss.hal.testsuite.test.configuration.infinispan.remote.cache.container.RemoteCacheContainerCommons.createRemoteSocketBinding;
 
 @Manatoko
 @Testcontainers
-class SecurityTest {
+class RemoteClusterDeleteTest {
 
     private static final String REMOTE_CACHE_CONTAINER_TO_BE_TESTED = "remote-cache-container-to-be-tested-" + Random.name();
     private static final String REMOTE_SOCKET_BINDING = "remote-socket-binding-" + Random.name();
-    private static final String REMOTE_SOCKET_BINDING_CLUSTER = "remote-socket-binding-cluster-" + Random.name();
+    private static final String REMOTE_SOCKET_BINDING_CLUSTER_CREATE = "remote-socket-binding-cluster-create" + Random.name();
+    private static final String REMOTE_SOCKET_BINDING_CLUSTER_EDIT = "remote-socket-binding-cluster-edit-" + Random.name();
+    private static final String REMOTE_SOCKET_BINDING_CLUSTER_DELETE = "remote-socket-binding-cluster-delete-" + Random.name();
+
     private static final String REMOTE_CLUSTER = "remote-cluster-" + Random.name();
-    private static final String SSL_CONTEXT = "client-ssl-context-" + Random.name();
+    private static final String REMOTE_CLUSTER_DELETE = "remote-cluster-to-be-deleted-" + Random.name();
 
     @Container static WildFlyContainer wildFly = WildFlyContainer.standalone(FULL_HA);
 
@@ -59,13 +61,22 @@ class SecurityTest {
         OnlineManagementClient client = wildFly.managementClient();
         Operations operations = new Operations(client);
         createRemoteSocketBinding(client, REMOTE_SOCKET_BINDING);
-        createRemoteSocketBinding(client, REMOTE_SOCKET_BINDING_CLUSTER);
-        createRemoteCacheContainer(operations, REMOTE_CACHE_CONTAINER_TO_BE_TESTED, REMOTE_SOCKET_BINDING);
-        operations.add(remoteClusterAddress(REMOTE_CACHE_CONTAINER_TO_BE_TESTED, REMOTE_CLUSTER),
-                Values.of(SOCKET_BINDINGS,
-                        new ModelNodeGenerator.ModelNodeListBuilder().addAll(REMOTE_SOCKET_BINDING_CLUSTER).build()));
-        operations.add(clientSslContextAddress(SSL_CONTEXT));
+        createRemoteSocketBinding(client, REMOTE_SOCKET_BINDING_CLUSTER_CREATE);
+        createRemoteSocketBinding(client, REMOTE_SOCKET_BINDING_CLUSTER_EDIT);
+        createRemoteSocketBinding(client, REMOTE_SOCKET_BINDING_CLUSTER_DELETE);
+        createRemoteCacheContainer(operations, REMOTE_CACHE_CONTAINER_TO_BE_TESTED,
+                REMOTE_SOCKET_BINDING_CLUSTER_CREATE);
+        createRemoteCluster(operations, REMOTE_CLUSTER, REMOTE_SOCKET_BINDING);
+        createRemoteCluster(operations, REMOTE_CLUSTER_DELETE,
+                REMOTE_SOCKET_BINDING_CLUSTER_DELETE);
         new Administration(client).reloadIfRequired();
+    }
+
+    private static void createRemoteCluster(Operations operations, String remoteClusterName, String socketBinding)
+            throws IOException {
+        operations.add(remoteClusterAddress(RemoteClusterDeleteTest.REMOTE_CACHE_CONTAINER_TO_BE_TESTED, remoteClusterName),
+                Values.of("socket-bindings",
+                        new ModelNodeGenerator.ModelNodeListBuilder().addAll(socketBinding).build()));
     }
 
     @Page protected RemoteCacheContainerPage page;
@@ -73,15 +84,14 @@ class SecurityTest {
     @Inject protected CrudOperations crudOperations;
 
     @BeforeEach
-    void initPage() {
+    void prepare() {
         page.navigate("name", REMOTE_CACHE_CONTAINER_TO_BE_TESTED);
-        console.verticalNavigation().selectPrimary("security-item");
+        console.verticalNavigation().selectPrimary("rc-item");
     }
 
     @Test
-    void editSSLContext() throws Exception {
-        crudOperations.update(securityAddress(REMOTE_CACHE_CONTAINER_TO_BE_TESTED), page.getSecurityForm(),
-                "ssl-context",
-                SSL_CONTEXT);
+    void delete() throws Exception {
+        crudOperations.delete(remoteClusterAddress(REMOTE_CACHE_CONTAINER_TO_BE_TESTED, REMOTE_CLUSTER_DELETE),
+                page.getRemoteClusterTable(), REMOTE_CLUSTER_DELETE);
     }
 }

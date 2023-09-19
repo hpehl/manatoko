@@ -15,10 +15,6 @@
  */
 package org.jboss.hal.testsuite.test.configuration.infinispan.remote.cache.container;
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.stream.Collectors;
-
 import org.jboss.arquillian.core.api.annotation.Inject;
 import org.jboss.arquillian.graphene.page.Page;
 import org.jboss.hal.testsuite.Console;
@@ -26,7 +22,7 @@ import org.jboss.hal.testsuite.CrudOperations;
 import org.jboss.hal.testsuite.Random;
 import org.jboss.hal.testsuite.container.WildFlyContainer;
 import org.jboss.hal.testsuite.fragment.FormFragment;
-import org.jboss.hal.testsuite.model.ModelNodeGenerator;
+import org.jboss.hal.testsuite.model.ModelNodeGenerator.ModelNodeListBuilder;
 import org.jboss.hal.testsuite.page.configuration.RemoteCacheContainerPage;
 import org.jboss.hal.testsuite.test.Manatoko;
 import org.junit.jupiter.api.BeforeAll;
@@ -41,14 +37,14 @@ import org.wildfly.extras.creaper.core.online.operations.admin.Administration;
 
 import static org.jboss.hal.testsuite.container.WildFlyConfiguration.FULL_HA;
 import static org.jboss.hal.testsuite.fixtures.InfinispanFixtures.SOCKET_BINDINGS;
-import static org.jboss.hal.testsuite.fixtures.InfinispanFixtures.connectionPoolAddress;
+import static org.jboss.hal.testsuite.fixtures.InfinispanFixtures.remoteCacheContainerAddress;
 import static org.jboss.hal.testsuite.fixtures.InfinispanFixtures.remoteClusterAddress;
 import static org.jboss.hal.testsuite.test.configuration.infinispan.remote.cache.container.RemoteCacheContainerCommons.createRemoteCacheContainer;
 import static org.jboss.hal.testsuite.test.configuration.infinispan.remote.cache.container.RemoteCacheContainerCommons.createRemoteSocketBinding;
 
 @Manatoko
 @Testcontainers
-class ConnectionPoolTest {
+class AttributesNumbersTest {
 
     private static final String REMOTE_CACHE_CONTAINER_TO_BE_TESTED = "remote-cache-container-to-be-tested-" + Random.name();
     private static final String REMOTE_SOCKET_BINDING = "remote-socket-binding-" + Random.name();
@@ -67,7 +63,7 @@ class ConnectionPoolTest {
         createRemoteCacheContainer(operations, REMOTE_CACHE_CONTAINER_TO_BE_TESTED, REMOTE_SOCKET_BINDING);
         operations.add(remoteClusterAddress(REMOTE_CACHE_CONTAINER_TO_BE_TESTED, REMOTE_CLUSTER),
                 Values.of(SOCKET_BINDINGS,
-                        new ModelNodeGenerator.ModelNodeListBuilder().addAll(REMOTE_SOCKET_BINDING_CLUSTER).build()));
+                        new ModelNodeListBuilder().addAll(REMOTE_SOCKET_BINDING_CLUSTER).build()));
         new Administration(client).reloadIfRequired();
     }
 
@@ -79,46 +75,27 @@ class ConnectionPoolTest {
     @BeforeEach
     void prepare() {
         page.navigate("name", REMOTE_CACHE_CONTAINER_TO_BE_TESTED);
-        console.verticalNavigation().selectPrimary("connection-pool-item");
-        form = page.getConnectionPoolForm();
+        console.verticalNavigation().selectPrimary("rcc-item");
+        form = page.getConfigurationForm();
     }
 
     @Test
-    void editExhaustedAction() throws Exception {
-        String previousExhaustedAction = operations
-                .readAttribute(connectionPoolAddress(REMOTE_CACHE_CONTAINER_TO_BE_TESTED), "exhausted-action")
-                .stringValue();
-        String[] allExhaustedActions = { "EXCEPTION", "WAIT", "CREATE_NEW" };
-        List<String> availableExhaustedActions = Arrays.stream(allExhaustedActions)
-                .filter(action -> !action.equals(previousExhaustedAction))
-                .collect(Collectors.toList());
-        String exhaustedAction = availableExhaustedActions.get(Random.number(0, availableExhaustedActions.size()));
-        crudOperations.update(connectionPoolAddress(REMOTE_CACHE_CONTAINER_TO_BE_TESTED), form,
-                formFragment -> formFragment.select("exhausted-action", exhaustedAction),
-                resourceVerifier -> resourceVerifier.verifyAttribute("exhausted-action", exhaustedAction));
-    }
-
-    @Test
-    void editMaxActive() throws Exception {
-        crudOperations.update(connectionPoolAddress(REMOTE_CACHE_CONTAINER_TO_BE_TESTED), form,
-                "max-active", Random.number());
-    }
-
-    @Test
-    void editMaxWait() throws Exception {
-        crudOperations.update(connectionPoolAddress(REMOTE_CACHE_CONTAINER_TO_BE_TESTED), form,
-                "max-wait", (long) Random.number());
-    }
-
-    @Test
-    void editMinEvictableIdleTime() throws Exception {
-        crudOperations.update(connectionPoolAddress(REMOTE_CACHE_CONTAINER_TO_BE_TESTED), form,
-                "min-evictable-idle-time", (long) Random.number());
-    }
-
-    @Test
-    void editMinIdle() throws Exception {
-        crudOperations.update(connectionPoolAddress(REMOTE_CACHE_CONTAINER_TO_BE_TESTED), form,
-                "min-idle", Random.number());
+    void editNumbers() throws Exception {
+        // If this was tested in AttributesTest, the test would fail
+        // Don't know why - so this has its own unit test
+        int connectionTimeout = Random.number();
+        int maxRetries = Random.number();
+        int socketTimeout = Random.number();
+        crudOperations.update(remoteCacheContainerAddress(REMOTE_CACHE_CONTAINER_TO_BE_TESTED), form,
+                formFragment -> {
+                    formFragment.number("connection-timeout", connectionTimeout);
+                    formFragment.number("max-retries", maxRetries);
+                    formFragment.number("socket-timeout", socketTimeout);
+                },
+                resourceVerifier -> {
+                    resourceVerifier.verifyAttribute("connection-timeout", connectionTimeout);
+                    resourceVerifier.verifyAttribute("max-retries", maxRetries);
+                    resourceVerifier.verifyAttribute("socket-timeout", socketTimeout);
+                });
     }
 }

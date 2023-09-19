@@ -128,10 +128,10 @@ public class FormFragment {
 
     /** Clicks on the edit link and waits until the editing section is visible. */
     public void edit() {
-        editLink.click();
+        console.scrollIntoView(editLink).click();
         waitGui().until().element(editingSection).is().visible();
-        // wait until the first input element has focus
         try {
+            // wait until the first input element has focus
             waitGui().until().element(By.cssSelector(DOT + editing + " input:first-of-type:focus")).is().present();
         } catch (TimeoutException ignored) {
             // some forms have a disabled first input field

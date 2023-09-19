@@ -13,16 +13,20 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package org.jboss.hal.testsuite.test.configuration.infinispan.remote.cache.container.configuration;
+package org.jboss.hal.testsuite.test.configuration.infinispan.remote.cache.container;
 
+import org.jboss.arquillian.core.api.annotation.Inject;
+import org.jboss.arquillian.graphene.page.Page;
+import org.jboss.hal.testsuite.Console;
+import org.jboss.hal.testsuite.CrudOperations;
 import org.jboss.hal.testsuite.Random;
 import org.jboss.hal.testsuite.container.WildFlyContainer;
+import org.jboss.hal.testsuite.fragment.FormFragment;
 import org.jboss.hal.testsuite.model.ModelNodeGenerator;
+import org.jboss.hal.testsuite.page.configuration.RemoteCacheContainerPage;
 import org.jboss.hal.testsuite.test.Manatoko;
-import org.jboss.hal.testsuite.test.configuration.infinispan.remote.cache.container.AbstractRemoteCacheContainerTest;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
@@ -32,13 +36,15 @@ import org.wildfly.extras.creaper.core.online.operations.Values;
 import org.wildfly.extras.creaper.core.online.operations.admin.Administration;
 
 import static org.jboss.hal.testsuite.container.WildFlyConfiguration.FULL_HA;
+import static org.jboss.hal.testsuite.fixtures.InfinispanFixtures.SOCKET_BINDINGS;
 import static org.jboss.hal.testsuite.fixtures.InfinispanFixtures.remoteCacheContainerAddress;
 import static org.jboss.hal.testsuite.fixtures.InfinispanFixtures.remoteClusterAddress;
+import static org.jboss.hal.testsuite.test.configuration.infinispan.remote.cache.container.RemoteCacheContainerCommons.createRemoteCacheContainer;
+import static org.jboss.hal.testsuite.test.configuration.infinispan.remote.cache.container.RemoteCacheContainerCommons.createRemoteSocketBinding;
 
 @Manatoko
 @Testcontainers
-@Disabled // TODO Enable once https://issues.redhat.com/browse/HAL-1904 has been fixed
-class AttributesTest extends AbstractRemoteCacheContainerTest {
+class AttributesTest {
 
     private static final String REMOTE_CACHE_CONTAINER_TO_BE_TESTED = "remote-cache-container-to-be-tested-" + Random.name();
     private static final String REMOTE_SOCKET_BINDING = "remote-socket-binding-" + Random.name();
@@ -56,85 +62,50 @@ class AttributesTest extends AbstractRemoteCacheContainerTest {
         createRemoteSocketBinding(client, REMOTE_SOCKET_BINDING_CLUSTER);
         createRemoteCacheContainer(operations, REMOTE_CACHE_CONTAINER_TO_BE_TESTED, REMOTE_SOCKET_BINDING);
         operations.add(remoteClusterAddress(REMOTE_CACHE_CONTAINER_TO_BE_TESTED, REMOTE_CLUSTER),
-                Values.of("socket-bindings",
+                Values.of(SOCKET_BINDINGS,
                         new ModelNodeGenerator.ModelNodeListBuilder().addAll(REMOTE_SOCKET_BINDING_CLUSTER).build()));
         new Administration(client).reloadIfRequired();
     }
+
+    @Page RemoteCacheContainerPage page;
+    @Inject Console console;
+    @Inject CrudOperations crudOperations;
+    FormFragment form;
 
     @BeforeEach
     void prepare() {
         page.navigate("name", REMOTE_CACHE_CONTAINER_TO_BE_TESTED);
         console.verticalNavigation().selectPrimary("rcc-item");
-    }
-
-    @Test
-    void editConnectionTimeout() throws Exception {
-        crudOperations.update(remoteCacheContainerAddress(REMOTE_CACHE_CONTAINER_TO_BE_TESTED),
-                page.getConfigurationForm(), "connection-timeout", Random.number());
+        form = page.getConfigurationForm();
     }
 
     @Test
     void editDefaultRemoteCluster() throws Exception {
-        crudOperations.update(remoteCacheContainerAddress(REMOTE_CACHE_CONTAINER_TO_BE_TESTED),
-                page.getConfigurationForm(), "default-remote-cluster", REMOTE_CLUSTER);
+        crudOperations.update(remoteCacheContainerAddress(REMOTE_CACHE_CONTAINER_TO_BE_TESTED), form,
+                "default-remote-cluster", REMOTE_CLUSTER);
     }
 
     @Test
-    void editKeySizeEstimate() throws Exception {
-        crudOperations.update(remoteCacheContainerAddress(REMOTE_CACHE_CONTAINER_TO_BE_TESTED),
-                page.getConfigurationForm(), "key-size-estimate", Random.number());
-    }
-
-    @Test
-    void editMaxRetries() throws Exception {
-        crudOperations.update(remoteCacheContainerAddress(REMOTE_CACHE_CONTAINER_TO_BE_TESTED),
-                page.getConfigurationForm(), "max-retries", Random.number());
-    }
-
-    @Test
-    void editModule() throws Exception {
-        crudOperations.update(remoteCacheContainerAddress(REMOTE_CACHE_CONTAINER_TO_BE_TESTED),
-                page.getConfigurationForm(), "module");
-    }
-
-    @Test
-    void editProtocolVersion() throws Exception {
-        String[] protocolVersions = { "1.0", "1.1", "1.2", "1.3", "2.0", "2.1", "2.2", "2.3", "2.4", "2.5", "2.6",
-                "2.7" };
-        String protocolVersion = protocolVersions[Random.number(0, protocolVersions.length)];
-        crudOperations.update(remoteCacheContainerAddress(REMOTE_CACHE_CONTAINER_TO_BE_TESTED),
-                page.getConfigurationForm(), formFragment -> {
-                    formFragment.select("protocol-standalone", protocolVersion);
-                }, resourceVerifier -> resourceVerifier.verifyAttribute("protocol-standalone", protocolVersion));
-    }
-
-    @Test
-    void ediSocketTimeout() throws Exception {
-        crudOperations.update(remoteCacheContainerAddress(REMOTE_CACHE_CONTAINER_TO_BE_TESTED),
-                page.getConfigurationForm(), "socket-timeout", Random.number());
+    void editModules() throws Exception {
+        String module = Random.name();
+        crudOperations.update(remoteCacheContainerAddress(REMOTE_CACHE_CONTAINER_TO_BE_TESTED), form,
+                formFragment -> formFragment.properties("modules").add(module),
+                resourceVerifier -> resourceVerifier.verifyListAttributeContainsValue("modules", module));
     }
 
     @Test
     void toggleTCPKeepAlive() throws Exception {
-        boolean tcpKeepAlive = operations.readAttribute(remoteCacheContainerAddress(REMOTE_CACHE_CONTAINER_TO_BE_TESTED),
-                "tcp-keep-alive")
-                .booleanValue();
-        crudOperations.update(remoteCacheContainerAddress(REMOTE_CACHE_CONTAINER_TO_BE_TESTED),
-                page.getConfigurationForm(), "tcp-keep-alive", !tcpKeepAlive);
+        boolean tcpKeepAlive = operations.readAttribute(
+                remoteCacheContainerAddress(REMOTE_CACHE_CONTAINER_TO_BE_TESTED), "tcp-keep-alive").booleanValue();
+        crudOperations.update(remoteCacheContainerAddress(REMOTE_CACHE_CONTAINER_TO_BE_TESTED), form, "tcp-keep-alive",
+                !tcpKeepAlive);
     }
 
     @Test
     void toggleTCPNoDelay() throws Exception {
         boolean tcpNoDelay = operations.readAttribute(remoteCacheContainerAddress(REMOTE_CACHE_CONTAINER_TO_BE_TESTED),
-                "tcp-no-delay")
-                .booleanValue();
-        crudOperations.update(remoteCacheContainerAddress(REMOTE_CACHE_CONTAINER_TO_BE_TESTED),
-                page.getConfigurationForm(), "tcp-no-delay", !tcpNoDelay);
-    }
-
-    @Test
-    void editValueSizeEstimate() throws Exception {
-        crudOperations.update(remoteCacheContainerAddress(REMOTE_CACHE_CONTAINER_TO_BE_TESTED),
-                page.getConfigurationForm(), "value-size-estimate", Random.number());
+                "tcp-no-delay").booleanValue();
+        crudOperations.update(remoteCacheContainerAddress(REMOTE_CACHE_CONTAINER_TO_BE_TESTED), form, "tcp-no-delay",
+                !tcpNoDelay);
     }
 }

@@ -15,13 +15,17 @@
  */
 package org.jboss.hal.testsuite.test.configuration.infinispan.remote.cache.container;
 
+import org.jboss.arquillian.core.api.annotation.Inject;
+import org.jboss.arquillian.graphene.page.Page;
+import org.jboss.hal.testsuite.Console;
+import org.jboss.hal.testsuite.CrudOperations;
 import org.jboss.hal.testsuite.Random;
 import org.jboss.hal.testsuite.container.WildFlyContainer;
 import org.jboss.hal.testsuite.model.ModelNodeGenerator;
+import org.jboss.hal.testsuite.page.configuration.RemoteCacheContainerPage;
 import org.jboss.hal.testsuite.test.Manatoko;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
@@ -34,11 +38,12 @@ import static org.jboss.hal.testsuite.container.WildFlyConfiguration.FULL_HA;
 import static org.jboss.hal.testsuite.fixtures.InfinispanFixtures.SOCKET_BINDINGS;
 import static org.jboss.hal.testsuite.fixtures.InfinispanFixtures.remoteClusterAddress;
 import static org.jboss.hal.testsuite.fixtures.InfinispanFixtures.threadPoolAddress;
+import static org.jboss.hal.testsuite.test.configuration.infinispan.remote.cache.container.RemoteCacheContainerCommons.createRemoteCacheContainer;
+import static org.jboss.hal.testsuite.test.configuration.infinispan.remote.cache.container.RemoteCacheContainerCommons.createRemoteSocketBinding;
 
 @Manatoko
 @Testcontainers
-@Disabled // TODO Enable once https://issues.redhat.com/browse/HAL-1904 has been fixed
-class ThreadPoolTest extends AbstractRemoteCacheContainerTest {
+class ThreadPoolTest {
 
     private static final String REMOTE_CACHE_CONTAINER_TO_BE_TESTED = "remote-cache-container-to-be-tested-" + Random.name();
     private static final String REMOTE_SOCKET_BINDING = "remote-socket-binding-" + Random.name();
@@ -59,6 +64,10 @@ class ThreadPoolTest extends AbstractRemoteCacheContainerTest {
         new Administration(client).reloadIfRequired();
     }
 
+    @Page protected RemoteCacheContainerPage page;
+    @Inject protected Console console;
+    @Inject protected CrudOperations crudOperations;
+
     @BeforeEach
     void prepare() {
         page.navigate("name", REMOTE_CACHE_CONTAINER_TO_BE_TESTED);
@@ -67,25 +76,22 @@ class ThreadPoolTest extends AbstractRemoteCacheContainerTest {
 
     @Test
     void editKeepAliveTime() throws Exception {
+        long keepAlive = Random.number();
+        int maxThreads = Random.number();
+        int minThreads = Random.number();
+        int queueLength = Random.number();
         crudOperations.update(threadPoolAddress(REMOTE_CACHE_CONTAINER_TO_BE_TESTED), page.getThreadPoolForm(),
-                "keepalive-time", (long) Random.number());
-    }
-
-    @Test
-    void editMaxThreads() throws Exception {
-        crudOperations.update(threadPoolAddress(REMOTE_CACHE_CONTAINER_TO_BE_TESTED), page.getThreadPoolForm(),
-                "max-threads", Random.number());
-    }
-
-    @Test
-    void editMinThreads() throws Exception {
-        crudOperations.update(threadPoolAddress(REMOTE_CACHE_CONTAINER_TO_BE_TESTED), page.getThreadPoolForm(),
-                "min-threads", Random.number());
-    }
-
-    @Test
-    void editQueueLength() throws Exception {
-        crudOperations.update(threadPoolAddress(REMOTE_CACHE_CONTAINER_TO_BE_TESTED), page.getThreadPoolForm(),
-                "queue-length", Random.number());
+                form -> {
+                    form.number("keepalive-time", keepAlive);
+                    form.number("max-threads", maxThreads);
+                    form.number("min-threads", minThreads);
+                    form.number("queue-length", queueLength);
+                },
+                resourceVerifier -> {
+                    resourceVerifier.verifyAttribute("keepalive-time", keepAlive);
+                    resourceVerifier.verifyAttribute("max-threads", maxThreads);
+                    resourceVerifier.verifyAttribute("min-threads", minThreads);
+                    resourceVerifier.verifyAttribute("queue-length", queueLength);
+                });
     }
 }

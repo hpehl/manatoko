@@ -17,17 +17,10 @@ package org.jboss.hal.testsuite.test.configuration.infinispan.remote.cache.conta
 
 import java.io.IOException;
 
-import org.jboss.arquillian.core.api.annotation.Inject;
-import org.jboss.arquillian.drone.api.annotation.Drone;
-import org.jboss.arquillian.graphene.page.Page;
-import org.jboss.hal.testsuite.Console;
-import org.jboss.hal.testsuite.CrudOperations;
 import org.jboss.hal.testsuite.Random;
 import org.jboss.hal.testsuite.command.AddRemoteSocketBinding;
 import org.jboss.hal.testsuite.model.AvailablePortFinder;
 import org.jboss.hal.testsuite.model.ModelNodeGenerator;
-import org.jboss.hal.testsuite.page.configuration.RemoteCacheContainerPage;
-import org.openqa.selenium.WebDriver;
 import org.wildfly.extras.creaper.core.CommandFailedException;
 import org.wildfly.extras.creaper.core.online.OnlineManagementClient;
 import org.wildfly.extras.creaper.core.online.operations.Batch;
@@ -37,9 +30,9 @@ import org.wildfly.extras.creaper.core.online.operations.Values;
 import static org.jboss.hal.testsuite.fixtures.InfinispanFixtures.SOCKET_BINDINGS;
 import static org.jboss.hal.testsuite.fixtures.InfinispanFixtures.remoteCacheContainerAddress;
 
-public abstract class AbstractRemoteCacheContainerTest {
+interface RemoteCacheContainerCommons {
 
-    protected static void createRemoteCacheContainer(Operations operations, String name, String socketBinding)
+    static void createRemoteCacheContainer(Operations operations, String name, String socketBinding)
             throws IOException {
         String remoteCluster = Random.name();
         operations.batch(
@@ -50,13 +43,8 @@ public abstract class AbstractRemoteCacheContainerTest {
                 .assertSuccess();
     }
 
-    protected static void createRemoteSocketBinding(OnlineManagementClient client, String name)
+    static void createRemoteSocketBinding(OnlineManagementClient client, String name)
             throws CommandFailedException {
         client.apply(new AddRemoteSocketBinding(name, "localhost", AvailablePortFinder.getNextAvailableTCPPort()));
     }
-
-    @Drone protected WebDriver browser;
-    @Page protected RemoteCacheContainerPage page;
-    @Inject protected Console console;
-    @Inject protected CrudOperations crudOperations;
 }
