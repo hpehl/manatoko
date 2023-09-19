@@ -35,6 +35,7 @@ public final class JGroupsFixtures {
     public static final String TCP = "tcp";
     public static final String JGROUPS_TCP = "jgroups-tcp";
     public static final String CLUSTER = "cluster";
+    public static final String RELAY2 = "relay.RELAY2";
     public static final String SITE = "site";
     public static final String KEEPALIVE_TIME = "keepalive-time";
     public static final String REMOTE_SITE = "remote-site";
@@ -54,7 +55,7 @@ public final class JGroupsFixtures {
     // ------------------------------------------------------ stack / relay
 
     public static Address relayAddress(String stack) {
-        return stackAddress(stack).and(RELAY, RELAY.toUpperCase());
+        return stackAddress(stack).and(RELAY, RELAY2);
     }
 
     // ------------------------------------------------------ stack / remote site
@@ -113,7 +114,7 @@ public final class JGroupsFixtures {
     // protocol names are specific to jgroups domain
     public static final String FORK_PROTOCOL_CREATE = "COUNTER";
     public static final String FORK_PROTOCOL_UPDATE = "CENTRAL_LOCK";
-    public static final String FORK_PROTOCOL_DELETE = "S3_PING";
+    public static final String FORK_PROTOCOL_DELETE = "TCP";
 
     public static Address forkProtocolAddress(String channel, String fork, String protocol) {
         return forkAddress(channel, fork).and(PROTOCOL, protocol);
