@@ -32,11 +32,11 @@ import static org.jboss.hal.testsuite.fixtures.LoggingFixtures.NAMED_FORMATTER;
 import static org.jboss.hal.testsuite.fixtures.LoggingFixtures.SocketHandler.SOCKET_HANDLER_CREATE;
 import static org.jboss.hal.testsuite.fixtures.LoggingFixtures.SocketHandler.SOCKET_HANDLER_DELETE;
 import static org.jboss.hal.testsuite.fixtures.LoggingFixtures.SocketHandler.SOCKET_HANDLER_UPDATE;
+import static org.jboss.hal.testsuite.fixtures.SecurityFixtures.CLIENT_SSL_READ;
+import static org.jboss.hal.testsuite.fixtures.SocketBindingFixtures.OUTBOUND_REMOTE_READ;
 
 public abstract class AbstractSocketHandlerTest {
 
-    static final String OUTBOUND_SOCKET_BINDING_REF = "outbound-socket-binding-ref-" + Random.name();
-    static final String SSL_CONTEXT = "client-ssl-context-" + Random.name();
     protected static final String XML_FORMATTER = "xml-formatter-" + Random.name();
     protected static Operations ops;
 
@@ -144,7 +144,7 @@ public abstract class AbstractSocketHandlerTest {
     void editOutboundSocketBindingRef() throws Exception {
         table.select(SOCKET_HANDLER_UPDATE);
         crud.update(socketHandlerAddress(SOCKET_HANDLER_UPDATE), form, "outbound-socket-binding-ref",
-                OUTBOUND_SOCKET_BINDING_REF);
+                OUTBOUND_REMOTE_READ);
     }
 
     @Test
@@ -160,6 +160,6 @@ public abstract class AbstractSocketHandlerTest {
     @Test
     void editSSLContext() throws Exception {
         table.select(SOCKET_HANDLER_UPDATE);
-        crud.update(socketHandlerAddress(SOCKET_HANDLER_UPDATE), form, "ssl-context", SSL_CONTEXT);
+        crud.update(socketHandlerAddress(SOCKET_HANDLER_UPDATE), form, "ssl-context", CLIENT_SSL_READ);
     }
 }

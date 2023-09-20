@@ -26,7 +26,6 @@ import org.jboss.hal.testsuite.page.configuration.LoggingSubsystemConfigurationP
 import org.jboss.hal.testsuite.test.Manatoko;
 import org.jboss.hal.testsuite.test.configuration.logging.AbstractCategoryTest;
 import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Disabled;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
 import org.wildfly.extras.creaper.core.online.OnlineManagementClient;
@@ -40,7 +39,6 @@ import static org.jboss.hal.testsuite.fixtures.LoggingFixtures.Category.CATEGORY
 
 @Manatoko
 @Testcontainers
-@Disabled // TODO Fix failing tests
 class CategoryTest extends AbstractCategoryTest {
 
     @Container static WildFlyContainer wildFly = WildFlyContainer.standalone(DEFAULT);

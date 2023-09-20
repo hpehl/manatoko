@@ -70,7 +70,7 @@ public final class LoggingFixtures {
     public static final String MODULE_VALUE = "org.jboss.as.logging";
     public static final String NAMESPACE_URI = "namespace-uri";
     public static final String NAMED_FORMATTER = "named-formatter";
-    public static final String PATH_VALUE = "pa/th";
+    public static final String PATH_VALUE = "/tmp/file";
     public static final String RECORD_DELIMITER = "record-delimiter";
     public static final String RECORD_DELIMITER_PROPERTY_NAME = "recordDelimiter";
     public static final String SUFFIX = "suffix";
