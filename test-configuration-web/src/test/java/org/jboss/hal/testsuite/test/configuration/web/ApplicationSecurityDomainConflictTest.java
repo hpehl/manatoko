@@ -39,15 +39,11 @@ import static org.jboss.hal.testsuite.container.WildFlyConfiguration.DEFAULT;
 import static org.jboss.hal.testsuite.fixtures.WebFixtures.APPLICATION_SECURITY_DOMAIN_HAF;
 import static org.jboss.hal.testsuite.fixtures.WebFixtures.APPLICATION_SECURITY_DOMAIN_SD;
 import static org.jboss.hal.testsuite.fixtures.WebFixtures.APPLICATION_SECURITY_DOMAIN_UPDATE;
-import static org.jboss.hal.testsuite.fixtures.WebFixtures.ENABLE_JACC;
-import static org.jboss.hal.testsuite.fixtures.WebFixtures.ENABLE_JASPI;
-import static org.jboss.hal.testsuite.fixtures.WebFixtures.INTEGRATED_JASPI;
-import static org.jboss.hal.testsuite.fixtures.WebFixtures.OVERRIDE_DEPLOYMENT_CONFIG;
 import static org.jboss.hal.testsuite.fixtures.WebFixtures.applicationSecurityDomainAddress;
 
 @Manatoko
 @Testcontainers
-class ApplicationSecurityDomainTest {
+class ApplicationSecurityDomainConflictTest {
 
     private static final String SECURITY_DOMAIN_NAME = Random.name();
     private static final String HTTP_AUTHENTICATION_FACTORY_NAME = Random.name();
@@ -74,43 +70,14 @@ class ApplicationSecurityDomainTest {
     @Inject CrudOperations crud;
 
     @Test
-    void edit() throws Exception {
-        page.navigate(NAME, APPLICATION_SECURITY_DOMAIN_UPDATE);
-        crud.update(applicationSecurityDomainAddress(APPLICATION_SECURITY_DOMAIN_UPDATE), page.getAttributesForm(),
-                f -> {
-                    f.flip(ENABLE_JACC, true);
-                    f.flip(ENABLE_JASPI, false);
-                    f.flip(INTEGRATED_JASPI, true);
-                    f.flip(OVERRIDE_DEPLOYMENT_CONFIG, false);
-                },
-                resourceVerifier -> {
-                    resourceVerifier.verifyAttribute(ENABLE_JACC, true);
-                    resourceVerifier.verifyAttribute(ENABLE_JASPI, false);
-                    resourceVerifier.verifyAttribute(INTEGRATED_JASPI, true);
-                    resourceVerifier.verifyAttribute(OVERRIDE_DEPLOYMENT_CONFIG, false);
-                });
-    }
-
-    @Test
-    void switchToSecurityDomain() throws Exception {
+    void preventBothHttpAuthenticationFactoryAndSecurityDomain() {
         page.navigate(NAME, APPLICATION_SECURITY_DOMAIN_HAF);
-        crud.update(applicationSecurityDomainAddress(APPLICATION_SECURITY_DOMAIN_HAF), page.getAttributesForm(),
-                form -> {
-                    form.text(SECURITY_DOMAIN, SECURITY_DOMAIN_NAME);
-                    form.clear(HTTP_AUTHENTICATION_FACTORY);
-                },
-                resourceVerifier -> resourceVerifier.verifyAttribute(SECURITY_DOMAIN, SECURITY_DOMAIN_NAME));
+        crud.updateWithError(page.getAttributesForm(), SECURITY_DOMAIN, SECURITY_DOMAIN_NAME);
     }
 
     @Test
-    void switchToHttpAuthenticationFactory() throws Exception {
+    void preventBothSecurityDomainAndHttpAuthenticationFactory() {
         page.navigate(NAME, APPLICATION_SECURITY_DOMAIN_SD);
-        crud.update(applicationSecurityDomainAddress(APPLICATION_SECURITY_DOMAIN_SD), page.getAttributesForm(),
-                form -> {
-                    form.text(HTTP_AUTHENTICATION_FACTORY, HTTP_AUTHENTICATION_FACTORY_NAME);
-                    form.clear(SECURITY_DOMAIN);
-                },
-                resourceVerifier -> resourceVerifier.verifyAttribute(HTTP_AUTHENTICATION_FACTORY,
-                        HTTP_AUTHENTICATION_FACTORY_NAME));
+        crud.updateWithError(page.getAttributesForm(), HTTP_AUTHENTICATION_FACTORY, HTTP_AUTHENTICATION_FACTORY_NAME);
     }
 }
