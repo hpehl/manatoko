@@ -128,7 +128,14 @@ public class FormFragment {
 
     /** Clicks on the edit link and waits until the editing section is visible. */
     public void edit() {
-        console.scrollIntoView(editLink).click();
+        try {
+            console.scrollIntoView(editLink).click();
+        } catch (ElementClickInterceptedException ex) {
+            // sometimes it's scrolled too much, let's try to move back a bit
+            JavascriptExecutor js = (JavascriptExecutor) browser;
+            js.executeScript("window.scrollBy(0,-100);");
+            editLink.click();
+        }
         waitGui().until().element(editingSection).is().visible();
         try {
             // wait until the first input element has focus
