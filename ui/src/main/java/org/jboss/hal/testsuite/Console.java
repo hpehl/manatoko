@@ -105,11 +105,14 @@ public class Console {
      */
     public void waitNoNotification() {
         List<WebElement> dismissibleNotifications = By.cssSelector(DOT + alertDismissable).findElements(browser);
-        for (WebElement notification : dismissibleNotifications) {
-            WebElement button = notification.findElement(By.cssSelector("button.close"));
+        for (int remainingExpected = dismissibleNotifications.size(); !dismissibleNotifications.isEmpty()
+                && remainingExpected > 0; remainingExpected--) {
+
+            WebElement button = dismissibleNotifications.get(0).findElement(By.cssSelector("button.close"));
             if (button != null) {
                 button.click();
             }
+            dismissibleNotifications = By.cssSelector(DOT + alertDismissable).findElements(browser);
         }
         waitModel().until().element(By.cssSelector(DOT + toastNotificationsListPf + ":empty")).is().present();
     }
