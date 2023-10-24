@@ -15,8 +15,6 @@
  */
 package org.jboss.hal.testsuite.fragment;
 
-import java.util.List;
-
 import org.jboss.arquillian.core.api.annotation.Inject;
 import org.jboss.arquillian.drone.api.annotation.Drone;
 import org.jboss.arquillian.graphene.findby.ByJQuery;
@@ -181,11 +179,8 @@ public class FormFragment {
 
         // get rid of any open auto suggestions popup,
         // which might interfere with save or cancel buttons
-        List<WebElement> autoSuggestions = By.cssSelector(DOT + autocompleteSuggestions).findElements(browser);
-        for (WebElement autoSuggestion : autoSuggestions) {
-            if (autoSuggestion.isDisplayed()) {
-                inputElement.sendKeys(Keys.TAB);
-            }
+        if (!By.cssSelector(DOT + autocompleteSuggestions).findElements(browser).isEmpty()) {
+            inputElement.sendKeys(Keys.TAB);
         }
     }
 
