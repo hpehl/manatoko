@@ -56,7 +56,7 @@ jobs:
         run: $MVN install
       - name: Run Tests (Stable)
         id: run-tests-stable
-        run: $MVN --projects ${{ matrix.module }} --also-make -P all-tests test -Dhal.image=quay.io/halconsole/hal
+        run: $MVN --projects ${{ matrix.module }} --also-make -P all-tests test -Dhal.image=quay.io/halconsole/hal -Dsurefire.failIfNoSpecifiedTests=false
       - name: Run Tests (Development)
         id: run-tests-development
-        run: $MVN --projects ${{ matrix.module }} --also-make -P all-tests test -Dhal.image=quay.io/halconsole/hal-development
+        run: $MVN --projects ${{ matrix.module }} --also-make -P all-tests test -Dhal.image=quay.io/halconsole/hal-development -Dsurefire.failIfNoSpecifiedTests=false

@@ -22,10 +22,10 @@ jobs:
           cache: maven
       - name: Run Tests
         id: run-tests
-        run: $MVN --fail-never -P all-tests test
+        run: $MVN --fail-never -P all-tests test -Dsurefire.failIfNoSpecifiedTests=false
       - name: Site
         id: site
-        run: $MVN -P all-tests site:site -DskipTests -Daggregate=true
+        run: $MVN -P all-tests site:site -DskipTests -Daggregate=true -Dsurefire.failIfNoSpecifiedTests=false
       - name: Publish
         id: publish
         uses: JamesIves/github-pages-deploy-action@v4.4.3

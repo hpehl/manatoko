@@ -64,4 +64,4 @@ jobs:
         run: $MVN install
       - name: Run Tests
         id: run-tests
-        run: $MVN --projects ${{ matrix.module }} --also-make -P all-tests test -Dhal.image=${{ github.event.inputs.hal-image }}
+        run: $MVN --projects ${{ matrix.module }} --also-make -P all-tests test -Dhal.image=${{ github.event.inputs.hal-image }} -Dsurefire.failIfNoSpecifiedTests=false
