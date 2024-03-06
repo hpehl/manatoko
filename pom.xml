@@ -82,7 +82,7 @@
         <version.logback>1.5.3</version.logback>
         <version.selenium>4.1.2</version.selenium>
         <version.slf4j>2.0.3</version.slf4j>
-        <version.testcontainers>1.19.6</version.testcontainers>
+        <version.testcontainers>1.19.7</version.testcontainers>
         <version.wildfly.core>23.0.3.Final</version.wildfly.core>
 
         <!-- Plugin versions -->
