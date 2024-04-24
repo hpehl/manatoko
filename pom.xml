@@ -76,7 +76,7 @@
         <version.gwtp>1.6</version.gwtp>
         <version.hal>3.6.12.Final</version.hal>
         <version.jboss.dmr>1.7.0.Final</version.jboss.dmr>
-        <version.jboss.logmanager>3.0.4.Final</version.jboss.logmanager>
+        <version.jboss.logmanager>3.0.5.Final</version.jboss.logmanager>
         <version.jgrapht>1.5.1</version.jgrapht>
         <version.junit>5.10.0</version.junit>
         <version.logback>1.5.6</version.logback>
