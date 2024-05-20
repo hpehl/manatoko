@@ -28,7 +28,7 @@ jobs:
         run: $MVN -P all-tests site:site -DskipTests -Daggregate=true -Dsurefire.failIfNoSpecifiedTests=false
       - name: Publish
         id: publish
-        uses: JamesIves/github-pages-deploy-action@v4.6.0
+        uses: JamesIves/github-pages-deploy-action@v4.6.1
         with:
           branch: gh-pages
           folder: ./target/site
