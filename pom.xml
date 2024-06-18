@@ -90,7 +90,7 @@
         <version.degraph.plugin>4.0.3</version.degraph.plugin>
         <version.enforcer.plugin>3.0.0-M3</version.enforcer.plugin>
         <version.formatter.plugin>2.23.0</version.formatter.plugin>
-        <version.impsort.plugin>1.10.0</version.impsort.plugin>
+        <version.impsort.plugin>1.9.0</version.impsort.plugin>
         <version.license.plugin>4.1</version.license.plugin>
         <version.site.plugin>4.0.0-M15</version.site.plugin>
 
@@ -108,7 +108,7 @@
         <default.host>primary</default.host>
         <encoding>UTF-8</encoding>
         <hal.image>quay.io/halconsole/hal:latest</hal.image>
-        <java.version>17</java.version>
+        <java.version>11</java.version>
         <maven.compiler.source>${java.version}</maven.compiler.source>
         <maven.compiler.target>${java.version}</maven.compiler.target>
         <maven.min.version>3.2.5</maven.min.version>
