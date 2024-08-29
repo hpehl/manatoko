@@ -79,7 +79,7 @@ public class WildFlyContainer extends GenericContainer<WildFlyContainer> {
                 .withNetworkAliases(Network.WILDFLY)
                 .withCommand(command)
                 .withExposedPorts(PORT)
-                .waitingFor(Wait.forLogMessage(".*(WildFly Full.*|JBoss EAP.*)started in.*", 1))
+                .waitingFor(Wait.forLogMessage(".*(WildFly.*|JBoss EAP.*)started in.*", 1))
                 .withStartupTimeout(Timeouts.WILDFLY_STARTUP_TIMEOUT);
 
         this.standalone = standalone;
