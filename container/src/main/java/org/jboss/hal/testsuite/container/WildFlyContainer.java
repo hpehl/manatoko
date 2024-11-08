@@ -41,6 +41,8 @@ import static org.jboss.hal.dmr.ModelDescriptionConstants.VALUE;
 public class WildFlyContainer extends GenericContainer<WildFlyContainer> {
 
     private static final int PORT = 9990;
+    private static final String MANAGEMENT_USER = "admin";
+    private static final String MANAGEMENT_PASSWORD = "admin";
     private static final Logger logger = LoggerFactory.getLogger(WildFlyContainer.class);
     private static WildFlyContainer instance = null;
 
@@ -144,7 +146,8 @@ public class WildFlyContainer extends GenericContainer<WildFlyContainer> {
         if (standalone) {
             options = OnlineOptions.standalone().hostAndPort(getHost(), getMappedPort(PORT)).build();
         } else {
-            options = OnlineOptions.domain().forHost(defaultHost).build().hostAndPort(getHost(), getMappedPort(PORT)).build();
+            options = OnlineOptions.domain().forHost(defaultHost).build().hostAndPort(getHost(), getMappedPort(PORT))
+                    .auth(MANAGEMENT_USER, MANAGEMENT_PASSWORD).build();
         }
         return ManagementClient.onlineLazy(options);
     }

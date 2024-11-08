@@ -38,6 +38,7 @@ public class TopologyPreview extends FinderPreviewFragment {
 
     public void selectServer(String server) {
         WebElement element = root.findElement(By.cssSelector("[data-server=" + hostServerId(server) + "]"));
+        Graphene.waitGui().until().element(element).is().visible();
         element.click();
     }
 
