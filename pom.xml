@@ -79,7 +79,7 @@
         <version.jboss.logmanager>3.1.1.Final</version.jboss.logmanager>
         <version.jgrapht>1.5.1</version.jgrapht>
         <version.junit>5.10.0</version.junit>
-        <version.logback>1.5.15</version.logback>
+        <version.logback>1.5.16</version.logback>
         <version.org.jboss.logging.jboss-logging>3.6.1.Final</version.org.jboss.logging.jboss-logging>
         <version.selenium>4.1.2</version.selenium>
         <version.slf4j>2.0.12</version.slf4j>
