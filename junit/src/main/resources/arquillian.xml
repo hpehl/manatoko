@@ -21,6 +21,7 @@
 
     <extension qualifier="webdriver">
         <property name="browser">firefox</property>
+        <property name="marionette-port">0</property>
     </extension>
 
     <extension qualifier="graphene">
@@ -28,5 +29,9 @@
         <property name="waitGuiInterval">10</property>
         <property name="waitAjaxInterval">20</property>
         <property name="waitModelInterval">30</property>
+    </extension>
+
+    <extension qualifier="drone">
+        <property name="instantiationTimeoutInSeconds">120</property>
     </extension>
 </arquillian>
