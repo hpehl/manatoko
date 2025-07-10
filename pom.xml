@@ -70,7 +70,7 @@
         <version.arquillian>1.10.0.Final</version.arquillian>
         <version.awaitility>4.3.0</version.awaitility>
         <version.checkstyle.config>1.0.8.Final</version.checkstyle.config>
-        <version.commons.lang3>3.17.0</version.commons.lang3>
+        <version.commons.lang3>3.18.0</version.commons.lang3>
         <version.commons.text>1.13.1</version.commons.text>
         <version.creaper>2.0.3</version.creaper>
         <version.gwtp>1.6</version.gwtp>
