@@ -81,7 +81,7 @@
         <version.junit>5.13.4</version.junit>
         <version.logback>1.5.19</version.logback>
         <version.org.jboss.logging.jboss-logging>3.6.1.Final</version.org.jboss.logging.jboss-logging>
-        <version.selenium>4.34.0</version.selenium>
+        <version.selenium>4.36.0</version.selenium>
         <version.slf4j>2.0.12</version.slf4j>
         <version.testcontainers>1.21.3</version.testcontainers>
         <version.wildfly.core>28.0.1.Final</version.wildfly.core>
