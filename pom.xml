@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8" ?>
 <!--
 
      Copyright 2022 Red Hat
@@ -16,14 +16,17 @@
      limitations under the License.
 
 -->
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project
+    xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
+>
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
         <groupId>org.jboss</groupId>
         <artifactId>jboss-parent</artifactId>
-        <version>50</version>
+        <version>51</version>
     </parent>
 
     <groupId>org.jboss.hal</groupId>
@@ -60,7 +63,7 @@
     <ciManagement>
         <system>Github Actions</system>
         <url>https://github.com/hal/manatoko/actions</url>
-        <notifiers/>
+        <notifiers />
    </ciManagement>
 
     <properties>
@@ -109,10 +112,9 @@
         <default.host>primary</default.host>
         <encoding>UTF-8</encoding>
         <hal.image>quay.io/halconsole/hal:latest</hal.image>
-        <java.version>11</java.version>
-        <maven.compiler.source>${java.version}</maven.compiler.source>
-        <maven.compiler.target>${java.version}</maven.compiler.target>
-        <maven.min.version>3.2.5</maven.min.version>
+        <java.version>17</java.version>
+        <maven.compiler.release>${java.version}</maven.compiler.release>
+        <maven.min.version>3.9.9</maven.min.version>
         <project.build.sourceEncoding>${encoding}</project.build.sourceEncoding>
         <project.reporting.outputEncoding>${encoding}</project.reporting.outputEncoding>
         <test.environment>remote</test.environment>
@@ -136,7 +138,7 @@
     </modules>
 
     <!-- No dependencies configuration here! This is done in parent-code. -->
-    <dependencies/>
+    <dependencies />
 
     <build>
         <!--
@@ -196,7 +198,7 @@
                         <failsOnError>true</failsOnError>
                         <includeTestSourceDirectory>true</includeTestSourceDirectory>
                         <excludes>**/*$logger.java,**/*$bundle.java</excludes>
-                        <useFile/>
+                        <useFile />
                     </configuration>
                     <dependencies>
                         <dependency>
