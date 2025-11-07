@@ -50,13 +50,18 @@
             <scope>test</scope>
         </dependency>
         <dependency>
-            <groupId>org.jboss.hal</groupId>
-            <artifactId>manatoko-environment</artifactId>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>manatoko-junit</artifactId>
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
-            <artifactId>manatoko-junit</artifactId>
+            <artifactId>manatoko-ui</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.jboss.hal</groupId>
+            <artifactId>manatoko-environment</artifactId>
             <scope>test</scope>
         </dependency>
         <dependency>
@@ -69,9 +74,36 @@
             <artifactId>manatoko-management-model</artifactId>
             <scope>test</scope>
         </dependency>
+
+        <!-- SmallRye Common -->
         <dependency>
-            <groupId>${project.groupId}</groupId>
-            <artifactId>manatoko-ui</artifactId>
+            <groupId>io.smallrye.common</groupId>
+            <artifactId>smallrye-common-cpu</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>io.smallrye.common</groupId>
+            <artifactId>smallrye-common-constraint</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>io.smallrye.common</groupId>
+            <artifactId>smallrye-common-expression</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>io.smallrye.common</groupId>
+            <artifactId>smallrye-common-net</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>io.smallrye.common</groupId>
+            <artifactId>smallrye-common-os</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>io.smallrye.common</groupId>
+            <artifactId>smallrye-common-ref</artifactId>
             <scope>test</scope>
         </dependency>
 
@@ -141,11 +173,6 @@
               <groupId>org.awaitility</groupId>
               <artifactId>awaitility</artifactId>
               <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>io.smallrye.common</groupId>
-            <artifactId>smallrye-common-constraint</artifactId>
-            <scope>test</scope>
         </dependency>
 
         <!-- Logging -->
