@@ -142,6 +142,11 @@
               <artifactId>awaitility</artifactId>
               <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>io.smallrye.common</groupId>
+            <artifactId>smallrye-common-constraint</artifactId>
+            <scope>test</scope>
+        </dependency>
 
         <!-- Logging -->
         <dependency>

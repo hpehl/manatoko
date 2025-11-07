@@ -69,7 +69,6 @@
                 <artifactId>jboss-logging</artifactId>
                 <version>${version.org.jboss.logging.jboss-logging}</version>
             </dependency>
-
             <dependency>
                 <groupId>org.jboss</groupId>
                 <artifactId>jboss-dmr</artifactId>
@@ -196,6 +195,11 @@
                 <groupId>org.jgrapht</groupId>
                 <artifactId>jgrapht-core</artifactId>
                 <version>${version.jgrapht}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.smallrye.common</groupId>
+                <artifactId>smallrye-common-constraint</artifactId>
+                <version>${version.smallrye.common}</version>
             </dependency>
 
             <!-- Logging -->
