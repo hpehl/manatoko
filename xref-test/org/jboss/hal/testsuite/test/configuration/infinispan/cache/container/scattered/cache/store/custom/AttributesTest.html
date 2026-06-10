@@ -55,7 +55,7 @@
 <a class="jxr_linenumber" name="L47" href="#L47">47</a>      @BeforeAll
 <a class="jxr_linenumber" name="L48" href="#L48">48</a>      <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">void</strong> setupModel() <strong class="jxr_keyword">throws</strong> Exception {
 <a class="jxr_linenumber" name="L49" href="#L49">49</a>          StoreSetup.setup(wildFly, operations -&gt; operations.headers(Values.of(<span class="jxr_string">"allow-resource-service-restart"</span>, <strong class="jxr_keyword">true</strong>))
-<a class="jxr_linenumber" name="L50" href="#L50">50</a>                  .add(customStoreAddress(CC_CREATE, SC_CREATE), Values.of(<span class="jxr_string">"class"</span>, Random.name())));
+<a class="jxr_linenumber" name="L50" href="#L50">50</a>                  .add(customStoreAddress(CC_CREATE, SC_CREATE), Values.of(<span class="jxr_string">"class"</span>, Random.name())).assertSuccess());
 <a class="jxr_linenumber" name="L51" href="#L51">51</a>      }
 <a class="jxr_linenumber" name="L52" href="#L52">52</a>  
 <a class="jxr_linenumber" name="L53" href="#L53">53</a>      @Inject Console console;
