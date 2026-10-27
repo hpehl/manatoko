@@ -37,7 +37,7 @@ jobs:
           - test-configuration-web
           - test-configuration-webservice
           - test-runtime-server
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     env:
       MVN: ./mvnw --show-version --batch-mode
     steps:
