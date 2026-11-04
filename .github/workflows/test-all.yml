@@ -47,6 +47,7 @@ jobs:
           - test-runtime-server
     runs-on: ubuntu-24.04
     env:
+      DOCKER_API_VERSION: "1.43"
       MVN: ./mvnw --show-version --batch-mode
     steps:
       - name: Checkout
